@@ -1,0 +1,59 @@
+@use './breakpoints';
+
+// RADIO GROUP, SLIDER, CHECKBOX (hover area):
+
+$hover-area-size-desk: 44px;
+$hover-area-size-mob: 32px;
+
+@mixin thumb-hover {
+  position: relative;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+
+    transition: all 0.5s ease-in-out;
+  }
+
+  &:focus-visible::after,
+  &:hover::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: $hover-area-size-desk;
+    height: $hover-area-size-desk;
+
+    opacity: 0.2;
+    background-color: var(--color-primary-500);
+    border-radius: 50%;
+
+    @media (width <= breakpoints.$mobile) {
+      width: $hover-area-size-mob;
+      height: $hover-area-size-mob;
+    }
+  }
+}
+
+// BUTTON, SELECT, TAB-SWITCHER (hover):
+
+@mixin background-hover($color) {
+  transition: background-color 0.3s ease-in-out !important;
+
+  &:hover {
+    background-color: $color;
+  }
+}
