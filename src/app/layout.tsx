@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { ReactNode } from 'react'
 
-import { inter, nunito } from '@/styles/fonts'
+import { inter, roboto } from '@/styles/fonts'
 import clsx from 'clsx'
 
 import '@/styles/index.scss'
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   const classNames = {
-    body: clsx(nunito.variable, inter.variable),
+    body: clsx(roboto.variable, inter.variable),
   }
 
   return (

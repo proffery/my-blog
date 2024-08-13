@@ -1,37 +1,24 @@
 :root {
-  --font-family-primary: var(--font-inter), sans-serif;
-  --font-family-second: var(--font-nunito), sans-serif;
+  --font-family-primary: var(--font-roboto), sans-serif;
+  --font-family-second: var(--font-inter), sans-serif;
 
   // line heights
-  --line-height-xxxxxs: 12px;
-  --line-height-xxxxs: 14px;
-  --line-height-xxxs: 16px;
-  --line-height-xxs: 18px;
-  --line-height-xs: 20px;
-  --line-height-s: 24px;
-  --line-height-m: 26px;
-  --line-height-l: 28px;
-  --line-height-xl: 30px;
-  --line-height-xxl: 40px;
-  --line-height-xxxl: 56px;
-  --line-height-xxxxl: 100px;
-  --line-height-xxxxxl: 120px;
+  --line-height-s: 100%;
+  --line-height-m: 130%;
+  --line-height-l: 140%;
+  --line-height-xl: 150%;
 
   // font sizes
-  --font-size-xxxxxs: 12px;
-  --font-size-xxxxs: 14px;
-  --font-size-xxxs: 16px;
-  --font-size-xxs: 18px;
-  --font-size-xs: 20px;
-  --font-size-s: 22px;
-  --font-size-m: 26px;
-  --font-size-l: 28px;
-  --font-size-xl: 30px;
-  --font-size-xxl: 36px;
+  --font-size-xxxs: 12px;
+  --font-size-xxs: 14px;
+  --font-size-xs: 16px;
+  --font-size-s: 18px;
+  --font-size-m: 20px;
+  --font-size-l: 24px;
+  --font-size-xl: 28px;
+  --font-size-xxl: 32px;
   --font-size-xxxl: 40px;
-  --font-size-xxxxl: 56px;
-  --font-size-xxxxxl: 100px;
-  --font-size-xxxxxxl: 120px;
+  --font-size-xxxxl: 48px;
 
   // font weights
   --font-weight-regular: 400;

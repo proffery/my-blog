@@ -1,4 +1,4 @@
-import { Inter, Nunito } from 'next/font/google'
+import { Inter, Roboto } from 'next/font/google'
 
 export const inter = Inter({
   display: 'swap',
@@ -7,9 +7,9 @@ export const inter = Inter({
   weight: ['400', '700'],
 })
 
-export const nunito = Nunito({
+export const roboto = Roboto({
   display: 'swap',
   subsets: ['cyrillic'],
-  variable: '--font-nunito',
+  variable: '--font-roboto',
   weight: ['400', '700'],
 })

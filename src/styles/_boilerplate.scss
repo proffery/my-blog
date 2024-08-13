@@ -41,8 +41,10 @@ body {
   padding: 0;
 
   font-family: var(--font-family-primary), sans-serif;
-  line-height: var(--line-height-m);
-  color: var(--color-primary-900);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+  color: var(--color-dark);
 
   background-color: var(--color-light);
 
@@ -61,6 +63,6 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary-300);
+  background-color: var(--color-dark);
   border-radius: 10px;
 }

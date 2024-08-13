@@ -1,0 +1,90 @@
+@use '@/styles/breakpoints';
+@use '@/styles/animations' as animations;
+
+$padding-desktop: 12px 24px;
+$padding-mobile: 8px 20px;
+$height-desktop: 48px;
+$height-mobile: 40px;
+$radius: 5px;
+
+.button {
+  all: unset;
+
+  cursor: pointer;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: fit-content;
+  height: $height-desktop;
+  padding: $padding-desktop;
+
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+  text-align: center;
+  white-space: nowrap;
+
+  border-radius: $radius;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info);
+  }
+
+  &.disabled {
+    cursor: initial;
+    opacity: 0.5;
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    height: $height-mobile;
+    padding: $padding-mobile;
+    font-size: var(--font-size-xs);
+  }
+}
+
+.primary,
+a.primary {
+  @include animations.background-hover(var(--color-light));
+
+  color: var(--color-light);
+  background-color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+
+  &:hover {
+    color: var(--color-dark);
+  }
+
+  &.disabled:hover {
+    cursor: initial;
+    color: var(--color-light);
+    background-color: var(--color-dark);
+  }
+}
+
+.secondary,
+a.secondary {
+  @include animations.background-hover(var(--color-dark));
+
+  color: var(--color-dark);
+  background-color: var(--color-light);
+  border: 1px solid var(--color-dark);
+
+  &:hover {
+    color: var(--color-light);
+  }
+
+  &.disabled:hover {
+    cursor: initial;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
