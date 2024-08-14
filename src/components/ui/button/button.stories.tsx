@@ -41,6 +41,18 @@ export const Secondary: Story = {
     disabled: false,
     variant: 'secondary',
   },
+  decorators: [
+    Story => (
+      <div
+        style={{
+          backgroundColor: 'var(--color-dark)',
+          padding: '10px',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export const PrimaryFullWidth: Story = {
@@ -51,6 +63,18 @@ export const PrimaryFullWidth: Story = {
     fullWidth: true,
     variant: 'primary',
   },
+  decorators: [
+    Story => (
+      <div
+        style={{
+          backgroundColor: 'var(--color-dark)',
+          padding: '10px',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export const SecondaryFullWidth: Story = {
@@ -86,6 +110,7 @@ export const AsLinkPrimary: Story = {
     as: 'a',
     children: 'As link Primary',
     disabled: false,
+    href: '/',
     variant: 'primary',
   },
 }
@@ -95,6 +120,7 @@ export const AsLinkSecondary: Story = {
     as: 'a',
     children: 'As link Secondary',
     disabled: false,
+    href: '/',
     variant: 'secondary',
   },
 }

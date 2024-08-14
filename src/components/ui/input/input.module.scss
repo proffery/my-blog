@@ -4,6 +4,7 @@ $height-input: 48px;
 $height-textarea: 100px;
 $padding: 12px;
 $radius: 5px;
+$margin: 8px 0;
 
 .input {
   display: flex;
@@ -13,6 +14,7 @@ $radius: 5px;
   box-sizing: border-box;
   width: 100%;
   height: $height-input;
+  margin: $margin;
   padding: $padding;
 
   font-family: inherit;

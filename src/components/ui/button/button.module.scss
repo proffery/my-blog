@@ -48,12 +48,13 @@ $radius: 5px;
   }
 }
 
-.primary,
-a.primary {
+.secondary,
+a.secondary {
   @include animations.background-hover(var(--color-light));
 
   color: var(--color-light);
   background-color: var(--color-dark);
+  outline: 1px solid var(--color-light);
 
   &:hover {
     color: var(--color-dark);
@@ -63,11 +64,13 @@ a.primary {
     cursor: initial;
     color: var(--color-light);
     background-color: var(--color-dark);
+
+    outliner: 1px solid var(--color-light);
   }
 }
 
-.secondary,
-a.secondary {
+.primary,
+a.primary {
   @include animations.background-hover(var(--color-dark));
 
   color: var(--color-dark);
@@ -75,6 +78,7 @@ a.secondary {
 
   &:hover {
     color: var(--color-light);
+    outline: 1px solid var(--color-light);
   }
 
   &.disabled:hover {
