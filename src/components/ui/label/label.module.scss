@@ -1,0 +1,17 @@
+.label {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xl);
+  color: var(--color-dark);
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.primary {
+  color: var(--color-dark);
+}
+
+.secondary {
+  color: var(--color-light);
+}

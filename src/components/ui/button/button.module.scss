@@ -29,6 +29,7 @@ $radius: 5px;
   text-align: center;
   white-space: nowrap;
 
+  border: 1px solid var(--color-dark);
   border-radius: $radius;
 
   &:focus-visible {
@@ -53,7 +54,6 @@ a.primary {
 
   color: var(--color-light);
   background-color: var(--color-dark);
-  border: 1px solid var(--color-dark);
 
   &:hover {
     color: var(--color-dark);
@@ -72,7 +72,6 @@ a.secondary {
 
   color: var(--color-dark);
   background-color: var(--color-light);
-  border: 1px solid var(--color-dark);
 
   &:hover {
     color: var(--color-light);

@@ -43,7 +43,7 @@ export const Secondary: Story = {
   },
 }
 
-export const FullWidthPrimary: Story = {
+export const PrimaryFullWidth: Story = {
   args: {
     as: 'button',
     children: 'Primary Button',
@@ -53,12 +53,12 @@ export const FullWidthPrimary: Story = {
   },
 }
 
-export const FullWidthSecondary: Story = {
+export const SecondaryFullWidth: Story = {
   args: {
-    FullWidth: true,
     as: 'button',
     children: 'Secondary Button',
     disabled: false,
+    fullWidth: true,
     variant: 'secondary',
   },
 }
