@@ -51,7 +51,7 @@ $hover-area-size-mob: 32px;
 // BUTTON, SELECT, TAB-SWITCHER (hover):
 
 @mixin background-hover($color) {
-  transition: background-color 0.3s ease-in-out !important;
+  transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: $color;

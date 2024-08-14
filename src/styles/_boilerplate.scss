@@ -57,12 +57,16 @@ body {
 
 /* size */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
+  cursor: grab;
   background-color: var(--color-dark);
-  border-radius: 10px;
+
+  &:hover {
+    background-color: var(--color-placeholder);
+  }
 }
