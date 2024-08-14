@@ -1,11 +1,12 @@
-import { Button } from '@/components/ui/button/button'
+import { Page } from '@/components/layouts/page/page'
+import { Input } from '@/components/ui/input/input'
 
 export default function Home() {
   return (
-    <main>
+    <Page>
       Hello, World!
-      <Button>Button</Button>
-      <Button variant={'secondary'}>Button</Button>
-    </main>
+      <Input cols={2} label={'234'} rows={4} />
+      <Input as={'textarea'} cols={2} label={'234'} resize={false} rows={14} />
+    </Page>
   )
 }

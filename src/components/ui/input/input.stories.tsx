@@ -60,6 +60,16 @@ export const PrimaryAsTextarea: Story = {
     variant: 'primary',
   },
 }
+export const PrimaryAsTextareaNoResize: Story = {
+  args: {
+    as: 'textarea',
+    disabled: false,
+    label: 'Textarea',
+    placeholder: 'Textarea',
+    resize: false,
+    variant: 'primary',
+  },
+}
 
 export const PrimaryDisabled: Story = {
   args: {

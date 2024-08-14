@@ -14,17 +14,18 @@ import clsx from 'clsx'
 
 import s from './input.module.scss'
 
-type Props<T extends ElementType = 'input'> = {
+type Props<T extends ElementType = 'input' | 'textarea'> = {
   as?: T
   className?: string
   cleanSearch?: () => void
   errorMessage?: string
   label?: string
+  resize?: boolean
   value?: string
   variant?: 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
-const InputComponent = <T extends ElementType = 'input'>(
+const InputComponent = <T extends ElementType = 'input' | 'textarea'>(
   props: Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & Props<T>,
   ref: Ref<HTMLInputElement>
 ) => {
@@ -35,6 +36,7 @@ const InputComponent = <T extends ElementType = 'input'>(
     errorMessage,
     id,
     label,
+    resize = true,
     value,
     variant = 'primary',
     ...rest
@@ -46,6 +48,7 @@ const InputComponent = <T extends ElementType = 'input'>(
       s.input,
       Component === 'textarea' && s.textarea,
       s[variant],
+      !resize && s.disableResize,
       disabled && s.disabled
     ),
   }
@@ -71,7 +74,7 @@ const InputComponent = <T extends ElementType = 'input'>(
   )
 }
 
-export const Input = forwardRef(InputComponent) as <T extends ElementType = 'input'>(
+export const Input = forwardRef(InputComponent) as <T extends ElementType = 'input' | 'textarea'>(
   props: {
     ref?: ForwardedRef<ElementRef<T>>
   } & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> &

@@ -1,7 +1,8 @@
 @use '@/styles/breakpoints';
 @use '@/styles/animations' as animations;
 
-$height: 48px;
+$height-input: 48px;
+$height-textarea: 100px;
 $padding: 12px;
 $radius: 5px;
 
@@ -12,7 +13,7 @@ $radius: 5px;
 
   box-sizing: border-box;
   width: 100%;
-  height: $height;
+  height: $height-input;
   padding: $padding;
 
   font-family: inherit;
@@ -38,7 +39,11 @@ $radius: 5px;
 }
 
 .textarea {
-  min-height: 100px;
+  min-height: $height-textarea;
+}
+
+.disableResize {
+  resize: none;
 }
 
 .secondary {
