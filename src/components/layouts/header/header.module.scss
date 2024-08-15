@@ -14,7 +14,7 @@
   height: breakpoints.$header-height-desktop;
 
   background-color: var(--color-light);
-  box-shadow: 0 0 1px 0 var(--color-dark);
+  box-shadow: var(--color-shadow);
 
   @media (width <= breakpoints.$mobile) {
     height: breakpoints.$header-height-mobile;
@@ -32,5 +32,15 @@
 
   @media (width <= breakpoints.$mobile) {
     padding: breakpoints.$header-padding-mobile;
+  }
+}
+
+.navWrapper {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 16px;
   }
 }

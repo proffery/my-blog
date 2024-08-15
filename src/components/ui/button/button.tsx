@@ -17,7 +17,7 @@ type ButtonProps<T extends ElementType = 'button'> = {
   children: ReactNode
   className?: string
   fullWidth?: boolean
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'text'
 } & ComponentPropsWithoutRef<T>
 
 const ButtonComponent = <T extends ElementType = 'button'>(

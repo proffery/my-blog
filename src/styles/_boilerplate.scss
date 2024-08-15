@@ -13,22 +13,10 @@ html {
   // outline: 1px solid red;
 }
 
-input,
-button,
-select,
-textarea,
-optgroup,
-option {
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  font-style: inherit;
-  color: inherit;
-}
-
 a,
 a:visited {
-  color: inherit;
+  color: var(--color-dark);
+  text-decoration: none;
 }
 
 body {
