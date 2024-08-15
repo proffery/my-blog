@@ -1,0 +1,20 @@
+@use '@/styles/breakpoints';
+
+.root {
+  position: relative;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+
+  width: 100%;
+  height: breakpoints.$footer-height-desktop;
+
+  color: var(--color-light);
+
+  background-color: var(--color-dark);
+
+  @media (width <= breakpoints.$mobile) {
+    height: breakpoints.$footer-height-mobile;
+  }
+}

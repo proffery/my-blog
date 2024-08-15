@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 
 import { ReactNode } from 'react'
 
+import { Footer } from '@/components/layouts/footer/footer'
+import { Header } from '@/components/layouts/header/header'
 import { inter, roboto } from '@/styles/fonts'
 import clsx from 'clsx'
 
@@ -24,9 +26,9 @@ export default function RootLayout({
   return (
     <html className={classNames.body} lang={'ru'}>
       <body>
-        <header>Header</header>
+        <Header />
         {children}
-        <footer>Footer</footer>
+        <Footer />
       </body>
     </html>
   )

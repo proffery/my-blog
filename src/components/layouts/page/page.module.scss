@@ -1,12 +1,7 @@
 @use '@/styles/breakpoints';
 
-$max-content-width: 1312px;
-$padding-desk: 64px;
-$padding-mob: 24px;
-$footer-height-desktop: 542px;
-$footer-height-mobile: 1322px;
-$header-height-desktop: 72px;
-$header-height-mobile: 48px;
+$header-height-desktop: breakpoints.$header-height-desktop;
+$header-height-mobile: breakpoints.$header-height-mobile;
 
 .main {
   position: relative;
@@ -15,13 +10,13 @@ $header-height-mobile: 48px;
   flex-direction: column;
 
   width: 100%;
-  max-width: $max-content-width;
+  max-width: breakpoints.$max-content-width;
   min-height: calc(100vh - $header-height-desktop);
   margin: 0 auto;
-  padding: $padding-desk;
+  padding: breakpoints.$content-padding-desktop;
 
   @media (width <= breakpoints.$mobile) {
     min-height: calc(100vh - $header-height-mobile);
-    padding: $padding-mob;
+    padding: breakpoints.$content-padding-mobile;
   }
 }

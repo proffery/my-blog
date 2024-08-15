@@ -1,0 +1,36 @@
+@use '@/styles/breakpoints';
+
+.root {
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: breakpoints.$header-height-desktop;
+
+  background-color: var(--color-light);
+  box-shadow: 0 0 1px 0 var(--color-dark);
+
+  @media (width <= breakpoints.$mobile) {
+    height: breakpoints.$header-height-mobile;
+  }
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: breakpoints.$max-content-width;
+  padding: breakpoints.$header-padding-desktop;
+
+  @media (width <= breakpoints.$mobile) {
+    padding: breakpoints.$header-padding-mobile;
+  }
+}
