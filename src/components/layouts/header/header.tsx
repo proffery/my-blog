@@ -1,5 +1,7 @@
+import { routes } from '@/common/constants/routes'
 import { Button } from '@/components/ui/button/button'
 import clsx from 'clsx'
+import Link from 'next/link'
 
 import s from './header.module.scss'
 export const Header = () => {
@@ -12,7 +14,9 @@ export const Header = () => {
     <header className={classNames.root}>
       <div className={classNames.container}>
         <nav></nav>
-        <Button>Log in</Button>
+        <Button as={Link} href={routes.login}>
+          Log in
+        </Button>
       </div>
     </header>
   )
