@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { ReactNode } from 'react'
 
 import { Footer } from '@/components/layouts/footer/footer'
-import { Header } from '@/components/layouts/header/header'
+import Header from '@/components/layouts/header/header'
 import { inter, roboto } from '@/styles/fonts'
 import clsx from 'clsx'
 

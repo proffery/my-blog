@@ -11,8 +11,9 @@ import s from './navbar-mobile.module.scss'
 
 type Props = {
   isAuthenticated: boolean
+  logout: () => void
 }
-export const NavbarMobile = ({ isAuthenticated }: Props) => {
+export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
   const [isOpened, setIsOpened] = useState(false)
   const classNames = {
     burgerButton: clsx(s.burgerButton),
@@ -27,6 +28,11 @@ export const NavbarMobile = ({ isAuthenticated }: Props) => {
   }
 
   const handleClose = () => {
+    setIsOpened(false)
+  }
+
+  const handleLogout = () => {
+    logout()
     setIsOpened(false)
   }
 
@@ -47,7 +53,11 @@ export const NavbarMobile = ({ isAuthenticated }: Props) => {
           <ActiveLink href={routes.contacts} onClick={handleClose}>
             Contacts
           </ActiveLink>
-          {isAuthenticated && <Button variant={'text'}>Log Out</Button>}
+          {isAuthenticated && (
+            <Button onClick={handleLogout} variant={'text'}>
+              Log Out
+            </Button>
+          )}
         </nav>
       </div>
     </>
