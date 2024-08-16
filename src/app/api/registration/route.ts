@@ -10,9 +10,9 @@ export async function POST(request: NextRequest) {
     await account.create(ID.unique(), email, password, name)
 
     return NextResponse.json({ message: 'Registration complete!' })
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
 
-    return NextResponse.json({ message: err.response.message }, { status: err.code })
+    return NextResponse.json({ message: error.response.message }, { status: error.code })
   }
 }

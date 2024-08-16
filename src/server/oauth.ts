@@ -1,4 +1,5 @@
 'use server'
+import { routes } from '@/common/constants/routes'
 import { createAdminClient } from '@/server/config'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -11,8 +12,8 @@ export async function signUpWithGithub() {
 
   const redirectUrl = await account.createOAuth2Token(
     OAuthProvider.Github,
-    `${origin}/oauth`,
-    `${origin}/signup`
+    `${origin}${routes.oauth}`,
+    `${origin}${routes.registration}`
   )
 
   return redirect(redirectUrl)
@@ -25,8 +26,8 @@ export async function signUpWithGoogle() {
 
   const redirectUrl = await account.createOAuth2Token(
     OAuthProvider.Google,
-    `${origin}/oauth`,
-    `${origin}/signup`
+    `${origin}${routes.oauth}`,
+    `${origin}${routes.registration}`
   )
 
   return redirect(redirectUrl)

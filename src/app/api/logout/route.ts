@@ -8,9 +8,9 @@ export async function DELETE(request: NextRequest) {
     await account.deleteSession('current')
 
     return NextResponse.json({ message: 'Successfully logged out!' })
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
 
-    return NextResponse.json({ message: err.response.message }, { status: err.code })
+    return NextResponse.json({ message: error.response.message }, { status: error.code })
   }
 }

@@ -9,7 +9,7 @@ export async function createSessionClient(request: NextRequest) {
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT)
 
-  const session = request.cookies.get('my-custom-session')
+  const session = request.cookies.get('process.env.NEXT_PUBLIC_SESSION_NAME')
 
   if (session) {
     client.setSession(session.value)

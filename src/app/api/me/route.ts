@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const user = await account.get()
 
     return NextResponse.json({ user })
-  } catch (err) {
-    return NextResponse.json({ message: err.response.message }, { status: err.code })
+  } catch (error) {
+    return NextResponse.json({ message: error.response.message }, { status: error.code })
   }
 }

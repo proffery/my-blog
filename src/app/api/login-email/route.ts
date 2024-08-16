@@ -9,19 +9,17 @@ export async function POST(request: NextRequest) {
 
     const session = await account.createEmailPasswordSession(email, password)
 
-    cookies().set('my-custom-session', session.secret, {
+    cookies().set('process.env.NEXT_PUBLIC_SESSION_NAME', session.secret, {
       httpOnly: true,
       path: '/',
       sameSite: 'strict',
       secure: true,
     })
 
-    console.log(session.secret)
-
     return NextResponse.json({ message: 'Sign-in complete' })
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
 
-    return NextResponse.json({ message: err.response.message }, { status: err.code })
+    return NextResponse.json({ message: error.response.message }, { status: error.code })
   }
 }
