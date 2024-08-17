@@ -1,5 +1,11 @@
+@use '@/styles/breakpoints';
+
 .error {
   font-size: var(--font-size-xs);
   line-height: var(--line-height-xl);
   color: var(--color-danger);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
 }

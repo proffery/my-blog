@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux'
 
 import { GithubIcon } from '@/assets/icons/components/github-icon'
 import { GoogleIcon } from '@/assets/icons/components/google-icon'
-import { breakpoints } from '@/common/constants/breakpoints'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
-import { useWidth } from '@/common/hooks/use-width'
 import { LoginForm } from '@/components/forms/login-form/login-form'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
@@ -28,7 +26,6 @@ function Login() {
 
   const [loginWithEmail] = useLoginEmailMutation()
   const isAuthenticated = useSelector(selectIsAuthenticated)
-  const width = useWidth()
 
   if (isAuthenticated) {
     redirect(routes.account)
@@ -41,13 +38,13 @@ function Login() {
         <div className={classNames.buttonsWrapper}>
           <form action={signUpWithGoogle} className={classNames.form}>
             <Button fullWidth type={'submit'}>
-              <GoogleIcon /> Sign in with Google
+              <GoogleIcon /> Google
             </Button>
           </form>
           <form action={signUpWithGithub} className={classNames.form}>
             <Button fullWidth type={'submit'}>
               <GithubIcon />
-              Sign in with Github
+              Github
             </Button>
           </form>
         </div>

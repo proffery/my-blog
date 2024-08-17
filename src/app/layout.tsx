@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 
 import { Footer } from '@/components/layouts/footer/footer'
 import Header from '@/components/layouts/header/header'
-import { inter, roboto } from '@/styles/fonts'
+import { roboto, vollkorn } from '@/styles/fonts'
 import clsx from 'clsx'
 
 import '@/styles/index.scss'
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   const classNames = {
-    body: clsx(roboto.variable, inter.variable),
+    body: clsx(roboto.variable, vollkorn.variable),
   }
 
   return (

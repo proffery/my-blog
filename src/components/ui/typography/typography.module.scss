@@ -1,0 +1,178 @@
+@use '@/styles/breakpoints';
+
+.typography {
+  margin: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.body1 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
+}
+
+.body2 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xxs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxxs);
+  }
+}
+
+.caption {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  font-style: italic;
+  line-height: var(--line-height-xl);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-s);
+  }
+}
+
+.h1 {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-xxxxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxxl);
+  }
+}
+
+.h2 {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-xxxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxl);
+  }
+}
+
+.h3 {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.h4 {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-l);
+  }
+}
+
+.h5 {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-l);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-m);
+  }
+}
+
+.h6 {
+  font-family: var(--font-family-second), sans-serif;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-s);
+  }
+}
+
+.link1 {
+  cursor: pointer;
+
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--color-placeholder);
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
+}
+
+.link2 {
+  cursor: pointer;
+
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  font-style: italic;
+  line-height: var(--line-height-xl);
+  text-decoration: underline;
+
+  &:hover {
+    color: var(--color-placeholder);
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
+}
+
+.overline {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
+  text-decoration: underline;
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
+}
+
+.subtitle1 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-s);
+  }
+}
+
+.subtitle2 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xxs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-xl);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxxs);
+  }
+}

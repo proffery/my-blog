@@ -1,13 +1,13 @@
-import { Inter, Roboto } from 'next/font/google'
+import { Roboto_Serif, Vollkorn } from 'next/font/google'
 
-export const inter = Inter({
+export const vollkorn = Vollkorn({
   display: 'swap',
   subsets: ['cyrillic'],
-  variable: '--font-inter',
+  variable: '--font-vollkorn',
   weight: ['400', '700'],
 })
 
-export const roboto = Roboto({
+export const roboto = Roboto_Serif({
   display: 'swap',
   subsets: ['cyrillic'],
   variable: '--font-roboto',

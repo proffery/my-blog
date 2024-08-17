@@ -1,5 +1,8 @@
 @use '@/styles/breakpoints';
 
+$gap-desktop: 32px;
+$gap-mobile: 16px;
+
 .page {
   display: flex;
   align-items: center;
@@ -9,7 +12,7 @@
 .container {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: $gap-desktop;
   align-items: center;
   justify-content: center;
 }
@@ -17,7 +20,7 @@
 .formsWrapper {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: $gap-desktop;
   align-items: center;
   justify-content: center;
 
@@ -29,20 +32,19 @@
 .buttonsWrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: $gap-mobile;
   justify-content: space-between;
 
   width: 100%;
 
-  @media (width <= breakpoints.$mobile) {
-    gap: 16px;
-    justify-content: center;
+  svg {
+    max-width: 24px;
   }
 }
 
 .form {
   display: flex;
   align-items: center;
-  width: 46%;
+  width: calc((100% / 2) - ($gap-mobile / 2));
   min-width: fit-content;
 }

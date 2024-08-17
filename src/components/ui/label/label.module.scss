@@ -1,7 +1,13 @@
+@use '@/styles/breakpoints';
+
 .label {
   font-size: var(--font-size-xs);
   line-height: var(--line-height-xl);
   color: var(--color-dark);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
 }
 
 .disabled {
