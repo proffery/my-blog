@@ -1,6 +1,12 @@
+@use '@/styles/breakpoints';
+
 .link {
   font-size: var(--font-size-xs);
   line-height: var(--line-height-xl);
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
 }
 
 .activeLink {

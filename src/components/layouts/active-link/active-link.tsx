@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 import clsx from 'clsx'
 import Link, { LinkProps } from 'next/link'
-import { usePathname, useSelectedLayoutSegment } from 'next/navigation'
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 import s from './active-link.module.scss'
 
