@@ -1,8 +1,10 @@
 @use '@/styles/breakpoints';
 
-$height-input: 48px;
+$height-input-desktop: 48px;
+$height-input-mobile: 40px;
 $height-textarea: 100px;
-$padding: 12px;
+$padding-desktop: 12px;
+$padding-mobile: 8px;
 $radius: 5px;
 
 .input {
@@ -12,8 +14,8 @@ $radius: 5px;
 
   box-sizing: border-box;
   width: 100%;
-  height: $height-input;
-  padding: $padding;
+  height: $height-input-desktop;
+  padding: $padding-desktop;
 
   font-family: inherit;
   font-size: var(--font-size-xs);
@@ -34,6 +36,11 @@ $radius: 5px;
   &:disabled {
     cursor: initial;
     opacity: 0.5;
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    height: $height-input-mobile;
+    padding: $padding-mobile;
   }
 }
 

@@ -37,18 +37,21 @@ export const RegistrationForm = ({ disabled, onSubmit }: Props) => {
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
       <Input
+        autoComplete={'name'}
         errorMessage={errors.name?.message}
         label={'Name'}
         placeholder={'Name'}
         {...register('name')}
       />
       <Input
+        autoComplete={'email'}
         errorMessage={errors.email?.message}
         label={'Email'}
         placeholder={'Email'}
         {...register('email')}
       />
       <Input
+        autoComplete={'billing new-password'}
         errorMessage={errors.password?.message}
         label={'Password'}
         placeholder={'Password'}
@@ -58,10 +61,11 @@ export const RegistrationForm = ({ disabled, onSubmit }: Props) => {
       <Button
         className={classNames.singUpButton}
         disabled={disabled}
+        fullWidth
         type={'submit'}
         variant={'secondary'}
       >
-        Sign in
+        Sign up
       </Button>
     </form>
   )

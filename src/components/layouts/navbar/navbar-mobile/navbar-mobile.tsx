@@ -19,7 +19,10 @@ export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
     burgerButton: clsx(s.burgerButton),
     burgerMenu: clsx(s.burgerMenu, isOpened && s.burgerMenuOpened),
     navbar: clsx(s.navbar, isOpened ? s.navbarOpened : s.navbarClosed),
-    navbarContainer: clsx(s.navbarContainer),
+    navbarContainer: clsx(
+      s.navbarContainer,
+      !isOpened ? s.navbarContainerClosed : s.navbarContainerOpened
+    ),
     navbarLeft: clsx(s.navbarLeft, isOpened ? s.navbarLeftOpened : s.navbarLeftClosed),
   }
 

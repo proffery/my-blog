@@ -34,12 +34,14 @@ export const LoginForm = ({ disabled, onSubmit }: Props) => {
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
       <Input
+        autoComplete={'email'}
         errorMessage={errors.email?.message}
         label={'Email'}
         placeholder={'Email'}
         {...register('email')}
       />
       <Input
+        autoComplete={'current-password webauthn'}
         errorMessage={errors.password?.message}
         label={'Password'}
         placeholder={'Password'}
@@ -49,6 +51,7 @@ export const LoginForm = ({ disabled, onSubmit }: Props) => {
       <Button
         className={classNames.singUpButton}
         disabled={disabled}
+        fullWidth
         type={'submit'}
         variant={'secondary'}
       >

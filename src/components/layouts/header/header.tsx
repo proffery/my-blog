@@ -47,7 +47,7 @@ const Header = () => {
           )}
           {!isAuthenticated && (
             <Button as={Link} href={routes.login}>
-              Log in
+              Sign in
             </Button>
           )}
           {isAuthenticated && width > breakpoints.mobile && (
