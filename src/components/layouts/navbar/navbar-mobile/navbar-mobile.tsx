@@ -48,17 +48,17 @@ export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
         <div className={classNames.navbarLeft} onClick={handleClose} />
         <nav className={classNames.navbar}>
           <ActiveLink href={routes.base} onClick={handleClose}>
-            Home
+            Главная
           </ActiveLink>
           <ActiveLink href={routes.posts} onClick={handleClose}>
-            Posts
+            Посты
           </ActiveLink>
           <ActiveLink href={routes.contacts} onClick={handleClose}>
-            Contacts
+            Контакты
           </ActiveLink>
           {isAuthenticated && (
             <Button onClick={handleLogout} variant={'text'}>
-              Log Out
+              Выйти
             </Button>
           )}
         </nav>

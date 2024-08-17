@@ -6,6 +6,7 @@ import {
 } from '@/components/forms/registration-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
+import { Typography } from '@/components/ui/typography/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -20,6 +21,7 @@ export const RegistrationForm = ({ disabled, onSubmit }: Props) => {
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
+    title: clsx(s.title),
   }
 
   const {
@@ -36,25 +38,26 @@ export const RegistrationForm = ({ disabled, onSubmit }: Props) => {
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
+      <Typography.H1 className={classNames.title}>Регистрация</Typography.H1>
       <Input
         autoComplete={'name'}
         errorMessage={errors.name?.message}
-        label={'Name'}
-        placeholder={'Name'}
+        label={'Имя'}
+        placeholder={'Ваше имя'}
         {...register('name')}
       />
       <Input
         autoComplete={'email'}
         errorMessage={errors.email?.message}
-        label={'Email'}
-        placeholder={'Email'}
+        label={'Почта'}
+        placeholder={'mymail@mail.com'}
         {...register('email')}
       />
       <Input
         autoComplete={'billing new-password'}
         errorMessage={errors.password?.message}
-        label={'Password'}
-        placeholder={'Password'}
+        label={'Пароль'}
+        placeholder={'Придумайте пароль'}
         type={'password'}
         {...register('password')}
       />

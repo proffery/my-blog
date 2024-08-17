@@ -47,11 +47,11 @@ const Header = () => {
           )}
           {!isAuthenticated && (
             <Button as={Link} href={routes.login}>
-              Sign in
+              Войти
             </Button>
           )}
           {isAuthenticated && width > breakpoints.mobile && (
-            <Button onClick={handleLogout}>Log Out</Button>
+            <Button onClick={handleLogout}>Выйти</Button>
           )}
         </div>
       </div>

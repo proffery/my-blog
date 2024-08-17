@@ -10,9 +10,9 @@ export const NavbarDesktop = () => {
 
   return (
     <nav className={classNames.navbar}>
-      <ActiveLink href={routes.base}>Home</ActiveLink>
-      <ActiveLink href={routes.posts}>Posts</ActiveLink>
-      <ActiveLink href={routes.contacts}>Contacts</ActiveLink>
+      <ActiveLink href={routes.base}>Главная</ActiveLink>
+      <ActiveLink href={routes.posts}>Посты</ActiveLink>
+      <ActiveLink href={routes.contacts}>Контакты</ActiveLink>
     </nav>
   )
 }
