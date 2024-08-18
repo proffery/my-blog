@@ -1,9 +1,16 @@
 'use client'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import { getErrorMessage } from '@/common/utils/get-error-message'
+import { LoginEmailFormValues } from '@/components/forms/login-form/schema'
 import { RegistrationForm } from '@/components/forms/registration-form/registration-form'
+import { RegistrationFormValues } from '@/components/forms/registration-form/schema'
 import { Page } from '@/components/layouts/page/page'
-import { useMeQuery, useRegistrationMutation } from '@/services/auth/auth.service'
+import { useRegistrationMutation } from '@/services/auth/auth.service'
+import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { redirect } from 'next/navigation'
 
@@ -15,18 +22,23 @@ function Registration() {
     page: clsx(s.page),
   }
 
-  const { data: meData } = useMeQuery()
+  const [registration, { error: registrationError }] = useRegistrationMutation()
+  const isAuthenticated = useSelector(selectUserIsAuthenticated)
 
-  const [registration] = useRegistrationMutation()
+  const registrationHandler = (registrationData: RegistrationFormValues) => {
+    registration(registrationData).unwrap()
+  }
 
-  if (meData) {
+  const errorMessage = getErrorMessage(registrationError)
+
+  if (isAuthenticated) {
     redirect(routes.account)
   }
 
   return (
     <Page className={classNames.page}>
       <div className={classNames.formsWrapper}>
-        <RegistrationForm onSubmit={registration} />
+        <RegistrationForm errorMessage={errorMessage} onSubmit={registrationHandler} />
       </div>
     </Page>
   )

@@ -14,9 +14,9 @@ export const FieldError = ({ children, errorMessage }: Props) => {
   }
 
   return (
-    <div>
+    <>
       {children}
       {errorMessage && <div className={classNames.error}>{errorMessage}</div>}
-    </div>
+    </>
   )
 }

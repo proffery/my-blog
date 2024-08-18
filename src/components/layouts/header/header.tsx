@@ -8,10 +8,12 @@ import { useWidth } from '@/common/hooks/use-width'
 import { NavbarDesktop } from '@/components/layouts/navbar/navbar-desktop/navbar-desktop'
 import { NavbarMobile } from '@/components/layouts/navbar/navbar-mobile/navbar-mobile'
 import { Button } from '@/components/ui/button/button'
-import { Loader } from '@/components/ui/loader/loader'
+import { InitializationLoader } from '@/components/ui/initialization-loader/initialization-loader'
+import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Logo } from '@/components/ui/logo/logo'
-import { selectAppIsLoading, selectIsAuthenticated } from '@/services/app/app.selectors'
+import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
 import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
+import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -24,10 +26,12 @@ const Header = () => {
   }
 
   const { data: meData } = useMeQuery()
+
   const [logout] = useLogoutMutation()
 
   const isLoading = useSelector(selectAppIsLoading)
-  const isAuthenticated = useSelector(selectIsAuthenticated)
+  const isUserAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
 
   const handleLogout = async () => {
@@ -36,21 +40,22 @@ const Header = () => {
 
   return (
     <header className={classNames.root}>
-      {isLoading && <Loader />}
+      {isLoading && <LinearLoader />}
+      {!isAppInitialized && <InitializationLoader />}
       <div className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>
           {width > breakpoints.mobile ? (
             <NavbarDesktop />
           ) : (
-            <NavbarMobile isAuthenticated={isAuthenticated} logout={handleLogout} />
+            <NavbarMobile isAuthenticated={isUserAuthenticated} logout={handleLogout} />
           )}
-          {!isAuthenticated && (
+          {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
               Войти
             </Button>
           )}
-          {isAuthenticated && width > breakpoints.mobile && (
+          {isUserAuthenticated && width > breakpoints.mobile && (
             <Button onClick={handleLogout}>Выйти</Button>
           )}
         </div>

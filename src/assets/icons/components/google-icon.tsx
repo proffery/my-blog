@@ -1,11 +1,21 @@
-export const GoogleIcon = () => {
+import { SVGProps } from 'react'
+
+export const GoogleIcon = ({
+  fill,
+  height,
+  viewBox,
+  width,
+  xmlns,
+  ...rest
+}: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      fill={'currentColor'}
-      height={'100%'}
-      viewBox={'0 0 128 128'}
-      width={'100%'}
-      xmlns={'http://www.w3.org/2000/svg'}
+      fill={fill ?? 'currentColor'}
+      height={height ?? '100%'}
+      viewBox={viewBox ?? '0 0 128 128'}
+      width={width ?? '100%'}
+      xmlns={xmlns ?? 'http://www.w3.org/2000/svg'}
+      {...rest}
     >
       <path
         d={

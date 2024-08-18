@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { LoginEmailFormValues, loginEmailSchema } from '@/components/forms/login-form/schema'
@@ -11,10 +12,11 @@ import s from './login-form.module.scss'
 
 type Props = {
   disabled?: boolean
+  errorMessage?: string
   onSubmit: (data: LoginEmailFormValues) => void
 }
 
-export const LoginForm = ({ disabled, onSubmit }: Props) => {
+export const LoginForm = ({ disabled, errorMessage, onSubmit }: Props) => {
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
@@ -22,12 +24,22 @@ export const LoginForm = ({ disabled, onSubmit }: Props) => {
   }
 
   const {
+    clearErrors,
     formState: { errors },
     handleSubmit,
     register,
+    setError,
   } = useForm<LoginEmailFormValues>({
     resolver: zodResolver(loginEmailSchema),
   })
+
+  useEffect(() => {
+    if (errorMessage) {
+      setError('password', { message: errorMessage, type: 'server' })
+    } else {
+      clearErrors(['password'])
+    }
+  }, [errorMessage])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)

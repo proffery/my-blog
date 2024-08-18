@@ -1,6 +1,7 @@
 import { createAdminClient } from '@/server/config'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,9 +18,11 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ message: 'Sign-in complete' })
-  } catch (error) {
-    console.log(error)
+  } catch (error: unknown) {
+    if (error instanceof AppwriteException) {
+      console.error(error)
 
-    return NextResponse.json({ message: error.response.message }, { status: error.code })
+      return NextResponse.json({ message: error.message }, { status: error.code })
+    }
   }
 }

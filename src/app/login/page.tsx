@@ -1,16 +1,19 @@
 'use client'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { GithubIcon } from '@/assets/icons/components/github-icon'
 import { GoogleIcon } from '@/assets/icons/components/google-icon'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import { getErrorMessage } from '@/common/utils/get-error-message'
 import { LoginForm } from '@/components/forms/login-form/login-form'
+import { LoginEmailFormValues } from '@/components/forms/login-form/schema'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { signUpWithGithub, signUpWithGoogle } from '@/server/oauth'
-import { selectIsAuthenticated } from '@/services/app/app.selectors'
 import { useLoginEmailMutation } from '@/services/auth/auth.service'
+import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { redirect } from 'next/navigation'
 
@@ -24,17 +27,23 @@ function Login() {
     page: clsx(s.page),
   }
 
-  const [loginWithEmail] = useLoginEmailMutation()
-  const isAuthenticated = useSelector(selectIsAuthenticated)
+  const [loginWithEmail, { error: loginWithEmailError }] = useLoginEmailMutation()
+  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+
+  const loginWithEmailHandler = (loginData: LoginEmailFormValues) => {
+    loginWithEmail(loginData).unwrap()
+  }
+
+  const errorMessage = getErrorMessage(loginWithEmailError)
 
   if (isAuthenticated) {
-    redirect(routes.account)
+    redirect(routes.base)
   }
 
   return (
     <Page className={classNames.page}>
       <div className={classNames.formsWrapper}>
-        <LoginForm onSubmit={loginWithEmail} />
+        <LoginForm errorMessage={errorMessage} onSubmit={loginWithEmailHandler} />
         <div className={classNames.buttonsWrapper}>
           <form action={signUpWithGoogle} className={classNames.form}>
             <Button fullWidth type={'submit'}>

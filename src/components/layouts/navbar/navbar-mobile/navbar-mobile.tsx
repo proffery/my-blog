@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { Logout } from '@/assets/icons/components/logout'
 import { routes } from '@/common/constants/routes'
 import { ActiveLink } from '@/components/layouts/active-link/active-link'
 import { Button } from '@/components/ui/button/button'
@@ -18,6 +19,7 @@ export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
   const classNames = {
     burgerButton: clsx(s.burgerButton),
     burgerMenu: clsx(s.burgerMenu, isOpened && s.burgerMenuOpened),
+    logoutIcon: clsx(s.logoutIcon),
     navbar: clsx(s.navbar, isOpened ? s.navbarOpened : s.navbarClosed),
     navbarContainer: clsx(
       s.navbarContainer,
@@ -57,9 +59,14 @@ export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
             Контакты
           </ActiveLink>
           {isAuthenticated && (
-            <Button onClick={handleLogout} variant={'text'}>
-              Выйти
-            </Button>
+            <>
+              <ActiveLink href={routes.account} onClick={handleClose}>
+                Профиль
+              </ActiveLink>
+              <Button onClick={handleLogout} variant={'text'}>
+                Выйти <Logout className={classNames.logoutIcon} />
+              </Button>
+            </>
           )}
         </nav>
       </div>

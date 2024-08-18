@@ -9,11 +9,19 @@ import {
   RegistrationResponse,
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
+import { userActions } from '@/services/user/user.slice'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
     loginEmail: builder.mutation<LoginEmailResponse, LoginEmailRequest>({
       invalidatesTags: ['Me'],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
       query: body => ({
         body,
         method: 'POST',
@@ -26,7 +34,7 @@ export const authService = baseApi.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
-          dispatch(appActions.setIsAuthenticated(false))
+          dispatch(userActions.setIsAuthenticated(false))
         } catch (error) {
           console.error(error)
         }
@@ -41,9 +49,11 @@ export const authService = baseApi.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
-          dispatch(appActions.setIsAuthenticated(true))
+          dispatch(userActions.setIsAuthenticated(true))
         } catch (error) {
-          dispatch(appActions.setIsAuthenticated(false))
+          console.error(error)
+        } finally {
+          dispatch(appActions.setAppIsInitialized(true))
         }
       },
       providesTags: ['Me'],
@@ -54,6 +64,13 @@ export const authService = baseApi.injectEndpoints({
     }),
     registration: builder.mutation<RegistrationResponse, RegistrationRequest>({
       invalidatesTags: ['Me'],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
       query: body => ({
         body,
         method: 'POST',

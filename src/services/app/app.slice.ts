@@ -23,7 +23,7 @@ const slice = createSlice({
   },
   initialState: {
     error: null as null | string,
-    isAuthenticated: false as boolean,
+    isInitialized: false as boolean,
     isLoading: false as boolean,
     success: null as null | string,
   },
@@ -32,11 +32,11 @@ const slice = createSlice({
     setAppError: (state, action: PayloadAction<null | string>) => {
       state.error = action.payload
     },
+    setAppIsInitialized: (state, action: PayloadAction<boolean>) => {
+      state.isInitialized = action.payload
+    },
     setAppSuccess: (state, action: PayloadAction<null | string>) => {
       state.success = action.payload
-    },
-    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticated = action.payload
     },
   },
 })

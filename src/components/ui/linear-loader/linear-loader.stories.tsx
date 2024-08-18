@@ -1,11 +1,11 @@
-import { Loader } from '@/components/ui/loader/loader'
+import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
-  component: Loader,
+  component: LinearLoader,
   tags: ['autodocs'],
-  title: 'Components/Loader',
-} satisfies Meta<typeof Loader>
+  title: 'Components/LinearLoader',
+} satisfies Meta<typeof LinearLoader>
 
 export default meta
 type Story = StoryObj<typeof meta>

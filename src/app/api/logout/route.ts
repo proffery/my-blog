@@ -1,5 +1,6 @@
 import { createSessionClient } from '@/server/config'
 import { NextRequest, NextResponse } from 'next/server'
+import { AppwriteException } from 'node-appwrite'
 
 export async function DELETE(request: NextRequest) {
   const { account } = await createSessionClient(request)
@@ -8,9 +9,11 @@ export async function DELETE(request: NextRequest) {
     await account.deleteSession('current')
 
     return NextResponse.json({ message: 'Successfully logged out!' })
-  } catch (error) {
-    console.log(error)
+  } catch (error: unknown) {
+    if (error instanceof AppwriteException) {
+      console.error(error)
 
-    return NextResponse.json({ message: error.response.message }, { status: error.code })
+      return NextResponse.json({ message: error.message }, { status: error.code })
+    }
   }
 }
