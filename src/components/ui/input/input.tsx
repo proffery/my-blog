@@ -14,19 +14,18 @@ import clsx from 'clsx'
 
 import s from './input.module.scss'
 
-type Props<T extends ElementType = 'input' | 'textarea'> = {
+export type InputProps<T extends ElementType = 'input' | 'textarea'> = {
   as?: T
   className?: string
   cleanSearch?: () => void
   errorMessage?: string
   label?: string
   resize?: boolean
-  value?: string
   variant?: 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
 const InputComponent = <T extends ElementType = 'input' | 'textarea'>(
-  props: Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> & Props<T>,
+  props: InputProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof InputProps<T>>,
   ref: Ref<HTMLInputElement>
 ) => {
   const {
@@ -37,7 +36,6 @@ const InputComponent = <T extends ElementType = 'input' | 'textarea'>(
     id,
     label,
     resize = true,
-    value,
     variant = 'primary',
     ...rest
   } = props
@@ -67,7 +65,6 @@ const InputComponent = <T extends ElementType = 'input' | 'textarea'>(
         disabled={disabled}
         id={id ?? new_id}
         ref={ref}
-        value={value}
         {...rest}
       />
     </FieldError>
@@ -77,6 +74,6 @@ const InputComponent = <T extends ElementType = 'input' | 'textarea'>(
 export const Input = forwardRef(InputComponent) as <T extends ElementType = 'input' | 'textarea'>(
   props: {
     ref?: ForwardedRef<ElementRef<T>>
-  } & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>> &
-    Props<T>
+  } & InputProps<T> &
+    Omit<ComponentPropsWithoutRef<T>, keyof InputProps<T>>
 ) => ReturnType<typeof InputComponent>

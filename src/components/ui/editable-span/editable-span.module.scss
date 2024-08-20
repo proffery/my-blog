@@ -1,0 +1,36 @@
+@use '@/styles/breakpoints';
+
+$height-desktop: 48px;
+$height-mobile: 40px;
+
+.span {
+  display: flex;
+  align-items: center;
+
+  height: $height-desktop;
+
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xl);
+
+  &:focus-visible {
+    border-radius: 5px;
+    outline: 2px solid var(--color-info);
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    height: $height-mobile;
+    font-size: var(--font-size-xxs);
+  }
+}
+
+.editIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.editButton {
+  width: fit-content;
+  height: fit-content;
+  padding: 2px;
+}

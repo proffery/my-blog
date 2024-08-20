@@ -6,7 +6,7 @@ const meta = {
   argTypes: {
     onChange: {
       action: 'changed',
-      description: 'Changeble value',
+      description: 'Changeable value',
     },
     variant: {
       control: { type: 'radio' },

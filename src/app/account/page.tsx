@@ -50,9 +50,9 @@ function Account() {
         <li>
           <strong>Почта:</strong> {meData?.user?.email} &nbsp;
           {meData?.user?.emailVerification ? (
-            <strong>(почта подтверждена)</strong>
+            <strong>(подтверждена)</strong>
           ) : (
-            <strong>(почта не подтверждена)</strong>
+            <strong>(не подтверждена)</strong>
           )}
         </li>
         {meData?.user?.labels.length ? (
