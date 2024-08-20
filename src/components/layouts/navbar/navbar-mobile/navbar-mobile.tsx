@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import { Logout } from '@/assets/icons/components/logout'
+import { LogoutIcon } from '@/assets/icons/components/logout-icon'
 import { routes } from '@/common/constants/routes'
 import { ActiveLink } from '@/components/layouts/active-link/active-link'
 import { Button } from '@/components/ui/button/button'
@@ -64,7 +64,7 @@ export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
                 Профиль
               </ActiveLink>
               <Button onClick={handleLogout} variant={'text'}>
-                Выйти <Logout className={classNames.logoutIcon} />
+                Выйти <LogoutIcon className={classNames.logoutIcon} />
               </Button>
             </>
           )}

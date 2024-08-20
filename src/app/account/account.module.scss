@@ -3,7 +3,6 @@
   flex-direction: column;
   gap: 32px;
   align-items: center;
-  justify-content: center;
 }
 
 .container {
@@ -16,6 +15,8 @@
   text-align: center;
 }
 
-.confirmIcon {
-  max-width: 400px;
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import { ConfirmEmailIcon } from '@/assets/icons/components/confirm-email-icon'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
@@ -17,6 +18,8 @@ import s from './confirm-email.module.scss'
 
 function ConfirmEmail() {
   const classNames = {
+    confirmIcon: clsx(s.confirmIcon),
+    container: clsx(s.container),
     page: clsx(s.page),
   }
   const searchParams = useSearchParams()
@@ -30,13 +33,13 @@ function ConfirmEmail() {
   const isAuthenticated = useSelector(selectUserIsAuthenticated)
   const isEmailVerified = meData?.user?.emailVerification
   const [verifyMessage, setVerifyMessage] = useState(
-    'На указанную Вами почту было выслано письмо с дальнейшими инструкциями.'
+    `На указанную Вами почту ${meData?.user?.email ?? ''} было выслано письмо с дальнейшими инструкциями.`
   )
 
   const verifyEmailHandler = async (data: VerifyEmailRequest) => {
     try {
       await verifyEmail(data).unwrap()
-      setVerifyMessage('Ваша почта подтверждена!')
+      setVerifyMessage(`Ваша почта ${meData?.user?.email ?? ''} подтверждена!`)
     } catch (error) {
       console.error(error)
     }
@@ -45,6 +48,10 @@ function ConfirmEmail() {
   useEffect(() => {
     if (userId && secret && isAuthenticated) {
       verifyEmailHandler({ secret, userId })
+    } else {
+      setVerifyMessage(
+        `На указанную Вами почту ${meData?.user?.email ?? ''} было выслано письмо с дальнейшими инструкциями.`
+      )
     }
   }, [secret, userId, isAuthenticated])
 
@@ -54,8 +61,11 @@ function ConfirmEmail() {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Подтверждение почты</Typography.H1>
-      <Typography.Body1>{verifyMessage}</Typography.Body1>
+      <div className={classNames.container}>
+        <Typography.H1>Подтверждение почты</Typography.H1>
+        <Typography.Body1>{verifyMessage}</Typography.Body1>
+      </div>
+      <ConfirmEmailIcon className={classNames.confirmIcon} />
     </Page>
   )
 }

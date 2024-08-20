@@ -5,11 +5,20 @@ import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
+import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery, useSendVerifyEmailMutation } from '@/services/auth/auth.service'
 import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import clsx from 'clsx'
 import { redirect, useRouter } from 'next/navigation'
 
+import s from './account.module.scss'
+
 function Account() {
+  const classNames = {
+    container: clsx(s.container),
+    list: clsx(s.list),
+    page: clsx(s.page),
+  }
   const { data: meData } = useMeQuery()
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const isAuthenticated = useSelector(selectUserIsAuthenticated)
@@ -29,22 +38,21 @@ function Account() {
   }
 
   return (
-    <Page>
-      <ul>
+    <Page className={classNames.page}>
+      <Typography.H1>Профиль</Typography.H1>
+      <ul className={classNames.list}>
         <li>
           <strong>ID: </strong> {meData?.user?.$id}
         </li>
         <li>
-          <strong>Name:</strong> {meData?.user?.name}
+          <strong>Имя:</strong> {meData?.user?.name}
         </li>
         <li>
-          <strong>Email:</strong> {meData?.user?.email}
+          <strong>Почта:</strong> {meData?.user?.email} &nbsp;
           {meData?.user?.emailVerification ? (
-            <strong>(verified)</strong>
+            <strong>(почта подтверждена)</strong>
           ) : (
-            <Button onClick={sendVerifyEmailHandler} type={'submit'}>
-              Verify Email
-            </Button>
+            <strong>(почта не подтверждена)</strong>
           )}
         </li>
         {meData?.user?.labels.length ? (
@@ -56,6 +64,11 @@ function Account() {
           </li>
         ) : null}
       </ul>
+      {!meData?.user?.emailVerification && (
+        <Button onClick={sendVerifyEmailHandler} type={'submit'}>
+          Подтвердить почту
+        </Button>
+      )}
     </Page>
   )
 }

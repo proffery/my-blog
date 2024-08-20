@@ -38,7 +38,7 @@ function Login() {
   const errorMessage = getErrorMessage(loginWithEmailError)
 
   if (isAuthenticated) {
-    redirect(routes.base)
+    redirect(routes.account)
   }
 
   return (

@@ -1,6 +1,6 @@
 import { SVGProps } from 'react'
 
-export const Logout = ({
+export const LogoutIcon = ({
   fill,
   height,
   viewBox,
