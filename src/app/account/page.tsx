@@ -26,7 +26,7 @@ function Account() {
 
   const sendVerifyEmailHandler = async () => {
     try {
-      await sendVerifyEmail()
+      await sendVerifyEmail().unwrap()
       router.push(routes.confirmEmail)
     } catch (error) {
       console.error(error)

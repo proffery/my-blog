@@ -28,7 +28,7 @@ export const authService = baseApi.injectEndpoints({
       query: body => ({
         body,
         method: 'POST',
-        url: endpoints.loginEmail,
+        url: endpoints.auth_loginEmail,
       }),
     }),
     logout: builder.mutation<LogoutResponse, void>({
@@ -43,7 +43,7 @@ export const authService = baseApi.injectEndpoints({
       },
       query: () => ({
         method: 'DELETE',
-        url: endpoints.logout,
+        url: endpoints.auth_logout,
       }),
     }),
 
@@ -61,7 +61,7 @@ export const authService = baseApi.injectEndpoints({
       providesTags: ['Me'],
       query: () => ({
         method: 'GET',
-        url: endpoints.me,
+        url: endpoints.auth_me,
       }),
     }),
 
@@ -76,7 +76,7 @@ export const authService = baseApi.injectEndpoints({
       query: body => ({
         body,
         method: 'POST',
-        url: endpoints.registration,
+        url: endpoints.auth_registration,
       }),
     }),
     sendVerifyEmail: builder.mutation<SendVerifyEmailResponse, void>({
@@ -89,7 +89,7 @@ export const authService = baseApi.injectEndpoints({
       },
       query: () => ({
         method: 'POST',
-        url: endpoints.sendVerifyEmail,
+        url: endpoints.auth_sendVerifyEmail,
       }),
     }),
     verifyEmail: builder.mutation<VerifyEmailResponse, VerifyEmailRequest>({
@@ -102,7 +102,7 @@ export const authService = baseApi.injectEndpoints({
       },
       query: () => ({
         method: 'POST',
-        url: endpoints.verifyEmail,
+        url: endpoints.auth_verifyEmail,
       }),
     }),
   }),

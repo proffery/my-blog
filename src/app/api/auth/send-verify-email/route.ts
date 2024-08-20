@@ -1,6 +1,5 @@
 import { routes } from '@/common/constants/routes'
-import { createAdminClient, createSessionClient } from '@/server/config'
-import { redirect } from 'next/navigation'
+import { createSessionClient } from '@/server/config'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 

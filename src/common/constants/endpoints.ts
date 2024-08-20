@@ -1,10 +1,10 @@
 export const endpoints = {
+  auth_loginEmail: 'api/auth/login-email',
+  auth_logout: 'api/auth/logout',
+  auth_me: 'api/auth/me',
+  auth_oauth: 'api/auth/oauth',
+  auth_registration: 'api/auth/registration',
+  auth_sendVerifyEmail: 'api/auth/send-verify-email',
+  auth_verifyEmail: 'api/auth/verify-email',
   base: process.env.NEXT_PUBLIC_HOST_BASE,
-  loginEmail: 'api/login-email',
-  logout: 'api/logout',
-  me: 'api/me',
-  oauth: 'api/oauth',
-  registration: 'api/registration',
-  sendVerifyEmail: 'api/send-verify-email',
-  verifyEmail: 'api/verify-email',
 } as const
