@@ -7,6 +7,9 @@ import {
   MeResponse,
   RegistrationRequest,
   RegistrationResponse,
+  SendVerifyEmailResponse,
+  VerifyEmailRequest,
+  VerifyEmailResponse,
 } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
 import { userActions } from '@/services/user/user.slice'
@@ -28,7 +31,6 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.loginEmail,
       }),
     }),
-
     logout: builder.mutation<LogoutResponse, void>({
       invalidatesTags: ['Me'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -62,8 +64,8 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.me,
       }),
     }),
+
     registration: builder.mutation<RegistrationResponse, RegistrationRequest>({
-      invalidatesTags: ['Me'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -77,8 +79,40 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.registration,
       }),
     }),
+    sendVerifyEmail: builder.mutation<SendVerifyEmailResponse, void>({
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      query: () => ({
+        method: 'POST',
+        url: endpoints.sendVerifyEmail,
+      }),
+    }),
+    verifyEmail: builder.mutation<VerifyEmailResponse, VerifyEmailRequest>({
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      query: () => ({
+        method: 'POST',
+        url: endpoints.verifyEmail,
+      }),
+    }),
   }),
 })
 
-export const { useLoginEmailMutation, useLogoutMutation, useMeQuery, useRegistrationMutation } =
-  authService
+export const {
+  useLoginEmailMutation,
+  useLogoutMutation,
+  useMeQuery,
+  useRegistrationMutation,
+  useSendVerifyEmailMutation,
+  useVerifyEmailMutation,
+} = authService

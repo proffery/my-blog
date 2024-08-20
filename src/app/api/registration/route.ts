@@ -16,5 +16,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({ message: error.message }, { status: error.code })
     }
+
+    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
   }
 }

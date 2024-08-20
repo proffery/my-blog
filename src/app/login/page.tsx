@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { GithubIcon } from '@/assets/icons/components/github-icon'
@@ -11,10 +10,12 @@ import { LoginForm } from '@/components/forms/login-form/login-form'
 import { LoginEmailFormValues } from '@/components/forms/login-form/schema'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
+import { Typography } from '@/components/ui/typography/typography'
 import { signUpWithGithub, signUpWithGoogle } from '@/server/oauth'
 import { useLoginEmailMutation } from '@/services/auth/auth.service'
 import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 import s from './login.module.scss'
@@ -57,6 +58,12 @@ function Login() {
             </Button>
           </form>
         </div>
+        <Typography.Body1>
+          Нет аккаунта?&nbsp;
+          <Typography.Link1 as={Link} href={routes.registration}>
+            Зарегистрироваться
+          </Typography.Link1>
+        </Typography.Body1>
       </div>
     </Page>
   )

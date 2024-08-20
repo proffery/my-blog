@@ -52,7 +52,7 @@ const COMPONENTS = {
   h4: 'h4',
   h5: 'h5',
   h6: 'h6',
-  link1: 'span',
+  link1: 'a',
   link2: 'a',
   overline: 'p',
   subtitle1: 'p',

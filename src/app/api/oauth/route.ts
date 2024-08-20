@@ -1,14 +1,17 @@
+import { routes } from '@/common/constants/routes'
 import { createAdminClient } from '@/server/config'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
-export async function POST(request: NextRequest) {
-  try {
-    const { account } = await createAdminClient()
-    const { email, password } = await request.json()
+export async function GET(request: NextRequest) {
+  const userId = request.nextUrl.searchParams.get('userId')
+  const secret = request.nextUrl.searchParams.get('secret')
 
-    const session = await account.createEmailPasswordSession(email, password)
+  const { account } = await createAdminClient()
+
+  try {
+    const session = await account.createSession(userId ?? '', secret ?? '')
 
     cookies().set(`${process.env.NEXT_PUBLIC_SESSION_NAME}`, session.secret, {
       httpOnly: true,
@@ -17,7 +20,7 @@ export async function POST(request: NextRequest) {
       secure: true,
     })
 
-    return NextResponse.json({ message: 'Sign-in successfully!' })
+    return NextResponse.redirect(`${request.nextUrl.origin}${routes.account}`)
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)
