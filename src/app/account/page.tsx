@@ -5,8 +5,13 @@ import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
+import { EditableSpan } from '@/components/ui/editable-span/editable-span'
 import { Typography } from '@/components/ui/typography/typography'
-import { useMeQuery, useSendVerifyEmailMutation } from '@/services/auth/auth.service'
+import {
+  useChangeNameMutation,
+  useMeQuery,
+  useSendVerifyEmailMutation,
+} from '@/services/auth/auth.service'
 import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { redirect, useRouter } from 'next/navigation'
@@ -17,10 +22,13 @@ function Account() {
   const classNames = {
     container: clsx(s.container),
     list: clsx(s.list),
+    listItem: clsx(s.listItem),
     page: clsx(s.page),
   }
   const { data: meData } = useMeQuery()
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
+  const [changeName] = useChangeNameMutation()
+
   const isAuthenticated = useSelector(selectUserIsAuthenticated)
   const router = useRouter()
 
@@ -41,14 +49,15 @@ function Account() {
     <Page className={classNames.page}>
       <Typography.H1>Профиль</Typography.H1>
       <ul className={classNames.list}>
-        <li>
-          <strong>ID: </strong> {meData?.user?.$id}
+        <li className={classNames.listItem}>
+          <strong>ID:&nbsp;</strong> {meData?.user?.$id}
         </li>
-        <li>
-          <strong>Имя:</strong> {meData?.user?.name}
+        <li className={classNames.listItem}>
+          <strong>Имя:&nbsp;</strong>
+          <EditableSpan defaultValue={meData?.user?.name} />
         </li>
-        <li>
-          <strong>Почта:</strong> {meData?.user?.email} &nbsp;
+        <li className={classNames.listItem}>
+          <strong>Почта:&nbsp;</strong> {meData?.user?.email} &nbsp;
           {meData?.user?.emailVerification ? (
             <strong>(подтверждена)</strong>
           ) : (
@@ -56,8 +65,8 @@ function Account() {
           )}
         </li>
         {meData?.user?.labels.length ? (
-          <li>
-            <strong>Status:</strong>{' '}
+          <li className={classNames.listItem}>
+            <strong>Status:</strong>
             {meData.user.labels.map(label => (
               <span key={label}>{label}&nbsp;</span>
             ))}

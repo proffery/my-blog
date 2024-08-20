@@ -7,7 +7,7 @@ import clsx from 'clsx'
 
 import s from './editable-span.module.scss'
 
-type Props = { onSubmit?: (data?: unknown) => void } & InputProps
+type Props = { onSubmit?: () => void } & InputProps
 
 export const EditableSpan = ({ defaultValue, onSubmit, ...rest }: Props) => {
   const classNames = {

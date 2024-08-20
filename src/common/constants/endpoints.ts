@@ -1,4 +1,5 @@
 export const endpoints = {
+  auth_changeName: 'api/auth/change-name',
   auth_loginEmail: 'api/auth/login-email',
   auth_logout: 'api/auth/logout',
   auth_me: 'api/auth/me',
