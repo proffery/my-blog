@@ -104,6 +104,7 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     verifyEmail: builder.mutation<ApiResponse, VerifyEmailRequest>({
+      invalidatesTags: ['Me'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled

@@ -36,10 +36,9 @@ function ConfirmEmail() {
     `На указанную Вами почту ${meData?.user?.email ?? ''} было выслано письмо с дальнейшими инструкциями.`
   )
 
-  const verifyEmailHandler = (data: VerifyEmailRequest) => {
+  const verifyEmailHandler = async (data: VerifyEmailRequest) => {
     try {
-      console.log(data)
-      verifyEmail(data).unwrap()
+      await verifyEmail(data).unwrap()
       setVerifyMessage(`Ваша почта ${meData?.user?.email ?? ''} подтверждена!`)
     } catch (error) {
       console.error(error)
