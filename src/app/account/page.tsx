@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import { getErrorMessage } from '@/common/utils/get-error-message'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
-import { EditableSpan } from '@/components/ui/editable-span/editable-span'
+import { EditableSpan, EditableSpanValues } from '@/components/ui/editable-span/editable-span'
 import { Typography } from '@/components/ui/typography/typography'
 import {
   useChangeNameMutation,
@@ -27,19 +28,25 @@ function Account() {
   }
   const { data: meData } = useMeQuery()
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
-  const [changeName] = useChangeNameMutation()
+  const [changeName, { error: chngeNameError }] = useChangeNameMutation()
 
   const isAuthenticated = useSelector(selectUserIsAuthenticated)
   const router = useRouter()
 
-  const sendVerifyEmailHandler = async () => {
+  const sendVerifyEmailHandler = () => {
     try {
-      await sendVerifyEmail().unwrap()
+      sendVerifyEmail().unwrap()
       router.push(routes.confirmEmail)
     } catch (error) {
       console.error(error)
     }
   }
+
+  const handleChangeNameSubmit = (data: EditableSpanValues) => {
+    changeName(data).unwrap()
+  }
+
+  const errorMessage = getErrorMessage(chngeNameError)
 
   if (!isAuthenticated) {
     redirect(routes.login)
@@ -54,7 +61,7 @@ function Account() {
         </li>
         <li className={classNames.listItem}>
           <strong>Имя:&nbsp;</strong>
-          <EditableSpan defaultValue={meData?.user?.name} />
+          <EditableSpan defaultValue={meData?.user?.name} onSubmit={handleChangeNameSubmit} />
         </li>
         <li className={classNames.listItem}>
           <strong>Почта:&nbsp;</strong> {meData?.user?.email} &nbsp;

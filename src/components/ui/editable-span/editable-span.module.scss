@@ -2,6 +2,10 @@
 
 $height-desktop: 48px;
 $height-mobile: 40px;
+$input-padding-desktop: 12px 30px 12px 12px;
+$input-padding-mobile: 8px 30px 8px 8px;
+$icon-size: 20px;
+$button-padding: 2px;
 
 .span {
   display: flex;
@@ -24,13 +28,41 @@ $height-mobile: 40px;
   }
 }
 
-.editIcon {
-  width: 20px;
-  height: 20px;
+.editIcon,
+.closeIcon {
+  width: $icon-size;
+  height: $icon-size;
 }
 
-.editButton {
+.editButton,
+.closeButton {
   width: fit-content;
   height: fit-content;
-  padding: 2px;
+  padding: $button-padding;
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: calc($icon-size);
+
+  @media (width <= breakpoints.$mobile) {
+    top: 8px;
+    right: calc($icon-size - 8px);
+  }
+}
+
+.form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.input {
+  padding: $input-padding-desktop;
+
+  @media (width <= breakpoints.$mobile) {
+    padding: $input-padding-mobile;
+  }
 }
