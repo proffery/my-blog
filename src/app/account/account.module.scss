@@ -8,21 +8,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
+  align-items: flex-start;
 }
 
-.list {
+.item {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.listItem {
-  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  vertical-align: center;
 }

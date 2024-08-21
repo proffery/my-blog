@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { EditableSpan } from '@/components/ui/editable-span/editable-span'
+import { EditNameForm } from '@/components/forms/edit-name-form/edit-name-form'
 import { fn } from '@storybook/test'
 
 const meta = {
@@ -14,10 +14,10 @@ const meta = {
       options: ['primary', 'secondary'],
     },
   },
-  component: EditableSpan,
+  component: EditNameForm,
   tags: ['autodocs'],
-  title: 'Components/EditableSpan',
-} satisfies Meta<typeof EditableSpan>
+  title: 'Forms/EditNameForm',
+} satisfies Meta<typeof EditNameForm>
 
 export default meta
 type Story = StoryObj<typeof meta>

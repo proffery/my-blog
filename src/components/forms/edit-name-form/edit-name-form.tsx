@@ -3,28 +3,23 @@ import { useForm } from 'react-hook-form'
 
 import { CloseIcon } from '@/assets/icons/components/close-icon'
 import { EditIcon } from '@/assets/icons/components/edit-icon'
+import { EditNameValues, editNameSchema } from '@/components/forms/edit-name-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { FieldError } from '@/components/ui/field-error/field-error'
 import { Input, InputProps } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-import { z } from 'zod'
 
-import s from './editable-span.module.scss'
+import s from './edit-name-form.module.scss'
 
-const editableSpanSchema = z.object({
-  name: z.string().min(3, { message: 'Имя не должно быть короче 3 символов!' }),
-})
-
-export type EditableSpanValues = z.infer<typeof editableSpanSchema>
 type Props = {
   defaultValue?: string
   disabled?: boolean
   errorMessage?: string
-  onSubmit?: (data: EditableSpanValues) => void
+  onSubmit?: (data: EditNameValues) => void
 } & Omit<InputProps, 'defaultValue' | 'disabled' | 'errorMessage' | 'onSubmit'>
 
-export const EditableSpan = ({ defaultValue, disabled, errorMessage, onSubmit }: Props) => {
+export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }: Props) => {
   const classNames = {
     closeButton: clsx(s.closeButton),
     closeIcon: clsx(s.closeIcon),
@@ -42,11 +37,11 @@ export const EditableSpan = ({ defaultValue, disabled, errorMessage, onSubmit }:
     handleSubmit,
     register,
     setError,
-  } = useForm<EditableSpanValues>({
+  } = useForm<EditNameValues>({
     defaultValues: {
       name: defaultValue,
     },
-    resolver: zodResolver(editableSpanSchema),
+    resolver: zodResolver(editNameSchema),
   })
 
   useEffect(() => {
@@ -55,7 +50,7 @@ export const EditableSpan = ({ defaultValue, disabled, errorMessage, onSubmit }:
     } else {
       clearErrors(['name'])
     }
-  }, [errorMessage])
+  }, [errorMessage, editMode])
 
   const handleToggleEditMode = () => {
     setEditMode(!editMode)
