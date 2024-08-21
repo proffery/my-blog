@@ -10,7 +10,7 @@
         },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://my-blog-idq8qww7c-profferys-projects.vercel.app"
+          "value": "https://shamko-blog.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
