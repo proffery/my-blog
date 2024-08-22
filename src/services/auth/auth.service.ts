@@ -14,14 +14,25 @@ import { userActions } from '@/services/user/user.slice'
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
     changeName: builder.mutation<ApiResponse, ChangeNameRequest>({
-      async onQueryStarted(_, { queryFulfilled }) {
+      invalidatesTags: ['Me'],
+      async onQueryStarted({ name: newName }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          authService.util.updateQueryData('me', undefined, draft => {
+            if (draft.user?.name) {
+              draft.user.name = newName
+            }
+          })
+        )
+
         try {
           await queryFulfilled
         } catch (error) {
+          patchResult?.undo()
           console.error(error)
         }
       },
-      query: () => ({
+      query: body => ({
+        body,
         method: 'POST',
         url: endpoints.auth_changeName,
       }),
@@ -112,7 +123,8 @@ export const authService = baseApi.injectEndpoints({
           console.error(error)
         }
       },
-      query: () => ({
+      query: body => ({
+        body,
         method: 'POST',
         url: endpoints.auth_verifyEmail,
       }),

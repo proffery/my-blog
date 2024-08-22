@@ -32,14 +32,10 @@ function ConfirmEmail() {
 
   const isAuthenticated = useSelector(selectUserIsAuthenticated)
   const isEmailVerified = meData?.user?.emailVerification
-  const [verifyMessage, setVerifyMessage] = useState(
-    `На указанную Вами почту ${meData?.user?.email ?? ''} было выслано письмо с дальнейшими инструкциями.`
-  )
 
   const verifyEmailHandler = async (data: VerifyEmailRequest) => {
     try {
       await verifyEmail(data).unwrap()
-      setVerifyMessage(`Ваша почта ${meData?.user?.email ?? ''} подтверждена!`)
     } catch (error) {
       console.error(error)
     }
@@ -48,22 +44,20 @@ function ConfirmEmail() {
   useEffect(() => {
     if (userId && secret && isAuthenticated) {
       verifyEmailHandler({ secret, userId })
-    } else {
-      setVerifyMessage(
-        `На указанную Вами почту ${meData?.user?.email ?? ''} было выслано письмо с дальнейшими инструкциями.`
-      )
     }
   }, [secret, userId, isAuthenticated])
 
   if (isEmailVerified) {
     redirect(routes.account)
+  } else if (!isAuthenticated) {
+    redirect(routes.login)
   }
 
   return (
     <Page className={classNames.page}>
       <div className={classNames.container}>
         <Typography.H1>Подтверждение почты</Typography.H1>
-        <Typography.Body1>{verifyMessage}</Typography.Body1>
+        <Typography.Body1>{`На указанную Вами почту ${meData?.user?.email ?? ''} было выслано письмо с дальнейшими инструкциями.`}</Typography.Body1>
       </div>
       <ConfirmEmailIcon className={classNames.confirmIcon} />
     </Page>
