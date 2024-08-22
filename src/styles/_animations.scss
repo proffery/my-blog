@@ -1,7 +1,5 @@
 @use './breakpoints';
 
-// RADIO GROUP, SLIDER, CHECKBOX (hover area):
-
 $hover-area-size-desk: 44px;
 $hover-area-size-mob: 32px;
 
@@ -48,12 +46,30 @@ $hover-area-size-mob: 32px;
   }
 }
 
-// BUTTON, SELECT, TAB-SWITCHER (hover):
-
 @mixin background-hover($color) {
   transition: background-color 0.3s ease-in-out;
 
   &:hover {
     background-color: $color;
+  }
+}
+
+@mixin bottom-line-hover {
+  position: relative;
+
+  &:hover,
+  &:focus-visible {
+    &::before {
+      content: '';
+
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 1px;
+
+      background-color: var(--color-dark);
+    }
   }
 }

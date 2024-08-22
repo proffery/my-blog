@@ -3,6 +3,7 @@ export const routes = {
   base: '/',
   confirmEmail: '/confirm-email',
   contacts: '/contacts',
+  createPost: '/create-post',
   login: '/login',
   post: '/posts/',
   posts: '/posts',

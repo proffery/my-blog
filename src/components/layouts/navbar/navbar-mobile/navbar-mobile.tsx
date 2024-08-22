@@ -1,20 +1,22 @@
 'use client'
 
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { LogoutIcon } from '@/assets/icons/components/logout-icon'
 import { routes } from '@/common/constants/routes'
-import { ActiveLink } from '@/components/layouts/active-link/active-link'
-import { Button } from '@/components/ui/button/button'
+import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
+import { ActiveLink } from '@/components/ui/active-link/active-link'
+import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
+import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 
 import s from './navbar-mobile.module.scss'
 
-type Props = {
-  isAuthenticated: boolean
-  logout: () => void
-}
-export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
+export const NavbarMobile = () => {
+  const { data: meData } = useMeQuery()
+  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const [logout] = useLogoutMutation()
+
   const [isOpened, setIsOpened] = useState(false)
   const classNames = {
     burgerButton: clsx(s.burgerButton),
@@ -59,14 +61,7 @@ export const NavbarMobile = ({ isAuthenticated, logout }: Props) => {
             Контакты
           </ActiveLink>
           {isAuthenticated && (
-            <>
-              <ActiveLink href={routes.account} onClick={handleClose}>
-                Профиль
-              </ActiveLink>
-              <Button onClick={handleLogout} variant={'text'}>
-                Выйти <LogoutIcon className={classNames.logoutIcon} />
-              </Button>
-            </>
+            <HeaderMenu email={meData?.user?.email} logout={logout} name={meData?.user?.name} />
           )}
         </nav>
       </div>

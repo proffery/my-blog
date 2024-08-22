@@ -2,6 +2,7 @@
 
 .typography {
   margin: 0;
+  padding: 0;
   color: inherit;
   text-decoration: none;
 }
@@ -157,12 +158,12 @@
 
 .subtitle1 {
   font-family: var(--font-family-primary), sans-serif;
-  font-size: var(--font-size-s);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-l);
 
   @media (width <= breakpoints.$mobile) {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-xxs);
   }
 }
 

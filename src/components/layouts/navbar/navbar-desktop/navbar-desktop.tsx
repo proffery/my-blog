@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
-import { ActiveLink } from '@/components/layouts/active-link/active-link'
+import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
+import { ActiveLink } from '@/components/ui/active-link/active-link'
+import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
 import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 
@@ -11,6 +13,8 @@ export const NavbarDesktop = () => {
     navbar: clsx(s.navbar),
   }
 
+  const { data: meData } = useMeQuery()
+  const [logout] = useLogoutMutation()
   const isUserAuthenticated = useSelector(selectUserIsAuthenticated)
 
   return (
@@ -18,7 +22,9 @@ export const NavbarDesktop = () => {
       <ActiveLink href={routes.base}>Главная</ActiveLink>
       <ActiveLink href={routes.posts}>Посты</ActiveLink>
       <ActiveLink href={routes.contacts}>Контакты</ActiveLink>
-      {isUserAuthenticated && <ActiveLink href={routes.account}>Профиль</ActiveLink>}
+      {isUserAuthenticated && (
+        <HeaderMenu email={meData?.user?.email} logout={logout} name={meData?.user?.name} />
+      )}
     </nav>
   )
 }

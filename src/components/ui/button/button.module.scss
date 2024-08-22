@@ -89,9 +89,29 @@ a.primary {
 
 .text,
 a.text {
-  padding: 0;
+  all: unset;
+
+  display: flex;
+  align-items: center;
+
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-xl);
   color: var(--color-dark);
-  border: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info);
+  }
+
+  &.disabled {
+    cursor: initial;
+    opacity: 0.5;
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    font-size: var(--font-size-xxs);
+  }
 }
 
 .fullWidth {

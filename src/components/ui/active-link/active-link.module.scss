@@ -1,8 +1,21 @@
 @use '@/styles/breakpoints';
+@use '@/styles/animations' as animations;
 
 .link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
   font-size: var(--font-size-xs);
   line-height: var(--line-height-xl);
+
+  &:focus-visible {
+    border-radius: 2px;
+    outline: 2px solid var(--color-info);
+  }
+
+  @include animations.bottom-line-hover;
 
   @media (width <= breakpoints.$mobile) {
     font-size: var(--font-size-xxs);

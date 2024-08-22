@@ -12,7 +12,6 @@ import { InitializationLoader } from '@/components/ui/initialization-loader/init
 import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Logo } from '@/components/ui/logo/logo'
 import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
-import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
 import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -25,18 +24,10 @@ const Header = () => {
     root: clsx(s.root),
   }
 
-  const { data: meData } = useMeQuery()
-
-  const [logout] = useLogoutMutation()
-
   const isLoading = useSelector(selectAppIsLoading)
   const isUserAuthenticated = useSelector(selectUserIsAuthenticated)
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
-
-  const handleLogout = async () => {
-    await logout()
-  }
 
   return (
     <header className={classNames.root}>
@@ -45,18 +36,11 @@ const Header = () => {
       <div className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>
-          {width > breakpoints.mobile ? (
-            <NavbarDesktop />
-          ) : (
-            <NavbarMobile isAuthenticated={isUserAuthenticated} logout={handleLogout} />
-          )}
+          {width > breakpoints.mobile ? <NavbarDesktop /> : <NavbarMobile />}
           {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
               Войти
             </Button>
-          )}
-          {isUserAuthenticated && width > breakpoints.mobile && (
-            <Button onClick={handleLogout}>Выйти</Button>
           )}
         </div>
       </div>
