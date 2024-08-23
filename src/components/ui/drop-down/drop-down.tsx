@@ -6,12 +6,14 @@ import clsx from 'clsx'
 import s from './drop-down.module.scss'
 
 type DropdownMenuProps = {
+  align?: 'center' | 'end' | 'start'
   ariaLabel?: string
+  triangleRight?: string
   trigger: ReactNode
 } & ComponentPropsWithoutRef<typeof DropdownMenuRadix.Root>
 
 export const DropdownMenu = (props: DropdownMenuProps) => {
-  const { ariaLabel, children, trigger } = props
+  const { align = 'end', ariaLabel, children, triangleRight = '10px', trigger } = props
   const classNames = {
     content: clsx(s.content),
     trigger: clsx(s.trigger),
@@ -24,7 +26,13 @@ export const DropdownMenu = (props: DropdownMenuProps) => {
       </DropdownMenuRadix.Trigger>
 
       <DropdownMenuRadix.Portal>
-        <DropdownMenuRadix.Content className={classNames.content} loop sideOffset={8}>
+        <DropdownMenuRadix.Content
+          align={align}
+          className={classNames.content}
+          loop
+          sideOffset={8}
+          style={{ ['--triangle-right' as string]: triangleRight }}
+        >
           {children}
         </DropdownMenuRadix.Content>
       </DropdownMenuRadix.Portal>

@@ -1,22 +1,23 @@
-import { ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import clsx from 'clsx'
 
 import s from './field-error.module.scss'
 
 type Props = {
-  children?: ReactNode
   errorMessage?: string
-}
-export const FieldError = ({ children, errorMessage }: Props) => {
-  const classNames = {
-    error: clsx(s.error),
-  }
+} & ComponentPropsWithoutRef<'div'>
+export const FieldError = forwardRef<ElementRef<'div'>, Props>(
+  ({ children, errorMessage }: Props, ref) => {
+    const classNames = {
+      error: clsx(s.error),
+    }
 
-  return (
-    <div>
-      {children}
-      {errorMessage && <div className={classNames.error}>{errorMessage}</div>}
-    </div>
-  )
-}
+    return (
+      <div ref={ref}>
+        {children}
+        {errorMessage && <div className={classNames.error}>{errorMessage}</div>}
+      </div>
+    )
+  }
+)

@@ -1,0 +1,53 @@
+@use '@/styles/breakpoints';
+
+$button-padding: 2px;
+$height: 100px;
+$padding-desktop: 12px;
+$padding-mobile: 8px;
+$radius: 5px;
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: $padding-desktop;
+
+  padding: $padding-desktop;
+
+  background-color: transparent;
+  border: 1px solid var(--color-dark);
+  border-radius: $radius;
+
+  @media (width <= breakpoints.$mobile) {
+    padding: $padding-mobile;
+  }
+}
+
+.content {
+  all: unset;
+  background-color: transparent;
+
+  p:focus-within {
+    border: none;
+    outline: none;
+  }
+}
+
+.toolbar {
+  display: flex;
+}
+
+.toolbarButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $padding-desktop;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: $padding-mobile;
+  }
+}
+
+.toolbarButton {
+  width: fit-content;
+  height: fit-content;
+  padding: $button-padding;
+}

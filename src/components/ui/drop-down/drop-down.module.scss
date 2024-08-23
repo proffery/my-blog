@@ -1,7 +1,14 @@
 @use '@/styles/animations' as animations;
 
-@mixin triangle {
+@mixin triangle($right) {
   $b: 2px;
+
+  content: '';
+
+  position: absolute;
+  z-index: 99;
+  right: $right;
+  bottom: 100%;
 
   aspect-ratio: 1 / cos(30deg);
   width: 9px;
@@ -52,14 +59,7 @@
   box-shadow: var(--color-shadow);
 
   &::before {
-    content: '';
-
-    position: absolute;
-    z-index: 99;
-    bottom: 100%;
-    left: 16px;
-
-    @include triangle;
+    @include triangle(var(--triangle-right));
   }
 
   &[data-state='open'] {

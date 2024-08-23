@@ -1,6 +1,7 @@
 'use client'
 
 import withRedux from '@/common/hocs/with-redux'
+import { CreatePostForm } from '@/components/forms/create-post-form/create-post-form'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
@@ -14,7 +15,7 @@ function Account() {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Написать пост</Typography.H1>
+      <CreatePostForm onSubmit={() => {}} />
     </Page>
   )
 }
