@@ -5,9 +5,11 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef, useState } fr
 import { FieldError } from '@/components/ui/field-error/field-error'
 import { Label } from '@/components/ui/label/label'
 import { Toolbar } from '@/components/ui/text-editor/toolbar'
-import Underline from '@tiptap/extension-underline'
+import { Link } from '@tiptap/extension-link'
+import { TextAlign } from '@tiptap/extension-text-align'
+import { Underline } from '@tiptap/extension-underline'
 import { EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+import { StarterKit } from '@tiptap/starter-kit'
 import clsx from 'clsx'
 
 import s from './text-editor.module.scss'
@@ -32,7 +34,21 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
     }
     const editor = useEditor({
       content,
-      extensions: [StarterKit, Underline],
+      extensions: [
+        StarterKit,
+        Underline,
+        Link.configure({
+          defaultProtocol: 'https',
+          protocols: ['ftp', 'mailto', 'http'],
+        }).extend({
+          inclusive: false,
+        }),
+        TextAlign.configure({
+          alignments: ['left', 'center', 'right', 'justify'],
+          defaultAlignment: 'left',
+          types: ['heading', 'paragraph'],
+        }),
+      ],
       onUpdate: ({ editor }) => {
         handleContentChange(editor.getHTML())
       },

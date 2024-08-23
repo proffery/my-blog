@@ -19,7 +19,7 @@ export const HeaderMenu = ({ email, logout, name }: Props) => {
   return (
     <DropdownMenu
       align={'start'}
-      triangleRight={'50%'}
+      triangleRight={'60%'}
       trigger={<Typography.Overline>{email}</Typography.Overline>}
     >
       <DropdownLabel>

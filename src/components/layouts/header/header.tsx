@@ -25,7 +25,7 @@ const Header = () => {
   }
 
   const isLoading = useSelector(selectAppIsLoading)
-  const isUserAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserIsAuthenticated)
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
 
@@ -37,7 +37,7 @@ const Header = () => {
         <Logo />
         <div className={classNames.navWrapper}>
           {width > breakpoints.mobile ? <NavbarDesktop /> : <NavbarMobile />}
-          {!isUserAuthenticated && (
+          {!isAuthenticated && (
             <Button as={Link} href={routes.login}>
               Войти
             </Button>

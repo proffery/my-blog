@@ -1,18 +1,23 @@
 @use '@/styles/breakpoints';
 
 $header-height-desktop: breakpoints.$header-height-desktop;
+$header-height-mobile: breakpoints.$header-height-mobile;
 
 .background {
   position: fixed;
   z-index: 999;
   top: $header-height-desktop + 1px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
 
   width: 100vw;
   height: calc(100vh - $header-height-desktop);
 
   background-color: var(--color-light);
+
+  @media (width <= breakpoints.$mobile) {
+    top: $header-height-mobile + 1px;
+    height: calc(100vh - $header-height-mobile);
+  }
 }
 
 .loader {
@@ -20,7 +25,7 @@ $header-height-desktop: breakpoints.$header-height-desktop;
   z-index: 999;
   top: 50%;
   left: 50%;
-  transform: rotate(45deg) translate(-50%, -50%);
+  transform: rotate(45deg) translateX(-50%);
 
   aspect-ratio: 1;
   width: 40px;

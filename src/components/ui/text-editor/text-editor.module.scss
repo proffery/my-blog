@@ -16,6 +16,7 @@ $radius: 5px;
   background-color: transparent;
   border: 1px solid var(--color-dark);
   border-radius: $radius;
+  box-shadow: var(--color-shadow);
 
   @media (width <= breakpoints.$mobile) {
     padding: $padding-mobile;

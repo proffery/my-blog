@@ -1,16 +1,27 @@
 'use client'
 
+import { useSelector } from 'react-redux'
+
+import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { CreatePostForm } from '@/components/forms/create-post-form/create-post-form'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
+import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
 import clsx from 'clsx'
+import { redirect } from 'next/navigation'
 
 import s from './account.module.scss'
 
-function Account() {
+function CreatePost() {
   const classNames = {
     page: clsx(s.page),
+  }
+
+  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+
+  if (!isAuthenticated) {
+    redirect(routes.login)
   }
 
   return (
@@ -19,4 +30,4 @@ function Account() {
     </Page>
   )
 }
-export default withRedux(Account)
+export default withRedux(CreatePost)
