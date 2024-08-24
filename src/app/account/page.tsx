@@ -65,14 +65,6 @@ function Account() {
           <Typography.Body1>{meData?.user?.$id}</Typography.Body1>
         </div>
         <div className={classNames.item}>
-          <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>
-          <EditNameForm
-            defaultValue={meData?.user?.name}
-            errorMessage={errorMessage}
-            onSubmit={handleChangeNameSubmit}
-          />
-        </div>
-        <div className={classNames.item}>
           <Typography.Subtitle1>Почта:&nbsp;</Typography.Subtitle1>{' '}
           <Typography.Body1>{meData?.user?.email} &nbsp;</Typography.Body1>
           {meData?.user?.emailVerification ? (
@@ -80,6 +72,14 @@ function Account() {
           ) : (
             <Typography.Subtitle2>(не подтверждена)</Typography.Subtitle2>
           )}
+        </div>
+        <div className={classNames.item}>
+          <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>
+          <EditNameForm
+            defaultValue={meData?.user?.name}
+            errorMessage={errorMessage}
+            onSubmit={handleChangeNameSubmit}
+          />
         </div>
         <div className={classNames.item}>
           {meData?.user?.labels.length ? (

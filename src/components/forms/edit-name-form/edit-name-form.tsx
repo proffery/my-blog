@@ -92,7 +92,12 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
         {...register('name')}
       />
       &nbsp;
-      <Button className={classNames.closeButton} disabled={disabled} type={'submit'}>
+      <Button
+        className={classNames.closeButton}
+        disabled={disabled}
+        onClick={handleToggleEditMode}
+        type={'button'}
+      >
         <CloseIcon className={classNames.closeIcon} />
       </Button>
     </form>

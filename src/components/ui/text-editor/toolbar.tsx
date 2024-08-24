@@ -104,7 +104,6 @@ export const Toolbar = ({ editor }: Props) => {
   const handleAddLink = (data: AddLinkValues) => {
     setUrl(data.link)
     setOpenLinkModal(false)
-    console.log(url)
   }
 
   if (!editor) {
