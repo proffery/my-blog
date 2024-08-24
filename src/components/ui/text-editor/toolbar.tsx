@@ -1,4 +1,9 @@
+import { useState } from 'react'
+
+import { AddLinkForm } from '@/components/forms/add-link-form/add-link-form'
+import { AddLinkValues } from '@/components/forms/add-link-form/schema'
 import { Button } from '@/components/ui/button/button'
+import { Modal } from '@/components/ui/modal/modal'
 import { setLink } from '@/components/ui/text-editor/set-link'
 import { Editor } from '@tiptap/react'
 import clsx from 'clsx'
@@ -36,6 +41,9 @@ export const Toolbar = ({ editor }: Props) => {
     toolbarButton: clsx(s.toolbarButton),
     toolbarButtons: clsx(s.toolbarButtons),
   }
+  const previousUrl = editor?.getAttributes('link').href
+  const [openLinkModal, setOpenLinkModal] = useState(false)
+  const [url, setUrl] = useState('')
 
   const buttonVariantBold = editor?.isActive('bold') ? 'secondary' : 'primary'
   const buttonVariantLink = editor?.isActive('link') ? 'secondary' : 'primary'
@@ -62,8 +70,15 @@ export const Toolbar = ({ editor }: Props) => {
     : 'primary'
 
   const handleClickBold = () => editor?.chain().focus().toggleBold().run()
-  const handleClickLink = () =>
-    editor?.isActive('link') ? editor?.chain().focus().unsetLink().run() : setLink(editor)
+  const handleClickLink = () => {
+    if (editor?.isActive('link')) {
+      editor?.chain().focus().unsetLink().run()
+      setUrl('')
+    } else {
+      setLink(editor, url)
+      setOpenLinkModal(true)
+    }
+  }
   const handleClickRedo = () => editor?.chain().focus().redo().run()
   const handleClickUndo = () => editor?.chain().focus().undo().run()
   const handleClickBlockquote = () => editor?.chain().focus().toggleBlockquote().run()
@@ -86,12 +101,21 @@ export const Toolbar = ({ editor }: Props) => {
 
   const handleClickAlignJustify = () => editor?.chain().focus().setTextAlign('justify').run()
 
+  const handleAddLink = (data: AddLinkValues) => {
+    setUrl(data.link)
+    setOpenLinkModal(false)
+    console.log(url)
+  }
+
   if (!editor) {
     return null
   }
 
   return (
     <div className={classNames.toolbar}>
+      <Modal onOpenChange={setOpenLinkModal} open={openLinkModal} title={'Введите ссылку'}>
+        <AddLinkForm defaultValue={previousUrl} onSubmit={handleAddLink} />
+      </Modal>
       <div className={classNames.toolbarButtons}>
         <Button
           className={classNames.toolbarButton}

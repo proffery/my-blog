@@ -36,7 +36,7 @@ $hover-area-size-mob: 32px;
     height: $hover-area-size-desk;
 
     opacity: 0.2;
-    background-color: var(--color-primary-500);
+    background-color: var(--color-placeholder);
     border-radius: 50%;
 
     @media (width <= breakpoints.$mobile) {

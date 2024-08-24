@@ -1,9 +1,6 @@
 import { Editor } from '@tiptap/react'
 
-function setLink(editor: Editor | null) {
-  const previousUrl = editor?.getAttributes('link').href
-  const url = window.prompt('URL', previousUrl)
-
+function setLink(editor: Editor | null, url: string) {
   // cancelled
   if (url === null || editor === null) {
     return
