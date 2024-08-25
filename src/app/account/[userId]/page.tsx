@@ -11,11 +11,10 @@ import s from './account.module.scss'
 
 export const generateStaticParams = async () => {
   const usersData = await getData<GetUsersListResponse, null>(endpoints.users_get_all)
-  const paramsObject = usersData?.usersList.users.map(user => ({
+
+  return usersData?.usersList.users.map(user => ({
     userId: user.$id,
   }))
-
-  return paramsObject as any[]
 }
 
 type Props = {
