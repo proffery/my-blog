@@ -14,23 +14,19 @@ export const generateStaticParams = async () => {
 
   return usersData?.usersList.users.map(user => ({
     userId: user.$id,
-  }))
+  })) as any[]
 }
 
 type Props = {
   params: { userId: string }
 }
 
-export default async function AccountById(props: Props) {
+export default async function AccountById({ params: { userId } }: Props) {
   const classNames = {
     container: clsx(s.container),
     item: clsx(s.item),
     page: clsx(s.page),
   }
-
-  const {
-    params: { userId },
-  } = props
 
   const userData = await getData<GetUserResponse, GetUserRequest>(endpoints.users_get_user, {
     body: { userId },
