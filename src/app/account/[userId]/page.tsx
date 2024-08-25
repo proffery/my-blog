@@ -11,8 +11,9 @@ import s from './account.module.scss'
 
 export const generateStaticParams = async () => {
   const usersData = await getData<GetUsersListResponse, null>(endpoints.users_get_all)
+  const users = usersData?.users
 
-  return usersData?.usersList.users.map(user => ({
+  return users?.map(user => ({
     userId: user.$id,
   })) as any[]
 }
@@ -21,12 +22,15 @@ type Props = {
   params: { userId: string }
 }
 
-export default async function AccountById({ params: { userId } }: Props) {
+export default async function AccountById(props: Props) {
   const classNames = {
     container: clsx(s.container),
     item: clsx(s.item),
     page: clsx(s.page),
   }
+  const {
+    params: { userId },
+  } = props
 
   const userData = await getData<GetUserResponse, GetUserRequest>(endpoints.users_get_user, {
     body: { userId },

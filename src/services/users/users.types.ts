@@ -1,7 +1,7 @@
 import { Models } from 'appwrite'
 
-export type GetUserResponse = { user?: Models.User<Models.Preferences> }
+type User = Models.User<Models.Preferences>
+
+export type GetUserResponse = { user?: User }
 export type GetUserRequest = { userId: string }
-export type GetUsersListResponse = {
-  usersList: { total: number; users: Models.User<Models.Preferences>[] }
-}
+export type GetUsersListResponse = { total: number; users: Array<User> }

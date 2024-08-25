@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const usersList = await users.list()
 
-    return NextResponse.json({ usersList })
+    return NextResponse.json(usersList)
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)
