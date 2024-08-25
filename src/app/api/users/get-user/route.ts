@@ -1,15 +1,15 @@
-import { routes } from '@/common/constants/routes'
-import { createSession } from '@/server/auth'
+import { createAdminUsers } from '@/server/users'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
+  const { users } = await createAdminUsers()
+  const { userId } = await request.json()
+
   try {
-    const { auth } = await createSession(request)
+    const user = await users.get(userId)
 
-    await auth.createVerification(`${request.nextUrl.origin}${routes.confirmEmail}`)
-
-    return NextResponse.json({ message: `Verification email sent successfully!` })
+    return NextResponse.json({ user })
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)

@@ -12,7 +12,7 @@ import { InitializationLoader } from '@/components/ui/initialization-loader/init
 import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Logo } from '@/components/ui/logo/logo'
 import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -25,7 +25,7 @@ const Header = () => {
   }
 
   const isLoading = useSelector(selectAppIsLoading)
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
 

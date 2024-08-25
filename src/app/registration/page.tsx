@@ -13,7 +13,7 @@ import {
   useRegistrationMutation,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { redirect, useRouter } from 'next/navigation'
@@ -29,7 +29,7 @@ function Registration() {
   const [registration, { error: registrationError }] = useRegistrationMutation()
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [loginWithEmail] = useLoginEmailMutation()
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
   const router = useRouter()
   const registrationHandler = async (data: RegistrationFormValues) => {
     try {

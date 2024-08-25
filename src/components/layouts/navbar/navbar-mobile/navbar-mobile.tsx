@@ -7,14 +7,14 @@ import { routes } from '@/common/constants/routes'
 import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
 import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 
 import s from './navbar-mobile.module.scss'
 
 export const NavbarMobile = () => {
   const { data: meData } = useMeQuery()
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
   const [logout] = useLogoutMutation()
 
   const [isOpened, setIsOpened] = useState(false)
@@ -38,11 +38,6 @@ export const NavbarMobile = () => {
     setIsOpened(false)
   }
 
-  const handleLogout = () => {
-    logout()
-    setIsOpened(false)
-  }
-
   return (
     <>
       <button className={classNames.burgerButton} onClick={handleToggle} type={'button'}>
@@ -60,9 +55,7 @@ export const NavbarMobile = () => {
           <ActiveLink href={routes.contacts} onClick={handleClose}>
             Контакты
           </ActiveLink>
-          {isAuthenticated && (
-            <HeaderMenu email={meData?.user?.email} logout={logout} name={meData?.user?.name} />
-          )}
+          {isAuthenticated && <HeaderMenu logout={logout} userData={meData} />}
         </nav>
       </div>
     </>

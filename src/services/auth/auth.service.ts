@@ -58,7 +58,7 @@ export const authService = baseApi.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
-          dispatch(userActions.setIsAuthenticated(false))
+          dispatch(userActions.setUserRole(null))
         } catch (error) {
           console.error(error)
         }
@@ -72,8 +72,9 @@ export const authService = baseApi.injectEndpoints({
     me: builder.query<MeResponse, void>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
-          dispatch(userActions.setIsAuthenticated(true))
+          const response = await queryFulfilled
+
+          dispatch(userActions.setUserRole(response.data.user?.labels ?? ['']))
         } catch (error) {
           console.error(error)
         } finally {

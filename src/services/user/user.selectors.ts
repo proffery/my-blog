@@ -1,3 +1,3 @@
 import { RootState } from '@/services/store'
 
-export const selectUserIsAuthenticated = (state: RootState) => state.user.isAuthenticated
+export const selectUserRole = (state: RootState) => state.user.userRole

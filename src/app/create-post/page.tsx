@@ -7,7 +7,7 @@ import withRedux from '@/common/hocs/with-redux'
 import { CreatePostForm } from '@/components/forms/create-post-form/create-post-form'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { redirect } from 'next/navigation'
 
@@ -18,7 +18,7 @@ function CreatePost() {
     page: clsx(s.page),
   }
 
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
 
   if (!isAuthenticated) {
     redirect(routes.login)

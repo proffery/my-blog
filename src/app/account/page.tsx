@@ -9,13 +9,15 @@ import { EditNameValues } from '@/components/forms/edit-name-form/schema'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
+import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import {
   useChangeNameMutation,
   useMeQuery,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
+import Link from 'next/link'
 import { redirect, useRouter } from 'next/navigation'
 
 import s from './account.module.scss'
@@ -30,7 +32,7 @@ function Account() {
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [changeName, { error: changeNameError }] = useChangeNameMutation()
 
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
   const router = useRouter()
 
   const sendVerifyEmailHandler = async () => {
@@ -45,6 +47,7 @@ function Account() {
   const handleChangeNameSubmit = async (data: EditNameValues) => {
     try {
       await changeName(data).unwrap()
+      clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
     } catch (error) {
       console.error(error)
     }
@@ -62,7 +65,9 @@ function Account() {
       <div className={classNames.container}>
         <div className={classNames.item}>
           <Typography.Subtitle1>ID:&nbsp;</Typography.Subtitle1>
-          <Typography.Body1>{meData?.user?.$id}</Typography.Body1>
+          <Typography.Link1 as={Link} href={routes.account + '/' + meData?.user?.$id}>
+            {meData?.user?.$id}
+          </Typography.Link1>
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Почта:&nbsp;</Typography.Subtitle1>{' '}
@@ -83,10 +88,10 @@ function Account() {
         </div>
         <div className={classNames.item}>
           {meData?.user?.labels.length ? (
-            <Typography.Subtitle1>Status:</Typography.Subtitle1>
+            <Typography.Subtitle1>Группа:&nbsp;</Typography.Subtitle1>
           ) : null}
           {meData?.user?.labels.map(label => (
-            <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
+            <Typography.Subtitle1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Subtitle1>
           ))}
         </div>
       </div>

@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const slice = createSlice({
   initialState: {
-    isAuthenticated: false as boolean,
+    userRole: null as null | string[],
   },
   name: 'user',
   reducers: {
-    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticated = action.payload
+    setUserRole: (state, action: PayloadAction<null | string[]>) => {
+      state.userRole = action.payload
     },
   },
 })

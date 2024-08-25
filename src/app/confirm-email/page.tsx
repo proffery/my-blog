@@ -10,7 +10,7 @@ import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery, useVerifyEmailMutation } from '@/services/auth/auth.service'
 import { VerifyEmailRequest } from '@/services/auth/auth.types'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { redirect, useSearchParams } from 'next/navigation'
 
@@ -30,7 +30,7 @@ function ConfirmEmail() {
   const [verifyEmail] = useVerifyEmailMutation()
   const { data: meData } = useMeQuery()
 
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
   const isEmailVerified = meData?.user?.emailVerification
 
   const verifyEmailHandler = async (data: VerifyEmailRequest) => {

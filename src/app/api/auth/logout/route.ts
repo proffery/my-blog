@@ -1,12 +1,12 @@
-import { createSessionClient } from '@/server/config'
+import { createSession } from '@/server/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function DELETE(request: NextRequest) {
-  const { account } = await createSessionClient(request)
+  const { auth } = await createSession(request)
 
   try {
-    await account.deleteSession('current')
+    await auth.deleteSession('current')
 
     return NextResponse.json({ message: 'Successfully logged out!' })
   } catch (error: unknown) {

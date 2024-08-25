@@ -1,14 +1,14 @@
-import { createSession } from '@/server/auth'
-import { NextRequest, NextResponse } from 'next/server'
+import { createAdminUsers } from '@/server/users'
+import { NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
-export async function GET(request: NextRequest) {
-  const { auth } = await createSession(request)
+export async function GET() {
+  const { users } = await createAdminUsers()
 
   try {
-    const user = await auth.get()
+    const usersList = await users.list()
 
-    return NextResponse.json({ user })
+    return NextResponse.json({ usersList })
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)

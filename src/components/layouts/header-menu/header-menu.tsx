@@ -8,30 +8,34 @@ import {
   DropdownSeparator,
 } from '@/components/ui/drop-down/drop-down'
 import { Typography } from '@/components/ui/typography/typography'
+import { MeResponse } from '@/services/auth/auth.types'
 
 type Props = {
-  email?: string
   logout: () => void
-  name?: string
+  userData?: MeResponse
 }
 
-export const HeaderMenu = ({ email, logout, name }: Props) => {
+export const HeaderMenu = ({ logout, userData }: Props) => {
+  const userRoles = userData?.user?.labels
+
   return (
     <DropdownMenu
       align={'start'}
       triangleRight={'60%'}
-      trigger={<Typography.Overline>{email}</Typography.Overline>}
+      trigger={<Typography.Overline>{userData?.user?.email}</Typography.Overline>}
     >
       <DropdownLabel>
-        <Typography.Caption>{name}</Typography.Caption>
+        <Typography.Caption>{userData?.user?.name}</Typography.Caption>
       </DropdownLabel>
       <DropdownSeparator />
       <DropdownItem>
         <ActiveLink href={routes.account}>Профиль</ActiveLink>
       </DropdownItem>
-      <DropdownItem>
-        <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
-      </DropdownItem>
+      {userRoles?.some(role => role === 'Writer') && (
+        <DropdownItem>
+          <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
+        </DropdownItem>
+      )}
       <DropdownItem>
         <Button onClick={() => logout()} variant={'text'}>
           Выход

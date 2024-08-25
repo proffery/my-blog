@@ -1,13 +1,13 @@
-import { createSessionClient } from '@/server/config'
+import { createSession } from '@/server/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
   try {
-    const { account } = await createSessionClient(request)
+    const { auth } = await createSession(request)
     const { secret, userId } = await request.json()
 
-    await account.updateVerification(userId, secret)
+    await auth.updateVerification(userId, secret)
 
     return NextResponse.json({ message: `Email confirmed!` })
   } catch (error: unknown) {

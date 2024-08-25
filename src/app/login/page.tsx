@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
 import { signUpWithGithub, signUpWithGoogle } from '@/server/oauth'
 import { useLoginEmailMutation } from '@/services/auth/auth.service'
-import { selectUserIsAuthenticated } from '@/services/user/user.selectors'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -29,7 +29,7 @@ function Login() {
   }
 
   const [loginWithEmail, { error: loginWithEmailError }] = useLoginEmailMutation()
-  const isAuthenticated = useSelector(selectUserIsAuthenticated)
+  const isAuthenticated = useSelector(selectUserRole)
 
   const loginWithEmailHandler = (loginData: LoginEmailFormValues) => {
     loginWithEmail(loginData).unwrap()
