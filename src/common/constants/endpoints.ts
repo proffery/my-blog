@@ -1,5 +1,5 @@
 export const endpoints = {
-  _base: process.env.NEXT_PUBLIC_HOST_BASE,
+  _base: `${process.env.NEXT_PUBLIC_HOST_BASE}`,
   auth_changeName: `/api/auth/change-name`,
   auth_loginEmail: `/api/auth/login-email`,
   auth_logout: `/api/auth/logout`,
