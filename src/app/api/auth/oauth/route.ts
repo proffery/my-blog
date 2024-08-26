@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
       secure: true,
     })
 
-    return NextResponse.redirect(`${request.nextUrl.origin}${routes.account}`)
+    return NextResponse.redirect(`${request.nextUrl.origin}${routes.base}`)
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)

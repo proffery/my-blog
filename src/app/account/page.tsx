@@ -18,7 +18,7 @@ import {
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import s from './account.module.scss'
 
@@ -32,7 +32,6 @@ function Account() {
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [changeName, { error: changeNameError }] = useChangeNameMutation()
 
-  const isAuthenticated = useSelector(selectUserRole)
   const router = useRouter()
 
   const sendVerifyEmailHandler = async () => {
@@ -54,10 +53,6 @@ function Account() {
   }
 
   const errorMessage = getErrorMessage(changeNameError)
-
-  if (!isAuthenticated) {
-    redirect(routes.login)
-  }
 
   return (
     <Page className={classNames.page}>

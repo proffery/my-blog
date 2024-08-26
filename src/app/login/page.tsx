@@ -1,5 +1,4 @@
 'use client'
-import { useSelector } from 'react-redux'
 
 import { GithubIcon } from '@/assets/icons/components/github-icon'
 import { GoogleIcon } from '@/assets/icons/components/google-icon'
@@ -13,10 +12,9 @@ import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
 import { signUpWithGithub, signUpWithGoogle } from '@/server/oauth'
 import { useLoginEmailMutation } from '@/services/auth/auth.service'
-import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import s from './login.module.scss'
 function Login() {
@@ -29,17 +27,13 @@ function Login() {
   }
 
   const [loginWithEmail, { error: loginWithEmailError }] = useLoginEmailMutation()
-  const isAuthenticated = useSelector(selectUserRole)
-
+  const router = useRouter()
   const loginWithEmailHandler = (loginData: LoginEmailFormValues) => {
     loginWithEmail(loginData).unwrap()
+    router.push(routes.base)
   }
 
   const errorMessage = getErrorMessage(loginWithEmailError)
-
-  if (isAuthenticated) {
-    redirect(routes.account)
-  }
 
   return (
     <Page className={classNames.page}>

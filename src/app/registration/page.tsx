@@ -1,5 +1,4 @@
 'use client'
-import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
@@ -13,10 +12,9 @@ import {
   useRegistrationMutation,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
-import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import s from './registration.module.scss'
 function Registration() {
@@ -29,7 +27,6 @@ function Registration() {
   const [registration, { error: registrationError }] = useRegistrationMutation()
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [loginWithEmail] = useLoginEmailMutation()
-  const isAuthenticated = useSelector(selectUserRole)
   const router = useRouter()
   const registrationHandler = async (data: RegistrationFormValues) => {
     try {
@@ -43,10 +40,6 @@ function Registration() {
   }
 
   const errorMessage = getErrorMessage(registrationError)
-
-  if (isAuthenticated) {
-    redirect(routes.account)
-  }
 
   return (
     <Page className={classNames.page}>
