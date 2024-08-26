@@ -47,7 +47,7 @@ function Account() {
   const handleChangeNameSubmit = async (data: EditNameValues) => {
     try {
       await changeName(data).unwrap()
-      clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
+      await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
     } catch (error) {
       console.error(error)
     }

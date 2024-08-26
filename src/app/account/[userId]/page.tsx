@@ -10,7 +10,9 @@ import Link from 'next/link'
 import s from './account.module.scss'
 
 export const generateStaticParams = async () => {
-  const usersData = await getData<GetUsersListResponse, null>(endpoints.users_get_all)
+  const usersData = await getData<GetUsersListResponse, null>(
+    endpoints._base + endpoints.users_get_all
+  )
   const users = usersData?.users
 
   return users?.map(user => ({
@@ -32,10 +34,13 @@ export default async function AccountById(props: Props) {
     params: { userId },
   } = props
 
-  const userData = await getData<GetUserResponse, GetUserRequest>(endpoints.users_get_user, {
-    body: { userId },
-    method: 'POST',
-  })
+  const userData = await getData<GetUserResponse, GetUserRequest>(
+    endpoints._base + endpoints.users_get_user,
+    {
+      body: { userId },
+      method: 'POST',
+    }
+  )
 
   return (
     <Page className={classNames.page}>
