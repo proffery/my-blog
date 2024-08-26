@@ -2,25 +2,22 @@ import { endpoints } from '@/common/constants/endpoints'
 import { routes } from '@/common/constants/routes'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
+import { createAdminUsers } from '@/server/users'
 import { getData } from '@/server/utils/get-data'
-import { GetUserRequest, GetUserResponse, GetUsersListResponse } from '@/services/users/users.types'
+import { GetUserRequest, GetUserResponse } from '@/services/users/users.types'
 import clsx from 'clsx'
 import Link from 'next/link'
 
 import s from './account.module.scss'
 
-// export const generateStaticParams = async () => {
-//   const usersData = await getData<GetUsersListResponse, null>(
-//     `${endpoints._base}${endpoints.users_get_all}`
-//   )
-//
-//   console.log(usersData)
-//   const users = usersData?.users
-//
-//   return users?.map(user => ({
-//     userId: user.$id,
-//   })) as any[]
-// }
+export const generateStaticParams = async () => {
+  const { users } = await createAdminUsers()
+  const usersData = await users.list()
+
+  return usersData.users?.map(user => ({
+    userId: user.$id,
+  })) as any[]
+}
 
 type Props = {
   params: { userId: string }
