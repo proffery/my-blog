@@ -1,7 +1,7 @@
 export const getData = async <T, D extends null | object>(
   endpoint: string,
   options: {
-    body?: D | null | undefined
+    body?: D
     cache?: 'force-cache' | 'no-store'
     method?: 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT'
     revalidate?: 0 | false | number

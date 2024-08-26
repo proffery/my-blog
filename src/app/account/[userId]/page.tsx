@@ -9,16 +9,18 @@ import Link from 'next/link'
 
 import s from './account.module.scss'
 
-export const generateStaticParams = async () => {
-  const usersData = await getData<GetUsersListResponse, null>(
-    endpoints._base + endpoints.users_get_all
-  )
-  const users = usersData?.users
-
-  return users?.map(user => ({
-    userId: user.$id,
-  })) as any[]
-}
+// export const generateStaticParams = async () => {
+//   const usersData = await getData<GetUsersListResponse, null>(
+//     `${endpoints._base}${endpoints.users_get_all}`
+//   )
+//
+//   console.log(usersData)
+//   const users = usersData?.users
+//
+//   return users?.map(user => ({
+//     userId: user.$id,
+//   })) as any[]
+// }
 
 type Props = {
   params: { userId: string }
@@ -35,7 +37,7 @@ export default async function AccountById(props: Props) {
   } = props
 
   const userData = await getData<GetUserResponse, GetUserRequest>(
-    endpoints._base + endpoints.users_get_user,
+    `${endpoints._base}${endpoints.users_get_user}`,
     {
       body: { userId },
       method: 'POST',

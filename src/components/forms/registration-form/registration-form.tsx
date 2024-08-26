@@ -80,7 +80,7 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
         type={'submit'}
         variant={'secondary'}
       >
-        Sign up
+        Зарегистрироваться
       </Button>
     </form>
   )

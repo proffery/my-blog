@@ -40,6 +40,7 @@ export const NavbarMobile = () => {
 
   return (
     <>
+      {isAuthenticated && <HeaderMenu logout={logout} userData={meData} />}
       <button className={classNames.burgerButton} onClick={handleToggle} type={'button'}>
         <span className={classNames.burgerMenu}></span>
       </button>
@@ -55,7 +56,6 @@ export const NavbarMobile = () => {
           <ActiveLink href={routes.contacts} onClick={handleClose}>
             Контакты
           </ActiveLink>
-          {isAuthenticated && <HeaderMenu logout={logout} userData={meData} />}
         </nav>
       </div>
     </>

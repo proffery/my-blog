@@ -23,35 +23,24 @@ function ConfirmEmail() {
     page: clsx(s.page),
   }
   const searchParams = useSearchParams()
-
   const userId = searchParams.get('userId')
   const secret = searchParams.get('secret')
 
   const [verifyEmail] = useVerifyEmailMutation()
   const { data: meData } = useMeQuery()
 
-  const isAuthenticated = useSelector(selectUserRole)
-  const isEmailVerified = meData?.user?.emailVerification
-
-  const verifyEmailHandler = async (data: VerifyEmailRequest) => {
+  async function verifyEmailHandler(data: VerifyEmailRequest) {
     try {
       await verifyEmail(data).unwrap()
+      redirect(routes.confirmEmail)
     } catch (error) {
       console.error(error)
     }
   }
 
   useEffect(() => {
-    if (userId && secret && isAuthenticated) {
-      verifyEmailHandler({ secret, userId })
-    }
-  }, [secret, userId, isAuthenticated])
-
-  if (isEmailVerified) {
-    redirect(routes.account)
-  } else if (!isAuthenticated) {
-    redirect(routes.login)
-  }
+    secret && userId && verifyEmailHandler({ secret, userId })
+  }, [])
 
   return (
     <Page className={classNames.page}>
