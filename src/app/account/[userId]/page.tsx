@@ -1,12 +1,10 @@
 import { endpoints } from '@/common/constants/endpoints'
-import { routes } from '@/common/constants/routes'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import { createAdminUsers } from '@/server/users'
 import { getData } from '@/server/utils/get-data'
 import { GetUserRequest, GetUserResponse } from '@/services/users/users.types'
 import clsx from 'clsx'
-import Link from 'next/link'
 
 import s from './account.module.scss'
 
@@ -33,13 +31,10 @@ export default async function AccountById(props: Props) {
     params: { userId },
   } = props
 
-  const userData = await getData<GetUserResponse, GetUserRequest>(
-    `${endpoints._base}${endpoints.users_get_user}`,
-    {
-      body: { userId },
-      method: 'POST',
-    }
-  )
+  const userData = await getData<GetUserResponse, GetUserRequest>(`${endpoints.users_get_user}`, {
+    body: { userId },
+    method: 'POST',
+  })
 
   return (
     <Page className={classNames.page}>
@@ -47,9 +42,7 @@ export default async function AccountById(props: Props) {
       <div className={classNames.container}>
         <div className={classNames.item}>
           <Typography.Subtitle1>ID:&nbsp;</Typography.Subtitle1>
-          <Typography.Link1 as={Link} href={routes.account + '/' + userData?.user?.$id}>
-            {userData?.user?.$id}
-          </Typography.Link1>
+          <Typography.Body1>{userData?.user?.$id}</Typography.Body1>
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>

@@ -1,5 +1,4 @@
 'use client'
-import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
@@ -15,7 +14,6 @@ import {
   useMeQuery,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
-import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
