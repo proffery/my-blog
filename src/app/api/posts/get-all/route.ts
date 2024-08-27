@@ -6,12 +6,12 @@ export async function GET() {
   const { databases } = await createDatabaseClient()
 
   try {
-    const postsList = await databases.listDocuments(
+    const list = await databases.listDocuments(
       `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
       `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`
     )
 
-    return NextResponse.json(postsList)
+    return NextResponse.json(list)
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)

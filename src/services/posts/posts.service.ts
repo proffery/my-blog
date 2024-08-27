@@ -16,7 +16,7 @@ export const postsService = baseApi.injectEndpoints({
   endpoints: builder => ({
     createPost: builder.mutation<CreatePostResponse, CreatePostRequest>({
       invalidatesTags: ['Posts'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
@@ -31,7 +31,7 @@ export const postsService = baseApi.injectEndpoints({
     }),
     deletePost: builder.mutation<DeletePostResponse, DeletePostRequest>({
       invalidatesTags: ['Posts'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
@@ -45,7 +45,7 @@ export const postsService = baseApi.injectEndpoints({
       }),
     }),
     getPost: builder.mutation<GetPostResponse, GetPostRequest>({
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
@@ -59,7 +59,7 @@ export const postsService = baseApi.injectEndpoints({
       }),
     }),
     getPostsList: builder.query<GetPostsListResponse, void>({
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
@@ -73,7 +73,7 @@ export const postsService = baseApi.injectEndpoints({
       }),
     }),
     updatePost: builder.mutation<UpdatePostResponse, UpdatePostRequest>({
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
@@ -89,4 +89,10 @@ export const postsService = baseApi.injectEndpoints({
   }),
 })
 
-export const {} = postsService
+export const {
+  useCreatePostMutation,
+  useDeletePostMutation,
+  useGetPostMutation,
+  useGetPostsListQuery,
+  useUpdatePostMutation,
+} = postsService
