@@ -7,7 +7,9 @@ import { GetPostsListResponse } from '@/services/posts/posts.types'
 import Link from 'next/link'
 
 export default async function Posts() {
-  const postsData = await getData<GetPostsListResponse, null>(endpoints.posts_get_all, {})
+  const postsData = await getData<GetPostsListResponse, null>(endpoints.posts_get_all, {
+    cache: 'no-store',
+  })
 
   const posts = postsData?.documents
 
