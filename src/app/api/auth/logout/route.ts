@@ -1,11 +1,11 @@
 'use server'
-import { createSession } from '@/server/auth'
+import { createSessionClient } from '@/server/auth'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function DELETE(request: NextRequest) {
-  const { auth } = await createSession(request)
+  const { auth } = await createSessionClient(request)
 
   try {
     await auth.deleteSession('current')

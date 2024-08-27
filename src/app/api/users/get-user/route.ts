@@ -1,9 +1,9 @@
-import { createAdminUsers } from '@/server/users'
+import { createUsersClient } from '@/server/users'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
-  const { users } = await createAdminUsers()
+  const { users } = await createUsersClient()
   const { userId } = await request.json()
 
   try {

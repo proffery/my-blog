@@ -1,15 +1,19 @@
-import { createSessionClient } from '@/server/auth'
+import { createDatabaseClient } from '@/server/posts'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
+  const { databases } = await createDatabaseClient()
+  const { postId } = await request.json()
+
   try {
-    const { auth } = await createSessionClient(request)
-    const { name } = await request.json()
+    const post = await databases.getDocument(
+      `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
+      `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
+      postId
+    )
 
-    await auth.updateName(name)
-
-    return NextResponse.json({ message: `Name updated successfully!` })
+    return NextResponse.json(post)
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)

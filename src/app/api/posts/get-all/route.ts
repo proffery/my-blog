@@ -1,14 +1,17 @@
-import { createUsersClient } from '@/server/users'
+import { createDatabaseClient } from '@/server/posts'
 import { NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function GET() {
-  const { users } = await createUsersClient()
+  const { databases } = await createDatabaseClient()
 
   try {
-    const usersList = await users.list()
+    const postsList = await databases.listDocuments(
+      `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
+      `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`
+    )
 
-    return NextResponse.json(usersList)
+    return NextResponse.json(postsList)
   } catch (error: unknown) {
     if (error instanceof AppwriteException) {
       console.error(error)

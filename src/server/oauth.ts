@@ -1,12 +1,12 @@
 'use server'
 import { endpoints } from '@/common/constants/endpoints'
 import { routes } from '@/common/constants/routes'
-import { createAdminAuth } from '@/server/auth'
+import { createAuthClient } from '@/server/auth'
 import { redirect } from 'next/navigation'
 import { OAuthProvider } from 'node-appwrite'
 
 export async function signUpWithGithub() {
-  const { auth } = await createAdminAuth()
+  const { auth } = await createAuthClient()
 
   const redirectUrl = await auth.createOAuth2Token(
     OAuthProvider.Github,
@@ -18,7 +18,7 @@ export async function signUpWithGithub() {
 }
 
 export async function signUpWithGoogle() {
-  const { auth } = await createAdminAuth()
+  const { auth } = await createAuthClient()
 
   const redirectUrl = await auth.createOAuth2Token(
     OAuthProvider.Google,

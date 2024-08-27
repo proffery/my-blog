@@ -8,6 +8,11 @@ export const endpoints = {
   auth_registration: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/registration`,
   auth_sendVerifyEmail: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/send-verify-email`,
   auth_verifyEmail: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/verify-email`,
+  posts_create: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/create-post`,
+  posts_delete: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/delete-post`,
+  posts_get_all: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/get-all`,
+  posts_get_post: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/get-post`,
+  posts_update: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/update-post`,
   users_get_all: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/get-all`,
   users_get_user: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/get-user`,
 } as const

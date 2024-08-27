@@ -1,11 +1,10 @@
 import { endpoints } from '@/common/constants/endpoints'
-import { ApiResponse } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
 import { GetUserRequest, GetUserResponse, GetUsersListResponse } from '@/services/users/users.types'
 
 export const usersService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getUser: builder.query<GetUserResponse, GetUserRequest>({
+    getUser: builder.mutation<GetUserResponse, GetUserRequest>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
@@ -19,7 +18,7 @@ export const usersService = baseApi.injectEndpoints({
         url: endpoints.users_get_user,
       }),
     }),
-    getUsersList: builder.query<GetUsersListResponse, ApiResponse>({
+    getUsersList: builder.query<GetUsersListResponse, void>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
@@ -27,6 +26,7 @@ export const usersService = baseApi.injectEndpoints({
           console.error(error)
         }
       },
+      providesTags: ['Users'],
       query: () => ({
         method: 'GET',
         url: endpoints.users_get_all,
@@ -35,4 +35,4 @@ export const usersService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetUserQuery } = usersService
+export const { useGetUserMutation, useGetUsersListQuery } = usersService

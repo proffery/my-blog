@@ -1,15 +1,14 @@
 'use server'
-import { Client, Users } from 'node-appwrite'
+import { Client, Databases } from 'node-appwrite'
 
-export async function createUsersClient() {
+export async function createDatabaseClient() {
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ?? '')
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT ?? '')
-    .setKey(process.env.NEXT_PUBLIC_APPWRITE_KEY ?? '')
 
   return {
-    get users() {
-      return new Users(client)
+    get databases() {
+      return new Databases(client)
     },
   }
 }

@@ -2,7 +2,7 @@
 import { NextRequest } from 'next/server'
 import { Account, Client } from 'node-appwrite'
 
-export async function createSession(request: NextRequest) {
+export async function createSessionClient(request: NextRequest) {
   const client = new Client()
 
   client
@@ -22,7 +22,7 @@ export async function createSession(request: NextRequest) {
   }
 }
 
-export async function createAdminAuth() {
+export async function createAuthClient() {
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT ?? '')
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT ?? '')

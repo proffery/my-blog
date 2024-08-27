@@ -1,11 +1,11 @@
-import { createAdminAuth } from '@/server/auth'
+import { createAuthClient } from '@/server/auth'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
   try {
-    const { auth } = await createAdminAuth()
+    const { auth } = await createAuthClient()
     const { email, password } = await request.json()
 
     const session = await auth.createEmailPasswordSession(email, password)

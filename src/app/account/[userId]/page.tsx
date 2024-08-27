@@ -1,7 +1,7 @@
 import { endpoints } from '@/common/constants/endpoints'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
-import { createAdminUsers } from '@/server/users'
+import { createUsersClient } from '@/server/users'
 import { getData } from '@/server/utils/get-data'
 import { GetUserRequest, GetUserResponse } from '@/services/users/users.types'
 import clsx from 'clsx'
@@ -9,7 +9,7 @@ import clsx from 'clsx'
 import s from './account.module.scss'
 
 export const generateStaticParams = async () => {
-  const { users } = await createAdminUsers()
+  const { users } = await createUsersClient()
   const usersData = await users.list()
 
   return usersData.users?.map(user => ({

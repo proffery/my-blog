@@ -1,11 +1,11 @@
 import { routes } from '@/common/constants/routes'
-import { createSession } from '@/server/auth'
+import { createSessionClient } from '@/server/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
   try {
-    const { auth } = await createSession(request)
+    const { auth } = await createSessionClient(request)
 
     await auth.createVerification(`${request.nextUrl.origin}${routes.confirmEmail}`)
 
