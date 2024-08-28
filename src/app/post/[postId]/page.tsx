@@ -33,7 +33,7 @@ export default async function Post({ params: { postId } }: Props) {
   return (
     <Page>
       <Typography.H1>{postData?.title}</Typography.H1>
-      <TextEditor defaultContent={postData?.post} em isEditable={false} />
+      <TextEditor defaultContent={postData?.post} isEditable={false} />
     </Page>
   )
 }
