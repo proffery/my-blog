@@ -1,10 +1,11 @@
+import { GetUserParams } from '@/app/api/users/get-user/[userId]/route'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
-import { GetUserRequest, GetUserResponse, GetUsersListResponse } from '@/services/users/users.types'
+import { GetUserResponse, GetUsersListResponse } from '@/services/users/users.types'
 
 export const usersService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getUser: builder.mutation<GetUserResponse, GetUserRequest>({
+    getUser: builder.query<GetUserResponse, GetUserParams>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
@@ -12,10 +13,9 @@ export const usersService = baseApi.injectEndpoints({
           console.error(error)
         }
       },
-      query: body => ({
-        body,
-        method: 'POST',
-        url: endpoints.users_get_user,
+      query: ({ params: { userId } }) => ({
+        method: 'GET',
+        url: endpoints.users_get_user + '/' + userId,
       }),
     }),
     getUsersList: builder.query<GetUsersListResponse, void>({
@@ -35,4 +35,4 @@ export const usersService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetUserMutation, useGetUsersListQuery } = usersService
+export const { useGetUserQuery, useGetUsersListQuery } = usersService

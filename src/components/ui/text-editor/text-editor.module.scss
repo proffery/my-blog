@@ -23,6 +23,17 @@ $radius: 5px;
   }
 }
 
+.notEditable {
+  padding: 0;
+  border: none;
+  box-shadow: none;
+
+  div [class='tiptap ProseMirror'] {
+    padding: 0;
+    border: none;
+  }
+}
+
 .content {
   all: unset;
   background-color: transparent;

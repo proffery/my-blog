@@ -10,10 +10,9 @@ export type Post = {
 
 export type DeletePostRequest = { postId: string }
 export type DeletePostResponse = { postId: string }
-export type GetPostRequest = { postId: string }
 export type GetPostResponse = Post
 export type UpdatePostResponse = Post
 export type UpdatePostRequest = { post: string; postId: string; tags: Tag[]; title: string }
 export type CreatePostResponse = Post
 export type CreatePostRequest = { authorId: string; post: string; tags: Tag[]; title: string }
-export type GetPostsListResponse = Models.DocumentList<Post>
+export type GetPostsResponse = Models.DocumentList<Post>

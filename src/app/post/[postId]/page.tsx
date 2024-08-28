@@ -1,9 +1,11 @@
+import { GetPostParams } from '@/app/api/posts/post/[postId]/route'
 import { endpoints } from '@/common/constants/endpoints'
 import { Page } from '@/components/layouts/page/page'
+import { TextEditor } from '@/components/ui/text-editor/text-editor'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/posts'
 import { getData } from '@/server/utils/get-data'
-import { GetPostRequest, GetPostResponse } from '@/services/posts/posts.types'
+import { GetPostResponse } from '@/services/posts/posts.types'
 
 type Props = {
   params: {
@@ -24,15 +26,14 @@ export const generateStaticParams = async () => {
 }
 
 export default async function Post({ params: { postId } }: Props) {
-  const postData = await getData<GetPostResponse, GetPostRequest>(`${endpoints.posts_get_post}`, {
-    body: { postId },
-    method: 'POST',
-  })
+  const postData = await getData<GetPostResponse, GetPostParams>(
+    `${endpoints.posts_get_post + '/' + postId}`
+  )
 
   return (
     <Page>
       <Typography.H1>{postData?.title}</Typography.H1>
-      <Typography.Body1>{postData?.post}</Typography.Body1>
+      <TextEditor defaultContent={postData?.post} em isEditable={false} />
     </Page>
   )
 }

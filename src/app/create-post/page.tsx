@@ -1,18 +1,15 @@
 'use client'
 
-import { useSelector } from 'react-redux'
-
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import { getErrorMessage } from '@/common/utils/get-error-message'
 import { CreatePostForm } from '@/components/forms/create-post-form/create-post-form'
 import { CreatePostFormValues } from '@/components/forms/create-post-form/schema'
 import { Page } from '@/components/layouts/page/page'
-import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import { useMeQuery } from '@/services/auth/auth.service'
 import { useCreatePostMutation } from '@/services/posts/posts.service'
-import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import s from './account.module.scss'
 
@@ -21,24 +18,22 @@ function CreatePost() {
     page: clsx(s.page),
   }
 
-  const isAuthenticated = useSelector(selectUserRole)
   const { data: meData } = useMeQuery()
   const authorId = meData?.user?.$id ?? ''
 
-  const [createPost] = useCreatePostMutation()
-
+  const [createPost, { error: createPostError }] = useCreatePostMutation()
+  const router = useRouter()
   const submitPostHandler = async (data: CreatePostFormValues) => {
-    await createPost({ authorId, ...data, tags: [] }).unwrap()
-    await clearCachesByServerAction(routes.posts)
+    const newPost = await createPost({ authorId, ...data, tags: [] }).unwrap()
+
+    router.push(routes.post + '/' + newPost.$id)
   }
 
-  if (!isAuthenticated) {
-    redirect(routes.login)
-  }
+  const errorMessage = getErrorMessage(createPostError)
 
   return (
     <Page className={classNames.page}>
-      <CreatePostForm onSubmit={submitPostHandler} />
+      <CreatePostForm errorMessage={errorMessage} onSubmit={submitPostHandler} />
     </Page>
   )
 }

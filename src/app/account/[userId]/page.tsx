@@ -1,9 +1,10 @@
+import { GetUserParams } from '@/app/api/users/get-user/[userId]/route'
 import { endpoints } from '@/common/constants/endpoints'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import { createUsersClient } from '@/server/users'
 import { getData } from '@/server/utils/get-data'
-import { GetUserRequest, GetUserResponse } from '@/services/users/users.types'
+import { GetUserResponse } from '@/services/users/users.types'
 import clsx from 'clsx'
 
 import s from './account.module.scss'
@@ -31,10 +32,12 @@ export default async function AccountById(props: Props) {
     params: { userId },
   } = props
 
-  const userData = await getData<GetUserResponse, GetUserRequest>(`${endpoints.users_get_user}`, {
-    body: { userId },
-    method: 'POST',
-  })
+  const userData = await getData<GetUserResponse, GetUserParams>(
+    `${endpoints.users_get_user + '/' + userId}`,
+    {
+      method: 'GET',
+    }
+  )
 
   return (
     <Page className={classNames.page}>

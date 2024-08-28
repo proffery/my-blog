@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect, useState } from 'react'
 
 import { FieldError } from '@/components/ui/field-error/field-error'
 import { Label } from '@/components/ui/label/label'
@@ -15,25 +15,30 @@ import clsx from 'clsx'
 import s from './text-editor.module.scss'
 
 type Props = {
+  defaultContent?: string
   errorMessage?: string
+  isEditable?: boolean
   label?: string
   onChange?: (content: string) => void
 } & Omit<ComponentPropsWithoutRef<'div'>, 'onChange'>
 
 export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
-  ({ errorMessage, label, onChange, ...rest }: Props, ref) => {
+  ({ defaultContent, errorMessage, isEditable = true, label, onChange, ...rest }: Props, ref) => {
     const classNames = {
-      content: clsx(s.content),
-      editor: clsx(s.editor),
+      content: clsx(s.content, !isEditable && s.notEditable),
+      editor: clsx(s.editor, !isEditable && s.notEditable),
     }
-    const [content, setContent] = useState('')
+    const [content, setContent] = useState(defaultContent ?? '')
+    const [editable, setEditable] = useState(isEditable)
 
     const handleContentChange = (newContent: string) => {
       setContent(newContent)
       onChange?.(newContent)
     }
+
     const editor = useEditor({
       content,
+      editable,
       extensions: [
         StarterKit,
         Underline,
@@ -49,16 +54,29 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
           types: ['heading', 'paragraph'],
         }),
       ],
+      immediatelyRender: false,
       onUpdate: ({ editor }) => {
         handleContentChange(editor.getHTML())
       },
     })
 
+    useEffect(() => {
+      if (!editor) {
+        return undefined
+      }
+
+      editor.setEditable(editable)
+    }, [editor, editable])
+
+    if (!editor) {
+      return null
+    }
+
     return (
       <FieldError errorMessage={errorMessage} ref={ref} {...rest}>
         {label && <Label>{label}</Label>}
         <div className={classNames.editor}>
-          <Toolbar editor={editor} />
+          {isEditable && <Toolbar editor={editor} />}
           <EditorContent className={classNames.content} editor={editor} />
         </div>
       </FieldError>

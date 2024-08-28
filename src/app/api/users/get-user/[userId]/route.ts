@@ -2,9 +2,10 @@ import { createUsersClient } from '@/server/users'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
-export async function POST(request: NextRequest) {
+export type GetUserParams = { params: { userId: string } }
+
+export async function GET(request: NextRequest, { params: { userId } }: GetUserParams) {
   const { users } = await createUsersClient()
-  const { userId } = await request.json()
 
   try {
     const user = await users.get(userId)

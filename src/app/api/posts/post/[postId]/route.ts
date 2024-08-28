@@ -2,9 +2,10 @@ import { createDatabaseClient } from '@/server/posts'
 import { NextRequest, NextResponse } from 'next/server'
 import { AppwriteException } from 'node-appwrite'
 
-export async function POST(request: NextRequest) {
+export type GetPostParams = { params: { postId: string } }
+
+export async function GET(request: NextRequest, { params: { postId } }: GetPostParams) {
   const { databases } = await createDatabaseClient()
-  const { postId } = await request.json()
 
   try {
     const post = await databases.getDocument(

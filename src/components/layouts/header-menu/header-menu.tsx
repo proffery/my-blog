@@ -32,9 +32,14 @@ export const HeaderMenu = ({ logout, userData }: Props) => {
         <ActiveLink href={routes.account}>Профиль</ActiveLink>
       </DropdownItem>
       {userRoles?.some(role => role === 'Writer') && (
-        <DropdownItem>
-          <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
-        </DropdownItem>
+        <>
+          <DropdownItem>
+            <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
+          </DropdownItem>
+          <DropdownItem>
+            <ActiveLink href={routes.myPosts}>Мои посты</ActiveLink>
+          </DropdownItem>
+        </>
       )}
       <DropdownItem>
         <Button onClick={() => logout()} variant={'text'}>
