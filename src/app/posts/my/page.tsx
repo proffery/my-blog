@@ -44,7 +44,7 @@ function MyPosts() {
       </div>
       {posts?.length === 0 && <Typography.Caption>У вас пока нет постов</Typography.Caption>}
       {posts?.map(post => (
-        <Typography.Body1 as={Link} href={routes.post + '/' + post.$id} key={post.$id}>
+        <Typography.Body1 as={Link} href={routes.post + '/' + post.$id} key={'my-posts' + post.$id}>
           {post.title}
         </Typography.Body1>
       ))}

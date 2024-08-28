@@ -1,4 +1,4 @@
-import { GetUserParams } from '@/app/api/users/get-user/[userId]/route'
+import { GetUserParams } from '@/app/api/users/user/[userId]/route'
 import { endpoints } from '@/common/constants/endpoints'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
@@ -35,6 +35,7 @@ export default async function AccountById(props: Props) {
   const userData = await getData<GetUserResponse, GetUserParams>(
     `${endpoints.users_get_user + '/' + userId}`,
     {
+      cache: 'no-store',
       method: 'GET',
     }
   )

@@ -1,4 +1,4 @@
-import { GetUserParams } from '@/app/api/users/get-user/[userId]/route'
+import { GetUserParams } from '@/app/api/users/user/[userId]/route'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
 import { GetUserResponse, GetUsersListResponse } from '@/services/users/users.types'

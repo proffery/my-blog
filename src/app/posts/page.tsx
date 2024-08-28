@@ -14,7 +14,7 @@ function Posts() {
     <Page>
       <Typography.H1>Posts Page</Typography.H1>
       {posts?.map(post => (
-        <Typography.Body1 as={Link} href={routes.post + '/' + post.$id} key={post.$id}>
+        <Typography.Body1 as={Link} href={routes.post + '/' + post.$id} key={'posts' + post.$id}>
           {post.title}
         </Typography.Body1>
       ))}

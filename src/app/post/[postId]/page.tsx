@@ -27,7 +27,8 @@ export const generateStaticParams = async () => {
 
 export default async function Post({ params: { postId } }: Props) {
   const postData = await getData<GetPostResponse, GetPostParams>(
-    `${endpoints.posts_get_post + '/' + postId}`
+    `${endpoints.posts_get_post + '/' + postId}`,
+    { cache: 'no-store', method: 'GET' }
   )
 
   return (
