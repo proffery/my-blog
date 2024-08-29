@@ -13,6 +13,8 @@ type Props = {
   }
 }
 
+export const dynamicParams = true
+
 export const generateStaticParams = async () => {
   const { databases } = await createDatabaseClient()
   const postsData = await databases.listDocuments(

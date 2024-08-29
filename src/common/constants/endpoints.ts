@@ -13,6 +13,6 @@ export const endpoints = {
   posts_delete: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/delete-post`,
   posts_get_post: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/post`,
   posts_update: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/update-post`,
-  users_get_all: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/all`,
+  users_get_all: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users`,
   users_get_user: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/user`,
 } as const

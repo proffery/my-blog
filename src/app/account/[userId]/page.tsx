@@ -9,6 +9,12 @@ import clsx from 'clsx'
 
 import s from './account.module.scss'
 
+type Props = {
+  params: { userId: string }
+}
+
+export const dynamicParams = true
+
 export const generateStaticParams = async () => {
   const { users } = await createUsersClient()
   const usersData = await users.list()
@@ -16,10 +22,6 @@ export const generateStaticParams = async () => {
   return usersData.users?.map(user => ({
     userId: user.$id,
   })) as any[]
-}
-
-type Props = {
-  params: { userId: string }
 }
 
 export default async function AccountById(props: Props) {
