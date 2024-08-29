@@ -1,0 +1,11 @@
+@use '@/styles/breakpoints';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 8px;
+  }
+}

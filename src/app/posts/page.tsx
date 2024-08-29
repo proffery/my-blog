@@ -1,34 +1,32 @@
 'use client'
 import { ChangeEvent, useState } from 'react'
 
-import { GetUserParams } from '@/app/api/users/user/[userId]/route'
-import { postsFilters } from '@/app/posts/posts-filters'
+import { PostsCard } from '@/app/posts/posts-card/posts-card'
+import { usePostsFilters } from '@/app/posts/use-posts-filters'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import { endpoints } from '@/common/constants/endpoints'
-import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import withSuspense from '@/common/hocs/with-suspense'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { Label } from '@/components/ui/label/label'
 import { TabGroup, TabItem, TabList } from '@/components/ui/tab-switcher/tab-switcher'
 import { Typography } from '@/components/ui/typography/typography'
-import { getData } from '@/server/utils/get-data'
 import { useMeQuery } from '@/services/auth/auth.service'
 import { useGetPostsQuery } from '@/services/posts/posts.service'
-import { GetUserResponse } from '@/services/users/users.types'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { useDebouncedCallback } from 'use-debounce'
 
 import s from './posts.module.scss'
 
 function Posts() {
-  const { search, setSearch, setSortDirection, sortDirection } = postsFilters()
+  const { search, setSearch, setSortDirection, sortDirection } = usePostsFilters()
 
   const classNames = {
     filtersWrapper: clsx(s.filtersWrapper),
     page: clsx(s.page),
+    posts: clsx(s.posts),
+    postsCard: clsx(s.postsCard),
     sortIcon: clsx(s.sortIcon, sortDirection === 'desc' ? s.sortIconDesc : s.sortIconAsc),
   }
 
@@ -94,22 +92,21 @@ function Posts() {
           </Button>
         </Label>
       </div>
-      {posts?.length === 0 && <Typography.Caption>Пока нет постов</Typography.Caption>}
-      {posts?.map(post => (
-        <Typography.Body1 as={Link} href={routes.post + '/' + post.$id} key={'posts' + post.$id}>
-          Заголовок: {post.title}
-          {' Автор: '}
-          <Typography.Subtitle1
-            as={Link}
-            href={routes.account + '/' + post.authorId}
-            key={'posts' + post.$id}
-          >
-            {post.authorName ?? 'Noname'}
-          </Typography.Subtitle1>
-        </Typography.Body1>
-      ))}
+      <div className={classNames.posts}>
+        {posts?.length === 0 && <Typography.Caption>Пока нет постов</Typography.Caption>}
+        {posts?.map(post => (
+          <PostsCard
+            className={classNames.postsCard}
+            date={post.$createdAt}
+            description={post.post}
+            key={post.$id}
+            postId={post.$id}
+            title={post.title}
+          />
+        ))}
+      </div>
     </Page>
   )
 }
 
-export default withRedux(Posts)
+export default withSuspense(withRedux(Posts))

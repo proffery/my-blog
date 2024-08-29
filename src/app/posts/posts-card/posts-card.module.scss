@@ -1,0 +1,61 @@
+@use '@/styles/breakpoints';
+
+.card {
+  aspect-ratio: 5/2;
+  width: 380px;
+
+  @media (width <= breakpoints.$mobile) {
+    width: 416px;
+  }
+}
+
+.image {
+  align-self: center;
+}
+
+.readIcon {
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+}
+
+.readButton {
+  display: flex;
+  justify-self: center;
+}
+
+.contentWrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  all: unset;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  text-decoration: none;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 8px;
+  }
+}

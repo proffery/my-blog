@@ -1,7 +1,7 @@
 import { SortDirection } from '@/app/api/posts/route'
 import { useQueryParam } from '@/common/hooks/use-query-params'
 
-export const postsFilters = () => {
+export const usePostsFilters = () => {
   const [search, setSearch] = useQueryParam<string>('search', '')
   const [authorId, setAuthorId] = useQueryParam<string>('authorId', '')
   const [sortDirection, setSortDirection] = useQueryParam<SortDirection>('sortDirection', 'desc')

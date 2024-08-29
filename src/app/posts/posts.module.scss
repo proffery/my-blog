@@ -34,3 +34,17 @@
     gap: 8px;
   }
 }
+
+.posts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 80px 16px;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 100%;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 32px;
+  }
+}
