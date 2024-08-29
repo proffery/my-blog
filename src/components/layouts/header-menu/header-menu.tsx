@@ -36,9 +36,6 @@ export const HeaderMenu = ({ logout, userData }: Props) => {
           <DropdownItem>
             <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
           </DropdownItem>
-          <DropdownItem>
-            <ActiveLink href={routes.myPosts}>Мои посты</ActiveLink>
-          </DropdownItem>
         </>
       )}
       <DropdownItem>

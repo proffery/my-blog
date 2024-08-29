@@ -4,14 +4,14 @@ import { AppwriteException } from 'node-appwrite'
 
 export async function PUT(request: NextRequest) {
   const { databases } = await createDatabaseClient()
-  const { post, postId, tags, title } = await request.json()
+  const { authorName, post, postId, tags, title } = await request.json()
 
   try {
     const updatedPost = await databases.updateDocument(
       `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
       `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
       postId,
-      { post, tags, title }
+      { authorName, post, tags, title }
     )
 
     return NextResponse.json({ post: updatedPost })

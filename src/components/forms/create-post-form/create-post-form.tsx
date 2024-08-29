@@ -56,7 +56,7 @@ export const CreatePostForm = ({ disabled, errorMessage, onSubmit }: Props) => {
       <Input
         errorMessage={errors.title?.message}
         label={'Заголовок'}
-        placeholder={'Как организовать идеальный домашний офис'}
+        placeholder={'Как организовать домашний офис'}
         {...register('title')}
       />
       <Controller

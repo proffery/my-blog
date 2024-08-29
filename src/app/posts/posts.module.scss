@@ -1,0 +1,36 @@
+@use '@/styles/breakpoints';
+
+.page {
+  gap: 16px;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 8px;
+  }
+}
+
+.sortIcon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+}
+
+.sortIconDesc {
+  transform: rotate(90deg);
+}
+
+.sortIconAsc {
+  transform: rotate(270deg);
+}
+
+.filtersWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+
+  width: 100%;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 8px;
+  }
+}

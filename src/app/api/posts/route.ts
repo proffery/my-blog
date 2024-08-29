@@ -6,6 +6,7 @@ export type SortDirection = 'asc' | 'desc'
 
 export type GetPostsSearchParams = {
   authorId?: string
+  search?: string
   sortDirection?: SortDirection
 }
 
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
 
   const authorId = searchParams.get('authorId')
   const sortDirection = searchParams.get('sortDirection')
+  const search = searchParams.get('search')
 
   if (authorId) {
     try {
@@ -22,7 +24,11 @@ export async function GET(request: NextRequest) {
         const list = await databases.listDocuments(
           `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
           `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
-          [Query.orderAsc('$createdAt'), Query.equal('authorId', [authorId])]
+          [
+            Query.orderAsc('$createdAt'),
+            Query.equal('authorId', [authorId]),
+            Query.contains('title', search ?? ''),
+          ]
         )
 
         return NextResponse.json(list)
@@ -30,7 +36,11 @@ export async function GET(request: NextRequest) {
         const list = await databases.listDocuments(
           `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
           `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
-          [Query.orderDesc('$createdAt'), Query.equal('authorId', [authorId])]
+          [
+            Query.orderDesc('$createdAt'),
+            Query.equal('authorId', [authorId]),
+            Query.contains('title', search ?? ''),
+          ]
         )
 
         return NextResponse.json(list)
@@ -46,12 +56,23 @@ export async function GET(request: NextRequest) {
     }
   } else {
     try {
-      const list = await databases.listDocuments(
-        `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
-        `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`
-      )
+      if (sortDirection === 'asc') {
+        const list = await databases.listDocuments(
+          `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
+          `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
+          [Query.orderAsc('$createdAt'), Query.contains('title', search ?? '')]
+        )
 
-      return NextResponse.json(list)
+        return NextResponse.json(list)
+      } else {
+        const list = await databases.listDocuments(
+          `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
+          `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
+          [Query.orderDesc('$createdAt'), Query.contains('title', search ?? '')]
+        )
+
+        return NextResponse.json(list)
+      }
     } catch (error: unknown) {
       if (error instanceof AppwriteException) {
         console.error(error)

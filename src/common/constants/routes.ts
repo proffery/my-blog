@@ -5,7 +5,6 @@ export const routes = {
   contacts: '/contacts',
   createPost: '/create-post',
   login: '/login',
-  myPosts: '/posts/my',
   post: '/post',
   posts: '/posts',
   registration: '/registration',

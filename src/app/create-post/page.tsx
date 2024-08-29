@@ -20,11 +20,12 @@ function CreatePost() {
 
   const { data: meData } = useMeQuery()
   const authorId = meData?.user?.$id ?? ''
+  const authorName = meData?.user?.name ?? ''
 
   const [createPost, { error: createPostError }] = useCreatePostMutation()
   const router = useRouter()
   const submitPostHandler = async (data: CreatePostFormValues) => {
-    const newPost = await createPost({ authorId, ...data, tags: [] }).unwrap()
+    const newPost = await createPost({ authorId, ...data, authorName, tags: [] }).unwrap()
 
     router.push(routes.post + '/' + newPost.$id)
   }

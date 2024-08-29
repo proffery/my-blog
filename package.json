@@ -16,6 +16,7 @@
     "@next/env": "^14.2.5",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-tabs": "^1.1.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@tiptap/extension-link": "^2.6.6",
     "@tiptap/extension-text-align": "^2.6.6",
@@ -33,6 +34,7 @@
     "react-dom": "18",
     "react-hook-form": "^7.52.2",
     "react-redux": "^9.1.2",
+    "use-debounce": "^10.0.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -56,4 +58,5 @@
     "storybook": "8.2.8",
     "stylelint": "16.8.1",
     "typescript": "5.6.1-rc"
-  }}
+  }
+}

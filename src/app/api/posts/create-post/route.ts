@@ -4,7 +4,7 @@ import { AppwriteException, ID } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
   const { databases } = await createDatabaseClient()
-  const { authorId, post, title } = await request.json()
+  const { authorId, authorName, post, title } = await request.json()
   const postId = ID.unique()
 
   try {
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
       `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
       postId,
-      { authorId, isPublished: true, post, title }
+      { authorId, authorName, isPublished: true, post, title }
     )
 
     return NextResponse.json(newPost)
