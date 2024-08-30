@@ -1,19 +1,19 @@
-import { endpoints } from '@/common/constants/endpoints'
-import { appActions } from '@/services/app/app.slice'
 import {
-  ApiResponse,
   ChangeNameRequest,
   LoginEmailRequest,
   MeResponse,
+  MessageResponse,
   RegistrationRequest,
   VerifyEmailRequest,
-} from '@/services/auth/auth.types'
+} from '@/app/api/auth/auth.types'
+import { endpoints } from '@/common/constants/endpoints'
+import { appActions } from '@/services/app/app.slice'
 import { baseApi } from '@/services/base-api'
 import { userActions } from '@/services/user/user.slice'
 
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    changeName: builder.mutation<ApiResponse, ChangeNameRequest>({
+    changeName: builder.mutation<MessageResponse, ChangeNameRequest>({
       invalidatesTags: ['Me'],
       async onQueryStarted({ name: newName }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
@@ -37,7 +37,7 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.auth_changeName,
       }),
     }),
-    loginEmail: builder.mutation<ApiResponse, LoginEmailRequest>({
+    loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({
       invalidatesTags: ['Me'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
@@ -53,7 +53,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    logout: builder.mutation<ApiResponse, void>({
+    logout: builder.mutation<MessageResponse, void>({
       invalidatesTags: ['Me'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -87,7 +87,7 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.auth_me,
       }),
     }),
-    registration: builder.mutation<ApiResponse, RegistrationRequest>({
+    registration: builder.mutation<MessageResponse, RegistrationRequest>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -101,7 +101,7 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.auth_registration,
       }),
     }),
-    sendVerifyEmail: builder.mutation<ApiResponse, void>({
+    sendVerifyEmail: builder.mutation<MessageResponse, void>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -115,7 +115,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
 
-    verifyEmail: builder.mutation<ApiResponse, VerifyEmailRequest>({
+    verifyEmail: builder.mutation<MessageResponse, VerifyEmailRequest>({
       invalidatesTags: ['Me'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {

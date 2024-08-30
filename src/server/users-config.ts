@@ -8,7 +8,7 @@ export async function createUsersClient() {
     .setKey(process.env.NEXT_PUBLIC_APPWRITE_KEY ?? '')
 
   return {
-    get users() {
+    get usersInstance() {
       return new Users(client)
     },
   }

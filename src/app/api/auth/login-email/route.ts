@@ -1,30 +1,17 @@
-import { createAuthClient } from '@/server/auth'
-import { cookies } from 'next/headers'
+import { createAuthClient } from '@/server/auth-config'
+import { loginEmail } from '@/server/functions/auth/login-email'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
+  const { authInstance } = await createAuthClient()
+  const { email, password } = await request.json()
+
   try {
-    const { auth } = await createAuthClient()
-    const { email, password } = await request.json()
-
-    const session = await auth.createEmailPasswordSession(email, password)
-
-    cookies().set(`${process.env.NEXT_PUBLIC_SESSION_NAME}`, session.secret, {
-      httpOnly: true,
-      path: '/',
-      sameSite: 'strict',
-      secure: true,
-    })
+    await loginEmail({ authInstance, email, password })
 
     return NextResponse.json({ message: 'Sign-in successfully!' })
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

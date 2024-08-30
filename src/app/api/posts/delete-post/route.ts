@@ -1,26 +1,17 @@
-import { createDatabaseClient } from '@/server/posts'
+import { createDatabaseClient } from '@/server/database-config'
+import { deletePost } from '@/server/functions/database/posts/delete-post'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
 export async function DELETE(request: NextRequest) {
-  const { databases } = await createDatabaseClient()
+  const { databasesInstance } = await createDatabaseClient()
   const { postId } = await request.json()
 
   try {
-    await databases.deleteDocument(
-      `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
-      `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
-      postId
-    )
+    await deletePost({ databasesInstance, postId })
 
-    return NextResponse.json(postId)
+    return NextResponse.json({ postId })
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

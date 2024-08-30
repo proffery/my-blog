@@ -1,17 +1,17 @@
-import { GetPostParams } from '@/app/api/posts/post/[postId]/route'
-import { GetPostsSearchParams } from '@/app/api/posts/route'
-import { endpoints } from '@/common/constants/endpoints'
-import { baseApi } from '@/services/base-api'
 import {
   CreatePostRequest,
   CreatePostResponse,
   DeletePostRequest,
   DeletePostResponse,
+  GetPostRequest,
   GetPostResponse,
+  GetPostsRequest,
   GetPostsResponse,
   UpdatePostRequest,
   UpdatePostResponse,
-} from '@/services/posts/posts.types'
+} from '@/app/api/posts/posts.types'
+import { endpoints } from '@/common/constants/endpoints'
+import { baseApi } from '@/services/base-api'
 
 export const postsService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -45,7 +45,7 @@ export const postsService = baseApi.injectEndpoints({
         url: endpoints.posts_delete,
       }),
     }),
-    getPost: builder.query<GetPostResponse, GetPostParams>({
+    getPost: builder.query<GetPostResponse, GetPostRequest>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -57,7 +57,7 @@ export const postsService = baseApi.injectEndpoints({
         url: endpoints.posts_get_post + '/' + postId,
       }),
     }),
-    getPosts: builder.query<GetPostsResponse, GetPostsSearchParams>({
+    getPosts: builder.query<GetPostsResponse, GetPostsRequest>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled

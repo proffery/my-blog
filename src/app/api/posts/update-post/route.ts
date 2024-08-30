@@ -1,27 +1,17 @@
-import { createDatabaseClient } from '@/server/posts'
+import { createDatabaseClient } from '@/server/database-config'
+import { updatePost } from '@/server/functions/database/posts/update-post'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
 export async function PUT(request: NextRequest) {
-  const { databases } = await createDatabaseClient()
-  const { authorName, post, postId, tags, title } = await request.json()
+  const { databasesInstance } = await createDatabaseClient()
+  const { authorName, post, postId, title } = await request.json()
 
   try {
-    const updatedPost = await databases.updateDocument(
-      `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
-      `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
-      postId,
-      { authorName, post, tags, title }
-    )
+    const updatedPost = await updatePost({ authorName, databasesInstance, post, postId, title })
 
-    return NextResponse.json({ post: updatedPost })
+    return NextResponse.json(updatedPost)
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

@@ -1,22 +1,17 @@
-import { createSessionClient } from '@/server/auth'
+import { createSessionClient } from '@/server/auth-config'
+import { verifyEmail } from '@/server/functions/auth/verify-email'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
-  try {
-    const { auth } = await createSessionClient(request)
-    const { secret, userId } = await request.json()
+  const { authInstance } = await createSessionClient(request)
+  const { secret, userId } = await request.json()
 
-    await auth.updateVerification(userId, secret)
+  try {
+    await verifyEmail({ authInstance, secret, userId })
 
     return NextResponse.json({ message: `Email confirmed!` })
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

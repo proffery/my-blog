@@ -12,6 +12,7 @@ export type Post = {
 export type DeletePostRequest = { postId: string }
 export type DeletePostResponse = { postId: string }
 export type GetPostResponse = Post
+export type GetPostRequest = { params: { postId: string } }
 export type UpdatePostResponse = Post
 export type UpdatePostRequest = { post: string; postId: string; tags: Tag[]; title: string }
 export type CreatePostResponse = Post
@@ -19,7 +20,12 @@ export type CreatePostRequest = {
   authorId: string
   authorName: string
   post: string
-  tags: Tag[]
   title: string
 }
+export type SortDirection = 'asc' | 'desc'
 export type GetPostsResponse = Models.DocumentList<Post>
+export type GetPostsRequest = {
+  authorId?: string
+  search?: string
+  sortDirection?: SortDirection
+}

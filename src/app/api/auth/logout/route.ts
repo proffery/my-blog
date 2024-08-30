@@ -1,24 +1,17 @@
 'use server'
-import { createSessionClient } from '@/server/auth'
-import { cookies } from 'next/headers'
+import { createSessionClient } from '@/server/auth-config'
+import { logout } from '@/server/functions/auth/logout'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
 export async function DELETE(request: NextRequest) {
-  const { auth } = await createSessionClient(request)
+  const { authInstance } = await createSessionClient(request)
 
   try {
-    await auth.deleteSession('current')
+    await logout({ authInstance })
 
     return NextResponse.json({ message: 'Successfully logged out!' })
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-      cookies().delete(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

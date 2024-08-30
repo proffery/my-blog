@@ -1,6 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 
+import { VerifyEmailRequest } from '@/app/api/auth/auth.types'
 import { ConfirmEmailIcon } from '@/assets/icons/components/confirm-email-icon'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
@@ -8,7 +9,6 @@ import withSuspense from '@/common/hocs/with-suspense'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery, useVerifyEmailMutation } from '@/services/auth/auth.service'
-import { VerifyEmailRequest } from '@/services/auth/auth.types'
 import clsx from 'clsx'
 import { useRouter, useSearchParams } from 'next/navigation'
 

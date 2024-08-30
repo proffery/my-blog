@@ -1,24 +1,16 @@
-import { createSessionClient } from '@/server/auth'
-import { cookies } from 'next/headers'
+import { createSessionClient } from '@/server/auth-config'
+import { me } from '@/server/functions/auth/me'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
 export async function GET(request: NextRequest) {
-  const { auth } = await createSessionClient(request)
+  const { authInstance } = await createSessionClient(request)
 
   try {
-    const user = await auth.get()
+    const user = await me({ authInstance })
 
     return NextResponse.json({ user })
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-
-      cookies().delete(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

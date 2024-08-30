@@ -1,4 +1,4 @@
-import { SortDirection } from '@/app/api/posts/route'
+import { SortDirection } from '@/app/api/posts/posts.types'
 import { useQueryParam } from '@/common/hooks/use-query-params'
 
 export const usePostsFilters = () => {

@@ -1,10 +1,9 @@
-import { GetUserParams } from '@/app/api/users/user/[userId]/route'
-import { endpoints } from '@/common/constants/endpoints'
+import { User } from '@/app/api/users/users.types'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
-import { createUsersClient } from '@/server/users'
-import { getData } from '@/server/utils/get-data'
-import { GetUserResponse } from '@/services/users/users.types'
+import { allUsers } from '@/server/functions/users/all-users'
+import { userById } from '@/server/functions/users/user-by-id'
+import { createUsersClient } from '@/server/users-config'
 import clsx from 'clsx'
 
 import s from './account.module.scss'
@@ -16,10 +15,10 @@ type Props = {
 export const dynamicParams = true
 
 export const generateStaticParams = async () => {
-  const { users } = await createUsersClient()
-  const usersData = await users.list()
+  const { usersInstance } = await createUsersClient()
+  const usersData = await allUsers({ usersInstance })
 
-  return usersData.users?.map(user => ({
+  return usersData.users?.map((user: User) => ({
     userId: user.$id,
   })) as any[]
 }
@@ -33,14 +32,8 @@ export default async function AccountById(props: Props) {
   const {
     params: { userId },
   } = props
-
-  const userData = await getData<GetUserResponse, GetUserParams>(
-    `${endpoints.users_get_user + '/' + userId}`,
-    {
-      cache: 'no-store',
-      method: 'GET',
-    }
-  )
+  const { usersInstance } = await createUsersClient()
+  const userData = await userById({ userId, usersInstance })
 
   return (
     <Page className={classNames.page}>
@@ -48,17 +41,17 @@ export default async function AccountById(props: Props) {
       <div className={classNames.container}>
         <div className={classNames.item}>
           <Typography.Subtitle1>ID:&nbsp;</Typography.Subtitle1>
-          <Typography.Body1>{userData?.user?.$id}</Typography.Body1>
+          <Typography.Body1>{userData?.$id}</Typography.Body1>
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>
-          <Typography.Body1>{userData?.user?.name}</Typography.Body1>
+          <Typography.Body1>{userData?.name}</Typography.Body1>
         </div>
         <div className={classNames.item}>
-          {userData?.user?.labels.length ? (
+          {userData?.labels.length ? (
             <Typography.Subtitle1>Группа:&nbsp;</Typography.Subtitle1>
           ) : null}
-          {userData?.user?.labels.map(label => (
+          {userData?.labels.map((label: string) => (
             <Typography.Subtitle1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Subtitle1>
           ))}
         </div>

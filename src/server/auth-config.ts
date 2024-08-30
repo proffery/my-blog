@@ -16,7 +16,7 @@ export async function createSessionClient(request: NextRequest) {
   }
 
   return {
-    get auth() {
+    get authInstance() {
       return new Account(client)
     },
   }
@@ -29,7 +29,7 @@ export async function createAuthClient() {
     .setKey(process.env.NEXT_PUBLIC_APPWRITE_KEY ?? '')
 
   return {
-    get auth() {
+    get authInstance() {
       return new Account(client)
     },
   }

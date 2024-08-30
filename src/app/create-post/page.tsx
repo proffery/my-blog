@@ -25,7 +25,7 @@ function CreatePost() {
   const [createPost, { error: createPostError }] = useCreatePostMutation()
   const router = useRouter()
   const submitPostHandler = async (data: CreatePostFormValues) => {
-    const newPost = await createPost({ authorId, ...data, authorName, tags: [] }).unwrap()
+    const newPost = await createPost({ authorId, ...data, authorName }).unwrap()
 
     router.push(routes.post + '/' + newPost.$id)
   }

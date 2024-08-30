@@ -1,11 +1,10 @@
-import { GetUserParams } from '@/app/api/users/user/[userId]/route'
+import { GetUserRequest, GetUserResponse, GetUsersListResponse } from '@/app/api/users/users.types'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
-import { GetUserResponse, GetUsersListResponse } from '@/services/users/users.types'
 
 export const usersService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getUser: builder.query<GetUserResponse, GetUserParams>({
+    getUser: builder.query<GetUserResponse, GetUserRequest>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled

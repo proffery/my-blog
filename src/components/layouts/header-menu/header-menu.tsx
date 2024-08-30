@@ -1,3 +1,4 @@
+import { MeResponse } from '@/app/api/auth/auth.types'
 import { routes } from '@/common/constants/routes'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
 import { Button } from '@/components/ui/button/button'
@@ -8,7 +9,6 @@ import {
   DropdownSeparator,
 } from '@/components/ui/drop-down/drop-down'
 import { Typography } from '@/components/ui/typography/typography'
-import { MeResponse } from '@/services/auth/auth.types'
 
 type Props = {
   logout: () => void

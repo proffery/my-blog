@@ -1,23 +1,17 @@
-import { createUsersClient } from '@/server/users'
+import { GetUserRequest } from '@/app/api/users/users.types'
+import { serverErrorHandler } from '@/server/functions/server-errors-handler'
+import { userById } from '@/server/functions/users/user-by-id'
+import { createUsersClient } from '@/server/users-config'
 import { NextRequest, NextResponse } from 'next/server'
-import { AppwriteException } from 'node-appwrite'
 
-export type GetUserParams = { params: { userId: string } }
-
-export async function GET(request: NextRequest, { params: { userId } }: GetUserParams) {
-  const { users } = await createUsersClient()
+export async function GET(request: NextRequest, { params: { userId } }: GetUserRequest) {
+  const { usersInstance } = await createUsersClient()
 
   try {
-    const user = await users.get(userId)
+    const user = await userById({ userId, usersInstance })
 
     return NextResponse.json({ user })
   } catch (error: unknown) {
-    if (error instanceof AppwriteException) {
-      console.error(error)
-
-      return NextResponse.json({ message: error.message }, { status: error.code })
-    }
-
-    return NextResponse.json({ message: 'An unknown error!' }, { status: 400 })
+    serverErrorHandler(error)
   }
 }

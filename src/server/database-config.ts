@@ -7,7 +7,7 @@ export async function createDatabaseClient() {
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT ?? '')
 
   return {
-    get databases() {
+    get databasesInstance() {
       return new Databases(client)
     },
   }
