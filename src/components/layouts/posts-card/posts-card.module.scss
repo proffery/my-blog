@@ -11,6 +11,7 @@
 
 .image {
   align-self: center;
+  box-shadow: var(--color-shadow);
 }
 
 .readIcon {
@@ -58,4 +59,10 @@
   @media (width <= breakpoints.$mobile) {
     gap: 8px;
   }
+}
+
+.bottomInfoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

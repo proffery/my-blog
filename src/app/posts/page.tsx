@@ -1,12 +1,12 @@
 'use client'
 import { ChangeEvent, useState } from 'react'
 
-import { PostsCard } from '@/app/posts/posts-card/posts-card'
 import { usePostsFilters } from '@/app/posts/use-posts-filters'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
 import { Page } from '@/components/layouts/page/page'
+import { PostsCard } from '@/components/layouts/posts-card/posts-card'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { Label } from '@/components/ui/label/label'
@@ -74,16 +74,18 @@ function Posts() {
           placeholder={'домашний офис'}
           value={searchInput ?? ''}
         />
-        <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
-          <TabList>
-            <TabItem selected={tabValue === 'my'} value={'my'}>
-              Мои
-            </TabItem>
-            <TabItem selected={tabValue === 'all'} value={'all'}>
-              Все
-            </TabItem>
-          </TabList>
-        </TabGroup>
+        {meData && (
+          <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
+            <TabList>
+              <TabItem selected={tabValue === 'all'} value={'all'}>
+                Все
+              </TabItem>
+              <TabItem selected={tabValue === 'my'} value={'my'}>
+                Мои
+              </TabItem>
+            </TabList>
+          </TabGroup>
+        )}
         <Label>
           Сначала
           <Button onClick={sortChangeHandler}>

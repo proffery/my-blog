@@ -49,7 +49,7 @@ export default async function AccountById(props: Props) {
         </div>
         <div className={classNames.item}>
           {userData?.labels.length ? (
-            <Typography.Subtitle1>Группа:&nbsp;</Typography.Subtitle1>
+            <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
           ) : null}
           {userData?.labels.map((label: string) => (
             <Typography.Subtitle1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Subtitle1>

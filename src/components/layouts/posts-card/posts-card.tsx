@@ -4,6 +4,7 @@ import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import cover from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { cleanFromHTML } from '@/common/utils/clean-from-html'
+import { dateIsoToLocalRu } from '@/common/utils/date-iso-to-local-ru'
 import { Button } from '@/components/ui/button/button'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
@@ -23,6 +24,7 @@ type Props = {
 
 export const PostsCard = ({ className, date, description, image, postId, title }: Props) => {
   const classNames = {
+    bottomInfoWrapper: clsx(s.bottomInfoWrapper),
     card: clsx(s.card, className),
     contentWrapper: clsx(s.contentWrapper),
     description: clsx(s.description),
@@ -38,8 +40,15 @@ export const PostsCard = ({ className, date, description, image, postId, title }
       <Image
         alt={'Card cover'}
         className={classNames.image}
+        height={400}
         src={image ? image : cover}
-        style={{ height: 'auto', width: '100%' }}
+        style={{
+          height: 'auto',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          width: '100%',
+        }}
+        width={400}
       />
       <div className={classNames.contentWrapper}>
         <div className={classNames.titleWrapper}>
@@ -50,15 +59,18 @@ export const PostsCard = ({ className, date, description, image, postId, title }
             {cleanFromHTML(description)}
           </Typography.Body1>
         </div>
-        <Button
-          as={Link}
-          className={classNames.readButton}
-          href={routes.post + '/' + postId}
-          variant={'text'}
-        >
-          <Typography.Body2>Читать больше</Typography.Body2>{' '}
-          <RightBracketIcon className={classNames.readIcon} />
-        </Button>
+        <div className={classNames.bottomInfoWrapper}>
+          <Button
+            as={Link}
+            className={classNames.readButton}
+            href={routes.post + '/' + postId}
+            variant={'text'}
+          >
+            <Typography.Subtitle2>Читать</Typography.Subtitle2>{' '}
+            <RightBracketIcon className={classNames.readIcon} />
+          </Button>
+          <Typography.Body2>{dateIsoToLocalRu(date)}</Typography.Body2>
+        </div>
       </div>
     </Card>
   )

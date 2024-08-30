@@ -81,7 +81,7 @@ function Account() {
         </div>
         <div className={classNames.item}>
           {meData?.user?.labels.length ? (
-            <Typography.Subtitle1>Группа:&nbsp;</Typography.Subtitle1>
+            <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
           ) : null}
           {meData?.user?.labels.map(label => (
             <Typography.Subtitle1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Subtitle1>
