@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
+import { TiktokIcon } from '@/assets/icons/components/tiktok-icon'
 import { AddLinkForm } from '@/components/forms/add-link-form/add-link-form'
-import { AddLinkValues } from '@/components/forms/add-link-form/schema'
+import { AddLinkValues } from '@/components/forms/add-link-form/add-link-schema'
+import { AddTiktokIdForm } from '@/components/forms/add-tiktok-id-form/add-tiktok-id-form'
+import { AddYoutubeLinkForm } from '@/components/forms/add-youtube-link-form/add-youtube-link-form'
 import { Button } from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal/modal'
 import { setLink } from '@/components/ui/text-editor/set-link'
@@ -27,6 +30,7 @@ import {
   Strikethrough,
   Underline,
   Undo,
+  Youtube,
 } from 'lucide-react'
 
 import s from './text-editor.module.scss'
@@ -38,72 +42,87 @@ type Props = {
 export const Toolbar = ({ editor }: Props) => {
   const classNames = {
     toolbar: clsx(s.toolbar),
-    toolbarButton: clsx(s.toolbarButton),
     toolbarButtons: clsx(s.toolbarButtons),
   }
-  const previousUrl = editor?.getAttributes('link').href
+  const previousLinkUrl = editor?.getAttributes('link').href
   const [openLinkModal, setOpenLinkModal] = useState(false)
-  const [url, setUrl] = useState('')
+  const [openYoutubeModal, setOpenYoutubeModal] = useState(false)
+  const [openTiktokModal, setOpenTiktokModal] = useState(false)
 
-  const buttonVariantBold = editor?.isActive('bold') ? 'secondary' : 'primary'
-  const buttonVariantLink = editor?.isActive('link') ? 'secondary' : 'primary'
-  const buttonVariantRedo = editor?.isActive('redo') ? 'secondary' : 'primary'
-  const buttonVariantUndo = editor?.isActive('undo') ? 'secondary' : 'primary'
-  const buttonVariantBlockquote = editor?.isActive('blockquote') ? 'secondary' : 'primary'
-  const buttonVariantCode = editor?.isActive('code') ? 'secondary' : 'primary'
-  const buttonVariantBulletList = editor?.isActive('bulletList') ? 'secondary' : 'primary'
-  const buttonVariantOrderedList = editor?.isActive('orderedList') ? 'secondary' : 'primary'
-  const buttonVariantHeading1 = editor?.isActive('heading', { level: 1 }) ? 'secondary' : 'primary'
-  const buttonVariantHeading2 = editor?.isActive('heading', { level: 2 }) ? 'secondary' : 'primary'
-  const buttonVariantHeading3 = editor?.isActive('heading', { level: 3 }) ? 'secondary' : 'primary'
-  const buttonVariantHeading4 = editor?.isActive('heading', { level: 4 }) ? 'secondary' : 'primary'
-  const buttonVariantItalic = editor?.isActive('italic') ? 'secondary' : 'primary'
-  const buttonVariantUnderline = editor?.isActive('underline') ? 'secondary' : 'primary'
-  const buttonVariantStrikethrough = editor?.isActive('strikethrough') ? 'secondary' : 'primary'
-  const buttonVariantAlignLeft = editor?.isActive({ textAlign: 'left' }) ? 'secondary' : 'primary'
-  const buttonVariantAlignRight = editor?.isActive({ textAlign: 'right' }) ? 'secondary' : 'primary'
-  const buttonVariantAlignCenter = editor?.isActive({ textAlign: 'center' })
-    ? 'secondary'
-    : 'primary'
-  const buttonVariantAlignJustify = editor?.isActive({ textAlign: 'justify' })
-    ? 'secondary'
-    : 'primary'
+  const activeBold = editor?.isActive('bold') ? 'secondary' : 'primary'
+  const activeLink = editor?.isActive('link') ? 'secondary' : 'primary'
+  const activeYoutube = editor?.isActive('youtube') ? 'secondary' : 'primary'
+  const activeTiktok = editor?.isActive('iframe') ? 'secondary' : 'primary'
+  const activeRedo = editor?.isActive('redo') ? 'secondary' : 'primary'
+  const activeUndo = editor?.isActive('undo') ? 'secondary' : 'primary'
+  const activeBlockquote = editor?.isActive('blockquote') ? 'secondary' : 'primary'
+  const activeCode = editor?.isActive('code') ? 'secondary' : 'primary'
+  const activeBulletList = editor?.isActive('bulletList') ? 'secondary' : 'primary'
+  const activeOrderedList = editor?.isActive('orderedList') ? 'secondary' : 'primary'
+  const activeHeading1 = editor?.isActive('heading', { level: 1 }) ? 'secondary' : 'primary'
+  const activeHeading2 = editor?.isActive('heading', { level: 2 }) ? 'secondary' : 'primary'
+  const activeHeading3 = editor?.isActive('heading', { level: 3 }) ? 'secondary' : 'primary'
+  const activeHeading4 = editor?.isActive('heading', { level: 4 }) ? 'secondary' : 'primary'
+  const activeItalic = editor?.isActive('italic') ? 'secondary' : 'primary'
+  const activeUnderline = editor?.isActive('underline') ? 'secondary' : 'primary'
+  const activeStrikethrough = editor?.isActive('strikethrough') ? 'secondary' : 'primary'
+  const activeAlignLeft = editor?.isActive({ textAlign: 'left' }) ? 'secondary' : 'primary'
+  const activeAlignRight = editor?.isActive({ textAlign: 'right' }) ? 'secondary' : 'primary'
+  const activeAlignCenter = editor?.isActive({ textAlign: 'center' }) ? 'secondary' : 'primary'
+  const activeAlignJustify = editor?.isActive({ textAlign: 'justify' }) ? 'secondary' : 'primary'
 
-  const handleClickBold = () => editor?.chain().focus().toggleBold().run()
-  const handleClickLink = () => {
+  const handleBold = () => editor?.chain().focus().toggleBold().run()
+  const handleLink = () => {
     if (editor?.isActive('link')) {
       editor?.chain().focus().unsetLink().run()
-      setUrl('')
     } else {
-      setLink(editor, url)
       setOpenLinkModal(true)
     }
   }
-  const handleClickRedo = () => editor?.chain().focus().redo().run()
-  const handleClickUndo = () => editor?.chain().focus().undo().run()
-  const handleClickBlockquote = () => editor?.chain().focus().toggleBlockquote().run()
-  const handleClickCode = () =>
+  const handleYoutube = () => {
+    setOpenYoutubeModal(true)
+  }
+  const handleTicTok = () => {
+    setOpenTiktokModal(true)
+  }
+  const handleRedo = () => editor?.chain().focus().redo().run()
+  const handleUndo = () => editor?.chain().focus().undo().run()
+  const handleBlockquote = () => editor?.chain().focus().toggleBlockquote().run()
+  const handleCode = () =>
     editor?.isActive('code')
       ? editor?.chain().focus().unsetCode().run()
       : editor?.chain().focus().setCode().run()
-  const handleClickBulletList = () => editor?.chain().focus().toggleBulletList().run()
-  const handleClickOrderedList = () => editor?.chain().focus().toggleOrderedList().run()
-  const handleClickHeading1 = () => editor?.chain().focus().toggleHeading({ level: 1 }).run()
-  const handleClickHeading2 = () => editor?.chain().focus().toggleHeading({ level: 2 }).run()
-  const handleClickHeading3 = () => editor?.chain().focus().toggleHeading({ level: 3 }).run()
-  const handleClickHeading4 = () => editor?.chain().focus().toggleHeading({ level: 4 }).run()
-  const handleClickItalic = () => editor?.chain().focus().toggleItalic().run()
-  const handleClickUnderline = () => editor?.chain().focus().toggleUnderline().run()
-  const handleClickStrikethrough = () => editor?.chain().focus().toggleStrike().run()
-  const handleClickAlignLeft = () => editor?.chain().focus().setTextAlign('left').run()
-  const handleClickAlignRight = () => editor?.chain().focus().setTextAlign('right').run()
-  const handleClickAlignCenter = () => editor?.chain().focus().setTextAlign('center').run()
-
-  const handleClickAlignJustify = () => editor?.chain().focus().setTextAlign('justify').run()
+  const handleBulletList = () => editor?.chain().focus().toggleBulletList().run()
+  const handleOrderedList = () => editor?.chain().focus().toggleOrderedList().run()
+  const handleHeading1 = () => editor?.chain().focus().toggleHeading({ level: 1 }).run()
+  const handleHeading2 = () => editor?.chain().focus().toggleHeading({ level: 2 }).run()
+  const handleHeading3 = () => editor?.chain().focus().toggleHeading({ level: 3 }).run()
+  const handleHeading4 = () => editor?.chain().focus().toggleHeading({ level: 4 }).run()
+  const handleItalic = () => editor?.chain().focus().toggleItalic().run()
+  const handleUnderline = () => editor?.chain().focus().toggleUnderline().run()
+  const handleStrikethrough = () => editor?.chain().focus().toggleStrike().run()
+  const handleAlignLeft = () => editor?.chain().focus().setTextAlign('left').run()
+  const handleAlignRight = () => editor?.chain().focus().setTextAlign('right').run()
+  const handleAlignCenter = () => editor?.chain().focus().setTextAlign('center').run()
+  const handleAlignJustify = () => editor?.chain().focus().setTextAlign('justify').run()
 
   const handleAddLink = (data: AddLinkValues) => {
-    setUrl(data.link)
+    setLink(editor, data.link)
     setOpenLinkModal(false)
+  }
+
+  const handleAddYoutube = (data: AddLinkValues) => {
+    editor?.chain().focus().setYoutubeVideo({ height: 480, src: data.link, width: 640 }).run()
+    setOpenYoutubeModal(false)
+  }
+
+  const handleAddTiktok = (data: AddLinkValues) => {
+    editor
+      ?.chain()
+      .focus()
+      .setIframe({ src: `https://www.tiktok.com/embed/v3/${data.link}` })
+      .run()
+    setOpenTiktokModal(false)
   }
 
   if (!editor) {
@@ -113,177 +132,115 @@ export const Toolbar = ({ editor }: Props) => {
   return (
     <div className={classNames.toolbar}>
       <Modal onOpenChange={setOpenLinkModal} open={openLinkModal} title={'Введите ссылку'}>
-        <AddLinkForm defaultValue={previousUrl} onSubmit={handleAddLink} />
+        <AddLinkForm defaultValue={previousLinkUrl} onSubmit={handleAddLink} />
+      </Modal>
+      <Modal
+        onOpenChange={setOpenYoutubeModal}
+        open={openYoutubeModal}
+        title={'Введите ссылку нa youtube ролик'}
+      >
+        <AddYoutubeLinkForm onSubmit={handleAddYoutube} />
+      </Modal>
+      <Modal onOpenChange={setOpenTiktokModal} open={openTiktokModal} title={'Введите ID ролика'}>
+        <AddTiktokIdForm onSubmit={handleAddTiktok} />
       </Modal>
       <div className={classNames.toolbarButtons}>
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickBold}
-          type={'button'}
-          variant={buttonVariantBold}
-        >
+        <Button onClick={handleBold} padding={false} type={'button'} variant={activeBold}>
           <Bold />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickItalic}
-          type={'button'}
-          variant={buttonVariantItalic}
-        >
+        <Button onClick={handleItalic} padding={false} type={'button'} variant={activeItalic}>
           <Italic />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickUnderline}
-          type={'button'}
-          variant={buttonVariantUnderline}
-        >
+        <Button onClick={handleUnderline} padding={false} type={'button'} variant={activeUnderline}>
           <Underline />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickStrikethrough}
+          onClick={handleStrikethrough}
+          padding={false}
           type={'button'}
-          variant={buttonVariantStrikethrough}
+          variant={activeStrikethrough}
         >
           <Strikethrough />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickAlignLeft}
-          type={'button'}
-          variant={buttonVariantAlignLeft}
-        >
+        <Button onClick={handleAlignLeft} padding={false} type={'button'} variant={activeAlignLeft}>
           <AlignLeft />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickAlignRight}
+          onClick={handleAlignRight}
+          padding={false}
           type={'button'}
-          variant={buttonVariantAlignRight}
+          variant={activeAlignRight}
         >
           <AlignRight />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickAlignCenter}
+          onClick={handleAlignCenter}
+          padding={false}
           type={'button'}
-          variant={buttonVariantAlignCenter}
+          variant={activeAlignCenter}
         >
           <AlignCenter />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickAlignJustify}
+          onClick={handleAlignJustify}
+          padding={false}
           type={'button'}
-          variant={buttonVariantAlignJustify}
+          variant={activeAlignJustify}
         >
           <AlignJustify />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickHeading1}
-          type={'button'}
-          variant={buttonVariantHeading1}
-        >
+        <Button onClick={handleHeading1} padding={false} type={'button'} variant={activeHeading1}>
           <Heading1 />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickHeading2}
-          type={'button'}
-          variant={buttonVariantHeading2}
-        >
+        <Button onClick={handleHeading2} padding={false} type={'button'} variant={activeHeading2}>
           <Heading2 />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickHeading3}
-          type={'button'}
-          variant={buttonVariantHeading3}
-        >
+        <Button onClick={handleHeading3} padding={false} type={'button'} variant={activeHeading3}>
           <Heading3 />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickHeading4}
-          type={'button'}
-          variant={buttonVariantHeading4}
-        >
+        <Button onClick={handleHeading4} padding={false} type={'button'} variant={activeHeading4}>
           <Heading4 />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickBulletList}
+          onClick={handleBulletList}
+          padding={false}
           type={'button'}
-          variant={buttonVariantBulletList}
+          variant={activeBulletList}
         >
           <List />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickOrderedList}
+          onClick={handleOrderedList}
+          padding={false}
           type={'button'}
-          variant={buttonVariantOrderedList}
+          variant={activeOrderedList}
         >
           <ListOrdered />
         </Button>
-
         <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickBlockquote}
+          onClick={handleBlockquote}
+          padding={false}
           type={'button'}
-          variant={buttonVariantBlockquote}
+          variant={activeBlockquote}
         >
           <Quote />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickCode}
-          type={'button'}
-          variant={buttonVariantCode}
-        >
+        <Button onClick={handleCode} padding={false} type={'button'} variant={activeCode}>
           <Code />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickLink}
-          type={'button'}
-          variant={buttonVariantLink}
-        >
+        <Button onClick={handleLink} padding={false} type={'button'} variant={activeLink}>
           <Link />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickUndo}
-          type={'button'}
-          variant={buttonVariantUndo}
-        >
+        <Button onClick={handleYoutube} padding={false} type={'button'} variant={activeYoutube}>
+          <Youtube />
+        </Button>
+        <Button onClick={handleTicTok} padding={false} type={'button'} variant={activeTiktok}>
+          <TiktokIcon />
+        </Button>
+        <Button onClick={handleUndo} padding={false} type={'button'} variant={activeUndo}>
           <Undo />
         </Button>
-
-        <Button
-          className={classNames.toolbarButton}
-          onClick={handleClickRedo}
-          type={'button'}
-          variant={buttonVariantRedo}
-        >
+        <Button onClick={handleRedo} padding={false} type={'button'} variant={activeRedo}>
           <Redo />
         </Button>
       </div>

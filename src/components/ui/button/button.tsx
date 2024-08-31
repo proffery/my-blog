@@ -17,6 +17,7 @@ type ButtonProps<T extends ElementType = 'button'> = {
   children: ReactNode
   className?: string
   fullWidth?: boolean
+  padding?: boolean
   variant?: 'primary' | 'secondary' | 'text'
 } & ComponentPropsWithoutRef<T>
 
@@ -29,6 +30,7 @@ const ButtonComponent = <T extends ElementType = 'button'>(
     className,
     disabled = false,
     fullWidth = false,
+    padding = true,
     variant = 'primary',
     ...rest
   } = props
@@ -37,6 +39,7 @@ const ButtonComponent = <T extends ElementType = 'button'>(
       s.button,
       s[variant],
       fullWidth && s.fullWidth,
+      !padding && s.nonePadding,
       disabled && s.disabled,
       className
     ),

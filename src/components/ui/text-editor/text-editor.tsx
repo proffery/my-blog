@@ -8,11 +8,14 @@ import { Toolbar } from '@/components/ui/text-editor/toolbar'
 import { Link } from '@tiptap/extension-link'
 import { TextAlign } from '@tiptap/extension-text-align'
 import { Underline } from '@tiptap/extension-underline'
+import { Youtube } from '@tiptap/extension-youtube'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import clsx from 'clsx'
 
 import s from './text-editor.module.scss'
+
+import Iframe from './iframe'
 
 type Props = {
   defaultContent?: string
@@ -27,6 +30,8 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
     const classNames = {
       content: clsx(s.content, !isEditable && s.notEditable),
       editor: clsx(s.editor, !isEditable && s.notEditable),
+      tiktok: clsx(s.tiktok),
+      youtube: clsx(s.youtube),
     }
     const [content, setContent] = useState(defaultContent ?? '')
     const [editable, setEditable] = useState(isEditable)
@@ -41,6 +46,18 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
       editable,
       extensions: [
         StarterKit,
+        Youtube.configure({
+          HTMLAttributes: { class: classNames.youtube },
+          nocookie: true,
+        }),
+        Iframe.configure({
+          HTMLAttributes: {
+            class: classNames.tiktok,
+            ['data-tiktok-video']: true,
+            draggable: false,
+          },
+          allowFullscreen: true,
+        }),
         Underline,
         Link.configure({
           defaultProtocol: 'https',

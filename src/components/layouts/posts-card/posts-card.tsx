@@ -26,9 +26,9 @@ export const PostsCard = ({ className, date, description, image, postId, title }
   const classNames = {
     bottomInfoWrapper: clsx(s.bottomInfoWrapper),
     card: clsx(s.card, className),
+    cardImage: clsx(s.cardImage),
     contentWrapper: clsx(s.contentWrapper),
     description: clsx(s.description),
-    image: clsx(s.image),
     readButton: clsx(s.read),
     readIcon: clsx(s.readIcon),
     title: clsx(s.title),
@@ -39,7 +39,7 @@ export const PostsCard = ({ className, date, description, image, postId, title }
     <Card className={classNames.card}>
       <Image
         alt={'Card cover'}
-        className={classNames.image}
+        className={classNames.cardImage}
         height={400}
         src={image ? image : cover}
         style={{

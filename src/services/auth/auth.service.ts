@@ -38,7 +38,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
     loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({
-      invalidatesTags: ['Me'],
+      invalidatesTags: ['Me', 'Posts', 'PostsByAuthor'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -54,7 +54,7 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     logout: builder.mutation<MessageResponse, void>({
-      invalidatesTags: ['Me'],
+      invalidatesTags: ['Me', 'Posts', 'PostsByAuthor'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
@@ -88,6 +88,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
     registration: builder.mutation<MessageResponse, RegistrationRequest>({
+      invalidatesTags: ['Me', 'Posts', 'PostsByAuthor'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -101,6 +102,7 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.auth_registration,
       }),
     }),
+
     sendVerifyEmail: builder.mutation<MessageResponse, void>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {

@@ -53,6 +53,7 @@ export const postsService = baseApi.injectEndpoints({
           console.error(error)
         }
       },
+      providesTags: ['PostsByAuthor'],
       query: ({ params: { postId } }) => ({
         url: endpoints.posts_get_post + '/' + postId,
       }),
@@ -65,7 +66,7 @@ export const postsService = baseApi.injectEndpoints({
           console.error(error)
         }
       },
-      providesTags: ['PostsByAuthor'],
+      providesTags: ['Posts'],
       query: searchParams => ({
         params: searchParams,
         url: endpoints.posts,

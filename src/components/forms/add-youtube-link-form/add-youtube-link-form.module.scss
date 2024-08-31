@@ -1,0 +1,8 @@
+@use '@/styles/breakpoints';
+
+.form {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: fit-content;
+}

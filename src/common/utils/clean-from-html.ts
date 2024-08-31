@@ -1,5 +1,9 @@
-export function cleanFromHTML(html: string): string {
-  const cleanText = html.replace(/<[^>]*>/g, ' ').trim()
+export function cleanFromHTML(html: null | string | undefined): string {
+  const cleanText = html?.replace(/<[^>]*>/g, ' ').trim()
 
-  return cleanText.replace(/\s+/g, ' ')
+  if (cleanText) {
+    return cleanText?.replace(/\s+/g, ' ')
+  } else {
+    return ''
+  }
 }

@@ -1,19 +1,22 @@
 import { useForm } from 'react-hook-form'
 
-import { AddLinkValues, addLinkSchema } from '@/components/forms/add-link-form/add-link-schema'
+import {
+  AddYoutubeValues,
+  addYoutubeLinkSchema,
+} from '@/components/forms/add-youtube-link-form/add-youtube-link-schema'
 import { Button } from '@/components/ui/button/button'
 import { Input, InputProps } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
-import s from './add-link-form.module.scss'
+import s from './add-youtube-link-form.module.scss'
 
 type Props = {
   defaultValue?: string
-  onSubmit?: (data: AddLinkValues) => void
+  onSubmit?: (data: AddYoutubeValues) => void
 } & Omit<InputProps, 'onSubmit'>
 
-export const AddLinkForm = ({ defaultValue, onSubmit }: Props) => {
+export const AddYoutubeLinkForm = ({ defaultValue, onSubmit }: Props) => {
   const classNames = {
     form: clsx(s.form),
   }
@@ -22,11 +25,11 @@ export const AddLinkForm = ({ defaultValue, onSubmit }: Props) => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<AddLinkValues>({
+  } = useForm<AddYoutubeValues>({
     defaultValues: {
       link: defaultValue,
     },
-    resolver: zodResolver(addLinkSchema),
+    resolver: zodResolver(addYoutubeLinkSchema),
   })
 
   const handleFormSubmit = handleSubmit(data => {
