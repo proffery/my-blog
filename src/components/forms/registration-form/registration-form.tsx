@@ -16,7 +16,7 @@ import s from './registration-form.module.scss'
 type Props = {
   disabled?: boolean
   errorMessage?: string
-  onSubmit: (data: RegistrationFormValues) => void
+  onSubmit: (data: Omit<RegistrationFormValues, 'confirmPassword'>) => void
 }
 
 export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) => {
@@ -38,9 +38,9 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
 
   useEffect(() => {
     if (errorMessage) {
-      setError('password', { message: errorMessage, type: 'server' })
+      setError('confirmPassword', { message: errorMessage, type: 'server' })
     } else {
-      clearErrors(['password'])
+      clearErrors(['confirmPassword'])
     }
   }, [errorMessage])
 
@@ -66,12 +66,19 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
         {...register('email')}
       />
       <Input
-        autoComplete={'billing new-password'}
+        autoComplete={'password'}
         errorMessage={errors.password?.message}
         label={'Пароль'}
         placeholder={'Придумайте пароль'}
         type={'password'}
         {...register('password')}
+      />
+      <Input
+        autoComplete={'confirmPassword'}
+        errorMessage={errors.confirmPassword?.message}
+        placeholder={'Повторите пароль'}
+        type={'password'}
+        {...register('confirmPassword')}
       />
       <Button
         className={classNames.singUpButton}

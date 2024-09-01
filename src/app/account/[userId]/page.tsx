@@ -1,10 +1,12 @@
 import { User } from '@/app/api/users/users.types'
+import { routes } from '@/common/constants/routes'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import { allUsers } from '@/server/functions/users/all-users'
 import { userById } from '@/server/functions/users/user-by-id'
 import { createUsersClient } from '@/server/users-config'
 import clsx from 'clsx'
+import { redirect } from 'next/navigation'
 
 import s from './account.module.scss'
 
@@ -33,7 +35,10 @@ export default async function AccountById(props: Props) {
     params: { userId },
   } = props
   const { usersInstance } = await createUsersClient()
-  const userData = await userById({ userId, usersInstance })
+
+  const userData = await userById({ userId, usersInstance }).catch(() => {
+    redirect(routes.account)
+  })
 
   return (
     <Page className={classNames.page}>

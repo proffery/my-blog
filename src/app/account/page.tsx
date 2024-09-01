@@ -54,7 +54,7 @@ function Account() {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Профиль</Typography.H1>
+      <Typography.H1>Мой профиль</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.item}>
           <Typography.Subtitle1>ID:&nbsp;</Typography.Subtitle1>

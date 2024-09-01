@@ -78,7 +78,6 @@ export const authService = baseApi.injectEndpoints({
           dispatch(userActions.setUserRole(response.data.user?.labels ?? ['']))
           dispatch(userActions.setUserId(response.data.user?.$id ?? ''))
         } catch (error) {
-          console.error(error)
         } finally {
           dispatch(appActions.setAppIsInitialized(true))
         }
