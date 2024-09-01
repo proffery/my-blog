@@ -28,9 +28,9 @@ function Registration() {
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [loginWithEmail] = useLoginEmailMutation()
   const router = useRouter()
-  const registrationHandler = async (data: RegistrationFormValues) => {
+  const registrationHandler = async (data: Omit<RegistrationFormValues, 'confirmPassword'>) => {
     try {
-      await registration(data).unwrap()
+      await registration({ email: data.email, name: data.name, password: data.password }).unwrap()
       await loginWithEmail({ email: data.email, password: data.password }).unwrap()
       await sendVerifyEmail().unwrap()
       router.push(routes.confirmEmail)
