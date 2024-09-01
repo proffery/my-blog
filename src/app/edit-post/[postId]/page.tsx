@@ -36,10 +36,13 @@ function EditPost(props: Props) {
   const [updatePost, { error: updatePostError }] = useUpdatePostMutation()
 
   const submitPostHandler = async (data: CreatePostFormValues) => {
-    await updatePost({ ...data, authorName, postId }).unwrap()
-
-    await clearCachesByServerAction(routes.post + '/' + postId)
-    router.push(routes.post + '/' + postId)
+    try {
+      await updatePost({ ...data, authorName, postId }).unwrap()
+      await clearCachesByServerAction(routes.post + '/' + postId)
+      router.push(routes.post + '/' + postId)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const errorMessage = getErrorMessage(updatePostError)
