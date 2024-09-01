@@ -45,7 +45,7 @@ export default async function Post({ params: { postId } }: Props) {
   let userId = ''
 
   if (token) {
-    userId = jwtDecode<{ id: string; secret: string }>(token?.value + '.' + token?.value).id
+    userId = jwtDecode<{ id: string; secret: string }>(token.value + '.' + token.value).id
   }
 
   return (
