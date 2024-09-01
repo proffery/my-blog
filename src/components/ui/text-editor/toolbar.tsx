@@ -86,7 +86,7 @@ export const Toolbar = ({ editor }: Props) => {
     setOpenYoutubeModal(true)
   }
   const handleImage = () => {
-    setOpenLinkModal(true)
+    setOpenImageModal(true)
   }
   const handleTicTok = () => {
     setOpenTiktokModal(true)
@@ -123,6 +123,7 @@ export const Toolbar = ({ editor }: Props) => {
   }
 
   const handleAddImage = (data: AddLinkValues) => {
+    setOpenImageModal(false)
     editor
       ?.chain()
       .focus()
@@ -130,7 +131,6 @@ export const Toolbar = ({ editor }: Props) => {
       .selectParentNode()
       .setLink({ href: data.link })
       .run()
-    setOpenImageModal(false)
   }
 
   const handleAddTiktok = (data: AddLinkValues) => {

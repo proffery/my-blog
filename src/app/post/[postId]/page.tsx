@@ -42,7 +42,11 @@ export default async function Post({ params: { postId } }: Props) {
   const postData = await postById({ databasesInstance, postId })
   const token = cookies().get(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
 
-  const userId = jwtDecode<{ id: string; secret: string }>(token?.value + '.' + token?.value).id
+  let userId = ''
+
+  if (token) {
+    userId = jwtDecode<{ id: string; secret: string }>(token?.value + '.' + token?.value).id
+  }
 
   return (
     <Page>
