@@ -5,6 +5,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect, useState }
 import { FieldError } from '@/components/ui/field-error/field-error'
 import { Label } from '@/components/ui/label/label'
 import { Toolbar } from '@/components/ui/text-editor/toolbar'
+import { Image } from '@tiptap/extension-image'
 import { Link } from '@tiptap/extension-link'
 import { TextAlign } from '@tiptap/extension-text-align'
 import { Underline } from '@tiptap/extension-underline'
@@ -30,6 +31,7 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
     const classNames = {
       content: clsx(s.content, !isEditable && s.notEditable),
       editor: clsx(s.editor, !isEditable && s.notEditable),
+      image: clsx(s.image),
       tiktok: clsx(s.tiktok),
       youtube: clsx(s.youtube),
     }
@@ -46,6 +48,7 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
       editable,
       extensions: [
         StarterKit,
+        Image.configure({ HTMLAttributes: { class: classNames.image }, inline: true }),
         Youtube.configure({
           HTMLAttributes: { class: classNames.youtube },
           nocookie: true,

@@ -21,6 +21,7 @@ import {
   Heading2,
   Heading3,
   Heading4,
+  ImagePlus,
   Italic,
   Link,
   List,
@@ -46,12 +47,14 @@ export const Toolbar = ({ editor }: Props) => {
   }
   const previousLinkUrl = editor?.getAttributes('link').href
   const [openLinkModal, setOpenLinkModal] = useState(false)
+  const [openImageModal, setOpenImageModal] = useState(false)
   const [openYoutubeModal, setOpenYoutubeModal] = useState(false)
   const [openTiktokModal, setOpenTiktokModal] = useState(false)
 
   const activeBold = editor?.isActive('bold') ? 'secondary' : 'primary'
   const activeLink = editor?.isActive('link') ? 'secondary' : 'primary'
   const activeYoutube = editor?.isActive('youtube') ? 'secondary' : 'primary'
+  const activeImage = editor?.isActive('image') ? 'secondary' : 'primary'
   const activeTiktok = editor?.isActive('iframe') ? 'secondary' : 'primary'
   const activeRedo = editor?.isActive('redo') ? 'secondary' : 'primary'
   const activeUndo = editor?.isActive('undo') ? 'secondary' : 'primary'
@@ -81,6 +84,9 @@ export const Toolbar = ({ editor }: Props) => {
   }
   const handleYoutube = () => {
     setOpenYoutubeModal(true)
+  }
+  const handleImage = () => {
+    setOpenLinkModal(true)
   }
   const handleTicTok = () => {
     setOpenTiktokModal(true)
@@ -116,6 +122,17 @@ export const Toolbar = ({ editor }: Props) => {
     setOpenYoutubeModal(false)
   }
 
+  const handleAddImage = (data: AddLinkValues) => {
+    editor
+      ?.chain()
+      .focus()
+      .setImage({ src: data.link })
+      .selectParentNode()
+      .setLink({ href: data.link })
+      .run()
+    setOpenImageModal(false)
+  }
+
   const handleAddTiktok = (data: AddLinkValues) => {
     editor
       ?.chain()
@@ -133,6 +150,13 @@ export const Toolbar = ({ editor }: Props) => {
     <div className={classNames.toolbar}>
       <Modal onOpenChange={setOpenLinkModal} open={openLinkModal} title={'Введите ссылку'}>
         <AddLinkForm defaultValue={previousLinkUrl} onSubmit={handleAddLink} />
+      </Modal>
+      <Modal
+        onOpenChange={setOpenImageModal}
+        open={openImageModal}
+        title={'Введите ссылку на изображение'}
+      >
+        <AddLinkForm defaultValue={previousLinkUrl} onSubmit={handleAddImage} />
       </Modal>
       <Modal
         onOpenChange={setOpenYoutubeModal}
@@ -230,6 +254,9 @@ export const Toolbar = ({ editor }: Props) => {
         </Button>
         <Button onClick={handleLink} padding={false} type={'button'} variant={activeLink}>
           <Link />
+        </Button>
+        <Button onClick={handleImage} padding={false} type={'button'} variant={activeImage}>
+          <ImagePlus />
         </Button>
         <Button onClick={handleYoutube} padding={false} type={'button'} variant={activeYoutube}>
           <Youtube />
