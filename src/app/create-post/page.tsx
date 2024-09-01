@@ -11,7 +11,7 @@ import { useCreatePostMutation } from '@/services/posts/posts.service'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
-import s from './account.module.scss'
+import s from './create-post.module.scss'
 
 function CreatePost() {
   const classNames = {

@@ -12,5 +12,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/account', '/account/:patch*', '/create-post', '/posts/my/'],
+  matcher: ['/account', '/account/:patch*', '/create-post', '/edit-post', '/edit-post/:patch*'],
 }

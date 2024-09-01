@@ -59,6 +59,7 @@ export const authService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
           dispatch(userActions.setUserRole(null))
+          dispatch(userActions.setUserId(null))
         } catch (error) {
           console.error(error)
         }
@@ -75,6 +76,7 @@ export const authService = baseApi.injectEndpoints({
           const response = await queryFulfilled
 
           dispatch(userActions.setUserRole(response.data.user?.labels ?? ['']))
+          dispatch(userActions.setUserId(response.data.user?.$id ?? ''))
         } catch (error) {
           console.error(error)
         } finally {

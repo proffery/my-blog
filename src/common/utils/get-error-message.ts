@@ -7,7 +7,7 @@ export const getErrorMessage = (error: FetchBaseQueryError | SerializedError | u
   if (error && 'status' in error) {
     errorMessage = (error.data as any)?.message
       ? (error.data as any).message
-      : 'An unknown error occurred'
+      : JSON.stringify(error)
   }
 
   return errorMessage

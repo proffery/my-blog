@@ -15,12 +15,13 @@ import clsx from 'clsx'
 import s from './create-post-form.module.scss'
 
 type Props = {
+  defaultValues?: CreatePostFormValues
   disabled?: boolean
   errorMessage?: string
   onSubmit: (data: CreatePostFormValues) => void
 }
 
-export const CreatePostForm = ({ disabled, errorMessage, onSubmit }: Props) => {
+export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit }: Props) => {
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
@@ -34,7 +35,9 @@ export const CreatePostForm = ({ disabled, errorMessage, onSubmit }: Props) => {
     handleSubmit,
     register,
     setError,
+    setValue,
   } = useForm<CreatePostFormValues>({
+    defaultValues: { post: defaultValues?.post, title: defaultValues?.title },
     resolver: zodResolver(createPostFormSchema),
   })
 
@@ -46,14 +49,24 @@ export const CreatePostForm = ({ disabled, errorMessage, onSubmit }: Props) => {
     }
   }, [errorMessage])
 
+  useEffect(() => {
+    defaultValues?.post && setValue('post', defaultValues?.post)
+    defaultValues?.title && setValue('title', defaultValues?.title)
+  }, [defaultValues?.title, defaultValues?.post])
+
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
   })
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Typography.H1 className={classNames.title}>Написать пост</Typography.H1>
+      {defaultValues ? (
+        <Typography.H1 className={classNames.title}>Редактировать пост</Typography.H1>
+      ) : (
+        <Typography.H1 className={classNames.title}>Написать пост</Typography.H1>
+      )}
       <Input
+        defaultValue={defaultValues?.title}
         errorMessage={errors.title?.message}
         label={'Заголовок'}
         placeholder={'Как организовать домашний офис'}
@@ -64,6 +77,7 @@ export const CreatePostForm = ({ disabled, errorMessage, onSubmit }: Props) => {
         name={'post'}
         render={({ field: { onChange, ref, ...restField } }) => (
           <TextEditor
+            defaultValue={defaultValues?.post}
             errorMessage={errors.post?.message}
             label={'Пост'}
             onChange={onChange}

@@ -12,6 +12,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ message: 'Successfully logged out!' })
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }

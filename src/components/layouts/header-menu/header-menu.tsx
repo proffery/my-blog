@@ -16,8 +16,6 @@ type Props = {
 }
 
 export const HeaderMenu = ({ logout, userData }: Props) => {
-  const userRoles = userData?.user?.labels
-
   return (
     <DropdownMenu
       align={'start'}
@@ -31,7 +29,7 @@ export const HeaderMenu = ({ logout, userData }: Props) => {
       <DropdownItem>
         <ActiveLink href={routes.account}>Профиль</ActiveLink>
       </DropdownItem>
-      {userRoles?.some(role => role === 'Writer') && (
+      {userData && (
         <>
           <DropdownItem>
             <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>

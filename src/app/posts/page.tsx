@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react'
 
 import { usePostsFilters } from '@/app/posts/use-posts-filters'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
+import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
 import { Page } from '@/components/layouts/page/page'
@@ -17,6 +18,7 @@ import { useMeQuery } from '@/services/auth/auth.service'
 import { useDeletePostMutation, useGetPostsQuery } from '@/services/posts/posts.service'
 import clsx from 'clsx'
 import { Edit3, Trash2 } from 'lucide-react'
+import Link from 'next/link'
 import { useDebouncedCallback } from 'use-debounce'
 
 import s from './posts.module.scss'
@@ -124,7 +126,12 @@ function Posts() {
           <div className={classNames.cardWrapper} key={post.$id}>
             {authId === post.authorId && (
               <div className={classNames.cardButtonsWrapper}>
-                <Button padding={false} title={'Изменить'}>
+                <Button
+                  as={Link}
+                  href={routes.updatePost + post.$id}
+                  padding={false}
+                  title={'Редактировать'}
+                >
                   <Edit3 />
                 </Button>
                 <Button

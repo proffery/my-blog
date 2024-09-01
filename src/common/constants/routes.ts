@@ -8,4 +8,5 @@ export const routes = {
   post: '/post',
   posts: '/posts',
   registration: '/registration',
+  updatePost: '/edit-post/',
 } as const

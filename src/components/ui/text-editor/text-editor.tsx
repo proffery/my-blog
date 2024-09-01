@@ -19,15 +19,15 @@ import s from './text-editor.module.scss'
 import Iframe from './iframe'
 
 type Props = {
-  defaultContent?: string
+  defaultValue?: string
   errorMessage?: string
   isEditable?: boolean
   label?: string
   onChange?: (content: string) => void
-} & Omit<ComponentPropsWithoutRef<'div'>, 'onChange'>
+} & Omit<ComponentPropsWithoutRef<'div'>, 'defaultValue' | 'onChange'>
 
 export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
-  ({ defaultContent, errorMessage, isEditable = true, label, onChange, ...rest }: Props, ref) => {
+  ({ defaultValue, errorMessage, isEditable = true, label, onChange, ...rest }: Props, ref) => {
     const classNames = {
       content: clsx(s.content, !isEditable && s.notEditable),
       editor: clsx(s.editor, !isEditable && s.notEditable),
@@ -35,8 +35,8 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
       tiktok: clsx(s.tiktok),
       youtube: clsx(s.youtube),
     }
-    const [content, setContent] = useState(defaultContent ?? '')
-    const [editable, setEditable] = useState(isEditable)
+    const [content, setContent] = useState(defaultValue ?? '')
+    const [editable] = useState(isEditable)
 
     const handleContentChange = (newContent: string) => {
       setContent(newContent)
@@ -87,6 +87,11 @@ export const TextEditor = forwardRef<ElementRef<'div'>, Props>(
 
       editor.setEditable(editable)
     }, [editor, editable])
+
+    useEffect(() => {
+      editor?.destroy()
+      defaultValue && setContent(defaultValue)
+    }, [defaultValue])
 
     if (!editor) {
       return null

@@ -11,6 +11,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ user })
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }

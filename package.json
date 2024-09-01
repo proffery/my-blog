@@ -29,6 +29,7 @@
     "appwrite": "13.0.0",
     "clsx": "2.1.1",
     "eslint-config-next": "14.2.5",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.435.0",
     "next": "14.2.5",
     "node-appwrite": "^13.0.0",

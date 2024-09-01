@@ -128,9 +128,8 @@
 .link2 {
   cursor: pointer;
 
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-xxs);
   font-weight: var(--font-weight-regular);
-  font-style: italic;
   line-height: var(--line-height-xl);
   text-decoration: underline;
 
@@ -139,7 +138,7 @@
   }
 
   @media (width <= breakpoints.$mobile) {
-    font-size: var(--font-size-xxs);
+    font-size: var(--font-size-xxxs);
   }
 }
 

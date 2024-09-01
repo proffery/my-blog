@@ -12,6 +12,6 @@ export async function GET(request: NextRequest, { params: { postId } }: GetPostR
 
     return NextResponse.json(post)
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }

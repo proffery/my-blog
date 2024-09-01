@@ -22,6 +22,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.redirect(`${request.nextUrl.origin}${routes.base}`)
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }

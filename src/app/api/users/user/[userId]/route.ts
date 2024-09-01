@@ -12,6 +12,6 @@ export async function GET(request: NextRequest, { params: { userId } }: GetUserR
 
     return NextResponse.json({ user })
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }

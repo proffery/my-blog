@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(list)
       }
     } catch (error: unknown) {
-      serverErrorHandler(error)
+      return serverErrorHandler(error)
     }
   } else {
     try {
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(list)
       }
     } catch (error: unknown) {
-      serverErrorHandler(error)
+      return serverErrorHandler(error)
     }
   }
 }

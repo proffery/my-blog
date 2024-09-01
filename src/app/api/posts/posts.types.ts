@@ -1,4 +1,3 @@
-import { Tag } from '@/services/tags/tags.types'
 import { Models } from 'appwrite'
 
 export type Post = {
@@ -14,7 +13,7 @@ export type DeletePostResponse = { postId: string }
 export type GetPostResponse = Post
 export type GetPostRequest = { params: { postId: string } }
 export type UpdatePostResponse = Post
-export type UpdatePostRequest = { post: string; postId: string; tags: Tag[]; title: string }
+export type UpdatePostRequest = { authorName: string; post: string; postId: string; title: string }
 export type CreatePostResponse = Post
 export type CreatePostRequest = {
   authorId: string

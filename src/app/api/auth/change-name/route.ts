@@ -12,6 +12,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ message: `Name updated successfully!` })
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }

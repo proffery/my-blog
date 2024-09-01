@@ -22,6 +22,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newPost)
   } catch (error: unknown) {
-    serverErrorHandler(error)
+    return serverErrorHandler(error)
   }
 }
