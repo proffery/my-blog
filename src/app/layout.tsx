@@ -5,6 +5,7 @@ import { ReactNode } from 'react'
 import { Footer } from '@/components/layouts/footer/footer'
 import Header from '@/components/layouts/header/header'
 import { roboto, vollkorn } from '@/styles/fonts'
+import { Analytics } from '@vercel/analytics/react'
 import clsx from 'clsx'
 
 import '@/styles/index.scss'
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
