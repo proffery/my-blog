@@ -53,7 +53,6 @@ export const PostsCard = ({
           className={classNames.cardImage}
           height={400}
           src={image ? image : cover}
-          style={{}}
           width={400}
         />
       </div>
