@@ -127,7 +127,7 @@ function Posts() {
           <Label>
             Сначала
             <Button onClick={sortChangeHandler}>
-              {sortDirection === 'desc' ? 'Новые' : 'Старые'}
+              {sortDirection === 'desc' ? 'новые' : 'старые'}
               <RightBracketIcon className={classNames.sortIcon} />
             </Button>
           </Label>
