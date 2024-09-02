@@ -34,13 +34,6 @@ $button-padding: 2px;
   height: $icon-size;
 }
 
-.editButton,
-.closeButton {
-  width: fit-content;
-  height: fit-content;
-  padding: $button-padding;
-}
-
 .closeButton {
   position: absolute;
   top: 12px;

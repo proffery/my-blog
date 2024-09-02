@@ -12,7 +12,7 @@ export const TiktokIcon = ({
     <svg
       fill={fill ?? 'currentColor'}
       height={height ?? '24px'}
-      viewBox={viewBox ?? '0 0 512 512'}
+      viewBox={viewBox ?? '-40 -40 600 600'}
       width={width ?? '24px'}
       xmlns={xmlns ?? 'http://www.w3.org/2000/svg'}
       {...rest}

@@ -66,12 +66,12 @@ export const PostsCard = ({
           </Typography.Body1>
         </div>
         <div className={classNames.bottomInfoWrapper}>
-          <Typography.Subtitle2 as={'span'} className={classNames.author}>
+          <Typography.Body2 as={'span'} className={classNames.author}>
             Автор:&nbsp;
             <Typography.Link2 as={Link} href={routes.account + '/' + authorId}>
               {authorName}
             </Typography.Link2>
-          </Typography.Subtitle2>
+          </Typography.Body2>
           <Typography.Body2 className={classNames.date}>{dateIsoToLocalRu(date)}</Typography.Body2>
         </div>
       </div>

@@ -1,8 +1,16 @@
+@use '@/styles/breakpoints';
+
 .descriptionWrapper {
   display: flex;
   gap: 16px;
   align-items: center;
   justify-content: space-between;
+
+  margin-top: 32px;
+
+  @media (width <= breakpoints.$mobile) {
+    margin-top: 16px;
+  }
 }
 
 .description {

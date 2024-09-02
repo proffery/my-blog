@@ -1,0 +1,45 @@
+@use '@/styles/breakpoints';
+
+.container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  max-width: breakpoints.$max-content-width;
+  margin: 0 auto;
+  padding: 24px 32px 0;
+
+  @media (width <= breakpoints.$mobile) {
+    position: fixed;
+    z-index: 99;
+    right: 16px;
+    bottom: 16px;
+
+    padding: 4px;
+
+    opacity: 0.7;
+    background-color: var(--color-light);
+    border: 1px solid var(--color-dark);
+    border-radius: 50%;
+    box-shadow: var(--color-shadow);
+  }
+}
+
+.icon {
+  transform: rotate(180deg);
+  width: 12px;
+  height: 12px;
+
+  @media (width <= breakpoints.$mobile) {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.button {
+  max-width: fit-content;
+  text-decoration: none !important;
+}

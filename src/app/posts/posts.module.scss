@@ -84,9 +84,9 @@
 
 .pagination {
   align-self: center;
-  padding: 32px;
+  padding: 32px 32px 0;
 
   @media (width <= breakpoints.$mobile) {
-    padding: 16px;
+    padding: 16px 16px 0;
   }
 }

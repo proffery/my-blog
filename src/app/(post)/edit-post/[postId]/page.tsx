@@ -12,7 +12,7 @@ import { useGetPostQuery, useUpdatePostMutation } from '@/services/posts/posts.s
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
-import s from '@/app/create-post/create-post.module.scss'
+import s from './edit-post.module.scss'
 
 type Props = {
   params: { postId: string }

@@ -33,7 +33,7 @@ const Header = () => {
     <header className={classNames.root}>
       {isLoading && <LinearLoader />}
       {!isAppInitialized && <InitializationLoader />}
-      <div className={classNames.container}>
+      <nav className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>
           {width > projectConstants.mobileWidth ? <NavbarDesktop /> : <NavbarMobile />}
@@ -43,7 +43,7 @@ const Header = () => {
             </Button>
           )}
         </div>
-      </div>
+      </nav>
     </header>
   )
 }

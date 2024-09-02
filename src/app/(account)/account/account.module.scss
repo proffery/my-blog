@@ -8,6 +8,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   align-items: flex-start;
 }
 
@@ -15,4 +16,9 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+}
+
+.avatarWrapper {
+  display: flex;
+  align-self: center;
 }

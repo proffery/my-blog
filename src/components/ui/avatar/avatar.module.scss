@@ -1,0 +1,68 @@
+@use '@/styles/breakpoints';
+
+$avatar-small-desktop: 30px;
+$avatar-large-desktop: 200px;
+$avatar-small-mobile: 20px;
+$avatar-large-mobile: 150px;
+
+.container {
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  aspect-ratio: 1/1;
+
+  border: 1px solid var(--color-dark);
+  border-radius: 50%;
+}
+
+.small {
+  min-width: $avatar-small-desktop;
+  max-width: $avatar-small-desktop;
+  min-height: $avatar-small-desktop;
+  max-height: $avatar-small-desktop;
+
+  @media (width <= breakpoints.$mobile) {
+    min-width: $avatar-small-mobile;
+    max-width: $avatar-small-mobile;
+    min-height: $avatar-small-mobile;
+    max-height: $avatar-small-mobile;
+  }
+}
+
+.large {
+  min-width: $avatar-large-desktop;
+  max-width: $avatar-large-desktop;
+  min-height: $avatar-large-desktop;
+  max-height: $avatar-large-desktop;
+
+  border-radius: 16px;
+  box-shadow: var(--color-shadow);
+
+  @media (width <= breakpoints.$mobile) {
+    min-width: $avatar-large-mobile;
+    max-width: $avatar-large-mobile;
+    min-height: $avatar-large-mobile;
+    max-height: $avatar-large-mobile;
+  }
+}
+
+.image {
+  display: flex;
+  object-fit: cover;
+  object-position: center;
+}
+
+.default {
+  width: 60%;
+  height: 60%;
+}
+
+.smallDefault {
+  svg {
+    color: var(--color-second);
+  }
+}

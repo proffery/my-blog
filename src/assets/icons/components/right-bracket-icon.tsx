@@ -12,7 +12,7 @@ export const RightBracketIcon = ({
     <svg
       fill={fill ?? 'currentColor'}
       height={height ?? '100%'}
-      viewBox={viewBox ?? '0 0 8 13'}
+      viewBox={viewBox ?? '-1 0 8 13'}
       width={width ?? '100%'}
       xmlns={xmlns ?? 'http://www.w3.org/2000/svg'}
       {...rest}

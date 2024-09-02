@@ -3,8 +3,8 @@ $mobile: 576px;
 
 // Container
 $max-content-width: 1312px;
-$content-padding-desktop: 32px;
-$content-padding-mobile: 16px;
+$content-padding-desktop: 32px 32px 64px 32px;
+$content-padding-mobile: 16px 16px 32px 16px;
 
 // Header
 $header-height-desktop: 72px;

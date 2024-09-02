@@ -6,6 +6,7 @@ import { getErrorMessage } from '@/common/utils/get-error-message'
 import { EditNameForm } from '@/components/forms/edit-name-form/edit-name-form'
 import { EditNameValues } from '@/components/forms/edit-name-form/schema'
 import { Page } from '@/components/layouts/page/page'
+import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
 import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
@@ -22,6 +23,7 @@ import s from './account.module.scss'
 
 function Account() {
   const classNames = {
+    avatarWrapper: clsx(s.avatarWrapper),
     container: clsx(s.container),
     item: clsx(s.item),
     page: clsx(s.page),
@@ -56,10 +58,9 @@ function Account() {
     <Page className={classNames.page}>
       <Typography.H1>Мой профиль</Typography.H1>
       <div className={classNames.container}>
-        <div className={classNames.item}>
-          <Typography.Subtitle1>ID:&nbsp;</Typography.Subtitle1>
+        <div className={classNames.avatarWrapper}>
           <Typography.Link1 as={Link} href={routes.account + '/' + meData?.user?.$id}>
-            {meData?.user?.$id}
+            <Avatar size={'large'} />
           </Typography.Link1>
         </div>
         <div className={classNames.item}>

@@ -1,6 +1,7 @@
 import { MeResponse } from '@/app/api/auth/auth.types'
 import { routes } from '@/common/constants/routes'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
+import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
 import {
   DropdownItem,
@@ -9,18 +10,31 @@ import {
   DropdownSeparator,
 } from '@/components/ui/drop-down/drop-down'
 import { Typography } from '@/components/ui/typography/typography'
+import clsx from 'clsx'
+
+import s from './header-menu.module.scss'
 
 type Props = {
+  avatarUrl?: string
   logout: () => void
   userData?: MeResponse
 }
 
 export const HeaderMenu = ({ logout, userData }: Props) => {
+  const classNames = {
+    trigger: clsx(s.trigger),
+  }
+
   return (
     <DropdownMenu
       align={'start'}
       triangleRight={'60%'}
-      trigger={<Typography.Overline>{userData?.user?.email}</Typography.Overline>}
+      trigger={
+        <div className={classNames.trigger}>
+          <Avatar />
+          <Typography.Overline as={'span'}>{userData?.user?.email}</Typography.Overline>
+        </div>
+      }
     >
       <DropdownLabel>
         <Typography.Caption>{userData?.user?.name}</Typography.Caption>

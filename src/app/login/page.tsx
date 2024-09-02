@@ -29,8 +29,8 @@ function Login() {
 
   const [loginWithEmail, { error: loginWithEmailError }] = useLoginEmailMutation()
   const router = useRouter()
-  const loginWithEmailHandler = (loginData: LoginEmailFormValues) => {
-    loginWithEmail(loginData).unwrap()
+  const loginWithEmailHandler = async (loginData: LoginEmailFormValues) => {
+    await loginWithEmail(loginData).unwrap()
     router.push(routes.base)
   }
 

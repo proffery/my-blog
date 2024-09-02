@@ -23,7 +23,6 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
   const classNames = {
     closeButton: clsx(s.closeButton),
     closeIcon: clsx(s.closeIcon),
-    editButton: clsx(s.editButton),
     editIcon: clsx(s.editIcon),
     form: clsx(s.form),
     input: clsx(s.input),
@@ -37,12 +36,17 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
     handleSubmit,
     register,
     setError,
+    setValue,
   } = useForm<EditNameValues>({
     defaultValues: {
       name: defaultValue,
     },
     resolver: zodResolver(editNameSchema),
   })
+
+  useEffect(() => {
+    defaultValue && setValue('name', defaultValue)
+  }, [defaultValue])
 
   useEffect(() => {
     if (errorMessage) {
@@ -71,12 +75,7 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
       <span className={classNames.span}>
         {defaultValue}
         &nbsp;
-        <Button
-          className={classNames.editButton}
-          disabled={disabled}
-          onClick={handleToggleEditMode}
-          type={'button'}
-        >
+        <Button disabled={disabled} onClick={handleToggleEditMode} padding={false} type={'button'}>
           <EditIcon className={classNames.editIcon} />
         </Button>
       </span>
@@ -96,6 +95,7 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
         className={classNames.closeButton}
         disabled={disabled}
         onClick={handleToggleEditMode}
+        padding={false}
         type={'button'}
       >
         <CloseIcon className={classNames.closeIcon} />
