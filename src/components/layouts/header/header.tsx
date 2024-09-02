@@ -1,7 +1,7 @@
 'use client'
 import { useSelector } from 'react-redux'
 
-import { breakpoints } from '@/common/constants/breakpoints'
+import { projectConstants } from '@/common/constants/project-constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { useWidth } from '@/common/hooks/use-width'
@@ -36,7 +36,7 @@ const Header = () => {
       <div className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>
-          {width > breakpoints.mobile ? <NavbarDesktop /> : <NavbarMobile />}
+          {width > projectConstants.mobileWidth ? <NavbarDesktop /> : <NavbarMobile />}
           {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
               Войти

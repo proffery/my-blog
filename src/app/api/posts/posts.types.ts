@@ -25,6 +25,7 @@ export type SortDirection = 'asc' | 'desc'
 export type GetPostsResponse = Models.DocumentList<Post>
 export type GetPostsRequest = {
   authorId?: string
+  page?: string
   search?: string
   sortDirection?: SortDirection
 }

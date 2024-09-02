@@ -14,6 +14,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    authorId: '1',
+    authorName: 'Author',
     date: '2024-08-28T15:08:52.307+00:00',
     description: 'Description',
     postId: '1',
@@ -23,6 +25,8 @@ export const Default: Story = {
 
 export const WithCover: Story = {
   args: {
+    authorId: '1',
+    authorName: 'Author',
     date: '2024-08-28T15:08:52.307+00:00',
     description: 'Description',
     image: cover.src,

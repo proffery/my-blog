@@ -1,10 +1,10 @@
 @use '@/styles/breakpoints';
 
 .page {
-  gap: 16px;
+  gap: 32px;
 
   @media (width <= breakpoints.$mobile) {
-    gap: 8px;
+    gap: 16px;
   }
 }
 
@@ -33,9 +33,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  align-items: flex-end;
+  align-items: flex-start;
+  justify-content: space-between;
 
   width: 100%;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 8px;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 
   @media (width <= breakpoints.$mobile) {
     gap: 8px;
@@ -45,14 +56,14 @@
 .posts {
   display: flex;
   flex-wrap: wrap;
-  gap: 80px 16px;
+  gap: 80px 24px;
   align-items: flex-start;
   justify-content: center;
 
   width: 100%;
 
   @media (width <= breakpoints.$mobile) {
-    gap: 32px;
+    gap: 64px;
   }
 }
 
@@ -62,10 +73,20 @@
 
 .cardButtonsWrapper {
   position: absolute;
+  z-index: 99;
   right: 0;
 
   display: flex;
   gap: 8px;
 
   padding: 8px;
+}
+
+.pagination {
+  align-self: center;
+  padding: 32px;
+
+  @media (width <= breakpoints.$mobile) {
+    padding: 16px;
+  }
 }
