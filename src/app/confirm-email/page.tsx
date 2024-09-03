@@ -40,9 +40,11 @@ function ConfirmEmail() {
     secret && userId && verifyEmailHandler({ secret, userId })
   }, [])
 
-  if (meData?.user?.emailVerification) {
-    router.push(routes.account)
-  }
+  useEffect(() => {
+    if (meData?.user?.emailVerification) {
+      router.push(routes.account)
+    }
+  }, [meData])
 
   return (
     <Page className={classNames.page}>

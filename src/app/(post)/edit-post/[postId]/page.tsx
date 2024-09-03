@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
@@ -73,9 +73,11 @@ function EditPost(props: Props) {
     router.push(routes.base)
   }
 
-  if (userId && authorId && userId !== authorId) {
-    router.push(routes.post + '/' + postId)
-  }
+  useEffect(() => {
+    if (userId && authorId && userId !== authorId) {
+      router.push(routes.post + '/' + postId)
+    }
+  }, [userId, authorId, postId])
 
   return (
     <Page className={classNames.page}>

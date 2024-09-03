@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
@@ -21,9 +22,11 @@ function Moderator() {
   const userRoles = useSelector(selectUserRole)
   const router = useRouter()
 
-  if (!isRole(userRoles, 'Moderator')) {
-    router.push(routes.base)
-  }
+  useEffect(() => {
+    if (!isRole(userRoles, 'Moderator')) {
+      router.push(routes.base)
+    }
+  }, [userRoles])
 
   return (
     <Page className={classNames.page}>
