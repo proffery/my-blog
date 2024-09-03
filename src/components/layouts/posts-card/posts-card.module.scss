@@ -64,6 +64,14 @@
   height: 100%;
 }
 
+.title {
+  transition: 0.2s;
+
+  &:hover {
+    color: var(--color-placeholder);
+  }
+}
+
 .title,
 .author {
   overflow: hidden;

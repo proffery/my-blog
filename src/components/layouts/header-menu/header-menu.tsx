@@ -1,5 +1,6 @@
 import { MeResponse } from '@/app/api/auth/auth.types'
 import { routes } from '@/common/constants/routes'
+import { isRole } from '@/common/utils/is-role'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
@@ -25,6 +26,8 @@ export const HeaderMenu = ({ logout, userData }: Props) => {
     trigger: clsx(s.trigger),
   }
 
+  const userRoles = userData?.user?.labels
+
   return (
     <DropdownMenu
       align={'start'}
@@ -43,12 +46,15 @@ export const HeaderMenu = ({ logout, userData }: Props) => {
       <DropdownItem>
         <ActiveLink href={routes.account}>Профиль</ActiveLink>
       </DropdownItem>
+      {isRole(userRoles, 'Moderator') && (
+        <DropdownItem>
+          <ActiveLink href={routes.moderator}>Модерировать</ActiveLink>
+        </DropdownItem>
+      )}
       {userData && (
-        <>
-          <DropdownItem>
-            <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
-          </DropdownItem>
-        </>
+        <DropdownItem>
+          <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
+        </DropdownItem>
       )}
       <DropdownItem>
         <Button onClick={() => logout()} variant={'text'}>

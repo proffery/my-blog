@@ -12,5 +12,12 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/account', '/account/:patch*', '/create-post', '/edit-post', '/edit-post/:patch*'],
+  matcher: [
+    '/account',
+    '/account/:patch*',
+    '/create-post',
+    '/edit-post',
+    '/edit-post/:patch*',
+    '/moderator',
+  ],
 }

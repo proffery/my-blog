@@ -49,7 +49,7 @@ export const PostsCard = ({
   }
 
   return (
-    <Card as={Link} className={classNames.card} href={routes.post + '/' + postId}>
+    <Card className={classNames.card}>
       <div className={classNames.cardImageContainer}>
         {!isPublished && (
           <Typography.H5 as={'span'} className={classNames.notPublishedDescription}>
@@ -66,13 +66,14 @@ export const PostsCard = ({
       </div>
       <div className={classNames.contentWrapper}>
         <div className={classNames.titleWrapper}>
-          <Typography.H5 as={'h2'} className={classNames.title}>
+          <Typography.H5 as={Link} className={classNames.title} href={routes.post + '/' + postId}>
             {title}
           </Typography.H5>
           <Typography.Body1 className={classNames.description}>
             {cleanFromHTML(description)}
           </Typography.Body1>
         </div>
+
         <div className={classNames.bottomInfoWrapper}>
           <Typography.Body2 as={'span'} className={classNames.author}>
             Автор:&nbsp;
