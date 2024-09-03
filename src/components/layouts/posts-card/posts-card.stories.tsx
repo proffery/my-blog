@@ -18,6 +18,7 @@ export const Default: Story = {
     authorName: 'Author',
     date: '2024-08-28T15:08:52.307+00:00',
     description: 'Description',
+    isPublished: true,
     postId: '1',
     title: 'Title',
   },
@@ -30,6 +31,20 @@ export const WithCover: Story = {
     date: '2024-08-28T15:08:52.307+00:00',
     description: 'Description',
     image: cover.src,
+    isPublished: true,
+    postId: '1',
+    title: 'Title',
+  },
+}
+
+export const WithCoverNotPublished: Story = {
+  args: {
+    authorId: '1',
+    authorName: 'Author',
+    date: '2024-08-28T15:08:52.307+00:00',
+    description: 'Description',
+    image: cover.src,
+    isPublished: false,
     postId: '1',
     title: 'Title',
   },

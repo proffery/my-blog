@@ -11,7 +11,7 @@ export type ModalProps = {
   className?: string
   title?: string
   trigger?: ReactNode
-} & ComponentPropsWithoutRef<typeof ModalPrimitive.Dialog>
+} & ComponentPropsWithoutRef<typeof ModalPrimitive.Root>
 
 export const Modal = ({ children, className, title, trigger, ...props }: ModalProps) => {
   const classNames = {

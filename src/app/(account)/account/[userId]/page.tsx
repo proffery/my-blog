@@ -3,6 +3,8 @@ import { routes } from '@/common/constants/routes'
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Typography } from '@/components/ui/typography/typography'
+import { createDatabaseClient } from '@/server/database-config'
+import { paginatedAuthorPostsTitleSearchAscByCreated } from '@/server/functions/database/posts/paginated-author-posts-title-search-asc-by-created'
 import { allUsers } from '@/server/functions/users/all-users'
 import { userById } from '@/server/functions/users/user-by-id'
 import { createUsersClient } from '@/server/users-config'
@@ -37,9 +39,17 @@ export default async function AccountById(props: Props) {
     params: { userId },
   } = props
   const { usersInstance } = await createUsersClient()
+  const { databasesInstance } = await createDatabaseClient()
 
   const userData = await userById({ userId, usersInstance }).catch(() => {
     redirect(routes.account)
+  })
+  const userPosts = await paginatedAuthorPostsTitleSearchAscByCreated({
+    authorId: userId,
+    databasesInstance,
+    limit: 9999999,
+    offset: 0,
+    titleSearch: '',
   })
 
   return (
@@ -58,8 +68,12 @@ export default async function AccountById(props: Props) {
             <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
           ) : null}
           {userData?.labels.map((label: string) => (
-            <Typography.Subtitle1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Subtitle1>
+            <Typography.Body1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Body1>
           ))}
+        </div>
+        <div className={classNames.item}>
+          <Typography.Subtitle1>Постов:&nbsp;</Typography.Subtitle1>
+          <Typography.Body1>{userPosts.total}</Typography.Body1>
         </div>
       </div>
     </Page>

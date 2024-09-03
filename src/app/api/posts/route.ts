@@ -1,9 +1,9 @@
 import { projectConstants } from '@/common/constants/project-constants'
 import { createDatabaseClient } from '@/server/database-config'
-import { paginatedAllPostsTitleSearchDescByCreated } from '@/server/functions/database/posts/paginated-all-posts-title-search-desc-by-created'
 import { paginatedAuthorPostsTitleSearchAscByCreated } from '@/server/functions/database/posts/paginated-author-posts-title-search-asc-by-created'
 import { paginatedAuthorPostsTitleSearchDescByCreated } from '@/server/functions/database/posts/paginated-author-posts-title-search-desc-by-created'
-import { paginatedPostsTitleSearchAscByCreated } from '@/server/functions/database/posts/paginated-posts-title-search-asc-by-created'
+import { paginatedPublishedPostsTitleSearchAscByCreated } from '@/server/functions/database/posts/paginated-published-posts-title-search-asc-by-created'
+import { paginatedPublishedPostsTitleSearchDescByCreated } from '@/server/functions/database/posts/paginated-published-posts-title-search-desc-by-created'
 import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
   } else {
     try {
       if (sortDirection === 'asc') {
-        const list = await paginatedPostsTitleSearchAscByCreated({
+        const list = await paginatedPublishedPostsTitleSearchAscByCreated({
           databasesInstance,
           limit,
           offset,
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.json(list)
       } else {
-        const list = await paginatedAllPostsTitleSearchDescByCreated({
+        const list = await paginatedPublishedPostsTitleSearchDescByCreated({
           databasesInstance,
           limit,
           offset,

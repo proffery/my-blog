@@ -1,5 +1,6 @@
 'use client'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useMemo, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { usePostsFilters } from '@/app/posts/use-posts-filters'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
@@ -18,6 +19,7 @@ import { TabGroup, TabItem, TabList } from '@/components/ui/tab-switcher/tab-swi
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
 import { useDeletePostMutation, useGetPostsQuery } from '@/services/posts/posts.service'
+import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { Edit3, Trash2 } from 'lucide-react'
 import Link from 'next/link'
@@ -46,6 +48,7 @@ function Posts() {
   const [deleteModal, setDeleteModal] = useState(false)
   const [tabValue, setTabValue] = useState<'all' | 'my'>('all')
 
+  const isAuthenticated = useSelector(selectUserRole)
   const { data: meData } = useMeQuery()
   const authId = meData?.user?.$id || ''
   const authorId = tabValue === 'all' ? undefined : authId
@@ -112,7 +115,7 @@ function Posts() {
             placeholder={'домашний офис'}
             value={searchInput ?? ''}
           />
-          {meData && (
+          {isAuthenticated && (
             <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
               <TabList>
                 <TabItem selected={tabValue === 'all'} value={'all'}>
@@ -137,7 +140,7 @@ function Posts() {
         {posts?.length === 0 && <Typography.Caption>Пока нет постов</Typography.Caption>}
         {posts?.map(post => (
           <div className={classNames.cardWrapper} key={post.$id}>
-            {authId === post.authorId && (
+            {isAuthenticated && authId === post.authorId && (
               <div className={classNames.cardButtonsWrapper}>
                 <Button
                   as={Link}
@@ -162,6 +165,7 @@ function Posts() {
               className={classNames.postsCard}
               date={post.$createdAt}
               description={post.post}
+              isPublished={post.isPublished}
               postId={post.$id}
               title={post.title}
             />

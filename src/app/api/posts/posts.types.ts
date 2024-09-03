@@ -13,11 +13,18 @@ export type DeletePostResponse = { postId: string }
 export type GetPostResponse = Post
 export type GetPostRequest = { params: { postId: string } }
 export type UpdatePostResponse = Post
-export type UpdatePostRequest = { authorName: string; post: string; postId: string; title: string }
+export type UpdatePostRequest = {
+  authorName: string
+  isPublished: boolean
+  post: string
+  postId: string
+  title: string
+}
 export type CreatePostResponse = Post
 export type CreatePostRequest = {
   authorId: string
   authorName: string
+  isPublished: boolean
   post: string
   title: string
 }

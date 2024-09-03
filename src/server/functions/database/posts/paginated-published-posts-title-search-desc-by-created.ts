@@ -1,6 +1,6 @@
 import { Databases, Query } from 'node-appwrite'
 
-export const paginatedAllPostsTitleSearchDescByCreated = async (payload: {
+export const paginatedPublishedPostsTitleSearchDescByCreated = async (payload: {
   databasesInstance: Databases
   limit: number
   offset: number
@@ -16,6 +16,7 @@ export const paginatedAllPostsTitleSearchDescByCreated = async (payload: {
       Query.offset(offset),
       Query.orderDesc('$createdAt'),
       Query.contains('title', titleSearch),
+      Query.equal('isPublished', [true]),
     ]
   )
 }

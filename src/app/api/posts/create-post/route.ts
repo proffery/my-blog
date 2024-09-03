@@ -6,7 +6,7 @@ import { ID } from 'node-appwrite'
 
 export async function POST(request: NextRequest) {
   const { databasesInstance } = await createDatabaseClient()
-  const { authorId, authorName, post, title } = await request.json()
+  const { authorId, authorName, isPublished, post, title } = await request.json()
 
   const postId = ID.unique()
 
@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
       authorId,
       authorName,
       databasesInstance,
+      isPublished,
       post,
       postId,
       title,

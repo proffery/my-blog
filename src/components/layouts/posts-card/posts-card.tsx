@@ -18,6 +18,7 @@ type Props = {
   date: string
   description: string
   image?: string
+  isPublished: boolean
   postId: string
   title: string
 } & ComponentPropsWithoutRef<'div'>
@@ -29,18 +30,20 @@ export const PostsCard = ({
   date,
   description,
   image,
+  isPublished,
   postId,
   title,
 }: Props) => {
   const classNames = {
     author: clsx(s.author),
     bottomInfoWrapper: clsx(s.bottomInfoWrapper),
-    card: clsx(s.card, className),
+    card: clsx(s.card, !isPublished && s.notPublished, className),
     cardImage: clsx(s.cardImage),
     cardImageContainer: clsx(s.cardImageContainer),
     contentWrapper: clsx(s.contentWrapper),
     date: clsx(s.date),
     description: clsx(s.description),
+    notPublishedDescription: clsx(s.notPublishedDescription),
     title: clsx(s.title),
     titleWrapper: clsx(s.titleWrapper),
   }
@@ -48,6 +51,11 @@ export const PostsCard = ({
   return (
     <Card as={Link} className={classNames.card} href={routes.post + '/' + postId}>
       <div className={classNames.cardImageContainer}>
+        {!isPublished && (
+          <Typography.H5 as={'span'} className={classNames.notPublishedDescription}>
+            Ожидает модерации
+          </Typography.H5>
+        )}
         <Image
           alt={'Card cover'}
           className={classNames.cardImage}
