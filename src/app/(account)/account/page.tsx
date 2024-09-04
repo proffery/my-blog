@@ -34,6 +34,8 @@ function Account() {
 
   const router = useRouter()
 
+  const authorId = meData?.user?.$id
+
   const sendVerifyEmailHandler = async () => {
     try {
       await sendVerifyEmail().unwrap()
@@ -59,7 +61,7 @@ function Account() {
       <Typography.H1>Мой профиль</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.avatarWrapper}>
-          <Typography.Link1 as={Link} href={routes.account + '/' + meData?.user?.$id}>
+          <Typography.Link1 as={Link} href={routes.account + '/' + authorId}>
             <Avatar size={'large'} />
           </Typography.Link1>
         </div>

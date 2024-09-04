@@ -52,10 +52,12 @@ function EditPost(props: Props) {
       await updatePost({
         ...data,
         authorName,
+        cover: '',
         isPublished: isRole(userRoles, 'Writer'),
         postId,
       }).unwrap()
       await clearCachesByServerAction(routes.post + '/' + postId)
+      await clearCachesByServerAction(routes.account + '/' + authorId)
 
       if (isRole(userRoles, 'Writer')) {
         router.push(routes.post + '/' + postId)

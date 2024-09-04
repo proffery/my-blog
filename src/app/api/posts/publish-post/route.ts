@@ -1,21 +1,17 @@
 import { createDatabaseClient } from '@/server/database-config'
-import { updatePost } from '@/server/functions/database/posts/update-post'
+import { publishPost } from '@/server/functions/database/posts/publish-post'
 import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function PUT(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const { databasesInstance } = await createDatabaseClient()
-  const { authorName, cover, isPublished, post, postId, title } = await request.json()
+  const { isPublished, postId } = await request.json()
 
   try {
-    const updatedPost = await updatePost({
-      authorName,
-      cover,
+    const updatedPost = await publishPost({
       databasesInstance,
       isPublished,
-      post,
       postId,
-      title,
     })
 
     return NextResponse.json(updatedPost)

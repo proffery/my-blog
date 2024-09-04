@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef } from 'react'
 import cover from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { cleanFromHTML } from '@/common/utils/clean-from-html'
-import { dateIsoToLocalRu } from '@/common/utils/date-iso-to-local-ru'
+import { dateShortToLocalRu } from '@/common/utils/date-short-to-local-ru'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
@@ -17,7 +17,7 @@ type Props = {
   authorName: string
   date: string
   description: string
-  image?: string
+  imageUrl: string
   isPublished: boolean
   postId: string
   title: string
@@ -29,7 +29,7 @@ export const PostsCard = ({
   className,
   date,
   description,
-  image,
+  imageUrl,
   isPublished,
   postId,
   title,
@@ -60,7 +60,7 @@ export const PostsCard = ({
           alt={'Card cover'}
           className={classNames.cardImage}
           height={400}
-          src={image ? image : cover}
+          src={imageUrl ? imageUrl : cover}
           width={400}
         />
       </div>
@@ -81,7 +81,9 @@ export const PostsCard = ({
               {authorName}
             </Typography.Link2>
           </Typography.Body2>
-          <Typography.Body2 className={classNames.date}>{dateIsoToLocalRu(date)}</Typography.Body2>
+          <Typography.Body2 className={classNames.date}>
+            {dateShortToLocalRu(date)}
+          </Typography.Body2>
         </div>
       </div>
     </Card>

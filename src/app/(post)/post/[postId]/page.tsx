@@ -1,11 +1,12 @@
 import { routes } from '@/common/constants/routes'
-import { dateIsoToLocalRu } from '@/common/utils/date-iso-to-local-ru'
+import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
+import { dateShortToLocalRu } from '@/common/utils/date-short-to-local-ru'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { TextEditor } from '@/components/ui/text-editor/text-editor'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
-import { allPosts } from '@/server/functions/database/posts/all-posts'
+import { notPublishedPosts } from '@/server/functions/database/posts/not-published-posts'
 import { postById } from '@/server/functions/database/posts/post-by-id'
 import clsx from 'clsx'
 import { jwtDecode } from 'jwt-decode'
@@ -25,7 +26,7 @@ export const dynamicParams = true
 
 export const generateStaticParams = async () => {
   const { databasesInstance } = await createDatabaseClient()
-  const postsData = await allPosts({ databasesInstance })
+  const postsData = await notPublishedPosts({ databasesInstance })
 
   return postsData.documents?.map(post => ({
     postId: post.$id,
@@ -63,9 +64,9 @@ export default async function Post({ params: { postId } }: Props) {
           <Typography.Subtitle2>
             Написан:&nbsp;
             <Typography.Body2 as={'span'}>
-              {dateIsoToLocalRu(postData.$createdAt)}
+              {dateFullToLocalRu(postData.$createdAt)}
               {postData.$updatedAt !== postData.$createdAt
-                ? ` (изменен: ${dateIsoToLocalRu(postData.$updatedAt)})`
+                ? ` (изменен: ${dateFullToLocalRu(postData.$updatedAt)})`
                 : ''}
             </Typography.Body2>
           </Typography.Subtitle2>

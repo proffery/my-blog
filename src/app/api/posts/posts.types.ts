@@ -3,6 +3,7 @@ import { Models } from 'appwrite'
 export type Post = {
   authorId: string
   authorName: string
+  cover: string
   isPublished: boolean
   post: string
   title: string
@@ -10,20 +11,31 @@ export type Post = {
 
 export type DeletePostRequest = { postId: string }
 export type DeletePostResponse = { postId: string }
+
 export type GetPostResponse = Post
 export type GetPostRequest = { params: { postId: string } }
+
+export type GetNotPublishedPostsResponse = Models.DocumentList<Post>
+
 export type UpdatePostResponse = Post
 export type UpdatePostRequest = {
   authorName: string
+  cover: string
   isPublished: boolean
   post: string
   postId: string
   title: string
 }
+export type PublishPostResponse = Post
+export type PublishPostRequest = {
+  isPublished: boolean
+  postId: string
+}
 export type CreatePostResponse = Post
 export type CreatePostRequest = {
   authorId: string
   authorName: string
+  cover: string
   isPublished: boolean
   post: string
   title: string

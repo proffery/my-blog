@@ -1,0 +1,134 @@
+import { Post } from '@/app/api/posts/posts.types'
+import cover from '@/assets/images/no-image.svg'
+import { routes } from '@/common/constants/routes'
+import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
+import { Button } from '@/components/ui/button/button'
+import {
+  Table,
+  TableBody,
+  TableBodyCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/table/table'
+import { Typography } from '@/components/ui/typography/typography'
+import clsx from 'clsx'
+import { BookCheck, Trash2 } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+import s from './moderator-table.module.scss'
+
+const columns = [
+  {
+    key: 'cover',
+    title: 'Обложка',
+  },
+  {
+    key: 'title',
+    title: 'Заголовок',
+  },
+  {
+    key: 'created',
+    title: 'Создан',
+  },
+  {
+    key: 'updated',
+    title: 'Изменен',
+  },
+  {
+    key: 'author',
+    title: 'Автор',
+  },
+  {
+    key: 'options',
+    title: 'Опции',
+  },
+]
+
+type ModeratorTableProps = {
+  onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
+  onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
+  posts?: Post[]
+}
+
+export const ModeratorTable = ({ onPostDelete, onPostPublish, posts }: ModeratorTableProps) => {
+  const classNames = {
+    buttonsWrapper: clsx(s.buttonsWrapper),
+    cover: clsx(s.cover),
+    coverCell: clsx(s.coverCell),
+    tableContainer: clsx(s.tableContainer),
+  }
+
+  const postPublishHandler = (post: Post) => {
+    onPostPublish({
+      authorId: post.authorId,
+      postId: post.$id,
+      postTitle: post.title,
+    })
+  }
+  const postDeleteHandler = (post: Post) => {
+    onPostDelete({
+      authorId: post.authorId,
+      postId: post.$id,
+      postTitle: post.title,
+    })
+  }
+
+  return (
+    <div className={classNames.tableContainer}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {columns.map(column => (
+              <TableHeadCell key={column.key}>{column.title}</TableHeadCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {posts?.map(post => (
+            <TableRow key={post.$id}>
+              <TableBodyCell className={classNames.coverCell}>
+                <Image
+                  alt={post.title}
+                  className={classNames.cover}
+                  src={post.cover ? post.cover : cover}
+                />
+              </TableBodyCell>
+              <TableBodyCell>
+                <Typography.Link2 as={Link} href={`${routes.post}/${post.$id}`}>
+                  {post.title}
+                </Typography.Link2>
+              </TableBodyCell>
+              <TableBodyCell>
+                <Typography.Body2>{dateFullToLocalRu(post.$createdAt)}</Typography.Body2>
+              </TableBodyCell>
+              <TableBodyCell>
+                <Typography.Body2>{dateFullToLocalRu(post.$updatedAt)}</Typography.Body2>
+              </TableBodyCell>
+              <TableBodyCell>
+                <Typography.Link2 as={Link} href={`${routes.account}/${post.authorId}`}>
+                  {post.authorName}
+                </Typography.Link2>
+              </TableBodyCell>
+              <TableBodyCell>
+                <div className={classNames.buttonsWrapper}>
+                  <Button
+                    onClick={() => postPublishHandler(post)}
+                    padding={false}
+                    title={'Публиковать'}
+                  >
+                    <BookCheck />
+                  </Button>
+                  <Button onClick={() => postDeleteHandler(post)} padding={false} title={'Удалить'}>
+                    <Trash2 />
+                  </Button>
+                </div>
+              </TableBodyCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}

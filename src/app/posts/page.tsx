@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, useMemo, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { usePostsFilters } from '@/app/posts/use-posts-filters'
@@ -8,20 +8,26 @@ import { projectConstants } from '@/common/constants/project-constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
+import { isRole } from '@/common/utils/is-role'
 import { Page } from '@/components/layouts/page/page'
 import { PostsCard } from '@/components/layouts/posts-card/posts-card'
 import { Button } from '@/components/ui/button/button'
+import { Dialog } from '@/components/ui/dialog/dialog'
 import { Input } from '@/components/ui/input/input'
 import { Label } from '@/components/ui/label/label'
-import { Modal } from '@/components/ui/modal/modal'
 import PaginationComponent from '@/components/ui/pagination/pagination'
 import { TabGroup, TabItem, TabList } from '@/components/ui/tab-switcher/tab-switcher'
 import { Typography } from '@/components/ui/typography/typography'
+import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import { useMeQuery } from '@/services/auth/auth.service'
-import { useDeletePostMutation, useGetPostsQuery } from '@/services/posts/posts.service'
+import {
+  useDeletePostMutation,
+  useGetPostsQuery,
+  usePublishPostMutation,
+} from '@/services/posts/posts.service'
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
-import { Edit3, Trash2 } from 'lucide-react'
+import { BookX, Edit3, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useDebouncedCallback } from 'use-debounce'
 
@@ -31,24 +37,26 @@ function Posts() {
   const { page, search, setPage, setSearch, setSortDirection, sortDirection } = usePostsFilters()
 
   const classNames = {
-    cardButtonsWrapper: clsx(s.cardButtonsWrapper),
+    adminButtonsWrapper: clsx(s.adminButtonsWrapper),
     cardWrapper: clsx(s.cardWrapper),
     filters: clsx(s.filters),
     filtersWrapper: clsx(s.filtersWrapper),
-    modalButtonsWrapper: clsx(s.modalButtonsWrapper),
     page: clsx(s.page),
     pagination: clsx(s.pagination),
     posts: clsx(s.posts),
     postsCard: clsx(s.postsCard),
     sortIcon: clsx(s.sortIcon, sortDirection === 'desc' ? s.sortIconDesc : s.sortIconAsc),
+    userButtonsWrapper: clsx(s.userButtonsWrapper),
   }
 
   const [searchInput, setSearchInput] = useState(search)
-  const [deletedPostData, setDeletedPostData] = useState({ postId: '', postTitle: '' })
-  const [deleteModal, setDeleteModal] = useState(false)
   const [tabValue, setTabValue] = useState<'all' | 'my'>('all')
 
-  const isAuthenticated = useSelector(selectUserRole)
+  const [tempPostData, setTempPostData] = useState({ postId: '', postTitle: '' })
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [notPublishModal, setNotPublishModal] = useState(false)
+
+  const userRoles = useSelector(selectUserRole)
   const { data: meData } = useMeQuery()
   const authId = meData?.user?.$id || ''
   const authorId = tabValue === 'all' ? undefined : authId
@@ -63,6 +71,7 @@ function Posts() {
   const pagesCount = postsData ? Math.ceil(postsData.total / projectConstants.postsPagination) : 1
 
   const [deletePost] = useDeletePostMutation()
+  const [changePublish] = usePublishPostMutation()
 
   const sortChangeHandler = () => {
     sortDirection === 'desc' ? setSortDirection('asc') : setSortDirection('desc')
@@ -86,26 +95,53 @@ function Posts() {
   }
 
   const setDeletedPostDataHandler = (postId: string, postTitle: string) => {
-    setDeletedPostData({ postId, postTitle })
+    setTempPostData({ postId, postTitle })
     setDeleteModal(true)
   }
 
+  const setNotPublishPostDataHandler = (postId: string, postTitle: string) => {
+    setTempPostData({ postId, postTitle })
+    setNotPublishModal(true)
+  }
+
   const confirmPostDeleteHandler = async () => {
-    await deletePost({ postId: deletedPostData.postId }).unwrap()
     setDeleteModal(false)
-    setDeletedPostData({ postId: '', postTitle: '' })
+    await deletePost({ postId: tempPostData.postId }).unwrap()
+    await clearCachesByServerAction(routes.account + '/' + authId)
+    setTempPostData({ postId: '', postTitle: '' })
+  }
+
+  const confirmNotPublishHandler = async () => {
+    await changePublish({ isPublished: false, postId: tempPostData.postId })
+    setNotPublishModal(false)
+    setTempPostData({ postId: '', postTitle: '' })
   }
 
   return (
     <Page className={classNames.page}>
       <Typography.H1>Посты</Typography.H1>
-      <Modal onOpenChange={setDeleteModal} open={deleteModal} title={'Удалить этот пост?'}>
-        <Typography.H3>{deletedPostData.postTitle}</Typography.H3>
-        <div className={classNames.modalButtonsWrapper}>
-          <Button onClick={() => setDeleteModal(false)}>Отмена</Button>
-          <Button onClick={confirmPostDeleteHandler}>Удалить</Button>
-        </div>
-      </Modal>
+      <Dialog
+        cancelText={'Отмена'}
+        confirmText={'Удалить'}
+        onCancel={() => setDeleteModal(false)}
+        onConfirm={confirmPostDeleteHandler}
+        onOpenChange={setDeleteModal}
+        open={deleteModal}
+        title={'Удалить этот пост?'}
+      >
+        <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
+      </Dialog>
+      <Dialog
+        cancelText={'Отмена'}
+        confirmText={'Не публиковать'}
+        onCancel={() => setNotPublishModal(false)}
+        onConfirm={confirmNotPublishHandler}
+        onOpenChange={setNotPublishModal}
+        open={notPublishModal}
+        title={'Не публиковать?'}
+      >
+        <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
+      </Dialog>
       <div className={classNames.filtersWrapper}>
         <Typography.Caption>Поиск постов по фильтрам:</Typography.Caption>
         <div className={classNames.filters}>
@@ -115,7 +151,7 @@ function Posts() {
             placeholder={'домашний офис'}
             value={searchInput ?? ''}
           />
-          {isAuthenticated && (
+          {userRoles && (
             <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
               <TabList>
                 <TabItem selected={tabValue === 'all'} value={'all'}>
@@ -140,8 +176,8 @@ function Posts() {
         {posts?.length === 0 && <Typography.Caption>Пока нет постов</Typography.Caption>}
         {posts?.map(post => (
           <div className={classNames.cardWrapper} key={post.$id}>
-            {isAuthenticated && authId === post.authorId && (
-              <div className={classNames.cardButtonsWrapper}>
+            {userRoles && authId === post.authorId && (
+              <div className={classNames.userButtonsWrapper}>
                 <Button
                   as={Link}
                   href={routes.updatePost + post.$id}
@@ -159,12 +195,24 @@ function Posts() {
                 </Button>
               </div>
             )}
+            {isRole(userRoles, 'Moderator') && (
+              <div className={classNames.adminButtonsWrapper}>
+                <Button
+                  onClick={() => setNotPublishPostDataHandler(post.$id, post.title)}
+                  padding={false}
+                  title={'Убрать из публикации'}
+                >
+                  <BookX />
+                </Button>
+              </div>
+            )}
             <PostsCard
               authorId={post.authorId}
               authorName={post.authorName}
               className={classNames.postsCard}
               date={post.$createdAt}
               description={post.post}
+              imageUrl={post.cover}
               isPublished={post.isPublished}
               postId={post.$id}
               title={post.title}

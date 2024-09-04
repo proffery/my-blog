@@ -1,4 +1,4 @@
-export function dateIsoToLocalRu(isoString: string): string {
+export function dateShortToLocalRu(isoString: string): string {
   const date = new Date(isoString)
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',

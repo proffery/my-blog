@@ -1,4 +1,5 @@
 @use '@/styles/breakpoints';
+@use '@/styles/animations' as animations;
 
 .page {
   gap: 32px;
@@ -6,13 +7,6 @@
   @media (width <= breakpoints.$mobile) {
     gap: 16px;
   }
-}
-
-.modalButtonsWrapper {
-  display: flex;
-  gap: 16px;
-  justify-content: space-around;
-  width: 100%;
 }
 
 .sortIcon {
@@ -71,15 +65,37 @@
   position: relative;
 }
 
-.cardButtonsWrapper {
+.userButtonsWrapper,
+.adminButtonsWrapper {
   position: absolute;
   z-index: 99;
-  right: 0;
 
   display: flex;
   gap: 8px;
 
   padding: 8px;
+}
+
+.adminButtonsWrapper {
+  left: 0;
+
+  button {
+    border-color: var(--color-danger);
+
+    @include animations.background-hover(var(--color-danger));
+  }
+
+  svg {
+    color: var(--color-danger);
+
+    &:hover {
+      color: var(--color-light);
+    }
+  }
+}
+
+.userButtonsWrapper {
+  right: 0;
 }
 
 .pagination {

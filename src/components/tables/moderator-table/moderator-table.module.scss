@@ -1,0 +1,21 @@
+.tableContainer {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.coverCell {
+  text-align: center;
+}
+
+.cover {
+  width: auto;
+  max-height: 32px;
+  object-fit: fill;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}

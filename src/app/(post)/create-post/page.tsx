@@ -13,6 +13,7 @@ import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal/modal'
 import { Typography } from '@/components/ui/typography/typography'
+import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import { useMeQuery } from '@/services/auth/auth.service'
 import { useCreatePostMutation } from '@/services/posts/posts.service'
 import { selectUserRole } from '@/services/user/user.selectors'
@@ -40,8 +41,11 @@ function CreatePost() {
       authorId,
       ...data,
       authorName,
+      cover: '',
       isPublished: isRole(userRoles, 'Writer'),
     }).unwrap()
+
+    await clearCachesByServerAction(routes.account + '/' + authorId)
 
     if (isRole(userRoles, 'Writer')) {
       router.push(routes.post + '/' + newPost.$id)

@@ -38,7 +38,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
     loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({
-      invalidatesTags: ['Me', 'Posts', 'PostsByAuthor'],
+      invalidatesTags: ['Me', 'Posts', 'Post'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -54,7 +54,7 @@ export const authService = baseApi.injectEndpoints({
     }),
 
     logout: builder.mutation<MessageResponse, void>({
-      invalidatesTags: ['Me', 'Posts', 'PostsByAuthor'],
+      invalidatesTags: ['Me', 'Posts', 'Post'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
@@ -78,7 +78,7 @@ export const authService = baseApi.injectEndpoints({
           dispatch(userActions.setUserRole(response.data.user?.labels ?? ['']))
           dispatch(userActions.setUserId(response.data.user?.$id ?? ''))
         } catch (error) {
-          console.log('Me request failed: ', error)
+          console.warn('Me request failed: ', error)
         } finally {
           dispatch(appActions.setAppIsInitialized(true))
         }
@@ -90,7 +90,7 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
     registration: builder.mutation<MessageResponse, RegistrationRequest>({
-      invalidatesTags: ['Me', 'Posts', 'PostsByAuthor'],
+      invalidatesTags: ['Me', 'Posts', 'Post'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
