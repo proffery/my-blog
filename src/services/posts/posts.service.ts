@@ -100,7 +100,7 @@ export const postsService = baseApi.injectEndpoints({
       }),
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostRequest>({
-      invalidatesTags: ['Posts', 'Post'],
+      invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
       async onQueryStarted({ isPublished, postId }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           postsService.util.updateQueryData('getNotPublishedPosts', undefined, draft => {
