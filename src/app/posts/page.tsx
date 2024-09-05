@@ -29,12 +29,13 @@ import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { BookX, Edit3, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
 import s from './posts.module.scss'
 
 function Posts() {
-  const { page, search, setPage, setSearch, setSortDirection, sortDirection } = usePostsFilters()
+  const { page, search, setPage, setSearch, setSort, sort } = usePostsFilters()
 
   const classNames = {
     adminButtonsWrapper: clsx(s.adminButtonsWrapper),
@@ -45,7 +46,7 @@ function Posts() {
     pagination: clsx(s.pagination),
     posts: clsx(s.posts),
     postsCard: clsx(s.postsCard),
-    sortIcon: clsx(s.sortIcon, sortDirection === 'desc' ? s.sortIconDesc : s.sortIconAsc),
+    sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     userButtonsWrapper: clsx(s.userButtonsWrapper),
   }
 
@@ -57,6 +58,7 @@ function Posts() {
   const [notPublishModal, setNotPublishModal] = useState(false)
 
   const userRoles = useSelector(selectUserRole)
+
   const { data: meData } = useMeQuery()
   const authId = meData?.user?.$id || ''
   const authorId = tabValue === 'all' ? undefined : authId
@@ -65,7 +67,7 @@ function Posts() {
     authorId,
     page: page ?? '1',
     search: search ?? '',
-    sortDirection: sortDirection ?? 'desc',
+    sort: sort ?? 'desc',
   })
   const posts = postsData?.documents
   const pagesCount = postsData ? Math.ceil(postsData.total / projectConstants.postsPagination) : 1
@@ -74,7 +76,7 @@ function Posts() {
   const [changePublish] = usePublishPostMutation()
 
   const sortChangeHandler = () => {
-    sortDirection === 'desc' ? setSortDirection('asc') : setSortDirection('desc')
+    sort === 'desc' ? setSort('asc') : setSort('desc')
   }
 
   const tabChangeHandler = () => {
@@ -112,8 +114,9 @@ function Posts() {
   }
 
   const confirmNotPublishHandler = async () => {
-    await changePublish({ isPublished: false, postId: tempPostData.postId })
     setNotPublishModal(false)
+    await changePublish({ isPublished: false, postId: tempPostData.postId }).unwrap()
+
     setTempPostData({ postId: '', postTitle: '' })
   }
 
@@ -166,7 +169,7 @@ function Posts() {
           <Label>
             Сначала
             <Button onClick={sortChangeHandler}>
-              {sortDirection === 'desc' ? 'новые' : 'старые'}
+              {sort === 'desc' ? 'новые' : 'старые'}
               <RightBracketIcon className={classNames.sortIcon} />
             </Button>
           </Label>

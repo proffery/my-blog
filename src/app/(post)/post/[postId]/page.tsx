@@ -1,11 +1,11 @@
 import { routes } from '@/common/constants/routes'
 import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
-import { dateShortToLocalRu } from '@/common/utils/date-short-to-local-ru'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { TextEditor } from '@/components/ui/text-editor/text-editor'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
+import { allPosts } from '@/server/functions/database/posts/all-posts'
 import { notPublishedPosts } from '@/server/functions/database/posts/not-published-posts'
 import { postById } from '@/server/functions/database/posts/post-by-id'
 import clsx from 'clsx'
@@ -26,7 +26,7 @@ export const dynamicParams = true
 
 export const generateStaticParams = async () => {
   const { databasesInstance } = await createDatabaseClient()
-  const postsData = await notPublishedPosts({ databasesInstance })
+  const postsData = await allPosts({ databasesInstance })
 
   return postsData.documents?.map(post => ({
     postId: post.$id,
@@ -37,6 +37,7 @@ export default async function Post({ params: { postId } }: Props) {
   const classNames = {
     description: clsx(s.description),
     descriptionWrapper: clsx(s.descriptionWrapper),
+    title: clsx(s.title),
   }
   const { databasesInstance } = await createDatabaseClient()
 
@@ -51,7 +52,7 @@ export default async function Post({ params: { postId } }: Props) {
 
   return (
     <Page>
-      <Typography.H1>{postData?.title}</Typography.H1>
+      <Typography.H1 className={classNames.title}>{postData?.title}</Typography.H1>
       <TextEditor defaultValue={postData?.post} isEditable={false} />
       <div className={classNames.descriptionWrapper}>
         <Typography.Subtitle2>

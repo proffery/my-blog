@@ -16,6 +16,9 @@ export type GetPostResponse = Post
 export type GetPostRequest = { params: { postId: string } }
 
 export type GetNotPublishedPostsResponse = Models.DocumentList<Post>
+export type GetNotPublishedPostsRequest = { sort?: SortDirection; sortBy: SortBy }
+
+export type SortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title'
 
 export type UpdatePostResponse = Post
 export type UpdatePostRequest = {
@@ -46,5 +49,5 @@ export type GetPostsRequest = {
   authorId?: string
   page?: string
   search?: string
-  sortDirection?: SortDirection
+  sort?: SortDirection
 }

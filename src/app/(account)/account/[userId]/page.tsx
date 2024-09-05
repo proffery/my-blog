@@ -4,7 +4,7 @@ import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
-import { paginatedAuthorPostsTitleSearchAscByCreated } from '@/server/functions/database/posts/paginated-author-posts-title-search-asc-by-created'
+import { paginatedPostsByCreate } from '@/server/functions/database/posts/paginated-posts-by-create'
 import { allUsers } from '@/server/functions/users/all-users'
 import { userById } from '@/server/functions/users/user-by-id'
 import { createUsersClient } from '@/server/users-config'
@@ -44,11 +44,12 @@ export default async function AccountById(props: Props) {
   const userData = await userById({ userId, usersInstance }).catch(() => {
     redirect(routes.account)
   })
-  const userPosts = await paginatedAuthorPostsTitleSearchAscByCreated({
+  const userPosts = await paginatedPostsByCreate({
     authorId: userId,
     databasesInstance,
     limit: 9999999,
     offset: 0,
+    sort: 'desc',
     titleSearch: '',
   })
 

@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import { useModeratorFilters } from '@/app/(account)/moderator/use-moderator-filters'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import withSuspense from '@/common/hocs/with-suspense'
 import { isRole } from '@/common/utils/is-role'
 import { Page } from '@/components/layouts/page/page'
 import { ModeratorTable } from '@/components/tables/moderator-table/moderator-table'
@@ -30,11 +32,16 @@ function Moderator() {
   const userRoles = useSelector(selectUserRole)
   const router = useRouter()
 
+  const { setSort, setSortBy, sort, sortBy } = useModeratorFilters()
+
   const [deleteModal, setDeleteModal] = useState(false)
   const [publishModal, setPublishModal] = useState(false)
   const [tempPostData, setTempPostData] = useState({ authorId: '', postId: '', postTitle: '' })
 
-  const { data: notPublishedPosts } = useGetNotPublishedPostsQuery()
+  const { data: notPublishedPosts, isSuccess } = useGetNotPublishedPostsQuery({
+    sort: sort ?? 'desc',
+    sortBy: sortBy ?? '$updatedAt',
+  })
   const [deletePost] = useDeletePostMutation()
   const [changePublish] = usePublishPostMutation()
 
@@ -66,17 +73,17 @@ function Moderator() {
     setPublishModal(true)
   }
 
-  const confirmPostDeleteHandler = async () => {
+  const confirmDeleteHandler = async () => {
     setDeleteModal(false)
     await deletePost({ postId: tempPostData.postId }).unwrap()
-
     await clearCachesByServerAction(routes.account + '/' + tempPostData.authorId)
     setTempPostData({ authorId: '', postId: '', postTitle: '' })
   }
 
   const confirmPublishHandler = async () => {
-    await changePublish({ isPublished: true, postId: tempPostData.postId })
     setPublishModal(false)
+    await changePublish({ isPublished: true, postId: tempPostData.postId }).unwrap()
+
     setTempPostData({ authorId: '', postId: '', postTitle: '' })
   }
 
@@ -87,7 +94,7 @@ function Moderator() {
         cancelText={'Отмена'}
         confirmText={'Удалить'}
         onCancel={() => setDeleteModal(false)}
-        onConfirm={confirmPostDeleteHandler}
+        onConfirm={confirmDeleteHandler}
         onOpenChange={setDeleteModal}
         open={deleteModal}
         title={'Удалить этот пост?'}
@@ -109,7 +116,11 @@ function Moderator() {
         <ModeratorTable
           onPostDelete={setDeletedPostDataHandler}
           onPostPublish={setPublishPostDataHandler}
+          onSortByChange={setSortBy}
+          onSortChange={setSort}
           posts={notPublishedPosts?.documents}
+          sort={sort ?? 'desc'}
+          sortBy={sortBy ?? '$updatedAt'}
         />
       ) : (
         <Typography.Caption>Пока нет постов для модерации</Typography.Caption>
@@ -117,4 +128,4 @@ function Moderator() {
     </Page>
   )
 }
-export default withRedux(Moderator)
+export default withSuspense(withRedux(Moderator))

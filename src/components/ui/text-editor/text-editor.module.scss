@@ -10,6 +10,8 @@ $radius: 5px;
   flex-direction: column;
   gap: $padding-desktop;
 
+  max-width: 900px;
+  margin: 0 auto;
   padding: $padding-desktop;
 
   background-color: transparent;

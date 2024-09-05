@@ -19,3 +19,17 @@
   align-items: center;
   justify-content: center;
 }
+
+.sortIcon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+}
+
+.sortIconDesc {
+  transform: rotate(90deg);
+}
+
+.sortIconAsc {
+  transform: rotate(270deg);
+}

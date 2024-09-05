@@ -3,6 +3,7 @@ import {
   CreatePostResponse,
   DeletePostRequest,
   DeletePostResponse,
+  GetNotPublishedPostsRequest,
   GetNotPublishedPostsResponse,
   GetPostRequest,
   GetPostResponse,
@@ -34,22 +35,11 @@ export const postsService = baseApi.injectEndpoints({
       }),
     }),
     deletePost: builder.mutation<DeletePostResponse, DeletePostRequest>({
-      invalidatesTags: ['Posts', 'Post'],
-      async onQueryStarted({ postId }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          postsService.util.updateQueryData('getNotPublishedPosts', undefined, draft => {
-            const postIndex = draft.documents.findIndex(post => post.$id === postId)
-
-            if (postIndex !== -1) {
-              draft.documents.splice(postIndex, 1)
-            }
-          })
-        )
-
+      invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
+      async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
-          patchResult?.undo()
           console.error(error)
         }
       },
@@ -59,7 +49,7 @@ export const postsService = baseApi.injectEndpoints({
         url: endpoints.posts_delete,
       }),
     }),
-    getNotPublishedPosts: builder.query<GetNotPublishedPostsResponse, void>({
+    getNotPublishedPosts: builder.query<GetNotPublishedPostsResponse, GetNotPublishedPostsRequest>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -68,7 +58,8 @@ export const postsService = baseApi.injectEndpoints({
         }
       },
       providesTags: ['NotPublishedPosts'],
-      query: () => ({
+      query: searchParams => ({
+        params: searchParams,
         url: endpoints.posts_get_not_published,
       }),
     }),
@@ -101,21 +92,10 @@ export const postsService = baseApi.injectEndpoints({
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostRequest>({
       invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
-      async onQueryStarted({ isPublished, postId }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          postsService.util.updateQueryData('getNotPublishedPosts', undefined, draft => {
-            const postIndex = draft.documents.findIndex(post => post.$id === postId)
-
-            if (postIndex !== -1) {
-              draft.documents.splice(postIndex, 1)
-            }
-          })
-        )
-
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
         } catch (error) {
-          patchResult?.undo()
           console.error(error)
         }
       },

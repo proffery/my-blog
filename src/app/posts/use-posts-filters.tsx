@@ -5,7 +5,7 @@ export const usePostsFilters = () => {
   const [search, setSearch] = useQueryParam<string>('search', '')
   const [page, setPage] = useQueryParam<string>('page', '1')
   const [authorId, setAuthorId] = useQueryParam<string>('authorId', '')
-  const [sortDirection, setSortDirection] = useQueryParam<SortDirection>('sortDirection', 'desc')
+  const [sort, setSort] = useQueryParam<SortDirection>('sort', 'desc')
 
   return {
     authorId,
@@ -14,7 +14,7 @@ export const usePostsFilters = () => {
     setAuthorId,
     setPage,
     setSearch,
-    setSortDirection,
-    sortDirection,
+    setSort,
+    sort,
   }
 }

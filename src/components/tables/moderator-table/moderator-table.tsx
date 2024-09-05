@@ -1,4 +1,5 @@
-import { Post } from '@/app/api/posts/posts.types'
+import { Post, SortBy, SortDirection } from '@/app/api/posts/posts.types'
+import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import cover from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
@@ -19,29 +20,39 @@ import Link from 'next/link'
 
 import s from './moderator-table.module.scss'
 
-const columns = [
+type ModeratorTableColumns = {
+  isClickable: boolean
+  key?: SortBy
+  title: string
+}
+
+const columns: ModeratorTableColumns[] = [
   {
-    key: 'cover',
+    isClickable: false,
     title: 'Обложка',
   },
   {
+    isClickable: true,
     key: 'title',
     title: 'Заголовок',
   },
   {
-    key: 'created',
+    isClickable: true,
+    key: '$createdAt',
     title: 'Создан',
   },
   {
-    key: 'updated',
+    isClickable: true,
+    key: '$updatedAt',
     title: 'Изменен',
   },
   {
-    key: 'author',
+    isClickable: true,
+    key: 'authorName',
     title: 'Автор',
   },
   {
-    key: 'options',
+    isClickable: false,
     title: 'Опции',
   },
 ]
@@ -49,14 +60,27 @@ const columns = [
 type ModeratorTableProps = {
   onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
   onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
+  onSortByChange: (value: SortBy | null) => void
+  onSortChange: (value: SortDirection | null) => void
   posts?: Post[]
+  sort: SortDirection
+  sortBy: SortBy
 }
 
-export const ModeratorTable = ({ onPostDelete, onPostPublish, posts }: ModeratorTableProps) => {
+export const ModeratorTable = ({
+  onPostDelete,
+  onPostPublish,
+  onSortByChange,
+  onSortChange,
+  posts,
+  sort,
+  sortBy,
+}: ModeratorTableProps) => {
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
     cover: clsx(s.cover),
     coverCell: clsx(s.coverCell),
+    sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     tableContainer: clsx(s.tableContainer),
   }
 
@@ -75,14 +99,34 @@ export const ModeratorTable = ({ onPostDelete, onPostPublish, posts }: Moderator
     })
   }
 
+  const sortToggleHandler = () => {
+    sort === 'asc' ? onSortChange('desc') : onSortChange('asc')
+  }
+
+  const sortByHandler = (key: SortBy) => {
+    key === sortBy ? sortToggleHandler() : onSortByChange(key)
+  }
+
   return (
     <div className={classNames.tableContainer}>
       <Table>
         <TableHead>
           <TableRow>
-            {columns.map(column => (
-              <TableHeadCell key={column.key}>{column.title}</TableHeadCell>
-            ))}
+            {columns.map(column =>
+              column.isClickable ? (
+                <TableHeadCell key={column.title}>
+                  <Button
+                    onClick={() => sortByHandler(column.key ?? '$updatedAt')}
+                    variant={'text'}
+                  >
+                    {column.title}&nbsp;
+                    {column.key === sortBy && <RightBracketIcon className={classNames.sortIcon} />}
+                  </Button>
+                </TableHeadCell>
+              ) : (
+                <TableHeadCell key={column.key}>{column.title}</TableHeadCell>
+              )
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
