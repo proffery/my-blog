@@ -27,20 +27,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-end;
 
   width: 100%;
-
-  @media (width <= breakpoints.$mobile) {
-    gap: 8px;
-  }
-}
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
 
   @media (width <= breakpoints.$mobile) {
     gap: 8px;

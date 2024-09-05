@@ -40,7 +40,6 @@ function Posts() {
   const classNames = {
     adminButtonsWrapper: clsx(s.adminButtonsWrapper),
     cardWrapper: clsx(s.cardWrapper),
-    filters: clsx(s.filters),
     filtersWrapper: clsx(s.filtersWrapper),
     page: clsx(s.page),
     pagination: clsx(s.pagination),
@@ -123,7 +122,10 @@ function Posts() {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Посты</Typography.H1>
+      <div>
+        <Typography.H1>Посты</Typography.H1>
+        <Typography.Caption>Поиск постов по фильтрам</Typography.Caption>
+      </div>
       <Dialog
         cancelText={'Отмена'}
         confirmText={'Удалить'}
@@ -147,34 +149,31 @@ function Posts() {
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
       <div className={classNames.filtersWrapper}>
-        <Typography.Caption>Поиск постов по фильтрам:</Typography.Caption>
-        <div className={classNames.filters}>
-          <Input
-            label={'Искать в заголовках'}
-            onChange={searchInputChangeHandler}
-            placeholder={'домашний офис'}
-            value={searchInput ?? ''}
-          />
-          {userRoles && (
-            <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
-              <TabList>
-                <TabItem selected={tabValue === 'all'} value={'all'}>
-                  Все
-                </TabItem>
-                <TabItem selected={tabValue === 'my'} value={'my'}>
-                  Мои
-                </TabItem>
-              </TabList>
-            </TabGroup>
-          )}
-          <Label>
-            Сначала
-            <Button onClick={sortChangeHandler}>
-              {sort === 'desc' ? 'новые' : 'старые'}
-              <RightBracketIcon className={classNames.sortIcon} />
-            </Button>
-          </Label>
-        </div>
+        <Input
+          label={'Искать в заголовках'}
+          onChange={searchInputChangeHandler}
+          placeholder={'домашний офис'}
+          value={searchInput ?? ''}
+        />
+        {userRoles && (
+          <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
+            <TabList>
+              <TabItem selected={tabValue === 'all'} value={'all'}>
+                Все
+              </TabItem>
+              <TabItem selected={tabValue === 'my'} value={'my'}>
+                Мои
+              </TabItem>
+            </TabList>
+          </TabGroup>
+        )}
+        <Label>
+          Сначала
+          <Button onClick={sortChangeHandler}>
+            {sort === 'desc' ? 'новые' : 'старые'}
+            <RightBracketIcon className={classNames.sortIcon} />
+          </Button>
+        </Label>
       </div>
       <div className={classNames.posts}>
         {posts?.length === 0 && <Typography.Caption>Пока нет постов</Typography.Caption>}
