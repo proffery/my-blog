@@ -119,12 +119,14 @@ export const ModeratorTable = ({
                     onClick={() => sortByHandler(column.key ?? '$updatedAt')}
                     variant={'text'}
                   >
-                    {column.title}&nbsp;
+                    <Typography.Subtitle2>{column.title}&nbsp;</Typography.Subtitle2>
                     {column.key === sortBy && <RightBracketIcon className={classNames.sortIcon} />}
                   </Button>
                 </TableHeadCell>
               ) : (
-                <TableHeadCell key={column.key}>{column.title}</TableHeadCell>
+                <TableHeadCell key={column.key}>
+                  <Typography.Subtitle2>{column.title}</Typography.Subtitle2>
+                </TableHeadCell>
               )
             )}
           </TableRow>

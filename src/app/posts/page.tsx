@@ -81,6 +81,7 @@ function Posts() {
 
   const tabChangeHandler = () => {
     tabValue === 'all' ? setTabValue('my') : setTabValue('all')
+    setPage('1')
   }
 
   const searchInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
