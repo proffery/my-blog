@@ -1,0 +1,92 @@
+@use '@/styles/breakpoints';
+
+$max-width-desktop: 480px;
+$max-width-mobile: 350px;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+
+  width: 100%;
+  max-width: $max-width-desktop;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 10px;
+    max-width: $max-width-mobile;
+  }
+}
+
+.listHeader {
+  margin: 0;
+}
+
+.centeredContainer {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+.avatarInput {
+  position: absolute;
+  z-index: -1;
+
+  overflow: hidden;
+
+  width: 0.1px;
+  height: 0.1px;
+
+  opacity: 0;
+}
+
+.avatarLabel {
+  &:focus-within {
+    outline: 2px solid var(--color-info);
+  }
+}
+
+.deletePhotoButton {
+  cursor: pointer;
+
+  position: absolute;
+  top: 102%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: none;
+  border: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-within {
+    text-decoration: underline;
+    border-radius: 2px;
+    outline: 2px solid var(--color-info);
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    right: 15%;
+  }
+}

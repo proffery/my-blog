@@ -5,6 +5,8 @@ import withRedux from '@/common/hocs/with-redux'
 import { getErrorMessage } from '@/common/utils/get-error-message'
 import { EditNameForm } from '@/components/forms/edit-name-form/edit-name-form'
 import { EditNameValues } from '@/components/forms/edit-name-form/schema'
+import { UploadAvatarFormValues } from '@/components/forms/upload-avatar-form/schema'
+import { UploadAvatarForm } from '@/components/forms/upload-avatar-form/upload-avatar-form'
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
@@ -12,9 +14,11 @@ import { Typography } from '@/components/ui/typography/typography'
 import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import {
   useChangeNameMutation,
+  useCreateAvatarMutation,
   useMeQuery,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
+import { useGetAvatarMetaQuery, useGetAvatarQuery } from '@/services/users/users.service'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -34,7 +38,16 @@ function Account() {
 
   const router = useRouter()
 
-  const authorId = meData?.user?.$id
+  const userId = meData?.user?.$id ?? ''
+
+  // const { data: avatarMetaData } = useGetAvatarQuery({ params: { userId } })
+  //
+  // const avatarBuffer = avatarMetaData?.avatar
+  // const avatarBlob = new Blob([avatarBuffer], {
+  //   type: 'image/webp',
+  // })
+
+  const [createAvatar] = useCreateAvatarMutation()
 
   const sendVerifyEmailHandler = async () => {
     try {
@@ -54,6 +67,17 @@ function Account() {
     }
   }
 
+  const handleCreateAvatarSubmit = async (data: UploadAvatarFormValues) => {
+    const { file } = data
+
+    try {
+      await createAvatar({ file, userId }).unwrap()
+      await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const errorMessage = getErrorMessage(changeNameError)
 
   return (
@@ -61,9 +85,7 @@ function Account() {
       <Typography.H1>Мой профиль</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.avatarWrapper}>
-          <Typography.Link1 as={Link} href={routes.account + '/' + authorId}>
-            <Avatar size={'large'} />
-          </Typography.Link1>
+          <UploadAvatarForm currentAvatarUrl={''} onSubmit={handleCreateAvatarSubmit} />
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Почта:&nbsp;</Typography.Subtitle1>{' '}

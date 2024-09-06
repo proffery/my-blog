@@ -86,6 +86,7 @@ function Posts() {
   const searchInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
     debouncedSearchInputHandler(e.target.value)
+    setPage('1')
   }
 
   const debouncedSearchInputHandler = useDebouncedCallback((value: string) => {

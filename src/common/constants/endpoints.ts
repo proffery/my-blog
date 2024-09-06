@@ -1,7 +1,9 @@
 export const endpoints = {
   _base: `${process.env.NEXT_PUBLIC_HOST_BASE}`,
   auth_changeName: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/change-name`,
+  auth_create_avatar: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/create-avatar`,
   auth_create_oauth_session: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/create-oauth-session`,
+  auth_delete_avatar: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/delete-avatar`,
   auth_loginEmail: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/login-email`,
   auth_logout: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/logout`,
   auth_me: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/auth/me`,
@@ -16,5 +18,7 @@ export const endpoints = {
   posts_publish: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/publish-post`,
   posts_update: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/update-post`,
   users_get_all: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users`,
+  users_get_avatar: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/avatar`,
+  users_get_avatar_meta: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/avatar-meta`,
   users_get_user: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/user`,
 } as const

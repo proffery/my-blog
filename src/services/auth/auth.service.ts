@@ -1,5 +1,8 @@
 import {
   ChangeNameRequest,
+  CreateAvatarRequest,
+  CreateAvatarResponse,
+  DeleteAvatarRequest,
   LoginEmailRequest,
   MeResponse,
   MessageResponse,
@@ -37,6 +40,42 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.auth_changeName,
       }),
     }),
+    createAvatar: builder.mutation<CreateAvatarResponse, CreateAvatarRequest>({
+      invalidatesTags: ['AvatarMeta'],
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      query: ({ file, userId }) => {
+        const formData = new FormData()
+
+        formData.append('file', file)
+        formData.append('userId', userId)
+
+        return {
+          body: formData,
+          method: 'POST',
+          url: endpoints.auth_create_avatar,
+        }
+      },
+    }),
+    deleteAvatar: builder.mutation<MessageResponse, DeleteAvatarRequest>({
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      query: body => ({
+        body,
+        method: 'DELETE',
+        url: endpoints.auth_delete_avatar,
+      }),
+    }),
     loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({
       invalidatesTags: ['Me', 'Posts', 'Post'],
       async onQueryStarted(_, { queryFulfilled }) {
@@ -52,7 +91,6 @@ export const authService = baseApi.injectEndpoints({
         url: endpoints.auth_loginEmail,
       }),
     }),
-
     logout: builder.mutation<MessageResponse, void>({
       invalidatesTags: ['Me', 'Posts', 'Post'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -139,6 +177,8 @@ export const authService = baseApi.injectEndpoints({
 
 export const {
   useChangeNameMutation,
+  useCreateAvatarMutation,
+  useDeleteAvatarMutation,
   useLoginEmailMutation,
   useLogoutMutation,
   useMeQuery,
