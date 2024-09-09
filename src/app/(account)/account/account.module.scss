@@ -20,5 +20,9 @@
 
 .avatarWrapper {
   display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
   align-self: center;
+  justify-content: center;
 }

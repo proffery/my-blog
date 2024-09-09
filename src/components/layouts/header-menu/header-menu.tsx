@@ -21,7 +21,7 @@ type Props = {
   userData?: MeResponse
 }
 
-export const HeaderMenu = ({ logout, userData }: Props) => {
+export const HeaderMenu = ({ avatarUrl, logout, userData }: Props) => {
   const classNames = {
     trigger: clsx(s.trigger),
   }
@@ -34,7 +34,7 @@ export const HeaderMenu = ({ logout, userData }: Props) => {
       triangleRight={'60%'}
       trigger={
         <div className={classNames.trigger}>
-          <Avatar />
+          <Avatar url={avatarUrl} />
           <Typography.Overline as={'span'}>{userData?.user?.email}</Typography.Overline>
         </div>
       }

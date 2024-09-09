@@ -52,7 +52,7 @@ export const authService = baseApi.injectEndpoints({
       query: ({ file, userId }) => {
         const formData = new FormData()
 
-        formData.append('file', file)
+        formData.append('file', file ?? '')
         formData.append('userId', userId)
 
         return {
@@ -63,9 +63,11 @@ export const authService = baseApi.injectEndpoints({
       },
     }),
     deleteAvatar: builder.mutation<MessageResponse, DeleteAvatarRequest>({
-      async onQueryStarted(_, { queryFulfilled }) {
+      invalidatesTags: ['AvatarMeta'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
+          dispatch(userActions.setAvatarUrl(null))
         } catch (error) {
           console.error(error)
         }

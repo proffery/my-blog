@@ -7,7 +7,8 @@ import { routes } from '@/common/constants/routes'
 import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
 import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
-import { selectUserRole } from '@/services/user/user.selectors'
+import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'
+import { useGetAvatarMetaQuery } from '@/services/users/users.service'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
@@ -15,9 +16,17 @@ import s from './navbar-mobile.module.scss'
 
 export const NavbarMobile = () => {
   const { data: meData } = useMeQuery()
-  const isAuthenticated = useSelector(selectUserRole)
+
+  useGetAvatarMetaQuery({
+    params: { userId: meData?.user?.$id ?? '' },
+  })
+
   const [logout] = useLogoutMutation()
+
+  const isAuthenticated = useSelector(selectUserRole)
+  const userAvatarUrl = useSelector(selectUserAvatarUrl)
   const router = useRouter()
+
   const [isOpened, setIsOpened] = useState(false)
   const classNames = {
     burgerButton: clsx(s.burgerButton),
@@ -46,7 +55,9 @@ export const NavbarMobile = () => {
 
   return (
     <>
-      {isAuthenticated && <HeaderMenu logout={handleLogout} userData={meData} />}
+      {isAuthenticated && (
+        <HeaderMenu avatarUrl={userAvatarUrl ?? ''} logout={handleLogout} userData={meData} />
+      )}
       <button className={classNames.burgerButton} onClick={handleToggle} type={'button'}>
         <span className={classNames.burgerMenu}></span>
       </button>

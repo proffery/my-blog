@@ -14,7 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const UploadPhoto: Story = {
   args: {
-    currentAvatarUrl: cover.src,
     onSubmit: fn(),
   },
 }

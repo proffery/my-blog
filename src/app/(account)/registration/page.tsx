@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import s from './registration.module.scss'
+
 function Registration() {
   const classNames = {
     container: clsx(s.container),

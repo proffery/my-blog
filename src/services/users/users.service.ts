@@ -1,33 +1,22 @@
 import {
   GetAvatarMetaRequest,
   GetAvatarMetaResponse,
-  GetAvatarRequest,
-  GetAvatarResponse,
   GetUserRequest,
   GetUserResponse,
   GetUsersListResponse,
 } from '@/app/api/users/users.types'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
+import { userActions } from '@/services/user/user.slice'
 
 export const usersService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getAvatar: builder.query<GetAvatarResponse, GetAvatarRequest>({
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled
-        } catch (error) {
-          console.error(error)
-        }
-      },
-      query: ({ params: { userId } }) => ({
-        url: endpoints.users_get_avatar + '/' + userId,
-      }),
-    }),
     getAvatarMeta: builder.query<GetAvatarMetaResponse, GetAvatarMetaRequest>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          dispatch(userActions.setAvatarUrl(response.data.avatarUrl))
         } catch (error) {
           console.error(error)
         }
@@ -66,5 +55,4 @@ export const usersService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetAvatarMetaQuery, useGetAvatarQuery, useGetUserQuery, useGetUsersListQuery } =
-  usersService
+export const { useGetAvatarMetaQuery, useGetUserQuery, useGetUsersListQuery } = usersService

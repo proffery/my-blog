@@ -4,7 +4,8 @@ import { routes } from '@/common/constants/routes'
 import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
 import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
-import { selectUserRole } from '@/services/user/user.selectors'
+import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'
+import { useGetAvatarMetaQuery } from '@/services/users/users.service'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
@@ -15,8 +16,15 @@ export const NavbarDesktop = () => {
   }
 
   const { data: meData } = useMeQuery()
+
+  useGetAvatarMetaQuery({
+    params: { userId: meData?.user?.$id ?? '' },
+  })
+
   const [logout] = useLogoutMutation()
-  const userRole = useSelector(selectUserRole)
+
+  const isAuthenticated = useSelector(selectUserRole)
+  const userAvatarUrl = useSelector(selectUserAvatarUrl)
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -29,7 +37,9 @@ export const NavbarDesktop = () => {
       <ActiveLink href={routes.base}>Главная</ActiveLink>
       <ActiveLink href={routes.posts}>Посты</ActiveLink>
       <ActiveLink href={routes.contacts}>Контакты</ActiveLink>
-      {userRole && <HeaderMenu logout={handleLogout} userData={meData} />}
+      {isAuthenticated && (
+        <HeaderMenu avatarUrl={userAvatarUrl ?? ''} logout={handleLogout} userData={meData} />
+      )}
     </nav>
   )
 }

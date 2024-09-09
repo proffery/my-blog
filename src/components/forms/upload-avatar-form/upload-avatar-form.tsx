@@ -15,11 +15,10 @@ import clsx from 'clsx'
 import s from './upload-avatar-form.module.scss'
 
 type Props = {
-  currentAvatarUrl?: string
   disabled?: boolean
   onSubmit: (data: UploadAvatarFormValues) => void
 }
-export const UploadAvatarForm = ({ currentAvatarUrl, disabled, onSubmit }: Props) => {
+export const UploadAvatarForm = ({ disabled, onSubmit }: Props) => {
   const classNames = {
     avatarInput: clsx(s.avatarInput),
     avatarLabel: clsx(s.avatarLabel),
@@ -30,14 +29,14 @@ export const UploadAvatarForm = ({ currentAvatarUrl, disabled, onSubmit }: Props
     listHeader: clsx(s.listHeader),
   }
 
-  const [image, setImage] = useState<File | undefined>(undefined)
+  const [image, setImage] = useState<File | null>(null)
 
   const { handleSubmit, register } = useForm<UploadAvatarFormValues>({
     resolver: zodResolver(uploadAvatarSchema),
   })
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data.file[0])
-    setImage(undefined)
+    setImage(null)
   })
   const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget?.files) {
@@ -45,24 +44,16 @@ export const UploadAvatarForm = ({ currentAvatarUrl, disabled, onSubmit }: Props
     }
   }
   const handlePhotoDelete = () => {
-    setImage(undefined)
+    setImage(null)
   }
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <div className={classNames.centeredContainer}>
-        <>
-          <Typography.Subtitle1 as={'h3'} className={classNames.listHeader}>
-            Автар
-          </Typography.Subtitle1>
-          <Avatar size={'large'} url={currentAvatarUrl} />
-        </>
-      </div>
       {image && (
         <>
           <div className={classNames.centeredContainer}>
             <Typography.Subtitle1 as={'h3'} className={classNames.listHeader}>
-              Новый аватар
+              Выбранный аватар:
             </Typography.Subtitle1>
             <Avatar size={'large'} url={URL.createObjectURL(image)} />
             <Typography.Subtitle2
@@ -70,7 +61,7 @@ export const UploadAvatarForm = ({ currentAvatarUrl, disabled, onSubmit }: Props
               className={classNames.deletePhotoButton}
               onClick={handlePhotoDelete}
             >
-              Удалить фото
+              Отмена
             </Typography.Subtitle2>
           </div>
         </>

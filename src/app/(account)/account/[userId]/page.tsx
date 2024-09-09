@@ -5,8 +5,10 @@ import { Avatar } from '@/components/ui/avatar/avatar'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
 import { paginatedPostsByCreate } from '@/server/functions/database/posts/paginated-posts-by-create'
+import { getAvatarMeta } from '@/server/functions/storage/get-avatar-meta'
 import { allUsers } from '@/server/functions/users/all-users'
 import { userById } from '@/server/functions/users/user-by-id'
+import { createStorageClient } from '@/server/storage-config'
 import { createUsersClient } from '@/server/users-config'
 import clsx from 'clsx'
 import { redirect } from 'next/navigation'
@@ -40,10 +42,12 @@ export default async function AccountById(props: Props) {
   } = props
   const { usersInstance } = await createUsersClient()
   const { databasesInstance } = await createDatabaseClient()
+  const { storageInstance } = await createStorageClient()
 
   const userData = await userById({ userId, usersInstance }).catch(() => {
     redirect(routes.account)
   })
+
   const userPosts = await paginatedPostsByCreate({
     authorId: userId,
     databasesInstance,
@@ -53,12 +57,22 @@ export default async function AccountById(props: Props) {
     titleSearch: '',
   })
 
+  let userAvatarUrl = ''
+
+  try {
+    const userAvatarMeta = await getAvatarMeta({ storageInstance, userId })
+
+    userAvatarUrl = userAvatarMeta.avatarUrl
+  } catch {
+    userAvatarUrl = ''
+  }
+
   return (
     <Page className={classNames.page}>
       <Typography.H1>Профиль</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.avatarWrapper}>
-          <Avatar size={'large'} />
+          <Avatar size={'large'} url={userAvatarUrl} />
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>

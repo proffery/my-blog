@@ -6,11 +6,12 @@ $max-width-mobile: 350px;
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   justify-content: center;
 
   width: 100%;
   max-width: $max-width-desktop;
+  height: fit-content;
 
   @media (width <= breakpoints.$mobile) {
     gap: 10px;
@@ -29,22 +30,17 @@ $max-width-mobile: 350px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  text-align: left;
 }
 
 .buttonsContainer {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
   justify-content: center;
 
-  margin-top: 40px;
-  margin-bottom: 40px;
-
-  @media (width <= breakpoints.$mobile) {
-    gap: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
+  margin-top: 16px;
 }
 
 .avatarInput {

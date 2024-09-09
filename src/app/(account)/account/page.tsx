@@ -1,5 +1,7 @@
 'use client'
 
+import { useSelector } from 'react-redux'
+
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { getErrorMessage } from '@/common/utils/get-error-message'
@@ -15,12 +17,12 @@ import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-act
 import {
   useChangeNameMutation,
   useCreateAvatarMutation,
+  useDeleteAvatarMutation,
   useMeQuery,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
-import { useGetAvatarMetaQuery, useGetAvatarQuery } from '@/services/users/users.service'
+import { selectUserAvatarUrl } from '@/services/user/user.selectors'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import s from './account.module.scss'
@@ -38,16 +40,14 @@ function Account() {
 
   const router = useRouter()
 
+  const userAvatarUrl = useSelector(selectUserAvatarUrl)
+
   const userId = meData?.user?.$id ?? ''
 
-  // const { data: avatarMetaData } = useGetAvatarQuery({ params: { userId } })
-  //
-  // const avatarBuffer = avatarMetaData?.avatar
-  // const avatarBlob = new Blob([avatarBuffer], {
-  //   type: 'image/webp',
-  // })
+  //const { data: avatarData } = useGetAvatarMetaQuery({ params: { userId } })
 
   const [createAvatar] = useCreateAvatarMutation()
+  const [deleteAvatar] = useDeleteAvatarMutation()
 
   const sendVerifyEmailHandler = async () => {
     try {
@@ -68,10 +68,17 @@ function Account() {
   }
 
   const handleCreateAvatarSubmit = async (data: UploadAvatarFormValues) => {
-    const { file } = data
-
     try {
-      await createAvatar({ file, userId }).unwrap()
+      await createAvatar({ file: data, userId }).unwrap()
+      await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleCreateAvatarDelete = async () => {
+    try {
+      await deleteAvatar({ userId }).unwrap()
       await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
     } catch (error) {
       console.error(error)
@@ -85,7 +92,17 @@ function Account() {
       <Typography.H1>Мой профиль</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.avatarWrapper}>
-          <UploadAvatarForm currentAvatarUrl={''} onSubmit={handleCreateAvatarSubmit} />
+          <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
+            <Typography.Subtitle1 as={'h3'}>Аватар:&nbsp;</Typography.Subtitle1>
+            <Avatar size={'large'} url={userAvatarUrl ?? ''} />
+          </div>
+          {!userAvatarUrl ? (
+            <UploadAvatarForm onSubmit={handleCreateAvatarSubmit} />
+          ) : (
+            <Button onClick={handleCreateAvatarDelete} type={'button'}>
+              Удалить аватар
+            </Button>
+          )}
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Почта:&nbsp;</Typography.Subtitle1>{' '}
