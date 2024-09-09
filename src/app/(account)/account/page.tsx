@@ -35,6 +35,7 @@ function Account() {
     page: clsx(s.page),
   }
   const { data: meData } = useMeQuery()
+  const userId = meData?.user?.$id ?? ''
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [changeName, { error: changeNameError }] = useChangeNameMutation()
 
@@ -42,12 +43,10 @@ function Account() {
 
   const userAvatarUrl = useSelector(selectUserAvatarUrl)
 
-  const userId = meData?.user?.$id ?? ''
-
-  //const { data: avatarData } = useGetAvatarMetaQuery({ params: { userId } })
-
-  const [createAvatar] = useCreateAvatarMutation()
+  const [createAvatar, { error: createAvatarError }] = useCreateAvatarMutation()
   const [deleteAvatar] = useDeleteAvatarMutation()
+
+  const avatarErrorMessage = getErrorMessage(createAvatarError)
 
   const sendVerifyEmailHandler = async () => {
     try {
@@ -69,8 +68,10 @@ function Account() {
 
   const handleCreateAvatarSubmit = async (data: UploadAvatarFormValues) => {
     try {
-      await createAvatar({ file: data, userId }).unwrap()
+      await createAvatar({ image: data, userId }).unwrap()
       await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
+      await clearCachesByServerAction(routes.account)
+      router.refresh()
     } catch (error) {
       console.error(error)
     }
@@ -80,12 +81,14 @@ function Account() {
     try {
       await deleteAvatar({ userId }).unwrap()
       await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
+      await clearCachesByServerAction(routes.account)
+      router.refresh()
     } catch (error) {
       console.error(error)
     }
   }
 
-  const errorMessage = getErrorMessage(changeNameError)
+  const nameErrorMessage = getErrorMessage(changeNameError)
 
   return (
     <Page className={classNames.page}>
@@ -97,7 +100,10 @@ function Account() {
             <Avatar size={'large'} url={userAvatarUrl ?? ''} />
           </div>
           {!userAvatarUrl ? (
-            <UploadAvatarForm onSubmit={handleCreateAvatarSubmit} />
+            <UploadAvatarForm
+              errorMessage={avatarErrorMessage}
+              onSubmit={handleCreateAvatarSubmit}
+            />
           ) : (
             <Button onClick={handleCreateAvatarDelete} type={'button'}>
               Удалить аватар
@@ -117,7 +123,7 @@ function Account() {
           <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>
           <EditNameForm
             defaultValue={meData?.user?.name}
-            errorMessage={errorMessage}
+            errorMessage={nameErrorMessage}
             onSubmit={handleChangeNameSubmit}
           />
         </div>

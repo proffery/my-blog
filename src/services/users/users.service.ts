@@ -7,16 +7,13 @@ import {
 } from '@/app/api/users/users.types'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
-import { userActions } from '@/services/user/user.slice'
 
 export const usersService = baseApi.injectEndpoints({
   endpoints: builder => ({
     getAvatarMeta: builder.query<GetAvatarMetaResponse, GetAvatarMetaRequest>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          const response = await queryFulfilled
-
-          dispatch(userActions.setAvatarUrl(response.data.avatarUrl))
+          await queryFulfilled
         } catch (error) {
           console.error(error)
         }

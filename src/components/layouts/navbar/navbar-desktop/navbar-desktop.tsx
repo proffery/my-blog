@@ -3,13 +3,17 @@ import { useSelector } from 'react-redux'
 import { routes } from '@/common/constants/routes'
 import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
-import { useLogoutMutation, useMeQuery } from '@/services/auth/auth.service'
+import {
+  useGetMyAvatarMetaQuery,
+  useLogoutMutation,
+  useMeQuery,
+} from '@/services/auth/auth.service'
 import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'
-import { useGetAvatarMetaQuery } from '@/services/users/users.service'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
 import s from './navbar-desktop.module.scss'
+
 export const NavbarDesktop = () => {
   const classNames = {
     navbar: clsx(s.navbar),
@@ -17,7 +21,7 @@ export const NavbarDesktop = () => {
 
   const { data: meData } = useMeQuery()
 
-  useGetAvatarMetaQuery({
+  useGetMyAvatarMetaQuery({
     params: { userId: meData?.user?.$id ?? '' },
   })
 

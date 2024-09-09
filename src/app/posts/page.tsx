@@ -29,7 +29,6 @@ import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { BookX, Edit3, Trash2 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
 import s from './posts.module.scss'

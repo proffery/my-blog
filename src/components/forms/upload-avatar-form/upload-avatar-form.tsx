@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -7,6 +7,7 @@ import {
 } from '@/components/forms/upload-avatar-form/schema'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
+import { FieldError } from '@/components/ui/field-error/field-error'
 import { Label } from '@/components/ui/label/label'
 import { Typography } from '@/components/ui/typography/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,9 +17,10 @@ import s from './upload-avatar-form.module.scss'
 
 type Props = {
   disabled?: boolean
+  errorMessage?: string
   onSubmit: (data: UploadAvatarFormValues) => void
 }
-export const UploadAvatarForm = ({ disabled, onSubmit }: Props) => {
+export const UploadAvatarForm = ({ disabled, errorMessage, onSubmit }: Props) => {
   const classNames = {
     avatarInput: clsx(s.avatarInput),
     avatarLabel: clsx(s.avatarLabel),
@@ -31,11 +33,26 @@ export const UploadAvatarForm = ({ disabled, onSubmit }: Props) => {
 
   const [image, setImage] = useState<File | null>(null)
 
-  const { handleSubmit, register } = useForm<UploadAvatarFormValues>({
+  const {
+    clearErrors,
+    formState: { errors },
+    handleSubmit,
+    register,
+    setError,
+  } = useForm<UploadAvatarFormValues>({
     resolver: zodResolver(uploadAvatarSchema),
   })
+
+  useEffect(() => {
+    if (errorMessage) {
+      setError('image', { message: errorMessage, type: 'server' })
+    } else {
+      clearErrors(['image'])
+    }
+  }, [errorMessage])
+
   const handleFormSubmit = handleSubmit(data => {
-    onSubmit(data.file[0])
+    onSubmit(data.image[0])
     setImage(null)
   })
   const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,42 +65,44 @@ export const UploadAvatarForm = ({ disabled, onSubmit }: Props) => {
   }
 
   return (
-    <form className={classNames.form} onSubmit={handleFormSubmit}>
-      {image && (
-        <>
-          <div className={classNames.centeredContainer}>
-            <Typography.Subtitle1 as={'h3'} className={classNames.listHeader}>
-              Выбранный аватар:
-            </Typography.Subtitle1>
-            <Avatar size={'large'} url={URL.createObjectURL(image)} />
-            <Typography.Subtitle2
-              as={'button'}
-              className={classNames.deletePhotoButton}
-              onClick={handlePhotoDelete}
-            >
-              Отмена
-            </Typography.Subtitle2>
-          </div>
-        </>
-      )}
-      <div className={classNames.buttonsContainer}>
-        <Button as={Label} className={classNames.avatarLabel} htmlFor={'avatar'}>
-          <input
-            accept={'image/png, image/jpeg, image/jpg'}
-            className={classNames.avatarInput}
-            id={'avatar'}
-            type={'file'}
-            {...register('file')}
-            onChange={handlePhotoChange}
-          />
-          {image ? 'Выбрать другой' : 'Выбрать аватар'}
-        </Button>
+    <FieldError errorMessage={errors.image?.message?.toString()}>
+      <form className={classNames.form} onSubmit={handleFormSubmit}>
         {image && (
-          <Button disabled={disabled} type={'submit'}>
-            Сохранить
-          </Button>
+          <>
+            <div className={classNames.centeredContainer}>
+              <Typography.Subtitle1 as={'h3'} className={classNames.listHeader}>
+                Выбранный аватар:
+              </Typography.Subtitle1>
+              <Avatar size={'large'} url={URL.createObjectURL(image)} />
+              <Typography.Subtitle2
+                as={'button'}
+                className={classNames.deletePhotoButton}
+                onClick={handlePhotoDelete}
+              >
+                Отмена
+              </Typography.Subtitle2>
+            </div>
+          </>
         )}
-      </div>
-    </form>
+        <div className={classNames.buttonsContainer}>
+          <Button as={Label} className={classNames.avatarLabel} htmlFor={'avatar'}>
+            <input
+              accept={'image/png, image/jpeg, image/jpg, image/webp'}
+              className={classNames.avatarInput}
+              id={'avatar'}
+              type={'file'}
+              {...register('image')}
+              onChange={handlePhotoChange}
+            />
+            {image ? 'Выбрать другой' : 'Выбрать аватар'}
+          </Button>
+          {image && (
+            <Button disabled={disabled} type={'submit'}>
+              Сохранить
+            </Button>
+          )}
+        </div>
+      </form>
+    </FieldError>
   )
 }

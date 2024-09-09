@@ -3,6 +3,8 @@ import {
   CreateAvatarRequest,
   CreateAvatarResponse,
   DeleteAvatarRequest,
+  GetMyAvatarMetaRequest,
+  GetMyAvatarMetaResponse,
   LoginEmailRequest,
   MeResponse,
   MessageResponse,
@@ -41,18 +43,19 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
     createAvatar: builder.mutation<CreateAvatarResponse, CreateAvatarRequest>({
-      invalidatesTags: ['AvatarMeta'],
-      async onQueryStarted(_, { queryFulfilled }) {
+      invalidatesTags: ['MyAvatarMeta'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
+          dispatch(baseApi.util.resetApiState())
         } catch (error) {
           console.error(error)
         }
       },
-      query: ({ file, userId }) => {
+      query: ({ image, userId }) => {
         const formData = new FormData()
 
-        formData.append('file', file ?? '')
+        formData.append('file', image ?? '')
         formData.append('userId', userId)
 
         return {
@@ -63,10 +66,11 @@ export const authService = baseApi.injectEndpoints({
       },
     }),
     deleteAvatar: builder.mutation<MessageResponse, DeleteAvatarRequest>({
-      invalidatesTags: ['AvatarMeta'],
+      invalidatesTags: ['MyAvatarMeta'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
+          dispatch(baseApi.util.resetApiState())
           dispatch(userActions.setAvatarUrl(null))
         } catch (error) {
           console.error(error)
@@ -76,6 +80,22 @@ export const authService = baseApi.injectEndpoints({
         body,
         method: 'DELETE',
         url: endpoints.auth_delete_avatar,
+      }),
+    }),
+    getMyAvatarMeta: builder.query<GetMyAvatarMetaResponse, GetMyAvatarMetaRequest>({
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const response = await queryFulfilled
+
+          dispatch(userActions.setAvatarUrl(response.data.avatarUrl))
+        } catch (error) {
+          dispatch(userActions.setAvatarUrl(null))
+          console.error(error)
+        }
+      },
+      providesTags: ['MyAvatarMeta'],
+      query: ({ params: { userId } }) => ({
+        url: endpoints.users_get_avatar_meta + '/' + userId,
       }),
     }),
     loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({
@@ -181,6 +201,7 @@ export const {
   useChangeNameMutation,
   useCreateAvatarMutation,
   useDeleteAvatarMutation,
+  useGetMyAvatarMetaQuery,
   useLoginEmailMutation,
   useLogoutMutation,
   useMeQuery,
