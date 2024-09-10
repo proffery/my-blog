@@ -43,11 +43,11 @@ export const authService = baseApi.injectEndpoints({
       }),
     }),
     createAvatar: builder.mutation<CreateAvatarResponse, CreateAvatarRequest>({
-      invalidatesTags: ['MyAvatarMeta'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
-          dispatch(baseApi.util.resetApiState())
+          const response = await queryFulfilled
+
+          dispatch(userActions.setAvatarUrl(response.data.avatarUrl))
         } catch (error) {
           console.error(error)
         }
@@ -66,14 +66,13 @@ export const authService = baseApi.injectEndpoints({
       },
     }),
     deleteAvatar: builder.mutation<MessageResponse, DeleteAvatarRequest>({
-      invalidatesTags: ['MyAvatarMeta'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
-          dispatch(baseApi.util.resetApiState())
-          dispatch(userActions.setAvatarUrl(null))
         } catch (error) {
           console.error(error)
+        } finally {
+          dispatch(userActions.setAvatarUrl(null))
         }
       },
       query: body => ({
@@ -94,8 +93,8 @@ export const authService = baseApi.injectEndpoints({
         }
       },
       providesTags: ['MyAvatarMeta'],
-      query: ({ params: { userId } }) => ({
-        url: endpoints.users_get_avatar_meta + '/' + userId,
+      query: ({ params: { date, userId } }) => ({
+        url: endpoints.users_get_avatar_meta + '/' + userId + '/' + date,
       }),
     }),
     loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({
@@ -120,6 +119,7 @@ export const authService = baseApi.injectEndpoints({
           await queryFulfilled
           dispatch(userActions.setUserRole(null))
           dispatch(userActions.setUserId(null))
+          dispatch(userActions.setAvatarUrl(null))
         } catch (error) {
           console.error(error)
         }

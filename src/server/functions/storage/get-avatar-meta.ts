@@ -8,7 +8,7 @@ export const getAvatarMeta = async (payload: { storageInstance: Storage; userId:
     userId
   )
 
-  const avatarUrl = `https://cloud.appwrite.io/v1/storage/buckets/${avatarMeta.bucketId}/files/${userId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT}`
+  const avatarUrl = `https://cloud.appwrite.io/v1/storage/buckets/${avatarMeta.bucketId}/files/${userId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT}&file=${avatarMeta.name}`
 
   return { avatarMeta, avatarUrl }
 }

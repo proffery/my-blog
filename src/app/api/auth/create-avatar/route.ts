@@ -10,9 +10,9 @@ export async function POST(request: NextRequest) {
   const file = formData.get('file') as File
 
   try {
-    const avatar = await createAvatar({ file, storageInstance, userId })
+    const avatarMeta = await createAvatar({ file, storageInstance, userId })
 
-    return NextResponse.json({ avatar })
+    return NextResponse.json(avatarMeta)
   } catch (error: unknown) {
     return serverErrorHandler(error)
   }

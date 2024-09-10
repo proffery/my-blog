@@ -18,7 +18,6 @@ export const endpoints = {
   posts_publish: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/publish-post`,
   posts_update: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/posts/update-post`,
   users_get_all: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users`,
-  users_get_avatar: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/avatar`,
   users_get_avatar_meta: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/avatar-meta`,
   users_get_user: `${process.env.NEXT_PUBLIC_HOST_BASE}/api/users/user`,
 } as const

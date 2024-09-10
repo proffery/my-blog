@@ -5,7 +5,7 @@ export function dateFullToLocalRu(isoString: string): string {
     hour: '2-digit', // Two-digit hour
     hour12: false, // 24-hour format
     minute: '2-digit', // Two-digit minute
-    month: 'short', // Full month name
+    month: 'short', // Full month [name]
     second: '2-digit', // Two-digit second
     year: 'numeric', // Full year
   }

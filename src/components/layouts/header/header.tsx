@@ -12,11 +12,13 @@ import { InitializationLoader } from '@/components/ui/initialization-loader/init
 import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Logo } from '@/components/ui/logo/logo'
 import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
+import { useGetMyAvatarMetaQuery, useMeQuery } from '@/services/auth/auth.service'
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
 
 import s from './header.module.scss'
+
 const Header = () => {
   const classNames = {
     container: clsx(s.container),
@@ -29,6 +31,12 @@ const Header = () => {
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
 
+  const { data: meData } = useMeQuery()
+
+  useGetMyAvatarMetaQuery({
+    params: { date: meData?.user?.$createdAt ?? '', userId: meData?.user?.$id ?? '' },
+  })
+
   return (
     <header className={classNames.root}>
       {isLoading && <LinearLoader />}
@@ -36,7 +44,11 @@ const Header = () => {
       <nav className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>
-          {width > projectConstants.mobileWidth ? <NavbarDesktop /> : <NavbarMobile />}
+          {width > projectConstants.mobileWidth ? (
+            <NavbarDesktop meData={meData} />
+          ) : (
+            <NavbarMobile meData={meData} />
+          )}
           {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
               Войти

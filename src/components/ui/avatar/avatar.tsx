@@ -1,6 +1,5 @@
 import { AvatarDefault } from '@/assets/icons/components/avatar-default'
 import clsx from 'clsx'
-import Image from 'next/image'
 
 import s from './avatar.module.scss'
 
@@ -20,11 +19,10 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
   return (
     <div className={classNames.container}>
       {url ? (
-        <Image
+        <img
           alt={'avatar'}
           className={classNames.image}
           height={size === 'large' ? 200 : 30}
-          layout={'responsive'}
           src={url}
           width={size === 'large' ? 200 : 30}
         />

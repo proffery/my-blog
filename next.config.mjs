@@ -17,6 +17,7 @@ const nextConfig = {
     },
     images: {
         domains: ['cloud.appwrite.io'],
+        minimumCacheTTL: 5,
     },
     trailingSlash: true,
 };

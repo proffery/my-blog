@@ -1,4 +1,4 @@
-export const getData = async <T, D extends null | object>(
+export const fetchWithTypes = async <T, D extends null | object>(
   endpoint: string,
   options: {
     body?: D

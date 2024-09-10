@@ -12,6 +12,7 @@ import { UploadAvatarForm } from '@/components/forms/upload-avatar-form/upload-a
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
+import { FieldError } from '@/components/ui/field-error/field-error'
 import { Typography } from '@/components/ui/typography/typography'
 import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import {
@@ -44,9 +45,10 @@ function Account() {
   const userAvatarUrl = useSelector(selectUserAvatarUrl)
 
   const [createAvatar, { error: createAvatarError }] = useCreateAvatarMutation()
-  const [deleteAvatar] = useDeleteAvatarMutation()
+  const [deleteAvatar, { error: deleteAvatarError }] = useDeleteAvatarMutation()
 
-  const avatarErrorMessage = getErrorMessage(createAvatarError)
+  const createAvatarErrorMessage = getErrorMessage(createAvatarError)
+  const deleteAvatarErrorMessage = getErrorMessage(deleteAvatarError)
 
   const sendVerifyEmailHandler = async () => {
     try {
@@ -101,13 +103,15 @@ function Account() {
           </div>
           {!userAvatarUrl ? (
             <UploadAvatarForm
-              errorMessage={avatarErrorMessage}
+              errorMessage={createAvatarErrorMessage}
               onSubmit={handleCreateAvatarSubmit}
             />
           ) : (
-            <Button onClick={handleCreateAvatarDelete} type={'button'}>
-              Удалить аватар
-            </Button>
+            <FieldError errorMessage={deleteAvatarErrorMessage}>
+              <Button onClick={handleCreateAvatarDelete} type={'button'}>
+                Удалить аватар
+              </Button>
+            </FieldError>
           )}
         </div>
         <div className={classNames.item}>

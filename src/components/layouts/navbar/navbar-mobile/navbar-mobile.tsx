@@ -3,32 +3,27 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import { MeResponse } from '@/app/api/auth/auth.types'
 import { routes } from '@/common/constants/routes'
 import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
-import {
-  useGetMyAvatarMetaQuery,
-  useLogoutMutation,
-  useMeQuery,
-} from '@/services/auth/auth.service'
+import { useLogoutMutation } from '@/services/auth/auth.service'
 import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
 import s from './navbar-mobile.module.scss'
 
-export const NavbarMobile = () => {
-  const { data: meData } = useMeQuery()
+type Props = {
+  meData?: MeResponse
+}
 
-  useGetMyAvatarMetaQuery({
-    params: { userId: meData?.user?.$id ?? '' },
-  })
-
-  const [logout] = useLogoutMutation()
-
+export const NavbarMobile = ({ meData }: Props) => {
   const isAuthenticated = useSelector(selectUserRole)
   const userAvatarUrl = useSelector(selectUserAvatarUrl)
   const router = useRouter()
+
+  const [logout] = useLogoutMutation()
 
   const [isOpened, setIsOpened] = useState(false)
   const classNames = {
