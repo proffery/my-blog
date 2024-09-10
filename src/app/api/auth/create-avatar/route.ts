@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   const { storageInstance } = await createStorageClient()
+
   const formData = await request.formData()
   const userId = formData.get('userId') as string
   const file = formData.get('file') as File
