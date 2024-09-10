@@ -60,10 +60,6 @@ export const authService = baseApi.injectEndpoints({
 
         return {
           body: formData,
-          formData: true,
-          headers: {
-            'Content-Type': 'multipart/form-data;',
-          },
           method: 'POST',
           url: endpoints.auth_create_avatar,
         }
