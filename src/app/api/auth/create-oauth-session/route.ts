@@ -1,12 +1,13 @@
-import { routes } from '@/common/constants/routes'
+import { endpoints } from '@/common/constants/endpoints'
 import { createAuthClient } from '@/server/auth-config'
 import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const userId = request.nextUrl.searchParams.get('userId')
-  const secret = request.nextUrl.searchParams.get('secret')
+  const { searchParams } = new URL(request.url)
+  const userId = searchParams.get('userId')
+  const secret = searchParams.get('secret')
 
   const { authInstance } = await createAuthClient()
 
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
       secure: true,
     })
 
-    return NextResponse.redirect(`${request.nextUrl.origin}${routes.base}`)
+    return NextResponse.redirect(`${endpoints._base}`)
   } catch (error: unknown) {
     return serverErrorHandler(error)
   }
