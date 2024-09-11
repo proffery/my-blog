@@ -41,7 +41,6 @@ function CreatePost() {
       authorId,
       ...data,
       authorName,
-      cover: '',
       isPublished: isRole(userRoles, 'Writer'),
     }).unwrap()
 

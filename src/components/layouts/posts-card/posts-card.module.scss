@@ -7,7 +7,8 @@
   transform: translate(-50%, -50%);
 
   width: 100%;
-  min-height: 380px;
+  min-width: 400px;
+  min-height: 400px;
 
   object-fit: cover;
 
@@ -64,19 +65,18 @@
   height: 100%;
 }
 
-.title {
-  transition: 0.2s;
-
-  &:hover {
-    color: var(--color-placeholder);
-  }
-}
-
 .title,
 .author {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.title {
+  &:hover {
+    color: var(--color-placeholder);
+    text-decoration: underline;
+  }
 }
 
 .author {

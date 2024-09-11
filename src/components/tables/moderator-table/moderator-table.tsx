@@ -1,6 +1,5 @@
 import { Post, SortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import cover from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
 import { Button } from '@/components/ui/button/button'
@@ -135,10 +134,10 @@ export const ModeratorTable = ({
           {posts?.map(post => (
             <TableRow key={post.$id}>
               <TableBodyCell className={classNames.coverCell}>
-                <Image
+                <img
                   alt={post.title}
                   className={classNames.cover}
-                  src={post.cover ? post.cover : cover}
+                  src={post.cover ? post.cover : '/images/no-image.svg'}
                 />
               </TableBodyCell>
               <TableBodyCell>

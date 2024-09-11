@@ -6,7 +6,6 @@ import { TextEditor } from '@/components/ui/text-editor/text-editor'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
 import { allPosts } from '@/server/functions/database/posts/all-posts'
-import { notPublishedPosts } from '@/server/functions/database/posts/not-published-posts'
 import { postById } from '@/server/functions/database/posts/post-by-id'
 import clsx from 'clsx'
 import { jwtDecode } from 'jwt-decode'
@@ -35,6 +34,7 @@ export const generateStaticParams = async () => {
 
 export default async function Post({ params: { postId } }: Props) {
   const classNames = {
+    cover: clsx(s.cover),
     description: clsx(s.description),
     descriptionWrapper: clsx(s.descriptionWrapper),
     title: clsx(s.title),
@@ -53,6 +53,9 @@ export default async function Post({ params: { postId } }: Props) {
   return (
     <Page>
       <Typography.H1 className={classNames.title}>{postData?.title}</Typography.H1>
+      {postData.cover && (
+        <img alt={'Post cover'} className={classNames.cover} src={postData.cover} />
+      )}
       <TextEditor defaultValue={postData?.post} isEditable={false} />
       <div className={classNames.descriptionWrapper}>
         <Typography.Subtitle2>

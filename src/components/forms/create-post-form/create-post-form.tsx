@@ -37,7 +37,11 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
     setError,
     setValue,
   } = useForm<CreatePostFormValues>({
-    defaultValues: { post: defaultValues?.post, title: defaultValues?.title },
+    defaultValues: {
+      cover: defaultValues?.cover,
+      post: defaultValues?.post,
+      title: defaultValues?.title,
+    },
     resolver: zodResolver(createPostFormSchema),
   })
 
@@ -52,7 +56,8 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
   useEffect(() => {
     defaultValues?.post && setValue('post', defaultValues?.post)
     defaultValues?.title && setValue('title', defaultValues?.title)
-  }, [defaultValues?.title, defaultValues?.post])
+    defaultValues?.cover && setValue('cover', defaultValues?.cover)
+  }, [defaultValues?.title, defaultValues?.post, defaultValues?.cover])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
@@ -71,6 +76,13 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
         label={'Заголовок'}
         placeholder={'Как организовать домашний офис'}
         {...register('title')}
+      />
+      <Input
+        defaultValue={defaultValues?.cover}
+        errorMessage={errors.cover?.message}
+        label={'Обложка'}
+        placeholder={'https://sub.domain.com/files/11-11-2011/example.jpg'}
+        {...register('cover')}
       />
       <Controller
         control={control}

@@ -1,13 +1,11 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import cover from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { cleanFromHTML } from '@/common/utils/clean-from-html'
 import { dateShortToLocalRu } from '@/common/utils/date-short-to-local-ru'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import s from './posts-card.module.scss'
@@ -56,12 +54,10 @@ export const PostsCard = ({
             Ожидает модерации
           </Typography.H5>
         )}
-        <Image
+        <img
           alt={'Card cover'}
           className={classNames.cardImage}
-          height={400}
-          src={imageUrl ? imageUrl : cover}
-          width={400}
+          src={imageUrl ? imageUrl : '/images/no-image.svg'}
         />
       </div>
       <div className={classNames.contentWrapper}>

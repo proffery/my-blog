@@ -23,7 +23,7 @@ export type SortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title'
 export type UpdatePostResponse = Post
 export type UpdatePostRequest = {
   authorName: string
-  cover: string
+  cover?: string
   isPublished: boolean
   post: string
   postId: string
@@ -38,7 +38,7 @@ export type CreatePostResponse = Post
 export type CreatePostRequest = {
   authorId: string
   authorName: string
-  cover: string
+  cover?: string
   isPublished: boolean
   post: string
   title: string

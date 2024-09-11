@@ -22,7 +22,7 @@ import {
   useMeQuery,
   useSendVerifyEmailMutation,
 } from '@/services/auth/auth.service'
-import { selectUserAvatarUrl } from '@/services/user/user.selectors'
+import { selectUserAvatarUrl, selectUserId } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
@@ -36,13 +36,13 @@ function Account() {
     page: clsx(s.page),
   }
   const { data: meData } = useMeQuery()
-  const userId = meData?.user?.$id ?? ''
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [changeName, { error: changeNameError }] = useChangeNameMutation()
 
   const router = useRouter()
 
   const userAvatarUrl = useSelector(selectUserAvatarUrl)
+  const userId = useSelector(selectUserId) ?? ''
 
   const [createAvatar, { error: createAvatarError }] = useCreateAvatarMutation()
   const [deleteAvatar, { error: deleteAvatarError }] = useDeleteAvatarMutation()
@@ -62,7 +62,7 @@ function Account() {
   const handleChangeNameSubmit = async (data: EditNameValues) => {
     try {
       await changeName(data).unwrap()
-      await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
+      await clearCachesByServerAction(routes.account + '/' + userId)
     } catch (error) {
       console.error(error)
     }
@@ -71,9 +71,7 @@ function Account() {
   const handleCreateAvatarSubmit = async (data: UploadAvatarFormValues) => {
     try {
       await createAvatar({ image: data, userId }).unwrap()
-      await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
-      await clearCachesByServerAction(routes.account)
-      router.refresh()
+      await clearCachesByServerAction(routes.account + '/' + userId)
     } catch (error) {
       console.error(error)
     }
@@ -82,9 +80,7 @@ function Account() {
   const handleCreateAvatarDelete = async () => {
     try {
       await deleteAvatar({ userId }).unwrap()
-      await clearCachesByServerAction(routes.account + '/' + meData?.user?.$id)
-      await clearCachesByServerAction(routes.account)
-      router.refresh()
+      await clearCachesByServerAction(routes.account + '/' + userId)
     } catch (error) {
       console.error(error)
     }

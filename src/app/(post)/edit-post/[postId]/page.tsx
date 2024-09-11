@@ -52,7 +52,6 @@ function EditPost(props: Props) {
       await updatePost({
         ...data,
         authorName,
-        cover: '',
         isPublished: isRole(userRoles, 'Writer'),
         postId,
       }).unwrap()
@@ -90,7 +89,11 @@ function EditPost(props: Props) {
         </Button>
       </Modal>
       <CreatePostForm
-        defaultValues={{ post: postData?.post ?? '', title: postData?.title ?? '' }}
+        defaultValues={{
+          cover: postData?.cover ?? '',
+          post: postData?.post ?? '',
+          title: postData?.title ?? '',
+        }}
         errorMessage={errorMessage}
         onSubmit={submitPostHandler}
       />
