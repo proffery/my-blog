@@ -55,14 +55,11 @@ export const authService = baseApi.injectEndpoints({
       query: ({ image, userId }) => {
         const formData = new FormData()
 
-        formData.append('file', image ?? '')
+        formData.append('file', image)
         formData.append('userId', userId)
 
         return {
           body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
           method: 'POST',
           url: endpoints.auth_create_avatar,
         }

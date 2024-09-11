@@ -69,6 +69,11 @@ function Account() {
   }
 
   const handleCreateAvatarSubmit = async (data: UploadAvatarFormValues) => {
+    const formData = new FormData()
+
+    formData.append('file', data.image)
+    formData.append('userId', userId)
+
     try {
       await createAvatar({ image: data, userId }).unwrap()
       await clearCachesByServerAction(routes.account + '/' + userId)

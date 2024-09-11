@@ -3,16 +3,18 @@ export const fetchWithTypes = async <T, D extends null | object>(
   options: {
     body?: D
     cache?: 'force-cache' | 'no-store'
+    headers?: HeadersInit
     method?: 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT'
     revalidate?: 0 | false | number
   } = {}
 ): Promise<T | null> => {
-  const { body, cache, method = 'GET', revalidate } = options
+  const { body, cache, headers, method = 'GET', revalidate } = options
 
   try {
     const response = await fetch(endpoint, {
       body: body ? JSON.stringify(body) : undefined,
       cache,
+      headers,
       method,
       next: { revalidate },
     })
