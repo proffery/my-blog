@@ -1,0 +1,39 @@
+@use '@/styles/breakpoints';
+
+.root {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 30px;
+
+  @media (width <= breakpoints.$mobile) {
+    min-height: 21px;
+  }
+}
+
+.firstLine {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  white-space: nowrap;
+
+  @media (width <= breakpoints.$mobile) {
+    top: -14px;
+  }
+}
+
+.secondLine {
+  position: absolute;
+  top: 11px;
+  left: -3px;
+
+  color: var(--color-placeholder) !important;
+  white-space: nowrap;
+
+  @media (width <= breakpoints.$mobile) {
+    top: 6px;
+  }
+}

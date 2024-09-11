@@ -15,7 +15,6 @@ $avatar-large-mobile: 150px;
 
   aspect-ratio: 1/1;
 
-  border: 1px solid var(--color-dark);
   border-radius: 50%;
 }
 
@@ -39,6 +38,7 @@ $avatar-large-mobile: 150px;
   min-height: $avatar-large-desktop;
   max-height: $avatar-large-desktop;
 
+  border: 1px solid var(--color-dark);
   border-radius: 16px;
   box-shadow: var(--color-shadow);
 

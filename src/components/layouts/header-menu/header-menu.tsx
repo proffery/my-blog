@@ -30,12 +30,11 @@ export const HeaderMenu = ({ avatarUrl, logout, userData }: Props) => {
 
   return (
     <DropdownMenu
-      align={'start'}
-      triangleRight={'60%'}
+      align={'end'}
+      triangleRight={'4%'}
       trigger={
         <div className={classNames.trigger}>
           <Avatar url={avatarUrl} />
-          <Typography.Overline as={'span'}>{userData?.user?.email}</Typography.Overline>
         </div>
       }
     >
