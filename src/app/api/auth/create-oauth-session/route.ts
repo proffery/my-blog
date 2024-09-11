@@ -5,11 +5,11 @@ import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
+  const { authInstance } = await createAuthClient()
+
   const { searchParams } = new URL(request.url)
   const userId = searchParams.get('userId')
   const secret = searchParams.get('secret')
-
-  const { authInstance } = await createAuthClient()
 
   try {
     const session = await authInstance.createSession(userId ?? '', secret ?? '')
