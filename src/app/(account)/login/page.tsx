@@ -41,12 +41,12 @@ function Login() {
       <div className={classNames.formsWrapper}>
         <LoginForm errorMessage={errorMessage} onSubmit={loginWithEmailHandler} />
         <div className={classNames.buttonsWrapper}>
-          <form action={signUpWithGoogle} className={classNames.form}>
+          <form action={signUpWithGoogle} className={classNames.form} method={'GET'}>
             <Button fullWidth type={'submit'}>
               <GoogleIcon /> Google
             </Button>
           </form>
-          <form action={signUpWithGithub} className={classNames.form}>
+          <form action={signUpWithGithub} className={classNames.form} method={'GET'}>
             <Button fullWidth type={'submit'}>
               <GithubIcon />
               Github
