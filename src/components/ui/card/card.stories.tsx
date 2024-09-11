@@ -2,9 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from '@/components/ui/button/button'
 import { Card } from '@/components/ui/card/card'
-import Image from 'next/image'
 
-import cover from '../../../../public/images/no-image.svg'
 import { Typography } from '../typography/typography'
 
 const meta = {
@@ -38,7 +36,11 @@ export const WithCover: Story = {
   args: {
     children: (
       <div style={{ width: '432px' }}>
-        <Image alt={'Card cover'} src={cover} style={{ height: 'auto', width: '400px' }} />
+        <img
+          alt={'Card cover'}
+          src={'/images/no-image.svg'}
+          style={{ height: 'auto', width: '400px' }}
+        />
         <Typography.H1 style={{ textAlign: 'center' }}>Learn &quot;Deck name&quot;</Typography.H1>
         <Typography.Body1 as={'div'}>
           <Typography.Subtitle1 as={'span'}>Question:</Typography.Subtitle1> How &quot;This&quot;
