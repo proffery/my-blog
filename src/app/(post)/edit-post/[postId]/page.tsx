@@ -59,7 +59,7 @@ function EditPost(props: Props) {
       await clearCachesByServerAction(routes.account + '/' + authorId)
 
       if (isRole(userRoles, 'Writer')) {
-        router.push(routes.post + '/' + postId)
+        router.push(routes.post + postId)
       } else {
         setShowModerationModal(true)
       }
@@ -76,7 +76,7 @@ function EditPost(props: Props) {
 
   useEffect(() => {
     if (userId && authorId && userId !== authorId) {
-      router.push(routes.post + '/' + postId)
+      router.push(routes.post + postId)
     }
   }, [userId, authorId, postId])
 

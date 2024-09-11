@@ -11,6 +11,7 @@ import clsx from 'clsx'
 import { jwtDecode } from 'jwt-decode'
 import { Edit3 } from 'lucide-react'
 import { cookies } from 'next/headers'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import s from './post-by-id.module.scss'
@@ -53,8 +54,14 @@ export default async function Post({ params: { postId } }: Props) {
   return (
     <Page>
       <Typography.H1 className={classNames.title}>{postData?.title}</Typography.H1>
-      {postData.cover && (
-        <img alt={'Post cover'} className={classNames.cover} src={postData.cover} />
+      {postData?.cover && (
+        <Image
+          alt={'Post cover'}
+          className={classNames.cover}
+          height={900}
+          src={postData.cover}
+          width={900}
+        />
       )}
       <TextEditor defaultValue={postData?.post} isEditable={false} />
       <div className={classNames.descriptionWrapper}>

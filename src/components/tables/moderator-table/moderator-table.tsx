@@ -134,14 +134,16 @@ export const ModeratorTable = ({
           {posts?.map(post => (
             <TableRow key={post.$id}>
               <TableBodyCell className={classNames.coverCell}>
-                <img
+                <Image
                   alt={post.title}
                   className={classNames.cover}
+                  height={32}
                   src={post.cover ? post.cover : '/images/no-image.svg'}
+                  width={32}
                 />
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Link2 as={Link} href={`${routes.post}/${post.$id}`}>
+                <Typography.Link2 as={Link} href={`${routes.post}${post.$id}`}>
                   {post.title}
                 </Typography.Link2>
               </TableBodyCell>

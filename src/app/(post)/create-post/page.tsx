@@ -47,7 +47,7 @@ function CreatePost() {
     await clearCachesByServerAction(routes.account + '/' + authorId)
 
     if (isRole(userRoles, 'Writer')) {
-      router.push(routes.post + '/' + newPost.$id)
+      router.push(routes.post + newPost.$id)
     } else {
       setShowModerationModal(true)
     }

@@ -6,8 +6,9 @@ export const routes = {
   createPost: '/create-post',
   login: '/login',
   moderator: '/moderator',
-  post: '/post',
+  post: '/post/',
   posts: '/posts',
+  profileNotFound: '/profile-not-found',
   registration: '/registration',
   updatePost: '/edit-post/',
 } as const

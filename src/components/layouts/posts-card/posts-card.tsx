@@ -6,6 +6,7 @@ import { dateShortToLocalRu } from '@/common/utils/date-short-to-local-ru'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import s from './posts-card.module.scss'
@@ -54,15 +55,17 @@ export const PostsCard = ({
             Ожидает модерации
           </Typography.H5>
         )}
-        <img
+        <Image
           alt={'Card cover'}
           className={classNames.cardImage}
+          height={380}
           src={imageUrl ? imageUrl : '/images/no-image.svg'}
+          width={380}
         />
       </div>
       <div className={classNames.contentWrapper}>
         <div className={classNames.titleWrapper}>
-          <Typography.H5 as={Link} className={classNames.title} href={routes.post + '/' + postId}>
+          <Typography.H5 as={Link} className={classNames.title} href={routes.post + postId}>
             {title}
           </Typography.H5>
           <Typography.Body1 className={classNames.description}>

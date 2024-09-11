@@ -45,7 +45,7 @@ export default async function AccountById(props: Props) {
   const { storageInstance } = await createStorageClient()
 
   const userData = await userById({ userId, usersInstance }).catch(() => {
-    redirect(routes.account)
+    redirect(routes.profileNotFound)
   })
 
   const userPosts = await paginatedPostsByCreate({
@@ -83,7 +83,7 @@ export default async function AccountById(props: Props) {
             <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
           ) : null}
           {userData?.labels.map((label: string) => (
-            <Typography.Body1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Body1>
+            <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
           ))}
         </div>
         <div className={classNames.item}>

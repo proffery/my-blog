@@ -137,7 +137,7 @@ function Account() {
             <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
           ) : null}
           {meData?.user?.labels.map(label => (
-            <Typography.Body1 key={label}>{label.toUpperCase()}&nbsp;</Typography.Body1>
+            <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
           ))}
         </div>
       </div>

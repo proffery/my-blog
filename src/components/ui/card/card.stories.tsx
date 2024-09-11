@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from '@/components/ui/button/button'
 import { Card } from '@/components/ui/card/card'
+import Image from 'next/image'
 
 import { Typography } from '../typography/typography'
 
@@ -36,7 +37,7 @@ export const WithCover: Story = {
   args: {
     children: (
       <div style={{ width: '432px' }}>
-        <img
+        <Image
           alt={'Card cover'}
           src={'/images/no-image.svg'}
           style={{ height: 'auto', width: '400px' }}
