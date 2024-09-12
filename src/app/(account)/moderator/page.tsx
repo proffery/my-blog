@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { useModeratorFilters } from '@/app/(account)/moderator/use-moderator-filters'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
@@ -23,6 +22,8 @@ import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
 import s from './moderator.module.scss'
+
+import { useModeratorFilters } from './use-moderator-filters'
 
 function Moderator() {
   const classNames = {

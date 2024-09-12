@@ -2,7 +2,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { usePostsFilters } from '@/app/posts/use-posts-filters'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { projectConstants } from '@/common/constants/project-constants'
 import { routes } from '@/common/constants/routes'
@@ -32,6 +31,8 @@ import Link from 'next/link'
 import { useDebouncedCallback } from 'use-debounce'
 
 import s from './posts.module.scss'
+
+import { usePostsFilters } from './use-posts-filters'
 
 function Posts() {
   const { page, search, setPage, setSearch, setSort, sort } = usePostsFilters()

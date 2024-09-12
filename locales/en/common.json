@@ -1,0 +1,11 @@
+{
+  "Home": {
+    "test": "English"
+  },
+  "Header": {
+    "main": "Home",
+    "posts": "Posts",
+    "contacts": "Contacts",
+    "login": "Logina"
+  }
+}

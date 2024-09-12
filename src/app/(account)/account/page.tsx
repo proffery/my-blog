@@ -9,6 +9,7 @@ import { EditNameForm } from '@/components/forms/edit-name-form/edit-name-form'
 import { EditNameValues } from '@/components/forms/edit-name-form/schema'
 import { UploadAvatarFormValues } from '@/components/forms/upload-avatar-form/schema'
 import { UploadAvatarForm } from '@/components/forms/upload-avatar-form/upload-avatar-form'
+import { LangSelect } from '@/components/layouts/lang-select/lang-select'
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
@@ -139,6 +140,10 @@ function Account() {
           {meData?.user?.labels.map(label => (
             <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
           ))}
+        </div>
+        <div className={classNames.item}>
+          <Typography.Subtitle1 as={'span'}>Язык:&nbsp;</Typography.Subtitle1>
+          <LangSelect />
         </div>
       </div>
       {!meData?.user?.emailVerification && (

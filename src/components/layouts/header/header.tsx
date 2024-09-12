@@ -16,6 +16,7 @@ import { useGetMyAvatarMetaQuery, useMeQuery } from '@/services/auth/auth.servic
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import s from './header.module.scss'
 
@@ -30,6 +31,7 @@ const Header = () => {
   const isUserAuthenticated = useSelector(selectUserRole)
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
+  const t = useTranslations('Header')
 
   const { data: meData } = useMeQuery()
 
@@ -43,6 +45,7 @@ const Header = () => {
       {!isAppInitialized && <InitializationLoader />}
       <nav className={classNames.container}>
         <Logo />
+
         <div className={classNames.navWrapper}>
           {width > projectConstants.mobileWidth ? (
             <NavbarDesktop meData={meData} />
@@ -51,7 +54,7 @@ const Header = () => {
           )}
           {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
-              Войти
+              {t('login')}
             </Button>
           )}
         </div>
