@@ -3,9 +3,17 @@
     "test": "Русский"
   },
   "Header": {
-    "Main": "Главная",
-    "Posts": "Посты",
-    "Contacts": "Контакты",
-    "Login": "Войти"
+    "Menu": {
+      "Account": "Профиль",
+      "Moderate": "Модерировать",
+      "WritePost": "Написать пост",
+      "Logout": "Выход"
+    },
+    "Navbar": {
+      "Home": "Главная",
+      "Posts": "Посты",
+      "Contacts": "Контакты"
+    },
+    "Login": "Вход"
   }
 }

@@ -54,7 +54,7 @@ const Header = () => {
           )}
           {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
-              {t('login')}
+              {t('Login')}
             </Button>
           )}
         </div>

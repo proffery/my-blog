@@ -3,9 +3,17 @@
     "test": "English"
   },
   "Header": {
-    "main": "Home",
-    "posts": "Posts",
-    "contacts": "Contacts",
-    "login": "Logina"
+    "Menu": {
+      "Account": "Account",
+      "Moderate": "Moderate",
+      "WritePost": "Write post",
+      "Logout": "Logout"
+    },
+    "Navbar": {
+      "Home": "Home",
+      "Posts": "Posts",
+      "Contacts": "Contacts"
+    },
+    "Login": "Login"
   }
 }

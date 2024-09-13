@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/drop-down/drop-down'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
 
 import s from './header-menu.module.scss'
 
@@ -25,7 +26,7 @@ export const HeaderMenu = ({ avatarUrl, logout, userData }: Props) => {
   const classNames = {
     trigger: clsx(s.trigger),
   }
-
+  const t = useTranslations('Header.Menu')
   const userRoles = userData?.user?.labels
 
   return (
@@ -39,25 +40,25 @@ export const HeaderMenu = ({ avatarUrl, logout, userData }: Props) => {
       }
     >
       <DropdownLabel>
-        <Typography.Caption>{userData?.user?.name}</Typography.Caption>
+        <Typography.Body1>{userData?.user?.name}</Typography.Body1>
       </DropdownLabel>
       <DropdownSeparator />
       <DropdownItem>
-        <ActiveLink href={routes.account}>Профиль</ActiveLink>
+        <ActiveLink href={routes.account}>{t('Account')}</ActiveLink>
       </DropdownItem>
       {isRole(userRoles, 'Moderator') && (
         <DropdownItem>
-          <ActiveLink href={routes.moderator}>Модерировать</ActiveLink>
+          <ActiveLink href={routes.moderator}>{t('Moderate')}</ActiveLink>
         </DropdownItem>
       )}
       {userData && (
         <DropdownItem>
-          <ActiveLink href={routes.createPost}>Написать пост</ActiveLink>
+          <ActiveLink href={routes.createPost}>{t('WritePost')}</ActiveLink>
         </DropdownItem>
       )}
       <DropdownItem>
         <Button onClick={() => logout()} variant={'text'}>
-          Выход
+          {t('Logout')}
         </Button>
       </DropdownItem>
     </DropdownMenu>
