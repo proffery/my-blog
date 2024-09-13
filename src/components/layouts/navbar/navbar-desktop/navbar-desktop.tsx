@@ -4,12 +4,11 @@ import { MeResponse } from '@/app/api/auth/auth.types'
 import { routes } from '@/common/constants/routes'
 import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
-import { Button } from '@/components/ui/button/button'
 import { useLogoutMutation } from '@/services/auth/auth.service'
 import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './navbar-desktop.module.scss'
 
@@ -34,11 +33,13 @@ export const NavbarDesktop = ({ meData }: Props) => {
     router.push(routes.login)
   }
 
+  const t = useTranslations('Header.Navbar')
+
   return (
     <nav className={classNames.navbar}>
-      <ActiveLink href={routes.base}>Главная</ActiveLink>
-      <ActiveLink href={routes.posts}>Посты</ActiveLink>
-      <ActiveLink href={routes.contacts}>Контакты</ActiveLink>
+      <ActiveLink href={routes.base}>{t('Home')}</ActiveLink>
+      <ActiveLink href={routes.posts}>{t('Posts')}</ActiveLink>
+      <ActiveLink href={routes.contacts}>{t('Contacts')}</ActiveLink>
       {isAuthenticated && (
         <HeaderMenu avatarUrl={userAvatarUrl ?? ''} logout={handleLogout} userData={meData} />
       )}
