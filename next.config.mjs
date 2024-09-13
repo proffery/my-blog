@@ -1,4 +1,5 @@
-import createNextIntlPlugin from 'next-intl/plugin';
+import { paraglide } from '@inlang/paraglide-next/plugin'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -21,6 +22,13 @@ const nextConfig = {
         ],
     },
     trailingSlash: true,
-};
+}
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(paraglide({
+    paraglide: {
+        outdir: './paraglide',
+        project: './project.inlang'
+    },
+    ...nextConfig
+}))
+

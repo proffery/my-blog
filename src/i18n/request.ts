@@ -1,6 +1,7 @@
 import { defaultLocale } from '@/i18n/config'
 import { getLocaleFromCookies } from '@/server/functions/locales/get-locale-from-cookies'
 import { getLocaleFromHeader } from '@/server/functions/locales/get-locale-from-header'
+import { setLocaleToCookies } from '@/server/functions/locales/set-locale-to-cookies'
 import { getRequestConfig } from 'next-intl/server'
 
 export default getRequestConfig(async () => {

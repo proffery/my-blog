@@ -1,23 +1,6 @@
-import { routes } from '@/common/constants/routes'
-import { NextRequest, NextResponse } from 'next/server'
+import { isUserMiddleware } from '@/middlewares/is-user-middleware'
+import { stackMiddlewares } from '@/middlewares/stack-handler'
 
-export function middleware(request: NextRequest) {
-  const isAuthenticated = request.cookies.get(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
+const middlewares = [isUserMiddleware]
 
-  if (!isAuthenticated) {
-    return NextResponse.redirect(new URL(routes.login, request.url))
-  }
-
-  return NextResponse.next()
-}
-
-export const config = {
-  matcher: [
-    '/account',
-    '/account/:patch*',
-    '/create-post',
-    '/edit-post',
-    '/edit-post/:patch*',
-    '/moderator',
-  ],
-}
+export default stackMiddlewares(middlewares)
