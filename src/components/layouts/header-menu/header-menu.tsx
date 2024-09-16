@@ -26,7 +26,7 @@ export const HeaderMenu = ({ avatarUrl, logout, userData }: Props) => {
   const classNames = {
     trigger: clsx(s.trigger),
   }
-  const t = useTranslations('Header.Menu')
+  const t = useTranslations('Components.Header.Menu')
   const userRoles = userData?.user?.labels
 
   return (

@@ -12,6 +12,7 @@ import { createStorageClient } from '@/server/storage-config'
 import { createUsersClient } from '@/server/users-config'
 import clsx from 'clsx'
 import { redirect } from 'next/navigation'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import s from '../account.module.scss'
 
@@ -37,6 +38,10 @@ export default async function AccountById(props: Props) {
     item: clsx(s.item),
     page: clsx(s.page),
   }
+
+  const t = await getTranslations('AccountPage')
+  const locale = await getLocale()
+
   const {
     params: { userId },
   } = props
@@ -52,12 +57,13 @@ export default async function AccountById(props: Props) {
     authorId: userId,
     databasesInstance,
     limit: 9999999,
+    locale,
     offset: 0,
     sort: 'desc',
     titleSearch: '',
   })
 
-  let userAvatarUrl = ''
+  let userAvatarUrl
 
   try {
     const userAvatarMeta = await getAvatarMeta({ storageInstance, userId })
@@ -69,22 +75,24 @@ export default async function AccountById(props: Props) {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Профиль</Typography.H1>
+      <Typography.H1>{t('title')}</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.avatarWrapper}>
           <Avatar size={'large'} url={userAvatarUrl} />
         </div>
         <div className={classNames.item}>
-          <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>
+          <Typography.Subtitle1>{t('Name.title')}&nbsp;</Typography.Subtitle1>
           <Typography.Body1>{userData?.name}</Typography.Body1>
         </div>
         <div className={classNames.item}>
+          <Typography.Subtitle1>{t('Status.title')}&nbsp;</Typography.Subtitle1>
           {userData?.labels.length ? (
-            <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
-          ) : null}
-          {userData?.labels.map((label: string) => (
-            <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
-          ))}
+            userData.labels.map(label => (
+              <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
+            ))
+          ) : (
+            <Typography.Body1>User</Typography.Body1>
+          )}
         </div>
         <div className={classNames.item}>
           <Typography.Subtitle1>Постов:&nbsp;</Typography.Subtitle1>

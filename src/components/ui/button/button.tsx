@@ -48,6 +48,7 @@ const ButtonComponent = <T extends ElementType = 'button'>(
   return <Component className={classNames.component} disabled={disabled} {...rest} ref={ref} />
 }
 
+// @ts-ignore
 export const Button = forwardRef(ButtonComponent) as <T extends ElementType = 'button'>(
   props: {
     ref?: ForwardedRef<ElementRef<T>>

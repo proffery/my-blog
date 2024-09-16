@@ -33,7 +33,7 @@ export const NavbarDesktop = ({ meData }: Props) => {
     router.push(routes.login)
   }
 
-  const t = useTranslations('Header.Navbar')
+  const t = useTranslations('Components.Header.Navbar')
 
   return (
     <nav className={classNames.navbar}>

@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { LoginEmailFormValues, loginEmailSchema } from '@/components/forms/login-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
-import { Typography } from '@/components/ui/typography/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -20,7 +19,6 @@ export const LoginForm = ({ disabled, errorMessage, onSubmit }: Props) => {
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
-    title: clsx(s.title),
   }
 
   const {
@@ -47,7 +45,6 @@ export const LoginForm = ({ disabled, errorMessage, onSubmit }: Props) => {
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Typography.H1 className={classNames.title}>Вход</Typography.H1>
       <Input
         autoComplete={'email'}
         errorMessage={errors.email?.message}

@@ -1,7 +1,6 @@
 import { Post, SortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
-import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
 import { Button } from '@/components/ui/button/button'
 import {
   Table,
@@ -16,6 +15,7 @@ import clsx from 'clsx'
 import { BookCheck, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useFormatter, useLocale, useTranslations } from 'next-intl'
 
 import s from './moderator-table.module.scss'
 
@@ -24,37 +24,6 @@ type ModeratorTableColumns = {
   key?: SortBy
   title: string
 }
-
-const columns: ModeratorTableColumns[] = [
-  {
-    isClickable: false,
-    title: 'Обложка',
-  },
-  {
-    isClickable: true,
-    key: 'title',
-    title: 'Заголовок',
-  },
-  {
-    isClickable: true,
-    key: '$createdAt',
-    title: 'Создан',
-  },
-  {
-    isClickable: true,
-    key: '$updatedAt',
-    title: 'Изменен',
-  },
-  {
-    isClickable: true,
-    key: 'authorName',
-    title: 'Автор',
-  },
-  {
-    isClickable: false,
-    title: 'Опции',
-  },
-]
 
 type ModeratorTableProps = {
   onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
@@ -75,6 +44,41 @@ export const ModeratorTable = ({
   sort,
   sortBy,
 }: ModeratorTableProps) => {
+  const t = useTranslations('ModerationPage.Table')
+  const format = useFormatter()
+  const locale = useLocale()
+
+  const columns: ModeratorTableColumns[] = [
+    {
+      isClickable: false,
+      title: t('Columns.Cover'),
+    },
+    {
+      isClickable: true,
+      key: 'title',
+      title: t('Columns.Title'),
+    },
+    {
+      isClickable: true,
+      key: '$createdAt',
+      title: t('Columns.Created'),
+    },
+    {
+      isClickable: true,
+      key: '$updatedAt',
+      title: t('Columns.Updated'),
+    },
+    {
+      isClickable: true,
+      key: 'authorName',
+      title: t('Columns.Author'),
+    },
+    {
+      isClickable: false,
+      title: t('Columns.Options'),
+    },
+  ]
+
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
     cover: clsx(s.cover),
@@ -104,6 +108,20 @@ export const ModeratorTable = ({
 
   const sortByHandler = (key: SortBy) => {
     key === sortBy ? sortToggleHandler() : onSortByChange(key)
+  }
+
+  const formatDateHandler = (postDate: string) => {
+    const dateTime = new Date(postDate)
+
+    return format.dateTime(dateTime, {
+      day: 'numeric', // Day of the month
+      hour: '2-digit', // Two-digit hour
+      hour12: locale !== 'ru', // 24-hour format
+      minute: '2-digit', // Two-digit minute
+      month: 'short', // Full month [name]
+      second: '2-digit', // Two-digit second
+      year: 'numeric', // Full year
+    })
   }
 
   return (
@@ -148,10 +166,10 @@ export const ModeratorTable = ({
                 </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{dateFullToLocalRu(post.$createdAt)}</Typography.Body2>
+                <Typography.Body2>{formatDateHandler(post.$createdAt)}</Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{dateFullToLocalRu(post.$updatedAt)}</Typography.Body2>
+                <Typography.Body2>{formatDateHandler(post.$updatedAt)}</Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
                 <Typography.Link2 as={Link} href={`${routes.account}/${post.authorId}`}>
@@ -163,11 +181,15 @@ export const ModeratorTable = ({
                   <Button
                     onClick={() => postPublishHandler(post)}
                     padding={false}
-                    title={'Публиковать'}
+                    title={t('OptionsButtons.Publish.title')}
                   >
                     <BookCheck />
                   </Button>
-                  <Button onClick={() => postDeleteHandler(post)} padding={false} title={'Удалить'}>
+                  <Button
+                    onClick={() => postDeleteHandler(post)}
+                    padding={false}
+                    title={t('OptionsButtons.Delete.title')}
+                  >
                     <Trash2 />
                   </Button>
                 </div>

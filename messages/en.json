@@ -1,19 +1,187 @@
 {
-  "Home": {
+  "PostsPage": {
+    "title": "Posts",
+    "description": "Search posts by filters",
+    "Filters": {
+      "SearchInput": {
+        "label": "Search in titles",
+        "placeholder": "photography trends"
+      },
+      "TabSwitcher": {
+        "label": "Show posts",
+        "item1": "All",
+        "item2": "My"
+      },
+      "SortButton": {
+        "label": "Sort",
+        "item1": "new",
+        "item2": "old"
+      }
+    },
+    "Dialogs": {
+      "DeletePost": {
+        "title": "Delete this post?",
+        "Confirm": "Delete",
+        "Cancel": "Cancel"
+      },
+      "NotPublish": {
+        "title": "Do not publish?",
+        "Confirm": "Confirm",
+        "Cancel": "Cancel"
+      }
+    },
+    "Posts": {
+      "Description": "No posts yet",
+      "CardButtons": {
+        "Edit": {
+          "title": "Edit"
+        },
+        "Delete": {
+          "title": "Delete"
+        },
+        "NotPublish": {
+          "title": "Do not publish"
+        }
+      }
+    }
+  },
+  "PostPage": {
+    "Author": "Author:",
+    "Created": "Created:",
+    "Updated": "updated:",
+    "EditButton": {
+      "title": "Edit"
+    }
+  },
+  "HomePage": {
     "test": "English"
   },
-  "Header": {
-    "Menu": {
-      "Account": "Account",
-      "Moderate": "Moderate",
-      "WritePost": "Write post",
-      "Logout": "Logout"
+  "MyAccountPage": {
+    "title": "My profile",
+    "Avatar": {
+      "title": "Profile photo:",
+      "DeleteButton": "Delete photo"
     },
-    "Navbar": {
-      "Home": "Home",
-      "Posts": "Posts",
-      "Contacts": "Contacts"
+    "Name": {
+      "title": "Name:"
     },
-    "Login": "Login"
+    "Status": {
+      "title": "Status:"
+    },
+    "Email": {
+      "title": "Email:",
+      "Confirmed": "(confirmed)",
+      "ConfirmButton": "Confirm email",
+      "NotConfirmed": "(not confirmed)"
+    }
+  },
+  "AccountPage": {
+    "title": "Profile",
+    "Name": {
+      "title": "Name:"
+    },
+    "Status": {
+      "title": "Status:"
+    }
+  },
+  "ModerationPage": {
+    "title": "Moderation of posts",
+    "Posts": {
+      "Description": "There are currently no posts awaiting review"
+    },
+    "Dialogs": {
+      "DeletePost": {
+        "title": "Delete this post?",
+        "Confirm": "Delete",
+        "Cancel": "Cancel"
+      },
+      "PublishPost": {
+        "title": "Do publish?",
+        "Confirm": "Publish",
+        "Cancel": "Cancel"
+      }
+    },
+    "Table": {
+      "Columns": {
+        "Cover": "Cover",
+        "Title": "Title",
+        "Created": "Created",
+        "Updated": "Updated",
+        "Author": "Author",
+        "Options": "Options"
+      },
+      "OptionsButtons": {
+        "Delete": {
+          "title": "Delete"
+        },
+        "Publish": {
+          "title": "Do publish"
+        }
+      }
+    }
+  },
+  "ContactsPage": {
+    "test": "Contacts"
+  },
+  "CreatePostPage": {
+    "title": "Write a post",
+    "Dialogs": {
+      "Attention": {
+        "title": "Attention!",
+        "description": "Your post has been sent but will be published after review",
+        "Confirm": "Ok"
+      }
+    }
+  },
+  "UpdatePostPage": {
+    "title": "Edit post",
+    "Dialogs": {
+      "Attention": {
+        "title": "Attention!",
+        "description": "Your post has been edited but will be published after review",
+        "Confirm": "Ok"
+      }
+    }
+  },
+  "ProfileNotFoundPage": {
+    "title": "Profile not found...",
+    "description": "This author does not exist or has been deleted!"
+  },
+  "ConfirmEmailPage": {
+    "description1": "An email with further instructions has been sent to",
+    "description2": ", the email address you provided"
+  },
+  "LoginPage": {
+    "title": "Login",
+    "description1": "Don't have an account?",
+    "description2": "Registration"
+  },
+  "RegistrationPage": {
+    "title": "Registration",
+    "description1": "Already have an account?",
+    "description2": "Login"
+  },
+  "Components": {
+    "Header": {
+      "Menu": {
+        "Account": "Profile",
+        "Moderate": "Moderate",
+        "WritePost": "Write post",
+        "Logout": "Logout"
+      },
+      "Navbar": {
+        "Home": "Home",
+        "Posts": "Posts",
+        "Contacts": "Contacts"
+      },
+      "Login": "Login"
+    },
+    "PostCard": {
+      "Author": "Author:",
+      "Moderation": "Awaiting moderation"
+    },
+    "BackButton": {
+      "Back": "Back"
+    }
   }
 }

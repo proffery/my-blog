@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './back-button-layout.module.scss'
 
@@ -17,6 +18,7 @@ export const BackButtonLayout = () => {
   }
   const router = useRouter()
   const width = useWidth()
+  const t = useTranslations('Components')
 
   return (
     <div className={classNames.container}>
@@ -27,7 +29,9 @@ export const BackButtonLayout = () => {
         variant={'text'}
       >
         <RightBracketIcon className={classNames.icon} />
-        {width >= projectConstants.mobileWidth && <Typography.Caption>Назад</Typography.Caption>}
+        {width >= projectConstants.mobileWidth && (
+          <Typography.Caption>{t('BackButton.Back')}</Typography.Caption>
+        )}
       </Typography.Link1>
     </div>
   )

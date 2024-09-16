@@ -11,6 +11,7 @@ import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery, useVerifyEmailMutation } from '@/services/auth/auth.service'
 import clsx from 'clsx'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './confirm-email.module.scss'
 
@@ -26,6 +27,7 @@ function ConfirmEmail() {
   const router = useRouter()
   const [verifyEmail] = useVerifyEmailMutation()
   const { data: meData } = useMeQuery()
+  const t = useTranslations('ConfirmEmailPage')
 
   async function verifyEmailHandler(data: VerifyEmailRequest) {
     try {
@@ -50,9 +52,9 @@ function ConfirmEmail() {
     <Page className={classNames.page}>
       <div className={classNames.container}>
         <Typography.H1>Подтверждение почты</Typography.H1>
-        <Typography.Body1>{`На указанную Вами почту ${
-          meData?.user?.email ?? ''
-        } было выслано письмо с дальнейшими инструкциями.`}</Typography.Body1>
+        <Typography.Body1>{`${t('description1')} ${meData?.user?.email ?? ''}${t(
+          'description2'
+        )}`}</Typography.Body1>
       </div>
       <ConfirmEmailIcon className={classNames.confirmIcon} />
     </Page>

@@ -1,19 +1,215 @@
 {
-  "Home": {
+  "PostsPage": {
+    "title": "Посты",
+    "description": "Поиск постов по фильтрам",
+    "Posts": {
+      "CardButtons": {
+        "Edit": {
+          "title": "Редактировать"
+        },
+        "Delete": {
+          "title": "Удалить"
+        },
+        "NotPublish": {
+          "title": "Убрать из публикации"
+        }
+      },
+      "Description": "Пока нет постов"
+    },
+    "Filters": {
+      "SearchInput": {
+        "label": "Искать в заголовках",
+        "placeholder": "тренды фотографии"
+      },
+      "TabSwitcher": {
+        "label": "Показать посты",
+        "item1": "Все",
+        "item2": "Мои"
+      },
+      "SortButton": {
+        "label": "Сначала",
+        "item1": "новые",
+        "item2": "старые"
+      }
+    },
+    "Dialogs": {
+      "DeletePost": {
+        "title": "Удалить этот пост?",
+        "Confirm": "Удалить",
+        "Cancel": "Отмена"
+      },
+      "NotPublish": {
+        "title": "Не публиковать?",
+        "Confirm": "Не публиковать",
+        "Cancel": "Отмена"
+      }
+    }
+  },
+  "PostPage": {
+    "Author": "Автор:",
+    "Created": "Написан:",
+    "Updated": "изменен:",
+    "EditButton": {
+      "title": "Редактировать"
+    }
+  },
+  "Filters": {
+    "SearchInput": {
+      "label": "Искать в заголовках",
+      "placeholder": "тренды фотографии"
+    },
+    "TabSwitcher": {
+      "label": "Показать посты",
+      "item1": "Все",
+      "item2": "Мои"
+    },
+    "SortButton": {
+      "label": "Сначала",
+      "item1": "новые",
+      "item2": "старые"
+    }
+  },
+  "Dialogs": {
+    "DeletePost": {
+      "title": "Удалить этот пост?",
+      "Confirm": "Удалить",
+      "Cancel": "Отмена"
+    },
+    "NotPublish": {
+      "title": "Не публиковать?",
+      "Confirm": "Не публиковать",
+      "Cancel": "Отмена"
+    }
+  },
+  "HomePage": {
     "test": "Русский"
   },
-  "Header": {
-    "Menu": {
-      "Account": "Профиль",
-      "Moderate": "Модерировать",
-      "WritePost": "Написать пост",
-      "Logout": "Выход"
+  "CreatePostPage": {
+    "title": "Написать пост",
+    "Dialogs": {
+      "Attention": {
+        "title": "Внимание!",
+        "description": "Ваш пост был отправлен, но будет опубликован после проверки",
+        "Confirm": "Хорошо"
+      }
+    }
+  },
+  "UpdatePostPage": {
+    "title": "Редактировать пост",
+    "Dialogs": {
+      "Attention": {
+        "title": "Внимание!",
+        "description": "Ваш пост был изменен, но будет опубликован после проверки",
+        "Confirm": "Хорошо"
+      }
+    }
+  },
+  "ContactsPage": {
+    "test": "Контакты"
+  },
+  "MyAccountPage": {
+    "title": "Мой профиль",
+    "Avatar": {
+      "DeleteButton": "Удалить фото",
+      "title": "Фото профиля:"
     },
-    "Navbar": {
-      "Home": "Главная",
-      "Posts": "Посты",
-      "Contacts": "Контакты"
+    "Email": {
+      "title": "Почта:",
+      "Confirmed": "(подтверждена)",
+      "NotConfirmed": "(не подтверждена)",
+      "ConfirmButton": "Подтвердить почту"
     },
-    "Login": "Вход"
+    "Name": {
+      "title": "Имя:"
+    },
+    "Status": {
+      "title": "Роль:"
+    }
+  },
+  "ModerationPage": {
+    "title": "Модерация постов",
+    "Posts": {
+      "Description": "Пока нет постов ожидающих проверку"
+    },
+    "Dialogs": {
+      "DeletePost": {
+        "title": "Удалить этот пост?",
+        "Confirm": "Удалить",
+        "Cancel": "Отмена"
+      },
+      "PublishPost": {
+        "title": "Опубликовать этот пост?",
+        "Confirm": "Опубликовать",
+        "Cancel": "Отмена"
+      }
+    },
+    "Table": {
+      "Columns": {
+        "Cover": "Обложка",
+        "Title": "Заголовок",
+        "Created": "Создан",
+        "Updated": "Изменен",
+        "Author": "Автор",
+        "Options": "Опции"
+      },
+      "OptionsButtons": {
+        "Delete": {
+          "title": "Удалить"
+        },
+        "Publish": {
+          "title": "Опубликовать"
+        }
+      }
+    }
+  },
+  "AccountPage": {
+    "title": "Профиль",
+    "Name": {
+      "title": "Имя:"
+    },
+    "Status": {
+      "title": "Роль:"
+    }
+  },
+  "ProfileNotFoundPage": {
+    "title": "Профиль не найден...",
+    "description": "Такого автора не существует, или он был удален!"
+  },
+  "ConfirmEmailPage": {
+    "description1": "На указанную Вами почту",
+    "description2": ", было выслано письмо с дальнейшими инструкциями"
+  },
+  "LoginPage": {
+    "title": "Вход",
+    "description1": "Нет аккаунта?",
+    "description2": "Зарегистрироваться"
+  },
+  "RegistrationPage": {
+    "title": "Регистрация",
+    "description1": "Уже есть аккаунт?",
+    "description2": "Войти"
+  },
+  "Components": {
+    "Header": {
+      "Menu": {
+        "Account": "Профиль",
+        "Moderate": "Модерировать",
+        "WritePost": "Написать пост",
+        "Logout": "Выход"
+      },
+      "Navbar": {
+        "Home": "Главная",
+        "Posts": "Посты",
+        "Contacts": "Контакты"
+      },
+      "Login": "Вход"
+    },
+    "PostCard": {
+      "Author": "Автор:",
+      "Moderation": "Ожидает модерации"
+    },
+    "BackButton": {
+      "Back": "Назад"
+    }
   }
 }

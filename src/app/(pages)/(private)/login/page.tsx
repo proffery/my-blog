@@ -16,6 +16,7 @@ import { useLoginEmailMutation } from '@/services/auth/auth.service'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './login.module.scss'
 function Login() {
@@ -29,6 +30,8 @@ function Login() {
 
   const [loginWithEmail, { error: loginWithEmailError }] = useLoginEmailMutation()
   const router = useRouter()
+  const t = useTranslations('LoginPage')
+
   const loginWithEmailHandler = async (loginData: LoginEmailFormValues) => {
     await loginWithEmail(loginData).unwrap()
     router.push(routes.base)
@@ -38,6 +41,7 @@ function Login() {
 
   return (
     <Page className={classNames.page}>
+      <Typography.H1>{t('title')}</Typography.H1>
       <div className={classNames.formsWrapper}>
         <LoginForm errorMessage={errorMessage} onSubmit={loginWithEmailHandler} />
         <div className={classNames.buttonsWrapper}>
@@ -54,9 +58,9 @@ function Login() {
           </form>
         </div>
         <Typography.Body1>
-          Нет аккаунта?&nbsp;
+          {t('description1')}&nbsp;
           <Typography.Link1 as={Link} href={routes.registration}>
-            Зарегистрироваться
+            {t('description2')}
           </Typography.Link1>
         </Typography.Body1>
       </div>

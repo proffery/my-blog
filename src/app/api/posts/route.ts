@@ -1,4 +1,5 @@
 import { projectConstants } from '@/common/constants/project-constants'
+import { defaultLocale } from '@/i18n/config'
 import { createDatabaseClient } from '@/server/database-config'
 import { paginatedPostsByCreate } from '@/server/functions/database/posts/paginated-posts-by-create'
 import { serverErrorHandler } from '@/server/functions/server-errors-handler'
@@ -10,6 +11,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
 
   const authorId = searchParams.get('authorId')
+  const locale = searchParams.get('locale') ?? defaultLocale
   const sort = searchParams.get('sort')
   const titleSearch = searchParams.get('search') ?? ''
   const page = Number(searchParams.get('page')) - 1
@@ -21,6 +23,7 @@ export async function GET(request: NextRequest) {
       authorId,
       databasesInstance,
       limit,
+      locale,
       offset,
       sort,
       titleSearch,

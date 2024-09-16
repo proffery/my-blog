@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function PUT(request: NextRequest) {
   const { databasesInstance } = await createDatabaseClient()
-  const { authorName, cover, isPublished, post, postId, title } = await request.json()
+  const { authorName, cover, isPublished, locale, post, postId, title } = await request.json()
 
   try {
     const updatedPost = await updatePost({
@@ -13,6 +13,7 @@ export async function PUT(request: NextRequest) {
       cover,
       databasesInstance,
       isPublished,
+      locale,
       post,
       postId,
       title,

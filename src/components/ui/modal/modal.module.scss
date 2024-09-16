@@ -2,12 +2,12 @@
 @use '@/styles/animations' as animations;
 
 $width: 500px;
-$gap-desktop: 16px;
-$gap-mobile: 12px;
-$padding-desktop: 24px;
+$gap-desktop: 24px;
+$gap-mobile: 16px;
+$padding-desktop: 32px;
 $padding-mobile: 16px;
-$border-radius-desktop: 5px;
-$border-radius-mobile: 5px;
+$border-radius-desktop: 16px;
+$border-radius-mobile: 8px;
 
 @keyframes overlay-show {
   from {

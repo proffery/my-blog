@@ -19,6 +19,7 @@ import { useCreatePostMutation } from '@/services/posts/posts.service'
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
 import s from './create-post.module.scss'
 
@@ -30,6 +31,10 @@ function CreatePost() {
   const [showModerationModal, setShowModerationModal] = useState(false)
 
   const userRoles = useSelector(selectUserRole)
+
+  const locale = useLocale()
+  const t = useTranslations('CreatePostPage')
+
   const { data: meData } = useMeQuery()
   const authorId = meData?.user?.$id ?? ''
   const authorName = meData?.user?.name ?? ''
@@ -42,6 +47,7 @@ function CreatePost() {
       ...data,
       authorName,
       isPublished: isRole(userRoles, 'Writer'),
+      locale,
     }).unwrap()
 
     await clearCachesByServerAction(routes.account + '/' + authorId)
@@ -61,12 +67,15 @@ function CreatePost() {
 
   return (
     <Page className={classNames.page}>
-      <Modal onOpenChange={moderationMessageHandler} open={showModerationModal} title={'Внимание!'}>
-        <Typography.Body1>
-          Ваш пост отправлен, но будет опубликован после проверки.
-        </Typography.Body1>
+      <Typography.H1>{t('title')}</Typography.H1>
+      <Modal
+        onOpenChange={moderationMessageHandler}
+        open={showModerationModal}
+        title={t('Dialogs.Attention.title')}
+      >
+        <Typography.Body1>{t('Dialogs.Attention.description')}</Typography.Body1>
         <Button className={classNames.confirmButton} onClick={moderationMessageHandler}>
-          Хорошо
+          {t('Dialogs.Attention.Confirm')}
         </Button>
       </Modal>
       <CreatePostForm errorMessage={errorMessage} onSubmit={submitPostHandler} />

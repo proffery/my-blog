@@ -15,6 +15,7 @@ import {
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './registration.module.scss'
 
@@ -29,6 +30,8 @@ function Registration() {
   const [sendVerifyEmail] = useSendVerifyEmailMutation()
   const [loginWithEmail] = useLoginEmailMutation()
   const router = useRouter()
+  const t = useTranslations('RegistrationPage')
+
   const registrationHandler = async (data: Omit<RegistrationFormValues, 'confirmPassword'>) => {
     try {
       await registration({ email: data.email, name: data.name, password: data.password }).unwrap()
@@ -44,12 +47,13 @@ function Registration() {
 
   return (
     <Page className={classNames.page}>
+      <Typography.H1>{t('title')}</Typography.H1>
       <div className={classNames.formsWrapper}>
         <RegistrationForm errorMessage={errorMessage} onSubmit={registrationHandler} />
         <Typography.Body1>
-          Уже есть аккаунт?&nbsp;
+          {t('description1')}&nbsp;
           <Typography.Link1 as={Link} href={routes.login}>
-            Войти
+            {t('description2')}
           </Typography.Link1>
         </Typography.Body1>
       </div>

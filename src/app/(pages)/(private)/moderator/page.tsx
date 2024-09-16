@@ -20,6 +20,7 @@ import {
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
 import s from './moderator.module.scss'
 
@@ -39,7 +40,11 @@ function Moderator() {
   const [publishModal, setPublishModal] = useState(false)
   const [tempPostData, setTempPostData] = useState({ authorId: '', postId: '', postTitle: '' })
 
-  const { data: notPublishedPosts, isSuccess } = useGetNotPublishedPostsQuery({
+  const locale = useLocale()
+  const t = useTranslations('ModerationPage')
+
+  const { data: notPublishedPosts } = useGetNotPublishedPostsQuery({
+    locale,
     sort: sort ?? 'desc',
     sortBy: sortBy ?? '$updatedAt',
   })
@@ -90,26 +95,26 @@ function Moderator() {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Модерация постов</Typography.H1>
+      <Typography.H1>{t('title')}</Typography.H1>
       <Dialog
-        cancelText={'Отмена'}
-        confirmText={'Удалить'}
+        cancelText={t('Dialogs.DeletePost.Cancel')}
+        confirmText={t('Dialogs.DeletePost.Confirm')}
         onCancel={() => setDeleteModal(false)}
         onConfirm={confirmDeleteHandler}
         onOpenChange={setDeleteModal}
         open={deleteModal}
-        title={'Удалить этот пост?'}
+        title={t('Dialogs.DeletePost.title')}
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
       <Dialog
-        cancelText={'Отмена'}
-        confirmText={'Опубликовать'}
+        cancelText={t('Dialogs.PublishPost.Cancel')}
+        confirmText={t('Dialogs.PublishPost.Confirm')}
         onCancel={() => setPublishModal(false)}
         onConfirm={confirmPublishHandler}
         onOpenChange={setPublishModal}
         open={publishModal}
-        title={'Опубликовать?'}
+        title={t('Dialogs.PublishPost.title')}
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
@@ -124,7 +129,7 @@ function Moderator() {
           sortBy={sortBy ?? '$updatedAt'}
         />
       ) : (
-        <Typography.Caption>Пока нет постов для модерации</Typography.Caption>
+        <Typography.Caption>{t('Posts.Description')}</Typography.Caption>
       )}
     </Page>
   )

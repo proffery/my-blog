@@ -28,6 +28,7 @@ import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { BookX, Edit3, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import { useLocale, useTranslations } from 'next-intl'
 import { useDebouncedCallback } from 'use-debounce'
 
 import s from './posts.module.scss'
@@ -62,8 +63,12 @@ function Posts() {
   const authId = meData?.user?.$id || ''
   const authorId = tabValue === 'all' ? undefined : authId
 
+  const locale = useLocale()
+  const t = useTranslations('PostsPage')
+
   const { data: postsData } = useGetPostsQuery({
     authorId,
+    locale,
     page: page ?? '1',
     search: search ?? '',
     sort: sort ?? 'desc',
@@ -124,60 +129,60 @@ function Posts() {
   return (
     <Page className={classNames.page}>
       <div>
-        <Typography.H1>Посты</Typography.H1>
-        <Typography.Caption>Поиск постов по фильтрам</Typography.Caption>
+        <Typography.H1>{t('title')}</Typography.H1>
+        <Typography.Caption>{t('description')}</Typography.Caption>
       </div>
       <Dialog
-        cancelText={'Отмена'}
-        confirmText={'Удалить'}
+        cancelText={t('Dialogs.DeletePost.Cancel')}
+        confirmText={t('Dialogs.DeletePost.Confirm')}
         onCancel={() => setDeleteModal(false)}
         onConfirm={confirmPostDeleteHandler}
         onOpenChange={setDeleteModal}
         open={deleteModal}
-        title={'Удалить этот пост?'}
+        title={t('Dialogs.DeletePost.title')}
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
       <Dialog
-        cancelText={'Отмена'}
-        confirmText={'Не публиковать'}
+        cancelText={t('Dialogs.NotPublish.Cancel')}
+        confirmText={t('Dialogs.NotPublish.Confirm')}
         onCancel={() => setNotPublishModal(false)}
         onConfirm={confirmNotPublishHandler}
         onOpenChange={setNotPublishModal}
         open={notPublishModal}
-        title={'Не публиковать?'}
+        title={t('Dialogs.NotPublish.title')}
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
       <div className={classNames.filtersWrapper}>
         <Input
-          label={'Искать в заголовках'}
+          label={t('Filters.SearchInput.label')}
           onChange={searchInputChangeHandler}
-          placeholder={'домашний офис'}
+          placeholder={t('Filters.SearchInput.placeholder')}
           value={searchInput ?? ''}
         />
         {userRoles && (
-          <TabGroup label={'Показать посты'} onValueChange={tabChangeHandler}>
+          <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
             <TabList>
               <TabItem selected={tabValue === 'all'} value={'all'}>
-                Все
+                {t('Filters.TabSwitcher.item1')}
               </TabItem>
               <TabItem selected={tabValue === 'my'} value={'my'}>
-                Мои
+                {t('Filters.TabSwitcher.item2')}
               </TabItem>
             </TabList>
           </TabGroup>
         )}
         <Label>
-          Сначала
+          {t('Filters.SortButton.label')}
           <Button onClick={sortChangeHandler}>
-            {sort === 'desc' ? 'новые' : 'старые'}
+            {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
             <RightBracketIcon className={classNames.sortIcon} />
           </Button>
         </Label>
       </div>
       <div className={classNames.posts}>
-        {posts?.length === 0 && <Typography.Caption>Пока нет постов</Typography.Caption>}
+        {posts?.length === 0 && <Typography.Caption>{t('Posts.Description')}</Typography.Caption>}
         {posts?.map(post => (
           <div className={classNames.cardWrapper} key={post.$id}>
             {userRoles && authId === post.authorId && (
@@ -186,14 +191,14 @@ function Posts() {
                   as={Link}
                   href={routes.updatePost + post.$id}
                   padding={false}
-                  title={'Редактировать'}
+                  title={t('Posts.CardButtons.Edit.title')}
                 >
                   <Edit3 />
                 </Button>
                 <Button
                   onClick={() => setDeletedPostDataHandler(post.$id, post.title)}
                   padding={false}
-                  title={'Удалить'}
+                  title={t('Posts.CardButtons.Delete.title')}
                 >
                   <Trash2 />
                 </Button>
@@ -204,7 +209,7 @@ function Posts() {
                 <Button
                   onClick={() => setNotPublishPostDataHandler(post.$id, post.title)}
                   padding={false}
-                  title={'Убрать из публикации'}
+                  title={t('Posts.CardButtons.NotPublish.title')}
                 >
                   <BookX />
                 </Button>

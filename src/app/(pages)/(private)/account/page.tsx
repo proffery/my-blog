@@ -26,6 +26,7 @@ import {
 import { selectUserAvatarUrl, selectUserId } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './account.module.scss'
 
@@ -41,6 +42,8 @@ function Account() {
   const [changeName, { error: changeNameError }] = useChangeNameMutation()
 
   const router = useRouter()
+
+  const t = useTranslations('MyAccountPage')
 
   const userAvatarUrl = useSelector(selectUserAvatarUrl)
   const userId = useSelector(selectUserId) ?? ''
@@ -70,11 +73,6 @@ function Account() {
   }
 
   const handleCreateAvatarSubmit = async (data: UploadAvatarFormValues) => {
-    const formData = new FormData()
-
-    formData.append('file', data.image)
-    formData.append('userId', userId)
-
     try {
       await createAvatar({ image: data, userId }).unwrap()
       await clearCachesByServerAction(routes.account + '/' + userId)
@@ -96,11 +94,11 @@ function Account() {
 
   return (
     <Page className={classNames.page}>
-      <Typography.H1>Мой профиль</Typography.H1>
+      <Typography.H1>{t('title')}</Typography.H1>
       <div className={classNames.container}>
         <div className={classNames.avatarWrapper}>
           <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-            <Typography.Subtitle1 as={'h3'}>Аватар:&nbsp;</Typography.Subtitle1>
+            <Typography.Subtitle1 as={'h3'}>{t('Avatar.title')}</Typography.Subtitle1>
             <Avatar size={'large'} url={userAvatarUrl ?? ''} />
           </div>
           {!userAvatarUrl ? (
@@ -111,22 +109,13 @@ function Account() {
           ) : (
             <FieldError errorMessage={deleteAvatarErrorMessage}>
               <Button onClick={handleCreateAvatarDelete} type={'button'}>
-                Удалить аватар
+                {t('Avatar.DeleteButton')}
               </Button>
             </FieldError>
           )}
         </div>
         <div className={classNames.item}>
-          <Typography.Subtitle1>Почта:&nbsp;</Typography.Subtitle1>{' '}
-          <Typography.Body1>{meData?.user?.email} &nbsp;</Typography.Body1>
-          {meData?.user?.emailVerification ? (
-            <Typography.Subtitle2>(подтверждена)</Typography.Subtitle2>
-          ) : (
-            <Typography.Subtitle2>(не подтверждена)</Typography.Subtitle2>
-          )}
-        </div>
-        <div className={classNames.item}>
-          <Typography.Subtitle1>Имя:&nbsp;</Typography.Subtitle1>
+          <Typography.Subtitle1>{t('Name.title')}&nbsp;</Typography.Subtitle1>
           <EditNameForm
             defaultValue={meData?.user?.name}
             errorMessage={nameErrorMessage}
@@ -134,23 +123,34 @@ function Account() {
           />
         </div>
         <div className={classNames.item}>
-          {meData?.user?.labels.length ? (
-            <Typography.Subtitle1>Роль:&nbsp;</Typography.Subtitle1>
-          ) : null}
-          {meData?.user?.labels.map(label => (
-            <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
-          ))}
-        </div>
-        <div className={classNames.item}>
           <Typography.Subtitle1 as={'span'}>Язык:&nbsp;</Typography.Subtitle1>
           <LangSelect />
         </div>
+        <div className={classNames.item}>
+          <Typography.Subtitle1>{t('Status.title')}&nbsp;</Typography.Subtitle1>
+          {meData?.user?.labels.length ? (
+            meData.user.labels.map(label => (
+              <Typography.Body1 key={label}>{label}&nbsp;</Typography.Body1>
+            ))
+          ) : (
+            <Typography.Body1>User</Typography.Body1>
+          )}
+        </div>
+        <div className={classNames.item}>
+          <Typography.Subtitle1>{t('Email.title')}&nbsp;</Typography.Subtitle1>{' '}
+          <Typography.Body1>{meData?.user?.email} &nbsp;</Typography.Body1>
+          {meData?.user?.emailVerification ? (
+            <Typography.Subtitle2>{t('Email.Confirmed')}</Typography.Subtitle2>
+          ) : (
+            <Typography.Subtitle2>{t('Email.NotConfirmed')}</Typography.Subtitle2>
+          )}
+        </div>
+        {!meData?.user?.emailVerification && (
+          <Button onClick={sendVerifyEmailHandler} type={'submit'}>
+            {t('Email.ConfirmButton')}
+          </Button>
+        )}
       </div>
-      {!meData?.user?.emailVerification && (
-        <Button onClick={sendVerifyEmailHandler} type={'submit'}>
-          Подтвердить почту
-        </Button>
-      )}
     </Page>
   )
 }

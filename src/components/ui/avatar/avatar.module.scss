@@ -1,9 +1,9 @@
 @use '@/styles/breakpoints';
 
 $avatar-small-desktop: 30px;
-$avatar-large-desktop: 200px;
+$avatar-large-desktop: 300px;
 $avatar-small-mobile: 20px;
-$avatar-large-mobile: 150px;
+$avatar-large-mobile: 200px;
 
 .container {
   position: relative;
@@ -38,7 +38,6 @@ $avatar-large-mobile: 150px;
   min-height: $avatar-large-desktop;
   max-height: $avatar-large-desktop;
 
-  border: 1px solid var(--color-dark);
   border-radius: 16px;
   box-shadow: var(--color-shadow);
 

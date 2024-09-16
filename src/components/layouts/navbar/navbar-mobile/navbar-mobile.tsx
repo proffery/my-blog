@@ -11,6 +11,7 @@ import { useLogoutMutation } from '@/services/auth/auth.service'
 import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import s from './navbar-mobile.module.scss'
 
@@ -38,6 +39,8 @@ export const NavbarMobile = ({ meData }: Props) => {
     navbarLeft: clsx(s.navbarLeft, isOpened ? s.navbarLeftOpened : s.navbarLeftClosed),
   }
 
+  const t = useTranslations('Components.Header.Navbar')
+
   const handleToggle = () => {
     setIsOpened(!isOpened)
   }
@@ -63,13 +66,13 @@ export const NavbarMobile = ({ meData }: Props) => {
         <div className={classNames.navbarLeft} onClick={handleClose} />
         <nav className={classNames.navbar}>
           <ActiveLink href={routes.base} onClick={handleClose}>
-            Главная
+            {t('Home')}
           </ActiveLink>
           <ActiveLink href={routes.posts} onClick={handleClose}>
-            Посты
+            {t('Posts')}
           </ActiveLink>
           <ActiveLink href={routes.contacts} onClick={handleClose}>
-            Контакты
+            {t('Contacts')}
           </ActiveLink>
         </nav>
       </div>

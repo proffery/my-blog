@@ -2,12 +2,12 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { routes } from '@/common/constants/routes'
 import { cleanFromHTML } from '@/common/utils/clean-from-html'
-import { dateShortToLocalRu } from '@/common/utils/date-short-to-local-ru'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useFormatter, useTranslations } from 'next-intl'
 
 import s from './posts-card.module.scss'
 
@@ -46,13 +46,16 @@ export const PostsCard = ({
     title: clsx(s.title),
     titleWrapper: clsx(s.titleWrapper),
   }
+  const t = useTranslations('Components')
+  const format = useFormatter()
+  const dateTime = new Date(date)
 
   return (
     <Card className={classNames.card}>
       <div className={classNames.cardImageContainer}>
         {!isPublished && (
           <Typography.H5 as={'span'} className={classNames.notPublishedDescription}>
-            Ожидает модерации
+            {t('PostCard.Moderation')}
           </Typography.H5>
         )}
         <Image
@@ -75,13 +78,18 @@ export const PostsCard = ({
 
         <div className={classNames.bottomInfoWrapper}>
           <Typography.Body2 as={'span'} className={classNames.author}>
-            Автор:&nbsp;
+            {t('PostCard.Author')}&nbsp;
             <Typography.Link2 as={Link} href={routes.account + '/' + authorId}>
               {authorName}
             </Typography.Link2>
           </Typography.Body2>
           <Typography.Body2 className={classNames.date}>
-            {dateShortToLocalRu(date)}
+            {format.dateTime(dateTime, {
+              day: 'numeric',
+              month: 'short',
+              weekday: 'short',
+              year: 'numeric',
+            })}
           </Typography.Body2>
         </div>
       </div>

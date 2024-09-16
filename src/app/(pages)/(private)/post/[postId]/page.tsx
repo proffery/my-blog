@@ -1,5 +1,4 @@
 import { routes } from '@/common/constants/routes'
-import { dateFullToLocalRu } from '@/common/utils/date-full-to-local-ru'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
 import { TextEditor } from '@/components/ui/text-editor/text-editor'
@@ -13,6 +12,7 @@ import { Edit3 } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getFormatter, getLocale, getTranslations } from 'next-intl/server'
 
 import s from './post-by-id.module.scss'
 
@@ -40,12 +40,31 @@ export default async function Post({ params: { postId } }: Props) {
     descriptionWrapper: clsx(s.descriptionWrapper),
     title: clsx(s.title),
   }
+
   const { databasesInstance } = await createDatabaseClient()
 
   const postData = await postById({ databasesInstance, postId })
   const token = cookies().get(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
 
   let userId = ''
+
+  const t = await getTranslations('PostPage')
+  const locale = await getLocale()
+  const format = await getFormatter()
+
+  const formatDateHandler = (postDate: string) => {
+    const dateTime = new Date(postDate)
+
+    return format.dateTime(dateTime, {
+      day: 'numeric', // Day of the month
+      hour: '2-digit', // Two-digit hour
+      hour12: locale !== 'ru', // 24-hour format
+      minute: '2-digit', // Two-digit minute
+      month: 'short', // Full month [name]
+      second: '2-digit', // Two-digit second
+      year: 'numeric', // Full year
+    })
+  }
 
   if (token) {
     userId = jwtDecode<{ id: string; secret: string }>(token.value + '.' + token.value).id
@@ -66,18 +85,18 @@ export default async function Post({ params: { postId } }: Props) {
       <TextEditor defaultValue={postData?.post} isEditable={false} />
       <div className={classNames.descriptionWrapper}>
         <Typography.Subtitle2>
-          Автор:&nbsp;
+          {t('Author')}&nbsp;
           <Typography.Link2 as={Link} href={routes.account + '/' + postData.authorId}>
             {postData.authorName}
           </Typography.Link2>
         </Typography.Subtitle2>
         <div className={classNames.description}>
           <Typography.Subtitle2>
-            Написан:&nbsp;
+            {t('Created')}&nbsp;
             <Typography.Body2 as={'span'}>
-              {dateFullToLocalRu(postData.$createdAt)}
+              {formatDateHandler(postData.$createdAt)}
               {postData.$updatedAt !== postData.$createdAt
-                ? ` (изменен: ${dateFullToLocalRu(postData.$updatedAt)})`
+                ? ` (${t('Updated')} ${formatDateHandler(postData.$updatedAt)})`
                 : ''}
             </Typography.Body2>
           </Typography.Subtitle2>
@@ -86,7 +105,7 @@ export default async function Post({ params: { postId } }: Props) {
               as={Link}
               href={routes.updatePost + postData.$id}
               padding={false}
-              title={'Редактировать'}
+              title={t('EditButton.title')}
             >
               <Edit3 />
             </Button>

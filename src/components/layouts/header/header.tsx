@@ -31,7 +31,7 @@ const Header = () => {
   const isUserAuthenticated = useSelector(selectUserRole)
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
-  const t = useTranslations('Header')
+  const t = useTranslations('Components.Header')
 
   const { data: meData } = useMeQuery()
 

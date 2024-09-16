@@ -8,7 +8,6 @@ import {
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { TextEditor } from '@/components/ui/text-editor/text-editor'
-import { Typography } from '@/components/ui/typography/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -25,7 +24,6 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
-    title: clsx(s.title),
   }
 
   const {
@@ -65,11 +63,6 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      {defaultValues ? (
-        <Typography.H1 className={classNames.title}>Редактировать пост</Typography.H1>
-      ) : (
-        <Typography.H1 className={classNames.title}>Написать пост</Typography.H1>
-      )}
       <Input
         defaultValue={defaultValues?.title}
         errorMessage={errors.title?.message}

@@ -7,7 +7,6 @@ import {
 } from '@/components/forms/registration-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
-import { Typography } from '@/components/ui/typography/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
@@ -23,7 +22,6 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
-    title: clsx(s.title),
   }
 
   const {
@@ -50,7 +48,6 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Typography.H1 className={classNames.title}>Регистрация</Typography.H1>
       <Input
         autoComplete={'name'}
         errorMessage={errors.name?.message}

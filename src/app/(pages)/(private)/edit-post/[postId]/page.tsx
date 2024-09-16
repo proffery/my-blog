@@ -19,6 +19,7 @@ import { useGetPostQuery, useUpdatePostMutation } from '@/services/posts/posts.s
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
 import s from './edit-post.module.scss'
 
@@ -33,6 +34,9 @@ function EditPost(props: Props) {
   }
   const [showModerationModal, setShowModerationModal] = useState(false)
   const userRoles = useSelector(selectUserRole)
+
+  const locale = useLocale()
+  const t = useTranslations('UpdatePostPage')
 
   const router = useRouter()
 
@@ -53,6 +57,7 @@ function EditPost(props: Props) {
         ...data,
         authorName,
         isPublished: isRole(userRoles, 'Writer'),
+        locale,
         postId,
       }).unwrap()
       await clearCachesByServerAction(routes.post + '/' + postId)
@@ -82,10 +87,15 @@ function EditPost(props: Props) {
 
   return (
     <Page className={classNames.page}>
-      <Modal onOpenChange={moderationMessageHandler} open={showModerationModal} title={'Внимание!'}>
-        <Typography.Body1>Ваш пост изменен, но будет опубликован после проверки.</Typography.Body1>
+      <Typography.H1>{t('title')}</Typography.H1>
+      <Modal
+        onOpenChange={moderationMessageHandler}
+        open={showModerationModal}
+        title={t('Dialogs.Attention.title')}
+      >
+        <Typography.Body1>{t('Dialogs.Attention.description')}</Typography.Body1>
         <Button className={classNames.confirmButton} onClick={moderationMessageHandler}>
-          Хорошо
+          {t('Dialogs.Attention.Confirm')}
         </Button>
       </Modal>
       <CreatePostForm
