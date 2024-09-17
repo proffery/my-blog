@@ -1,17 +1,21 @@
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import {
-  CreatePostFormValues,
-  createPostFormSchema,
-} from '@/components/forms/create-post-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { TextEditor } from '@/components/ui/text-editor/text-editor'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
+import { z } from 'zod'
 
 import s from './create-post-form.module.scss'
+
+export type CreatePostFormValues = {
+  cover?: string
+  post: string
+  title: string
+}
 
 type Props = {
   defaultValues?: CreatePostFormValues
@@ -26,6 +30,20 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
     singUpButton: clsx(s.singUpButton),
   }
 
+  const t = useTranslations('Components.Forms.CreatePost')
+
+  const createPostFormSchema = z.object({
+    cover: z
+      .string()
+      .optional()
+      .refine(
+        value => /^((http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|webp|svg)))$|^$/.test(value ?? ''),
+        t('Cover.ErrorMessage')
+      ),
+    post: z.string(),
+    title: z.string().min(1, { message: t('Title.ErrorMessage') }),
+  })
+
   const {
     clearErrors,
     control,
@@ -34,7 +52,7 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
     register,
     setError,
     setValue,
-  } = useForm<CreatePostFormValues>({
+  } = useForm<z.infer<typeof createPostFormSchema>>({
     defaultValues: {
       cover: defaultValues?.cover,
       post: defaultValues?.post,
@@ -66,15 +84,15 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
       <Input
         defaultValue={defaultValues?.title}
         errorMessage={errors.title?.message}
-        label={'Заголовок'}
-        placeholder={'Как организовать домашний офис'}
+        label={t('Title.label')}
+        placeholder={t('Title.placeholder')}
         {...register('title')}
       />
       <Input
         defaultValue={defaultValues?.cover}
         errorMessage={errors.cover?.message}
-        label={'Обложка'}
-        placeholder={'https://sub.domain.com/files/11-11-2011/example.jpg'}
+        label={t('Cover.label')}
+        placeholder={t('Cover.placeholder')}
         {...register('cover')}
       />
       <Controller
@@ -83,8 +101,7 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
         render={({ field: { onChange, ref, ...restField } }) => (
           <TextEditor
             defaultValue={defaultValues?.post}
-            errorMessage={errors.post?.message}
-            label={'Пост'}
+            label={t('Post.label')}
             onChange={onChange}
             ref={ref}
             {...restField}
@@ -98,7 +115,7 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
         type={'submit'}
         variant={'secondary'}
       >
-        Отправить
+        {t('SubmitButton')}
       </Button>
     </form>
   )

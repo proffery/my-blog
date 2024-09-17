@@ -3,7 +3,7 @@
 
 $padding-desktop: 12px 24px;
 $padding-mobile: 8px 20px;
-$none-padding: 2px;
+$none-padding: 2px 4px;
 $height-desktop: 48px;
 $height-mobile: 40px;
 $radius: 5px;
@@ -120,7 +120,7 @@ a.text {
 }
 
 .nonePadding {
-  width: fit-content;
+  min-width: fit-content;
   height: fit-content;
   padding: $none-padding;
 }

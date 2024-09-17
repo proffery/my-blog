@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 import clsx from 'clsx'
 import Link, { LinkProps } from 'next/link'
-import { useSelectedLayoutSegment } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import s from './active-link.module.scss'
 
@@ -12,10 +12,9 @@ type Props = {
 } & LinkProps
 export const ActiveLink = ({ children, ...rest }: Props) => {
   const { href } = rest
-  const activeSegment = useSelectedLayoutSegment()
-  const activePath = activeSegment ? '/' + activeSegment : '/'
+  const pathname = usePathname()
 
-  const isActive = href === activePath
+  const isActive = pathname.replaceAll('/', '') === href.toString().replaceAll('/', '')
 
   const classNames = { link: clsx(s.link, isActive && s.activeLink) }
 

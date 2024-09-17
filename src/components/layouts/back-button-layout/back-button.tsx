@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl'
 
 import s from './back-button-layout.module.scss'
 
-export const BackButtonLayout = () => {
+export const BackButton = () => {
   const classNames = {
     button: clsx(s.button),
     container: clsx(s.container),

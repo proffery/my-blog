@@ -38,6 +38,8 @@ import { usePostsFilters } from './use-posts-filters'
 function Posts() {
   const { page, search, setPage, setSearch, setSort, sort } = usePostsFilters()
 
+  const [showFilters, setShowFilters] = useState(false)
+
   const classNames = {
     adminButtonsWrapper: clsx(s.adminButtonsWrapper),
     cardWrapper: clsx(s.cardWrapper),
@@ -46,6 +48,7 @@ function Posts() {
     pagination: clsx(s.pagination),
     posts: clsx(s.posts),
     postsCard: clsx(s.postsCard),
+    shawFiltersIcon: clsx(s.sortIcon, showFilters ? s.sortIconDesc : s.sortIconAsc),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     userButtonsWrapper: clsx(s.userButtonsWrapper),
   }
@@ -130,7 +133,11 @@ function Posts() {
     <Page className={classNames.page}>
       <div>
         <Typography.H1>{t('title')}</Typography.H1>
-        <Typography.Caption>{t('description')}</Typography.Caption>
+        <Button onClick={() => setShowFilters(!showFilters)} variant={'text'}>
+          <Typography.Caption>
+            {t('description')} <RightBracketIcon className={classNames.shawFiltersIcon} />
+          </Typography.Caption>
+        </Button>
       </div>
       <Dialog
         cancelText={t('Dialogs.DeletePost.Cancel')}
@@ -154,33 +161,35 @@ function Posts() {
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
-      <div className={classNames.filtersWrapper}>
-        <Input
-          label={t('Filters.SearchInput.label')}
-          onChange={searchInputChangeHandler}
-          placeholder={t('Filters.SearchInput.placeholder')}
-          value={searchInput ?? ''}
-        />
-        {userRoles && (
-          <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
-            <TabList>
-              <TabItem selected={tabValue === 'all'} value={'all'}>
-                {t('Filters.TabSwitcher.item1')}
-              </TabItem>
-              <TabItem selected={tabValue === 'my'} value={'my'}>
-                {t('Filters.TabSwitcher.item2')}
-              </TabItem>
-            </TabList>
-          </TabGroup>
-        )}
-        <Label>
-          {t('Filters.SortButton.label')}
-          <Button onClick={sortChangeHandler}>
-            {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
-            <RightBracketIcon className={classNames.sortIcon} />
-          </Button>
-        </Label>
-      </div>
+      {showFilters && (
+        <div className={classNames.filtersWrapper}>
+          <Input
+            label={t('Filters.SearchInput.label')}
+            onChange={searchInputChangeHandler}
+            placeholder={t('Filters.SearchInput.placeholder')}
+            value={searchInput ?? ''}
+          />
+          {userRoles && (
+            <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
+              <TabList>
+                <TabItem selected={tabValue === 'all'} value={'all'}>
+                  {t('Filters.TabSwitcher.item1')}
+                </TabItem>
+                <TabItem selected={tabValue === 'my'} value={'my'}>
+                  {t('Filters.TabSwitcher.item2')}
+                </TabItem>
+              </TabList>
+            </TabGroup>
+          )}
+          <Label>
+            {t('Filters.SortButton.label')}
+            <Button onClick={sortChangeHandler}>
+              {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
+              <RightBracketIcon className={classNames.sortIcon} />
+            </Button>
+          </Label>
+        </div>
+      )}
       <div className={classNames.posts}>
         {posts?.length === 0 && <Typography.Caption>{t('Posts.Description')}</Typography.Caption>}
         {posts?.map(post => (

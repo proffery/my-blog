@@ -60,29 +60,3 @@ $max-width-mobile: 350px;
     outline: 2px solid var(--color-info);
   }
 }
-
-.deletePhotoButton {
-  cursor: pointer;
-
-  position: absolute;
-  top: 102%;
-  left: 50%;
-  transform: translateX(-50%);
-
-  background: none;
-  border: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:focus-within {
-    text-decoration: underline;
-    border-radius: 2px;
-    outline: 2px solid var(--color-info);
-  }
-
-  @media (width <= breakpoints.$mobile) {
-    right: 15%;
-  }
-}

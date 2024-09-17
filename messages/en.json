@@ -82,6 +82,9 @@
     },
     "Status": {
       "title": "Status:"
+    },
+    "PostsCount": {
+      "title": "Posts:"
     }
   },
   "ModerationPage": {
@@ -182,6 +185,109 @@
     },
     "BackButton": {
       "Back": "Back"
+    },
+    "Forms": {
+      "Login": {
+        "Email": {
+          "label": "Email",
+          "placeholder": "mymail@mail.com",
+          "ErrorMessage": "The email address is incorrect!"
+        },
+        "Password": {
+          "label": "Password",
+          "placeholder": "Enter password",
+          "ErrorMessage": "Password must be at least 8 characters long!"
+        },
+        "SubmitButton": "Sign-in"
+      },
+      "Registration": {
+        "Name": {
+          "label": "Name",
+          "placeholder": "Your name",
+          "ErrorMessage": "Name must be at least 3 characters long!"
+        },
+        "Email": {
+          "label": "Email",
+          "placeholder": "mymail@mail.com",
+          "ErrorMessage": "Email is not valid!"
+        },
+        "Password": {
+          "label": "Password",
+          "placeholder": "Your password",
+          "ErrorMessage": "Password must be at least 8 characters long!"
+        },
+        "ConfirmPassword": {
+          "placeholder": "Confirm password",
+          "ErrorMessage": "Password must be at least 8 characters long!"
+        },
+        "SubmitButton": "Register",
+        "ErrorMessage": "Passwords do not match"
+      },
+      "UploadAvatar": {
+        "NewAvatar": "New photo:",
+        "CancelButton": "Cancel",
+        "SelectAnotherButton": "Select",
+        "SelectPhotoButton": "Select photo",
+        "SubmitButton": "Save",
+        "ErrorMessage1": "Allowed formats:",
+        "ErrorMessage2": "Maximum file size:"
+      },
+      "CreatePost": {
+        "Title": {
+          "label": "Title",
+          "placeholder": "How to organize a home office",
+          "ErrorMessage": "You need to come up with a title!"
+        },
+        "Cover": {
+          "label": "Cover",
+          "placeholder": "https://sub.domain.com/files/11-11-2011/example.jpg",
+          "ErrorMessage": "Protocol: http, https. Supported formats: png, jpg, jpeg, gif, webp, svg"
+        },
+        "Post": {
+          "label": "Post"
+        },
+        "SubmitButton": "Submit"
+      },
+      "EditName": {
+        "ErrorMessage1": "Name must be at least 3 characters long!",
+        "ErrorMessage2": "Name must not exceed 32 characters!"
+      },
+      "AddLink": {
+        "SubmitButton": "Add",
+        "placeholder": "https://link.com/mylink",
+        "ErrorMessage1": "You need to provide a link",
+        "ErrorMessage2": "The link must start with http, https, ftp, or mailto"
+      },
+      "AddTiktokId": {
+        "SubmitButton": "Add",
+        "placeholder": "7407205444709666053",
+        "ErrorMessage1": "You need to provide the video ID",
+        "ErrorMessage2": "Example: 7407205444709666053"
+      },
+      "AddYoutubeLink": {
+        "SubmitButton": "Add",
+        "placeholder": "https://www.youtube.com/watch?v=XIMLoLxmTDw&t=3621s&ab_channel=CandRfun",
+        "ErrorMessage1": "You need to provide a link to the YouTube video",
+        "ErrorMessage2": "The link is not valid!"
+      }
+    },
+    "Editor": {
+      "Toolbar": {
+        "Dialogs": {
+          "AddLink": {
+            "title": "Enter link"
+          },
+          "AddImage": {
+            "title": "Enter image link"
+          },
+          "AddYoutube": {
+            "title": "Enter YouTube video link"
+          },
+          "AddTiktok": {
+            "title": "Enter Tiktok video ID"
+          }
+        }
+      }
     }
   }
 }

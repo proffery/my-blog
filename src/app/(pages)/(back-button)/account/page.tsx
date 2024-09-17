@@ -5,10 +5,11 @@ import { useSelector } from 'react-redux'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { getErrorMessage } from '@/common/utils/get-error-message'
-import { EditNameForm } from '@/components/forms/edit-name-form/edit-name-form'
-import { EditNameValues } from '@/components/forms/edit-name-form/schema'
-import { UploadAvatarFormValues } from '@/components/forms/upload-avatar-form/schema'
-import { UploadAvatarForm } from '@/components/forms/upload-avatar-form/upload-avatar-form'
+import { EditNameForm, EditNameValues } from '@/components/forms/edit-name-form/edit-name-form'
+import {
+  UploadAvatarForm,
+  UploadAvatarFormValues,
+} from '@/components/forms/upload-avatar-form/upload-avatar-form'
 import { LangSelect } from '@/components/layouts/lang-select/lang-select'
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
@@ -146,7 +147,7 @@ function Account() {
           )}
         </div>
         {!meData?.user?.emailVerification && (
-          <Button onClick={sendVerifyEmailHandler} type={'submit'}>
+          <Button onClick={sendVerifyEmailHandler} style={{ alignSelf: 'center' }} type={'submit'}>
             {t('Email.ConfirmButton')}
           </Button>
         )}

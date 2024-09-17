@@ -1,6 +1,7 @@
 @use '@/styles/breakpoints';
 
 .label {
+  margin-left: 4px;
   font-size: var(--font-size-xs);
   line-height: var(--line-height-xl);
   color: var(--color-dark);

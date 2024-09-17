@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { BackButtonLayout } from '@/components/layouts/back-button-layout/back-button-layout'
+import { BackButton } from '@/components/layouts/back-button-layout/back-button'
 
 export default function AccountLayout({
   children,
@@ -9,7 +9,7 @@ export default function AccountLayout({
 }>) {
   return (
     <>
-      <BackButtonLayout />
+      <BackButton />
       {children}
     </>
   )

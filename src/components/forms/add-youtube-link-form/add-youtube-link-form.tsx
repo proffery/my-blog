@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form'
 
-import {
-  AddYoutubeValues,
-  addYoutubeLinkSchema,
-} from '@/components/forms/add-youtube-link-form/add-youtube-link-schema'
 import { Button } from '@/components/ui/button/button'
 import { Input, InputProps } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
+import { z } from 'zod'
 
 import s from './add-youtube-link-form.module.scss'
+
+export type AddYoutubeValues = { link: string }
 
 type Props = {
   defaultValue?: string
@@ -20,12 +20,26 @@ export const AddYoutubeLinkForm = ({ defaultValue, onSubmit }: Props) => {
   const classNames = {
     form: clsx(s.form),
   }
+  const t = useTranslations('Components.Forms.AddYoutubeLink')
+
+  const addYoutubeLinkSchema = z.object({
+    link: z
+      .string()
+      .min(1, { message: t('ErrorMessage1') })
+      .refine(
+        value =>
+          /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/gi.test(
+            value ?? ''
+          ),
+        t('ErrorMessage2')
+      ),
+  })
 
   const {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<AddYoutubeValues>({
+  } = useForm<z.infer<typeof addYoutubeLinkSchema>>({
     defaultValues: {
       link: defaultValue,
     },
@@ -42,11 +56,12 @@ export const AddYoutubeLinkForm = ({ defaultValue, onSubmit }: Props) => {
         as={'input'}
         autoComplete={'name'}
         errorMessage={errors.link?.message}
+        placeholder={t('placeholder')}
         {...register('link')}
       />
       &nbsp;
       <Button disabled={!!errors.link?.message} onClick={handleFormSubmit} type={'button'}>
-        Добавить
+        {t('SubmitButton')}
       </Button>
     </form>
   )

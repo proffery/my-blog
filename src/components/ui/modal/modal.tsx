@@ -29,7 +29,7 @@ export const Modal = ({ children, className, title, trigger, ...props }: ModalPr
         <ModalPrimitive.Overlay className={classNames.overlay} />
         <ModalPrimitive.Content className={classNames.content}>
           <div className={classNames.title}>
-            <Typography.H2 as={ModalPrimitive.Title}>{title}</Typography.H2>
+            <Typography.H3 as={ModalPrimitive.Title}>{title}</Typography.H3>
             <ModalPrimitive.Close aria-label={'Close'} className={classNames.close}>
               <CloseIcon />
             </ModalPrimitive.Close>

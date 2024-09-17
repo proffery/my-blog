@@ -53,34 +53,6 @@
       "title": "Редактировать"
     }
   },
-  "Filters": {
-    "SearchInput": {
-      "label": "Искать в заголовках",
-      "placeholder": "тренды фотографии"
-    },
-    "TabSwitcher": {
-      "label": "Показать посты",
-      "item1": "Все",
-      "item2": "Мои"
-    },
-    "SortButton": {
-      "label": "Сначала",
-      "item1": "новые",
-      "item2": "старые"
-    }
-  },
-  "Dialogs": {
-    "DeletePost": {
-      "title": "Удалить этот пост?",
-      "Confirm": "Удалить",
-      "Cancel": "Отмена"
-    },
-    "NotPublish": {
-      "title": "Не публиковать?",
-      "Confirm": "Не публиковать",
-      "Cancel": "Отмена"
-    }
-  },
   "HomePage": {
     "test": "Русский"
   },
@@ -169,6 +141,9 @@
     },
     "Status": {
       "title": "Роль:"
+    },
+    "PostsCount": {
+      "title": "Постов:"
     }
   },
   "ProfileNotFoundPage": {
@@ -210,6 +185,109 @@
     },
     "BackButton": {
       "Back": "Назад"
+    },
+    "Forms": {
+      "Login": {
+        "Email": {
+          "label": "Почта",
+          "placeholder": "mymail@mail.com",
+          "ErrorMessage": "Почта указана не верно!"
+        },
+        "Password": {
+          "label": "Пароль",
+          "placeholder": "Ваш пароль",
+          "ErrorMessage": "Пароль должен иметь не менее 8 символов!"
+        },
+        "SubmitButton": "Войти"
+      },
+      "Registration": {
+        "Name": {
+          "label": "Имя",
+          "placeholder": "Ваше имя",
+          "ErrorMessage": "Имя не должно быть короче 3 символов!"
+        },
+        "Email": {
+          "label": "Почта",
+          "placeholder": "mymail@mail.com",
+          "ErrorMessage": "Почта указана не верно!"
+        },
+        "Password": {
+          "label": "Пароль",
+          "placeholder": "Ваш пароль",
+          "ErrorMessage": "Пароль должен иметь не менее 8 символов!"
+        },
+        "ConfirmPassword": {
+          "placeholder": "Повторите пароль",
+          "ErrorMessage": "Пароль должен иметь не менее 8 символов!"
+        },
+        "SubmitButton": "Зарегистрироваться",
+        "ErrorMessage": "Пароли не совпадают"
+      },
+      "UploadAvatar": {
+        "NewAvatar": "Новое фото:",
+        "CancelButton": "Отмена",
+        "SelectAnotherButton": "Выбрать",
+        "SelectPhotoButton": "Выбрать фото",
+        "SubmitButton": "Сохранить",
+        "ErrorMessage1": "Разрешенные форматы:",
+        "ErrorMessage2": "Максимальный размер файла:"
+      },
+      "CreatePost": {
+        "Title": {
+          "label": "Заголовок",
+          "placeholder": "Как организовать домашний офис",
+          "ErrorMessage": "Нужно придумать заголовок!"
+        },
+        "Cover": {
+          "label": "Обложка",
+          "placeholder": "https://sub.domain.com/files/11-11-2011/example.jpg",
+          "ErrorMessage": "Протокол: http, https. Поддерживаемые форматы: png, jpg, jpeg, gif, webp, svg"
+        },
+        "Post": {
+          "label": "Пост"
+        },
+        "SubmitButton": "Отправить"
+      },
+      "EditName": {
+        "ErrorMessage1": "Имя не должно быть короче 3 символов!",
+        "ErrorMessage2": "Имя не должно быть длиннее 32 символов!"
+      },
+      "AddLink": {
+        "SubmitButton": "Добавить",
+        "placeholder": "https://link.com/mylink",
+        "ErrorMessage1": "Нужно указать ссылку",
+        "ErrorMessage2": "Ссылка должна начинаться с http, https, ftp, или mailto"
+      },
+      "AddTiktokId": {
+        "SubmitButton": "Добавить",
+        "placeholder": "7407205444709666053",
+        "ErrorMessage1": "Нужно указать ID ролика",
+        "ErrorMessage2": "Пример: 7407205444709666053"
+      },
+      "AddYoutubeLink": {
+        "SubmitButton": "Добавить",
+        "placeholder": "https://www.youtube.com/watch?v=XIMLoLxmTDw&t=3621s&ab_channel=CandRfun",
+        "ErrorMessage1": "Нужно указать ссылку на youtube ролик",
+        "ErrorMessage2": "Ссылка не правильная!"
+      }
+    },
+    "Editor": {
+      "Toolbar": {
+        "Dialogs": {
+          "AddLink": {
+            "title": "Введите ссылку"
+          },
+          "AddImage": {
+            "title": "Введите ссылку на изображение"
+          },
+          "AddYoutube": {
+            "title": "Введите ссылку нa Youtube ролик"
+          },
+          "AddTiktok": {
+            "title": "Введите ID ролика"
+          }
+        }
+      }
     }
   }
 }

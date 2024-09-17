@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form'
 
-import {
-  AddTiktokIdValues,
-  addTiktokIdSchema,
-} from '@/components/forms/add-tiktok-id-form/add-tiktok-id-schema'
 import { Button } from '@/components/ui/button/button'
 import { Input, InputProps } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
+import { z } from 'zod'
 
 import s from './add-tiktok-id-form.module.scss'
+
+export type AddTiktokIdValues = { link: string }
 
 type Props = {
   defaultValue?: string
@@ -21,11 +21,20 @@ export const AddTiktokIdForm = ({ defaultValue, onSubmit }: Props) => {
     form: clsx(s.form),
   }
 
+  const t = useTranslations('Components.Forms.AddTiktokId')
+
+  const addTiktokIdSchema = z.object({
+    link: z
+      .string()
+      .min(1, { message: t('ErrorMessage1') })
+      .refine(value => /\d+/.test(value ?? ''), t('ErrorMessage2')),
+  })
+
   const {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<AddTiktokIdValues>({
+  } = useForm<z.infer<typeof addTiktokIdSchema>>({
     defaultValues: {
       link: defaultValue,
     },
@@ -42,11 +51,12 @@ export const AddTiktokIdForm = ({ defaultValue, onSubmit }: Props) => {
         as={'input'}
         autoComplete={'name'}
         errorMessage={errors.link?.message}
+        placeholder={t('placeholder')}
         {...register('link')}
       />
       &nbsp;
       <Button disabled={!!errors.link?.message} onClick={handleFormSubmit} type={'button'}>
-        Добавить
+        {t('SubmitButton')}
       </Button>
     </form>
   )

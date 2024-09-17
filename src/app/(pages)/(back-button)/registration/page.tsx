@@ -3,8 +3,10 @@
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { getErrorMessage } from '@/common/utils/get-error-message'
-import { RegistrationForm } from '@/components/forms/registration-form/registration-form'
-import { RegistrationFormValues } from '@/components/forms/registration-form/schema'
+import {
+  RegistrationForm,
+  RegistrationFormValues,
+} from '@/components/forms/registration-form/registration-form'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import {
@@ -32,7 +34,7 @@ function Registration() {
   const router = useRouter()
   const t = useTranslations('RegistrationPage')
 
-  const registrationHandler = async (data: Omit<RegistrationFormValues, 'confirmPassword'>) => {
+  const registrationHandler = async (data: RegistrationFormValues) => {
     try {
       await registration({ email: data.email, name: data.name, password: data.password }).unwrap()
       await loginWithEmail({ email: data.email, password: data.password }).unwrap()

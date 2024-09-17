@@ -1,21 +1,25 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  RegistrationFormValues,
-  registrationSchema,
-} from '@/components/forms/registration-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
+import { z } from 'zod'
 
 import s from './registration-form.module.scss'
+
+export type RegistrationFormValues = {
+  email: string
+  name: string
+  password: string
+}
 
 type Props = {
   disabled?: boolean
   errorMessage?: string
-  onSubmit: (data: Omit<RegistrationFormValues, 'confirmPassword'>) => void
+  onSubmit: (data: RegistrationFormValues) => void
 }
 
 export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) => {
@@ -24,13 +28,27 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
     singUpButton: clsx(s.singUpButton),
   }
 
+  const t = useTranslations('Components.Forms.Registration')
+
+  const registrationSchema = z
+    .object({
+      confirmPassword: z.string().min(8, { message: t('ConfirmPassword.ErrorMessage') }),
+      email: z.string().email({ message: t('Email.ErrorMessage') }),
+      name: z.string().min(3, { message: t('Name.ErrorMessage') }),
+      password: z.string().min(8, { message: t('Password.ErrorMessage') }),
+    })
+    .refine(schema => schema.password === schema.confirmPassword, {
+      message: t('ErrorMessage'),
+      path: ['confirmPassword'],
+    })
+
   const {
     clearErrors,
     formState: { errors },
     handleSubmit,
     register,
     setError,
-  } = useForm<RegistrationFormValues>({
+  } = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
   })
 
@@ -51,29 +69,29 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
       <Input
         autoComplete={'name'}
         errorMessage={errors.name?.message}
-        label={'Имя'}
-        placeholder={'Ваше имя'}
+        label={t('Name.label')}
+        placeholder={t('Name.placeholder')}
         {...register('name')}
       />
       <Input
         autoComplete={'email'}
         errorMessage={errors.email?.message}
-        label={'Почта'}
-        placeholder={'mymail@mail.com'}
+        label={t('Email.label')}
+        placeholder={t('Email.placeholder')}
         {...register('email')}
       />
       <Input
         autoComplete={'password'}
         errorMessage={errors.password?.message}
-        label={'Пароль'}
-        placeholder={'Придумайте пароль'}
+        label={t('Password.label')}
+        placeholder={t('Password.placeholder')}
         type={'password'}
         {...register('password')}
       />
       <Input
         autoComplete={'confirmPassword'}
         errorMessage={errors.confirmPassword?.message}
-        placeholder={'Повторите пароль'}
+        placeholder={t('ConfirmPassword.placeholder')}
         type={'password'}
         {...register('confirmPassword')}
       />
@@ -84,7 +102,7 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
         type={'submit'}
         variant={'secondary'}
       >
-        Зарегистрироваться
+        {t('SubmitButton')}
       </Button>
     </form>
   )

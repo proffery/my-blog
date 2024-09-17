@@ -95,7 +95,7 @@ export default async function AccountById(props: Props) {
           )}
         </div>
         <div className={classNames.item}>
-          <Typography.Subtitle1>Постов:&nbsp;</Typography.Subtitle1>
+          <Typography.Subtitle1>{t('PostsCount.title')}&nbsp;</Typography.Subtitle1>
           <Typography.Body1>{userPosts.total}</Typography.Body1>
         </div>
       </div>

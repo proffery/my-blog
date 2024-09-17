@@ -3,14 +3,17 @@ import { useForm } from 'react-hook-form'
 
 import { CloseIcon } from '@/assets/icons/components/close-icon'
 import { EditIcon } from '@/assets/icons/components/edit-icon'
-import { EditNameValues, editNameSchema } from '@/components/forms/edit-name-form/schema'
 import { Button } from '@/components/ui/button/button'
 import { FieldError } from '@/components/ui/field-error/field-error'
 import { Input, InputProps } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
+import { z } from 'zod'
 
 import s from './edit-name-form.module.scss'
+
+export type EditNameValues = { name: string }
 
 type Props = {
   defaultValue?: string
@@ -28,6 +31,16 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
     input: clsx(s.input),
     span: clsx(s.span),
   }
+
+  const t = useTranslations('Components.Forms.EditName')
+
+  const editNameSchema = z.object({
+    name: z
+      .string()
+      .min(3, { message: t('ErrorMessage1') })
+      .max(32, { message: t('ErrorMessage2') }),
+  })
+
   const [editMode, setEditMode] = useState(false)
 
   const {
@@ -37,7 +50,7 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
     register,
     setError,
     setValue,
-  } = useForm<EditNameValues>({
+  } = useForm<z.infer<typeof editNameSchema>>({
     defaultValues: {
       name: defaultValue,
     },

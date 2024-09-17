@@ -1,10 +1,15 @@
 import { useState } from 'react'
 
 import { TiktokIcon } from '@/assets/icons/components/tiktok-icon'
-import { AddLinkForm } from '@/components/forms/add-link-form/add-link-form'
-import { AddLinkValues } from '@/components/forms/add-link-form/add-link-schema'
-import { AddTiktokIdForm } from '@/components/forms/add-tiktok-id-form/add-tiktok-id-form'
-import { AddYoutubeLinkForm } from '@/components/forms/add-youtube-link-form/add-youtube-link-form'
+import { AddLinkForm, AddLinkValues } from '@/components/forms/add-link-form/add-link-form'
+import {
+  AddTiktokIdForm,
+  AddTiktokIdValues,
+} from '@/components/forms/add-tiktok-id-form/add-tiktok-id-form'
+import {
+  AddYoutubeLinkForm,
+  AddYoutubeValues,
+} from '@/components/forms/add-youtube-link-form/add-youtube-link-form'
 import { Button } from '@/components/ui/button/button'
 import { Modal } from '@/components/ui/modal/modal'
 import { setLink } from '@/components/ui/text-editor/set-link'
@@ -33,6 +38,7 @@ import {
   Undo,
   Youtube,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 import s from './text-editor.module.scss'
 
@@ -45,6 +51,9 @@ export const Toolbar = ({ editor }: Props) => {
     toolbar: clsx(s.toolbar),
     toolbarButtons: clsx(s.toolbarButtons),
   }
+
+  const t = useTranslations('Components.Editor.Toolbar')
+
   const previousLinkUrl = editor?.getAttributes('link').href
   const [openLinkModal, setOpenLinkModal] = useState(false)
   const [openImageModal, setOpenImageModal] = useState(false)
@@ -117,7 +126,7 @@ export const Toolbar = ({ editor }: Props) => {
     setOpenLinkModal(false)
   }
 
-  const handleAddYoutube = (data: AddLinkValues) => {
+  const handleAddYoutube = (data: AddYoutubeValues) => {
     editor?.chain().focus().setYoutubeVideo({ height: 480, src: data.link, width: 640 }).run()
     setOpenYoutubeModal(false)
   }
@@ -133,7 +142,7 @@ export const Toolbar = ({ editor }: Props) => {
       .run()
   }
 
-  const handleAddTiktok = (data: AddLinkValues) => {
+  const handleAddTiktok = (data: AddTiktokIdValues) => {
     editor
       ?.chain()
       .focus()
@@ -148,24 +157,32 @@ export const Toolbar = ({ editor }: Props) => {
 
   return (
     <div className={classNames.toolbar}>
-      <Modal onOpenChange={setOpenLinkModal} open={openLinkModal} title={'Введите ссылку'}>
+      <Modal
+        onOpenChange={setOpenLinkModal}
+        open={openLinkModal}
+        title={t('Dialogs.AddLink.title')}
+      >
         <AddLinkForm defaultValue={previousLinkUrl} onSubmit={handleAddLink} />
       </Modal>
       <Modal
         onOpenChange={setOpenImageModal}
         open={openImageModal}
-        title={'Введите ссылку на изображение'}
+        title={t('Dialogs.AddImage.title')}
       >
         <AddLinkForm defaultValue={previousLinkUrl} onSubmit={handleAddImage} />
       </Modal>
       <Modal
         onOpenChange={setOpenYoutubeModal}
         open={openYoutubeModal}
-        title={'Введите ссылку нa youtube ролик'}
+        title={t('Dialogs.AddYoutube.title')}
       >
         <AddYoutubeLinkForm onSubmit={handleAddYoutube} />
       </Modal>
-      <Modal onOpenChange={setOpenTiktokModal} open={openTiktokModal} title={'Введите ID ролика'}>
+      <Modal
+        onOpenChange={setOpenTiktokModal}
+        open={openTiktokModal}
+        title={t('Dialogs.AddTiktok.title')}
+      >
         <AddTiktokIdForm onSubmit={handleAddTiktok} />
       </Modal>
       <div className={classNames.toolbarButtons}>
