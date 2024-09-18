@@ -48,7 +48,7 @@ function Posts() {
     pagination: clsx(s.pagination),
     posts: clsx(s.posts),
     postsCard: clsx(s.postsCard),
-    shawFiltersIcon: clsx(s.sortIcon, showFilters ? s.sortIconDesc : s.sortIconAsc),
+    showFiltersIcon: clsx(s.sortIcon, showFilters ? s.sortIconAsc : s.sortIconDesc),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     userButtonsWrapper: clsx(s.userButtonsWrapper),
   }
@@ -79,8 +79,8 @@ function Posts() {
   const posts = postsData?.documents
   const pagesCount = postsData ? Math.ceil(postsData.total / projectConstants.postsPagination) : 1
 
-  const [deletePost] = useDeletePostMutation()
-  const [changePublish] = usePublishPostMutation()
+  const [deletePost, { isLoading: isDeleteLoading }] = useDeletePostMutation()
+  const [changePublish, { isLoading: isPublishLoading }] = usePublishPostMutation()
 
   const sortChangeHandler = () => {
     sort === 'desc' ? setSort('asc') : setSort('desc')
@@ -135,7 +135,7 @@ function Posts() {
         <Typography.H1>{t('title')}</Typography.H1>
         <Button onClick={() => setShowFilters(!showFilters)} variant={'text'}>
           <Typography.Caption>
-            {t('description')} <RightBracketIcon className={classNames.shawFiltersIcon} />
+            {t('description')} <RightBracketIcon className={classNames.showFiltersIcon} />
           </Typography.Caption>
         </Button>
       </div>
@@ -205,6 +205,7 @@ function Posts() {
                   <Edit3 />
                 </Button>
                 <Button
+                  disabled={isDeleteLoading}
                   onClick={() => setDeletedPostDataHandler(post.$id, post.title)}
                   padding={false}
                   title={t('Posts.CardButtons.Delete.title')}
@@ -216,6 +217,7 @@ function Posts() {
             {isRole(userRoles, 'Moderator') && (
               <div className={classNames.adminButtonsWrapper}>
                 <Button
+                  disabled={isPublishLoading}
                   onClick={() => setNotPublishPostDataHandler(post.$id, post.title)}
                   padding={false}
                   title={t('Posts.CardButtons.NotPublish.title')}

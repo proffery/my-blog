@@ -124,7 +124,7 @@ function Account() {
           />
         </div>
         <div className={classNames.item}>
-          <Typography.Subtitle1 as={'span'}>Язык:&nbsp;</Typography.Subtitle1>
+          <Typography.Subtitle1 as={'span'}>{t('Language.title')}&nbsp;</Typography.Subtitle1>
           <LangSelect />
         </div>
         <div className={classNames.item}>

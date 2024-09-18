@@ -68,6 +68,9 @@
     "Status": {
       "title": "Status:"
     },
+    "Language": {
+      "title": "Language:"
+    },
     "Email": {
       "title": "Email:",
       "Confirmed": "(confirmed)",
@@ -168,7 +171,7 @@
     "Header": {
       "Menu": {
         "Account": "Profile",
-        "Moderate": "Moderate",
+        "Moderate": "Moderate posts",
         "WritePost": "Write post",
         "Logout": "Logout"
       },
@@ -288,6 +291,9 @@
           }
         }
       }
+    },
+    "Footer": {
+      "Copyrights": "All rights reserved."
     }
   }
 }

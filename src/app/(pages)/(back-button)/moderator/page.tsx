@@ -48,8 +48,8 @@ function Moderator() {
     sort: sort ?? 'desc',
     sortBy: sortBy ?? '$updatedAt',
   })
-  const [deletePost] = useDeletePostMutation()
-  const [changePublish] = usePublishPostMutation()
+  const [deletePost, { isLoading: isDeleteLoading }] = useDeletePostMutation()
+  const [changePublish, { isLoading: isPublishLoading }] = usePublishPostMutation()
 
   useEffect(() => {
     if (!isRole(userRoles, 'Moderator')) {
@@ -120,6 +120,7 @@ function Moderator() {
       </Dialog>
       {notPublishedPosts && notPublishedPosts.documents.length > 0 ? (
         <ModeratorTable
+          disabled={isDeleteLoading || isPublishLoading}
           onPostDelete={setDeletedPostDataHandler}
           onPostPublish={setPublishPostDataHandler}
           onSortByChange={setSortBy}

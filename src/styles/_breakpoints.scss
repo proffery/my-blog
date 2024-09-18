@@ -4,14 +4,14 @@ $mobile: 576px;
 // Container
 $max-content-width: 1312px;
 $content-padding-desktop: 32px 32px 64px 32px;
-$content-padding-mobile: 16px 16px 32px 16px;
+$content-padding-mobile: 16px 8px 32px 8px;
 
 // Header
 $header-height-desktop: 72px;
 $header-height-mobile: 48px;
 $header-padding-desktop: 0 32px;
-$header-padding-mobile: 0 16px;
+$header-padding-mobile: 0 8px;
 
 // Footer
-$footer-height-desktop: 542px;
-$footer-height-mobile: 1322px;
+$footer-padding-desktop: 32px;
+$footer-padding-mobile: 32px 8px;

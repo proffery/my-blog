@@ -28,9 +28,10 @@ function Registration() {
     page: clsx(s.page),
   }
 
-  const [registration, { error: registrationError }] = useRegistrationMutation()
-  const [sendVerifyEmail] = useSendVerifyEmailMutation()
-  const [loginWithEmail] = useLoginEmailMutation()
+  const [registration, { error: registrationError, isLoading: isRegistrationLoading }] =
+    useRegistrationMutation()
+  const [sendVerifyEmail, { isLoading: isSendVerifyEmailLoading }] = useSendVerifyEmailMutation()
+  const [loginWithEmail, { isLoading: isLoginWithEmailLoading }] = useLoginEmailMutation()
   const router = useRouter()
   const t = useTranslations('RegistrationPage')
 
@@ -51,7 +52,11 @@ function Registration() {
     <Page className={classNames.page}>
       <Typography.H1>{t('title')}</Typography.H1>
       <div className={classNames.formsWrapper}>
-        <RegistrationForm errorMessage={errorMessage} onSubmit={registrationHandler} />
+        <RegistrationForm
+          disabled={isRegistrationLoading || isRegistrationLoading || isSendVerifyEmailLoading}
+          errorMessage={errorMessage}
+          onSubmit={registrationHandler}
+        />
         <Typography.Body1>
           {t('description1')}&nbsp;
           <Typography.Link1 as={Link} href={routes.login}>

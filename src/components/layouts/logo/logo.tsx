@@ -5,9 +5,13 @@ import Link from 'next/link'
 
 import s from './logo.module.scss'
 
-export const Logo = () => {
+type Props = {
+  variant?: 'primary' | 'secondary'
+}
+
+export const Logo = ({ variant = 'primary' }: Props) => {
   const classNames = {
-    firstLine: clsx(s.firstLine),
+    firstLine: clsx(s.firstLine, s[variant]),
     root: clsx(s.root),
     secondLine: clsx(s.secondLine),
   }

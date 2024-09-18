@@ -41,7 +41,7 @@ function CreatePost() {
   const authorId = meData?.user?.$id ?? ''
   const authorName = meData?.user?.name ?? ''
 
-  const [createPost, { error: createPostError }] = useCreatePostMutation()
+  const [createPost, { error: createPostError, isLoading }] = useCreatePostMutation()
   const router = useRouter()
   const submitPostHandler = async (data: CreatePostFormValues) => {
     const newPost = await createPost({
@@ -80,7 +80,11 @@ function CreatePost() {
           {t('Dialogs.Attention.Confirm')}
         </Button>
       </Modal>
-      <CreatePostForm errorMessage={errorMessage} onSubmit={submitPostHandler} />
+      <CreatePostForm
+        disabled={isLoading}
+        errorMessage={errorMessage}
+        onSubmit={submitPostHandler}
+      />
     </Page>
   )
 }

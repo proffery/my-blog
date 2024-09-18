@@ -9,14 +9,15 @@ import s from './active-link.module.scss'
 
 type Props = {
   children?: ReactNode
+  variant?: 'primary' | 'secondary'
 } & LinkProps
-export const ActiveLink = ({ children, ...rest }: Props) => {
+export const ActiveLink = ({ children, variant = 'primary', ...rest }: Props) => {
   const { href } = rest
   const pathname = usePathname()
 
   const isActive = pathname.replaceAll('/', '') === href.toString().replaceAll('/', '')
 
-  const classNames = { link: clsx(s.link, isActive && s.activeLink) }
+  const classNames = { link: clsx(s.link, isActive && s.activeLink, s[variant]) }
 
   return (
     <Link {...rest} className={classNames.link}>

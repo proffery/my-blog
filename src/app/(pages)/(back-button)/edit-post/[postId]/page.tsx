@@ -51,7 +51,7 @@ function EditPost(props: Props) {
 
   const authorId = postData?.authorId
 
-  const [updatePost, { error: updatePostError }] = useUpdatePostMutation()
+  const [updatePost, { error: updatePostError, isLoading }] = useUpdatePostMutation()
 
   const submitPostHandler = async (data: CreatePostFormValues) => {
     try {
@@ -106,6 +106,7 @@ function EditPost(props: Props) {
           post: postData?.post ?? '',
           title: postData?.title ?? '',
         }}
+        disabled={isLoading}
         errorMessage={errorMessage}
         onSubmit={submitPostHandler}
       />

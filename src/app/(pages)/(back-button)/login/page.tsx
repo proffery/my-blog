@@ -27,7 +27,7 @@ function Login() {
     page: clsx(s.page),
   }
 
-  const [loginWithEmail, { error: loginWithEmailError }] = useLoginEmailMutation()
+  const [loginWithEmail, { error: loginWithEmailError, isLoading }] = useLoginEmailMutation()
   const router = useRouter()
   const t = useTranslations('LoginPage')
 
@@ -42,7 +42,11 @@ function Login() {
     <Page className={classNames.page}>
       <Typography.H1>{t('title')}</Typography.H1>
       <div className={classNames.formsWrapper}>
-        <LoginForm errorMessage={errorMessage} onSubmit={loginWithEmailHandler} />
+        <LoginForm
+          disabled={isLoading}
+          errorMessage={errorMessage}
+          onSubmit={loginWithEmailHandler}
+        />
         <div className={classNames.buttonsWrapper}>
           <form action={signUpWithGoogle} className={classNames.form}>
             <Button fullWidth type={'submit'}>

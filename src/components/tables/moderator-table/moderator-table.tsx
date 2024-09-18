@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 import { Post, SortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
@@ -20,12 +22,12 @@ import { useFormatter, useLocale, useTranslations } from 'next-intl'
 import s from './moderator-table.module.scss'
 
 type ModeratorTableColumns = {
-  isClickable: boolean
   key?: SortBy
   title: string
 }
 
 type ModeratorTableProps = {
+  disabled?: boolean
   onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
   onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
   onSortByChange: (value: SortBy | null) => void
@@ -36,6 +38,7 @@ type ModeratorTableProps = {
 }
 
 export const ModeratorTable = ({
+  disabled = false,
   onPostDelete,
   onPostPublish,
   onSortByChange,
@@ -50,31 +53,25 @@ export const ModeratorTable = ({
 
   const columns: ModeratorTableColumns[] = [
     {
-      isClickable: false,
       title: t('Columns.Cover'),
     },
     {
-      isClickable: true,
       key: 'title',
       title: t('Columns.Title'),
     },
     {
-      isClickable: true,
       key: '$createdAt',
       title: t('Columns.Created'),
     },
     {
-      isClickable: true,
       key: '$updatedAt',
       title: t('Columns.Updated'),
     },
     {
-      isClickable: true,
       key: 'authorName',
       title: t('Columns.Author'),
     },
     {
-      isClickable: false,
       title: t('Columns.Options'),
     },
   ]
@@ -130,9 +127,10 @@ export const ModeratorTable = ({
         <TableHead>
           <TableRow>
             {columns.map(column =>
-              column.isClickable ? (
+              column.key ? (
                 <TableHeadCell key={column.title}>
                   <Button
+                    disabled={disabled}
                     onClick={() => sortByHandler(column.key ?? '$updatedAt')}
                     variant={'text'}
                   >
@@ -141,7 +139,7 @@ export const ModeratorTable = ({
                   </Button>
                 </TableHeadCell>
               ) : (
-                <TableHeadCell key={column.key}>
+                <TableHeadCell key={column.title}>
                   <Typography.Subtitle2>{column.title}</Typography.Subtitle2>
                 </TableHeadCell>
               )
@@ -179,6 +177,7 @@ export const ModeratorTable = ({
               <TableBodyCell>
                 <div className={classNames.buttonsWrapper}>
                   <Button
+                    disabled={disabled}
                     onClick={() => postPublishHandler(post)}
                     padding={false}
                     title={t('OptionsButtons.Publish.title')}
@@ -186,6 +185,7 @@ export const ModeratorTable = ({
                     <BookCheck />
                   </Button>
                   <Button
+                    disabled={disabled}
                     onClick={() => postDeleteHandler(post)}
                     padding={false}
                     title={t('OptionsButtons.Delete.title')}
