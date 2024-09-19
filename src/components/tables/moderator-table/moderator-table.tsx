@@ -1,6 +1,6 @@
 import { useId } from 'react'
 
-import { Post, SortBy, SortDirection } from '@/app/api/posts/posts.types'
+import { PostModel, SortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
 import { Button } from '@/components/ui/button/button'
@@ -32,7 +32,7 @@ type ModeratorTableProps = {
   onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
   onSortByChange: (value: SortBy | null) => void
   onSortChange: (value: SortDirection | null) => void
-  posts?: Post[]
+  posts?: PostModel[]
   sort: SortDirection
   sortBy: SortBy
 }
@@ -84,14 +84,14 @@ export const ModeratorTable = ({
     tableContainer: clsx(s.tableContainer),
   }
 
-  const postPublishHandler = (post: Post) => {
+  const postPublishHandler = (post: PostModel) => {
     onPostPublish({
       authorId: post.authorId,
       postId: post.$id,
       postTitle: post.title,
     })
   }
-  const postDeleteHandler = (post: Post) => {
+  const postDeleteHandler = (post: PostModel) => {
     onPostDelete({
       authorId: post.authorId,
       postId: post.$id,

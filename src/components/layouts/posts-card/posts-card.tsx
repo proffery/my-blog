@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import { PostModel } from '@/app/api/posts/posts.types'
+import defaultImage from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { cleanFromHTML } from '@/common/utils/clean-from-html'
 import { Card } from '@/components/ui/card/card'
@@ -12,27 +14,13 @@ import { useFormatter, useTranslations } from 'next-intl'
 import s from './posts-card.module.scss'
 
 type Props = {
-  authorId: string
-  authorName: string
-  date: string
-  description: string
-  imageUrl: string
-  isPublished: boolean
-  postId: string
-  title: string
+  postData: PostModel
 } & ComponentPropsWithoutRef<'div'>
 
-export const PostsCard = ({
-  authorId,
-  authorName,
-  className,
-  date,
-  description,
-  imageUrl,
-  isPublished,
-  postId,
-  title,
-}: Props) => {
+export const PostsCard = ({ postData, ...rest }: Props) => {
+  const { $createdAt, authorId, authorName, className, cover, isPublished, post, postId, title } =
+    postData
+
   const classNames = {
     author: clsx(s.author),
     bottomInfoWrapper: clsx(s.bottomInfoWrapper),
@@ -48,10 +36,10 @@ export const PostsCard = ({
   }
   const t = useTranslations('Components')
   const format = useFormatter()
-  const dateTime = new Date(date)
+  const dateTime = new Date($createdAt)
 
   return (
-    <Card className={classNames.card}>
+    <Card {...rest} className={classNames.card}>
       <div className={classNames.cardImageContainer}>
         {!isPublished && (
           <Typography.H5 as={'span'} className={classNames.notPublishedDescription}>
@@ -62,7 +50,7 @@ export const PostsCard = ({
           alt={'Card cover'}
           className={classNames.cardImage}
           height={380}
-          src={imageUrl ? imageUrl : '/images/no-image.svg'}
+          src={cover ? cover : defaultImage}
           width={380}
         />
       </div>
@@ -72,7 +60,7 @@ export const PostsCard = ({
             {title}
           </Typography.H5>
           <Typography.Body1 className={classNames.description}>
-            {cleanFromHTML(description)}
+            {cleanFromHTML(post)}
           </Typography.Body1>
         </div>
 

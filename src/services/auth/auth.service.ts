@@ -89,7 +89,7 @@ export const authService = baseApi.injectEndpoints({
           dispatch(userActions.setAvatarUrl(response.data.avatarUrl))
         } catch (error) {
           dispatch(userActions.setAvatarUrl(null))
-          console.error(error)
+          console.warn(error)
         }
       },
       providesTags: ['MyAvatarMeta'],

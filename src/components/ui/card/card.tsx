@@ -6,10 +6,14 @@ import s from './card.module.scss'
 
 type Props = ComponentPropsWithoutRef<'div'>
 
-export const Card = ({ children, className }: Props) => {
+export const Card = ({ children, className, ...rest }: Props) => {
   const classNames = {
     card: clsx(s.card, className),
   }
 
-  return <div className={classNames.card}>{children}</div>
+  return (
+    <div className={classNames.card} {...rest}>
+      {children}
+    </div>
+  )
 }

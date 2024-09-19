@@ -1,6 +1,6 @@
 'use client'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import { projectConstants } from '@/common/constants/project-constants'
+import { projectConstants } from '@/common/constants/projectConstants'
 import { useWidth } from '@/common/hooks/use-width'
 import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'

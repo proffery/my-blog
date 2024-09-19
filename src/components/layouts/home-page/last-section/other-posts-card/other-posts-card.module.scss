@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  max-height: 250px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.coverWrapper {
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.cover {
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.readMoreIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.readMore {
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}

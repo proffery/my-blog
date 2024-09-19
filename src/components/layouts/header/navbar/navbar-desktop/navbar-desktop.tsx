@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { MeResponse } from '@/app/api/auth/auth.types'
 import { routes } from '@/common/constants/routes'
-import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
+import { HeaderMenu } from '@/components/layouts/header/header-menu/header-menu'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
 import { useLogoutMutation } from '@/services/auth/auth.service'
 import { selectUserAvatarUrl, selectUserRole } from '@/services/user/user.selectors'

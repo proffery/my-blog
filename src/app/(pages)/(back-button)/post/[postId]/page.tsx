@@ -1,3 +1,4 @@
+import { PostModel } from '@/app/api/posts/posts.types'
 import { routes } from '@/common/constants/routes'
 import { Page } from '@/components/layouts/page/page'
 import { Button } from '@/components/ui/button/button'
@@ -6,9 +7,10 @@ import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
 import { allPosts } from '@/server/functions/database/posts/all-posts'
 import { postById } from '@/server/functions/database/posts/post-by-id'
+import { updatePostViews } from '@/server/functions/database/posts/update-post-views'
 import clsx from 'clsx'
 import { jwtDecode } from 'jwt-decode'
-import { Edit3 } from 'lucide-react'
+import { Edit3, Eye } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -39,11 +41,14 @@ export default async function Post({ params: { postId } }: Props) {
     description: clsx(s.description),
     descriptionWrapper: clsx(s.descriptionWrapper),
     title: clsx(s.title),
+    viewsWrapper: clsx(s.viewsWrapper),
   }
 
   const { databasesInstance } = await createDatabaseClient()
 
-  const postData = await postById({ databasesInstance, postId })
+  const postData = (await postById({ databasesInstance, postId })) as PostModel
+
+  await updatePostViews({ databasesInstance, postId, views: postData.views + 1 })
   const token = cookies().get(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
 
   let userId = ''
@@ -100,6 +105,11 @@ export default async function Post({ params: { postId } }: Props) {
                 : ''}
             </Typography.Body2>
           </Typography.Subtitle2>
+          <Typography.Caption as={'div'} className={classNames.viewsWrapper}>
+            <Eye />
+            &nbsp;
+            {postData.views}
+          </Typography.Caption>
           {userId === postData.authorId && (
             <Button
               as={Link}

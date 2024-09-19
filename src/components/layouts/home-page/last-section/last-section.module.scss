@@ -1,0 +1,39 @@
+.section {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+  max-height: 814px;
+}
+
+.postsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 32px;
+}
+
+.postOne {
+  display: flex;
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+}
+
+.postTwo {
+  display: flex;
+  grid-column: 2 / 2;
+  grid-row: 1 / 2;
+}
+
+.postThree {
+  display: flex;
+  grid-column: 2 / 2;
+  grid-row: 2 / 3;
+}
+
+.postFour {
+  display: flex;
+  grid-column: 2 / 2;
+  grid-row: 3 / 4;
+}

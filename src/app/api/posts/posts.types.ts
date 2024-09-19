@@ -1,26 +1,27 @@
 import { Models } from 'appwrite'
 
-export type Post = {
+export type PostModel = {
   authorId: string
   authorName: string
   cover: string
   isPublished: boolean
   post: string
   title: string
+  views: number
 } & Models.Document
 
 export type DeletePostRequest = { postId: string }
 export type DeletePostResponse = { postId: string }
 
-export type GetPostResponse = Post
+export type GetPostResponse = PostModel
 export type GetPostRequest = { params: { postId: string } }
 
-export type GetNotPublishedPostsResponse = Models.DocumentList<Post>
+export type GetNotPublishedPostsResponse = Models.DocumentList<PostModel>
 export type GetNotPublishedPostsRequest = { locale: string; sort: SortDirection; sortBy: SortBy }
 
 export type SortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title'
 
-export type UpdatePostResponse = Post
+export type UpdatePostResponse = PostModel
 export type UpdatePostRequest = {
   authorName: string
   cover?: string
@@ -30,12 +31,12 @@ export type UpdatePostRequest = {
   postId: string
   title: string
 }
-export type PublishPostResponse = Post
+export type PublishPostResponse = PostModel
 export type PublishPostRequest = {
   isPublished: boolean
   postId: string
 }
-export type CreatePostResponse = Post
+export type CreatePostResponse = PostModel
 export type CreatePostRequest = {
   authorId: string
   authorName: string
@@ -46,7 +47,7 @@ export type CreatePostRequest = {
   title: string
 }
 export type SortDirection = 'asc' | 'desc'
-export type GetPostsResponse = Models.DocumentList<Post>
+export type GetPostsResponse = Models.DocumentList<PostModel>
 export type GetPostsRequest = {
   authorId?: string
   locale: string

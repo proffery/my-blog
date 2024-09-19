@@ -61,13 +61,24 @@
 .copyrightsLink {
   color: inherit !important;
   text-decoration: underline;
+  text-underline-offset: 6px;
 }
 
-.navbar {
+.columns {
   display: flex;
+  flex-direction: column;
   gap: 16px;
 
   @media (width <= breakpoints.$mobile) {
-    align-self: flex-end;
+    align-self: center;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 64px;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 32px;
   }
 }

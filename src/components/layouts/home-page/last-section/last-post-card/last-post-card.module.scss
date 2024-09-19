@@ -1,0 +1,32 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+}
+
+.cover {
+  width: 100%;
+  height: auto;
+}
+
+.description {
+  all: unset;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  text-decoration: none;
+}
+
+.readMoreIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.readMore {
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}

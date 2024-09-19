@@ -35,5 +35,11 @@
 .description {
   display: flex;
   gap: 16px;
+  align-items: flex-start;
+}
+
+.viewsWrapper {
+  display: flex;
   align-items: center;
+  height: fit-content;
 }

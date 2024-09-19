@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { BackButton } from '@/components/layouts/back-button-layout/back-button'
+import { BackButton } from '@/components/ui/back-button/back-button'
 
 export default function AccountLayout({
   children,

@@ -1,7 +1,6 @@
 import { routes } from '@/common/constants/routes'
-import { HeaderMenu } from '@/components/layouts/header-menu/header-menu'
-import { Logo } from '@/components/layouts/logo/logo'
 import { ActiveLink } from '@/components/ui/active-link/active-link'
+import { Logo } from '@/components/ui/logo/logo'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -10,40 +9,53 @@ import { useTranslations } from 'next-intl'
 import s from './footer.module.scss'
 export const Footer = () => {
   const classNames = {
+    columns: clsx(s.columns),
     container: clsx(s.container),
     content: clsx(s.content),
     copyrights: clsx(s.copyrights),
     copyrightsLink: clsx(s.copyrightsLink),
-    navbar: clsx(s.navbar),
     root: clsx(s.root),
+    row: clsx(s.row),
   }
 
-  const t = useTranslations('Components.Header.Navbar')
-  const t2 = useTranslations('Components.Footer')
+  const t = useTranslations('Components.Footer')
 
   return (
     <footer className={classNames.root}>
       <div className={classNames.container}>
         <div className={classNames.content}>
           <Logo variant={'secondary'} />
-          <nav className={classNames.navbar}>
-            <ActiveLink href={routes.base} variant={'secondary'}>
-              {t('Home')}
-            </ActiveLink>
-            <ActiveLink href={routes.posts} variant={'secondary'}>
-              {t('Posts')}
-            </ActiveLink>
-            <ActiveLink href={routes.contacts} variant={'secondary'}>
-              {t('Contacts')}
-            </ActiveLink>
-          </nav>
+          <div className={classNames.row}>
+            <nav className={classNames.columns}>
+              <ActiveLink href={routes.base} variant={'secondary'}>
+                {t('Navbar.Home')}
+              </ActiveLink>
+              <ActiveLink href={routes.posts} variant={'secondary'}>
+                {t('Navbar.Posts')}
+              </ActiveLink>
+              <ActiveLink href={routes.contacts} variant={'secondary'}>
+                {t('Navbar.Contacts')}
+              </ActiveLink>
+            </nav>
+            <div className={classNames.columns}>
+              <Link className={classNames.copyrightsLink} href={'/'}>
+                About
+              </Link>
+              <Link className={classNames.copyrightsLink} href={'/'}>
+                FAQs
+              </Link>
+              <Link className={classNames.copyrightsLink} href={'/'}>
+                Terms
+              </Link>
+            </div>
+          </div>
         </div>
         <Typography.Body2 as={'div'} className={classNames.copyrights}>
           <div>{new Date().getFullYear() + ' ©'}&nbsp;</div>
           <Link className={classNames.copyrightsLink} href={routes.base}>
             STREET PHOTO WORLD
           </Link>
-          <div>&nbsp;{t2('Copyrights')}</div>
+          <div>&nbsp;{t('Copyrights')}</div>
         </Typography.Body2>
       </div>
     </footer>

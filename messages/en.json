@@ -293,6 +293,11 @@
       }
     },
     "Footer": {
+      "Navbar": {
+        "Home": "Home",
+        "Posts": "Posts",
+        "Contacts": "Contacts"
+      },
       "Copyrights": "All rights reserved."
     }
   }

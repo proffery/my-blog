@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import { projectConstants } from '@/common/constants/project-constants'
+import { projectConstants } from '@/common/constants/projectConstants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
@@ -77,7 +77,9 @@ function Posts() {
     sort: sort ?? 'desc',
   })
   const posts = postsData?.documents
-  const pagesCount = postsData ? Math.ceil(postsData.total / projectConstants.postsPagination) : 1
+  const pagesCount = postsData
+    ? Math.ceil(postsData.total / projectConstants.NumberPostsForPagination)
+    : 1
 
   const [deletePost, { isLoading: isDeleteLoading }] = useDeletePostMutation()
   const [changePublish, { isLoading: isPublishLoading }] = usePublishPostMutation()
@@ -226,17 +228,7 @@ function Posts() {
                 </Button>
               </div>
             )}
-            <PostsCard
-              authorId={post.authorId}
-              authorName={post.authorName}
-              className={classNames.postsCard}
-              date={post.$createdAt}
-              description={post.post}
-              imageUrl={post.cover}
-              isPublished={post.isPublished}
-              postId={post.$id}
-              title={post.title}
-            />
+            <PostsCard postData={post} />
           </div>
         ))}
       </div>
