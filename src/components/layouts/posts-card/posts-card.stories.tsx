@@ -1,7 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { PostModel } from '@/app/api/posts/posts.types'
 import cover from '@/assets/images/test-cover.jpg'
 import { PostsCard } from '@/components/layouts/posts-card/posts-card'
+
+const mockData: PostModel = {
+  $collectionId: '1',
+  $createdAt: '2024-08-28T15:08:52.307+00:00',
+  $databaseId: '1',
+  $id: '1',
+  $permissions: ['1'],
+  $updatedAt: '2024-08-28T15:08:52.307+00:00',
+  authorId: '1',
+  authorName: 'Author',
+  cover: '',
+  imageUrl: '',
+  isPublished: true,
+  post: 'Description',
+  postId: '1',
+  title: 'Title',
+  views: 0,
+}
 
 const meta = {
   component: PostsCard,
@@ -14,39 +33,18 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    authorId: '1',
-    authorName: 'Author',
-    date: '2024-08-28T15:08:52.307+00:00',
-    description: 'Description',
-    imageUrl: '',
-    isPublished: true,
-    postId: '1',
-    title: 'Title',
+    postData: mockData,
   },
 }
 
 export const WithCover: Story = {
   args: {
-    authorId: '1',
-    authorName: 'Author',
-    date: '2024-08-28T15:08:52.307+00:00',
-    description: 'Description',
-    imageUrl: cover.src,
-    isPublished: true,
-    postId: '1',
-    title: 'Title',
+    postData: { ...mockData, cover: cover.src },
   },
 }
 
 export const WithCoverNotPublished: Story = {
   args: {
-    authorId: '1',
-    authorName: 'Author',
-    date: '2024-08-28T15:08:52.307+00:00',
-    description: 'Description',
-    imageUrl: cover.src,
-    isPublished: false,
-    postId: '1',
-    title: 'Title',
+    postData: { ...mockData, cover: cover.src, isPublished: false },
   },
 }

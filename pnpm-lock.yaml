@@ -159,6 +159,9 @@ importers:
       storybook:
         specifier: 8.2.8
         version: 8.2.8(@babel/preset-env@7.25.4(@babel/core@7.25.2))
+      storybook-next-intl:
+        specifier: ^1.1.4
+        version: 1.1.4(next-intl@3.19.1(next@14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react@18.3.1))
       stylelint:
         specifier: 16.8.1
         version: 16.8.1(typescript@5.6.2)
@@ -5479,6 +5482,14 @@ packages:
   stop-iteration-iterator@1.0.0:
     resolution: {integrity: sha512-iCGQj+0l0HOdZ2AEeBADlsRC+vsnDsZsbdSiH1yNSjcfKM7fdpCMfqAL/dwF5BLiw/XhRft/Wax6zQbhq2BcjQ==}
     engines: {node: '>= 0.4'}
+
+  storybook-i18n@3.1.1:
+    resolution: {integrity: sha512-k1/lS+Rx6l5mJEYAHQWEgXuwU5IyWk7kjcJtm2FDIn1UqZwbEraGlrp/fEZKK2e/7+SXEQdKeCaTz7+63WTQxw==}
+
+  storybook-next-intl@1.1.4:
+    resolution: {integrity: sha512-7QoiYjxXMmCNMJQX5LIttRxkuIdRb+AL4Zk0DbRlz81kQD88RPwnj3PK3PlG0JJ/7/4VjuCi6j5O9gNVBGSfLA==}
+    peerDependencies:
+      next-intl: ^3
 
   storybook@8.2.8:
     resolution: {integrity: sha512-sh4CNCXkieVgJ5GXrCOESS0BjRbQ9wG7BVnurQPl6izNnB9zR8rag+aUmjPZWBwbj55V1BFA5A/vEsCov21qjg==}
@@ -12274,6 +12285,13 @@ snapshots:
   stop-iteration-iterator@1.0.0:
     dependencies:
       internal-slot: 1.0.7
+
+  storybook-i18n@3.1.1: {}
+
+  storybook-next-intl@1.1.4(next-intl@3.19.1(next@14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react@18.3.1)):
+    dependencies:
+      next-intl: 3.19.1(next@14.2.5(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react@18.3.1)
+      storybook-i18n: 3.1.1
 
   storybook@8.2.8(@babel/preset-env@7.25.4(@babel/core@7.25.2)):
     dependencies:

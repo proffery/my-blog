@@ -10,11 +10,11 @@ import {
   UploadAvatarForm,
   UploadAvatarFormValues,
 } from '@/components/forms/upload-avatar-form/upload-avatar-form'
-import { LangSelect } from '@/components/layouts/lang-select/lang-select'
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button/button'
 import { FieldError } from '@/components/ui/field-error/field-error'
+import { LangSelect } from '@/components/ui/lang-select/lang-select'
 import { Typography } from '@/components/ui/typography/typography'
 import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import {
