@@ -51,8 +51,6 @@ export default async function Post({ params: { postId } }: Props) {
   await updatePostViews({ databasesInstance, postId, views: postData.views + 1 })
   const token = cookies().get(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
 
-  let userId = ''
-
   const t = await getTranslations('PostPage')
   const locale = await getLocale()
   const format = await getFormatter()
@@ -70,6 +68,8 @@ export default async function Post({ params: { postId } }: Props) {
       year: 'numeric', // Full year
     })
   }
+
+  let userId = ''
 
   if (token) {
     userId = jwtDecode<{ id: string; secret: string }>(token.value + '.' + token.value).id

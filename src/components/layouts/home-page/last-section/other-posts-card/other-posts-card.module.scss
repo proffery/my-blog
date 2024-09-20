@@ -1,7 +1,7 @@
 .card {
   display: flex;
   flex-direction: row;
-  max-height: 250px;
+  height: fit-content;
 }
 
 .column {
@@ -11,10 +11,19 @@
 
 .coverWrapper {
   overflow: hidden;
+
   aspect-ratio: 1 / 1;
+  min-width: 120px;
+  height: 120px;
+
+  border-radius: 5px;
+  box-shadow: var(--color-shadow);
 }
 
 .cover {
+  display: flex;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -22,7 +31,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px 0;
+
+  width: 100%;
+  min-height: 120px;
+  padding: 8px 0;
+}
+
+.description {
+  all: unset;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  text-decoration: none;
 }
 
 .readMoreIcon {
@@ -31,6 +54,8 @@
 }
 
 .readMore {
+  display: flex;
+  align-items: center;
   font-weight: var(--font-weight-bold);
   text-decoration: none;
 }
