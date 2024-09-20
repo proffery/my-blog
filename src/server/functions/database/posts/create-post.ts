@@ -27,6 +27,6 @@ export const createPost = async (payload: {
     `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
     `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
     postId,
-    { authorId, authorName, cover, isPublished, locale, post, title, views: 0 }
+    { authorId, authorName, cover, isPublished, locale, post, title, views: 1 }
   )
 }
