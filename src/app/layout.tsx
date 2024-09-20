@@ -11,8 +11,10 @@ type Props = {
 }
 
 export const metadata: Metadata = {
-  description: 'Next app',
-  title: 'Blog App',
+  description:
+    'platform for street photography enthusiasts, featuring stunning images,' +
+    ' tips, and stories that celebrate urban life and spontaneity.',
+  title: 'STREET PHOTO WORLD',
 }
 
 export default function RootLayout({ children }: Props) {
