@@ -12,12 +12,7 @@
   flex-wrap: wrap;
   gap: 32px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 
   width: 100%;
-
-  @media (width <= breakpoints.$mobile) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto auto auto;
-  }
 }

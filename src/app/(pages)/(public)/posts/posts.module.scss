@@ -3,6 +3,7 @@
 
 .page {
   gap: 64px;
+  width: 100%;
 
   @media (width <= breakpoints.$mobile) {
     gap: 32px;
@@ -47,12 +48,16 @@
   width: 100%;
 
   @media (width <= breakpoints.$mobile) {
-    gap: 64px;
+    gap: 32px;
   }
 }
 
 .cardWrapper {
   position: relative;
+
+  @media (width <= breakpoints.$mobile) {
+    width: 100%;
+  }
 }
 
 .userButtonsWrapper,

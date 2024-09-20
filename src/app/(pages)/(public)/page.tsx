@@ -16,12 +16,11 @@ export default function Home() {
   return (
     <Page className={classNames.page}>
       <div>
-        <Typography.H1 as={'h2'}>{t('title1')}</Typography.H1>
-        <Typography.H1>{t('title2')}</Typography.H1>
+        <Typography.H1>{t('title1')}</Typography.H1>
         <Typography.Caption>{t('description')}</Typography.Caption>
       </div>
       <LastSection />
-      <Typography.H1 as={'h2'}>{t('title3')}</Typography.H1>
+      <Typography.H1 as={'h2'}>{t('title2')}</Typography.H1>
       <PopularSection />
     </Page>
   )

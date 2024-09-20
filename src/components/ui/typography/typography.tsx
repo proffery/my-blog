@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef, ElementType, FC, ReactNode } from 'react'
 
+import clsx from 'clsx'
+
 import s from './typography.module.scss'
 
 export type TypographyProps<T extends ElementType = 'span'> = {
@@ -14,11 +16,12 @@ const createTypographyComponent = <T extends ElementType>(
   return ({ as, children, className, ...rest }) => {
     const Component = as || COMPONENTS[basicClassName] || 'span'
 
+    const classNames = {
+      component: clsx(s.typography, s[basicClassName], className),
+    }
+
     return (
-      <Component
-        className={`${s.typography} ${s[basicClassName] || ''} ${className || ''}`}
-        {...rest}
-      >
+      <Component className={classNames.component} {...rest}>
         {children}
       </Component>
     )

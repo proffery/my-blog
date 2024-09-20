@@ -43,7 +43,6 @@
 
 .copyrights {
   display: flex;
-  gap: 32px;
   align-items: flex-start;
   justify-content: flex-start;
 
@@ -55,7 +54,6 @@
   border-top: 1px solid var(--color-light);
 
   @media (width <= breakpoints.$mobile) {
-    gap: 16px;
     justify-content: center;
   }
 }
