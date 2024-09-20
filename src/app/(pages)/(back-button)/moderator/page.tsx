@@ -83,12 +83,14 @@ function Moderator() {
     setDeleteModal(false)
     await deletePost({ postId: tempPostData.postId }).unwrap()
     await clearCachesByServerAction(routes.account + '/' + tempPostData.authorId)
+    await clearCachesByServerAction(routes.base)
     setTempPostData({ authorId: '', postId: '', postTitle: '' })
   }
 
   const confirmPublishHandler = async () => {
     setPublishModal(false)
     await changePublish({ isPublished: true, postId: tempPostData.postId }).unwrap()
+    await clearCachesByServerAction(routes.base)
 
     setTempPostData({ authorId: '', postId: '', postTitle: '' })
   }

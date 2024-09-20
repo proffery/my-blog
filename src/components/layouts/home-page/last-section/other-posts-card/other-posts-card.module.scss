@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap !important;
   height: fit-content;
 }
 
@@ -13,8 +13,8 @@
   overflow: hidden;
 
   aspect-ratio: 1 / 1;
-  min-width: 120px;
-  height: 120px;
+  min-width: 150px;
+  height: 150px;
 
   border-radius: 5px;
   box-shadow: var(--color-shadow);
@@ -33,7 +33,7 @@
   justify-content: space-between;
 
   width: 100%;
-  min-height: 120px;
+  min-height: 150px;
   padding: 8px 0;
 }
 
@@ -49,13 +49,13 @@
 }
 
 .readMoreIcon {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 .readMore {
   display: flex;
   align-items: center;
-  font-weight: var(--font-weight-bold);
-  text-decoration: none;
+  font-weight: var(--font-weight-bold) !important;
+  text-decoration: none !important;
 }

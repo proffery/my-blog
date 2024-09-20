@@ -10,6 +10,7 @@ import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import s from './other-posts-card.module.scss'
 
@@ -30,15 +31,17 @@ export const OtherPostCard = ({ className, postData, ...rest }: Props) => {
     readMoreIcon: clsx(s.readMoreIcon),
   }
 
+  const t = useTranslations('HomePage.LatestSection.Card')
+
   return (
     <Card className={classNames.card} {...rest}>
       <div className={classNames.coverWrapper}>
         <Image
           alt={'Last post'}
           className={classNames.cover}
-          height={120}
+          height={150}
           src={cover ? cover : defaultImage}
-          width={120}
+          width={150}
         />
       </div>
       <div className={classNames.content}>
@@ -48,9 +51,10 @@ export const OtherPostCard = ({ className, postData, ...rest }: Props) => {
             {cleanFromHTML(post)}
           </Typography.Body1>
         </div>
-        <Typography.Link1 as={Link} className={classNames.readMore} href={routes.post + $id}>
-          Read more <RightBracketIcon className={classNames.readMoreIcon} />
-        </Typography.Link1>
+        <Typography.Subtitle2 as={Link} className={classNames.readMore} href={routes.post + $id}>
+          {t('ReadMore')}
+          <RightBracketIcon className={classNames.readMoreIcon} />
+        </Typography.Subtitle2>
       </div>
     </Card>
   )

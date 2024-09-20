@@ -2,10 +2,10 @@
 @use '@/styles/animations' as animations;
 
 .page {
-  gap: 32px;
+  gap: 64px;
 
   @media (width <= breakpoints.$mobile) {
-    gap: 16px;
+    gap: 32px;
   }
 }
 

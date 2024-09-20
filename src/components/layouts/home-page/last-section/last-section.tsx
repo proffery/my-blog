@@ -6,7 +6,7 @@ import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
 import { paginatedPostsByCreate } from '@/server/functions/database/posts/paginated-posts-by-create'
 import clsx from 'clsx'
-import { getLocale } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import s from './last-section.module.scss'
 
@@ -20,8 +20,10 @@ export const LastSection = async () => {
     postsContainer: clsx(s.postsContainer),
     section: clsx(s.section),
   }
-  const { databasesInstance } = await createDatabaseClient()
+  const t = await getTranslations('HomePage.LatestSection')
   const locale = await getLocale()
+
+  const { databasesInstance } = await createDatabaseClient()
   const { documents } = (await paginatedPostsByCreate({
     databasesInstance,
     limit: projectConstants.NumberPostsForLastSection,
@@ -32,7 +34,7 @@ export const LastSection = async () => {
 
   return (
     <section className={classNames.section} id={'last'}>
-      <Typography.H5 as={'h3'}>Latest blog posts</Typography.H5>
+      <Typography.H3>{t('title')}</Typography.H3>
       <div className={classNames.postsContainer}>
         {documents[0] && <LastPostCard className={classNames.postOne} postData={documents[0]} />}
         {documents[1] && <OtherPostCard className={classNames.postTwo} postData={documents[1]} />}

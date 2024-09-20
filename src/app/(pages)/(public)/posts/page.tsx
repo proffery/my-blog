@@ -121,12 +121,14 @@ function Posts() {
     setDeleteModal(false)
     await deletePost({ postId: tempPostData.postId }).unwrap()
     await clearCachesByServerAction(routes.account + '/' + authId)
+    await clearCachesByServerAction(routes.base)
     setTempPostData({ postId: '', postTitle: '' })
   }
 
   const confirmNotPublishHandler = async () => {
     setNotPublishModal(false)
     await changePublish({ isPublished: false, postId: tempPostData.postId }).unwrap()
+    await clearCachesByServerAction(routes.base)
 
     setTempPostData({ postId: '', postTitle: '' })
   }
@@ -140,6 +142,35 @@ function Posts() {
             {t('description')} <RightBracketIcon className={classNames.showFiltersIcon} />
           </Typography.Caption>
         </Button>
+        {showFilters && (
+          <div className={classNames.filtersWrapper}>
+            <Input
+              label={t('Filters.SearchInput.label')}
+              onChange={searchInputChangeHandler}
+              placeholder={t('Filters.SearchInput.placeholder')}
+              value={searchInput ?? ''}
+            />
+            {userRoles && (
+              <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
+                <TabList>
+                  <TabItem selected={tabValue === 'all'} value={'all'}>
+                    {t('Filters.TabSwitcher.item1')}
+                  </TabItem>
+                  <TabItem selected={tabValue === 'my'} value={'my'}>
+                    {t('Filters.TabSwitcher.item2')}
+                  </TabItem>
+                </TabList>
+              </TabGroup>
+            )}
+            <Label>
+              {t('Filters.SortButton.label')}
+              <Button onClick={sortChangeHandler}>
+                {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
+                <RightBracketIcon className={classNames.sortIcon} />
+              </Button>
+            </Label>
+          </div>
+        )}
       </div>
       <Dialog
         cancelText={t('Dialogs.DeletePost.Cancel')}
@@ -163,35 +194,7 @@ function Posts() {
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
-      {showFilters && (
-        <div className={classNames.filtersWrapper}>
-          <Input
-            label={t('Filters.SearchInput.label')}
-            onChange={searchInputChangeHandler}
-            placeholder={t('Filters.SearchInput.placeholder')}
-            value={searchInput ?? ''}
-          />
-          {userRoles && (
-            <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
-              <TabList>
-                <TabItem selected={tabValue === 'all'} value={'all'}>
-                  {t('Filters.TabSwitcher.item1')}
-                </TabItem>
-                <TabItem selected={tabValue === 'my'} value={'my'}>
-                  {t('Filters.TabSwitcher.item2')}
-                </TabItem>
-              </TabList>
-            </TabGroup>
-          )}
-          <Label>
-            {t('Filters.SortButton.label')}
-            <Button onClick={sortChangeHandler}>
-              {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
-              <RightBracketIcon className={classNames.sortIcon} />
-            </Button>
-          </Label>
-        </div>
-      )}
+
       <div className={classNames.posts}>
         {posts?.length === 0 && <Typography.Caption>{t('Posts.Description')}</Typography.Caption>}
         {posts?.map(post => (

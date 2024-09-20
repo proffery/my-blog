@@ -64,6 +64,7 @@ function EditPost(props: Props) {
       }).unwrap()
       await clearCachesByServerAction(routes.post + '/' + postId)
       await clearCachesByServerAction(routes.account + '/' + authorId)
+      await clearCachesByServerAction(routes.base)
 
       if (isRole(userRoles, 'Writer')) {
         router.push(routes.post + postId)

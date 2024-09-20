@@ -1,4 +1,5 @@
 import { LastSection } from '@/components/layouts/home-page/last-section/last-section'
+import { PopularSection } from '@/components/layouts/home-page/popular-section/popular-section'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
@@ -15,11 +16,13 @@ export default function Home() {
   return (
     <Page className={classNames.page}>
       <div>
-        <Typography.H1 as={'h2'}>Stay inspired with</Typography.H1>
-        <Typography.H1>Street Photo World articles</Typography.H1>
+        <Typography.H1 as={'h2'}>{t('title1')}</Typography.H1>
+        <Typography.H1>{t('title2')}</Typography.H1>
+        <Typography.Caption>{t('description')}</Typography.Caption>
       </div>
-      <Typography.Body1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography.Body1>
       <LastSection />
+      <Typography.H1 as={'h2'}>{t('title3')}</Typography.H1>
+      <PopularSection />
     </Page>
   )
 }

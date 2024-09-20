@@ -14,6 +14,7 @@ import { Edit3, Eye } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { getFormatter, getLocale, getTranslations } from 'next-intl/server'
 
 import s from './post-by-id.module.scss'
@@ -45,11 +46,20 @@ export default async function Post({ params: { postId } }: Props) {
   }
 
   const { databasesInstance } = await createDatabaseClient()
+  let postData
 
-  const postData = (await postById({ databasesInstance, postId })) as PostModel
+  try {
+    postData = (await postById({ databasesInstance, postId })) as PostModel
+  } catch (error) {
+    redirect(routes.base)
+  }
 
-  await updatePostViews({ databasesInstance, postId, views: postData.views + 1 })
+  if (postData.views) {
+    await updatePostViews({ databasesInstance, postId, views: postData.views + 1 })
+  }
   const token = cookies().get(`${process.env.NEXT_PUBLIC_SESSION_NAME}`)
+
+  let userId = ''
 
   const t = await getTranslations('PostPage')
   const locale = await getLocale()
@@ -68,8 +78,6 @@ export default async function Post({ params: { postId } }: Props) {
       year: 'numeric', // Full year
     })
   }
-
-  let userId = ''
 
   if (token) {
     userId = jwtDecode<{ id: string; secret: string }>(token.value + '.' + token.value).id

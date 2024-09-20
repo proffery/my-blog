@@ -3,7 +3,7 @@
 .title {
   width: 100%;
   max-width: 900px;
-  margin: 16px auto 32px;
+  margin: 16px auto 32px !important;
 
   @media (width <= breakpoints.$mobile) {
     margin-bottom: 16px;

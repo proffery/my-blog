@@ -18,7 +18,7 @@ type Props = {
 } & ComponentPropsWithoutRef<'div'>
 
 export const PostsCard = ({ postData, ...rest }: Props) => {
-  const { $createdAt, authorId, authorName, className, cover, isPublished, post, postId, title } =
+  const { $createdAt, $id, authorId, authorName, className, cover, isPublished, post, title } =
     postData
 
   const classNames = {
@@ -56,7 +56,7 @@ export const PostsCard = ({ postData, ...rest }: Props) => {
       </div>
       <div className={classNames.contentWrapper}>
         <div className={classNames.titleWrapper}>
-          <Typography.H5 as={Link} className={classNames.title} href={routes.post + postId}>
+          <Typography.H5 as={Link} className={classNames.title} href={routes.post + $id}>
             {title}
           </Typography.H5>
           <Typography.Body1 className={classNames.description}>
@@ -65,12 +65,12 @@ export const PostsCard = ({ postData, ...rest }: Props) => {
         </div>
 
         <div className={classNames.bottomInfoWrapper}>
-          <Typography.Body2 as={'span'} className={classNames.author}>
+          <Typography.Subtitle2 as={'span'} className={classNames.author}>
             {t('PostCard.Author')}&nbsp;
             <Typography.Link2 as={Link} href={routes.account + '/' + authorId}>
               {authorName}
             </Typography.Link2>
-          </Typography.Body2>
+          </Typography.Subtitle2>
           <Typography.Body2 className={classNames.date}>
             {format.dateTime(dateTime, {
               day: 'numeric',

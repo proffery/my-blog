@@ -53,6 +53,7 @@ function CreatePost() {
     }).unwrap()
 
     await clearCachesByServerAction(routes.account + '/' + authorId)
+    await clearCachesByServerAction(routes.base)
 
     if (isRole(userRoles, 'Writer')) {
       router.push(routes.post + newPost.$id)

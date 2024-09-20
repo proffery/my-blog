@@ -54,7 +54,19 @@
     }
   },
   "HomePage": {
-    "test": "English"
+    "title1": "Stay inspired with",
+    "title2": "Street Photo World articles",
+    "title3": "Popular",
+    "description": "“If your pictures aren't good enough, you aren't close enough.” - Robert Capa",
+    "LatestSection": {
+      "title": "Latest blog posts:",
+      "Card": {
+        "ReadMore": "Read more"
+      }
+    },
+    "PopularSection": {
+      "title": "Most views articles:"
+    }
   },
   "MyAccountPage": {
     "title": "My profile",
