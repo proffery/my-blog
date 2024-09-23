@@ -45,52 +45,6 @@
       }
     }
   },
-  "PostsPage": {
-    "title": "Посты",
-    "description": "Поиск постов по фильтрам",
-    "Posts": {
-      "CardButtons": {
-        "Edit": {
-          "title": "Редактировать"
-        },
-        "Delete": {
-          "title": "Удалить"
-        },
-        "NotPublish": {
-          "title": "Убрать из публикации"
-        }
-      },
-      "Description": "Пока нет постов"
-    },
-    "Filters": {
-      "SearchInput": {
-        "label": "Искать в заголовках",
-        "placeholder": "тренды фотографии"
-      },
-      "TabSwitcher": {
-        "label": "Показать посты",
-        "item1": "Все",
-        "item2": "Мои"
-      },
-      "SortButton": {
-        "label": "Сначала",
-        "item1": "новые",
-        "item2": "старые"
-      }
-    },
-    "Dialogs": {
-      "DeletePost": {
-        "title": "Удалить этот пост?",
-        "Confirm": "Удалить",
-        "Cancel": "Отмена"
-      },
-      "NotPublish": {
-        "title": "Не публиковать?",
-        "Confirm": "Не публиковать",
-        "Cancel": "Отмена"
-      }
-    }
-  },
   "ContactsPage": {
     "title": "Контакты",
     "description": "Связаться с нами"
@@ -104,7 +58,7 @@
     }
   },
   "HomePage": {
-    "title1": "Оставайтесь вдохновленными, читая Street Photo World",
+    "title1": "Черпайте вдохновение, читая Street Photo World",
     "title2": "Популярные",
     "description": "“Если ваши фотографии недостаточно хороши, значит вы были недостаточно близко.” - Роберт Капа",
     "LatestSection": {
