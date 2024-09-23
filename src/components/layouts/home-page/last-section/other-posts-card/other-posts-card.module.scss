@@ -1,3 +1,5 @@
+@use '@/styles/animations' as animations;
+
 .card {
   display: flex;
   flex-flow: row nowrap !important;
@@ -28,6 +30,8 @@
 }
 
 .content {
+  @include animations.bottom-line-hover;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -56,6 +60,9 @@
 .readMore {
   display: flex;
   align-items: center;
+
+  width: fit-content;
+
   font-weight: var(--font-weight-bold) !important;
   text-decoration: none !important;
 }

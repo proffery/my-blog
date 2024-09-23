@@ -94,7 +94,7 @@ export const authService = baseApi.injectEndpoints({
       },
       providesTags: ['MyAvatarMeta'],
       query: ({ params: { date, userId } }) => ({
-        url: endpoints.users_get_avatar_meta + '/' + userId + '/' + date,
+        url: endpoints.users_avatar + '/' + userId + '/' + date,
       }),
     }),
     loginEmail: builder.mutation<MessageResponse, LoginEmailRequest>({

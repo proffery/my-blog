@@ -138,7 +138,8 @@
     }
   },
   "ContactsPage": {
-    "test": "Contacts"
+    "title": "Contacts",
+    "description": "Contact us"
   },
   "CreatePostPage": {
     "title": "Write a post",
@@ -259,6 +260,24 @@
         },
         "Post": {
           "label": "Post"
+        },
+        "SubmitButton": "Submit"
+      },
+      "ContactUs": {
+        "Name": {
+          "label": "Name",
+          "placeholder": "Your name",
+          "ErrorMessage": "Name must be at least 3 characters long!"
+        },
+        "Email": {
+          "label": "Email",
+          "placeholder": "mymail@mail.com",
+          "ErrorMessage": "Email is not valid!"
+        },
+        "Message": {
+          "label": "Message",
+          "placeholder": "Type your message...",
+          "ErrorMessage": "The message is empty!"
         },
         "SubmitButton": "Submit"
       },

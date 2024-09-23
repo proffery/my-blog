@@ -20,7 +20,7 @@ export const usersService = baseApi.injectEndpoints({
       },
       providesTags: ['AvatarMeta'],
       query: ({ params: { userId } }) => ({
-        url: endpoints.users_get_avatar_meta + '/' + userId,
+        url: endpoints.users_avatar + '/' + userId,
       }),
     }),
     getUser: builder.query<GetUserResponse, GetUserRequest>({
@@ -32,7 +32,7 @@ export const usersService = baseApi.injectEndpoints({
         }
       },
       query: ({ params: { userId } }) => ({
-        url: endpoints.users_get_user + '/' + userId,
+        url: endpoints.users_user + '/' + userId,
       }),
     }),
     getUsersList: builder.query<GetUsersListResponse, void>({
@@ -46,7 +46,7 @@ export const usersService = baseApi.injectEndpoints({
       providesTags: ['Users'],
       query: () => ({
         method: 'GET',
-        url: endpoints.users_get_all,
+        url: endpoints.users_all,
       }),
     }),
   }),

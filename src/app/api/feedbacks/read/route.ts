@@ -1,20 +1,20 @@
 import { createDatabaseClient } from '@/server/database-config'
-import { publishPost } from '@/server/functions/database/posts/publish-post'
+import { changeReadFeedback } from '@/server/functions/database/feedbacks/change-read-feedback'
 import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   const { databasesInstance } = await createDatabaseClient()
-  const { isPublished, postId } = await request.json()
+  const { feedbackId, isRead } = await request.json()
 
   try {
-    const updatedPost = await publishPost({
+    const updatedFeedback = await changeReadFeedback({
       databasesInstance,
-      isPublished,
-      postId,
+      feedbackId,
+      isRead,
     })
 
-    return NextResponse.json(updatedPost)
+    return NextResponse.json(updatedFeedback)
   } catch (error: unknown) {
     return serverErrorHandler(error)
   }

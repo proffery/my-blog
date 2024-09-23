@@ -3,7 +3,7 @@ import { Databases } from 'node-appwrite'
 export const createPost = async (payload: {
   authorId: string
   authorName: string
-  cover: string
+  cover?: string
   databasesInstance: Databases
   isPublished: boolean
   locale: string

@@ -1,16 +1,16 @@
 import { Databases } from 'node-appwrite'
 
-export const publishPost = async (payload: {
+export const changePublishFeedback = async (payload: {
   databasesInstance: Databases
+  feedbackId: string
   isPublished: boolean
-  postId: string
 }) => {
-  const { databasesInstance, isPublished, postId } = payload
+  const { databasesInstance, feedbackId, isPublished } = payload
 
   return await databasesInstance.updateDocument(
     `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
-    `${process.env.NEXT_PUBLIC_APPWRITE_POSTS}`,
-    postId,
+    `${process.env.NEXT_PUBLIC_APPWRITE_FEEDBACKS}`,
+    feedbackId,
     { isPublished }
   )
 }

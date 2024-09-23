@@ -1,4 +1,5 @@
 @use '@/styles/breakpoints';
+@use '@/styles/animations' as animations;
 
 .cardImage {
   position: relative;
@@ -32,37 +33,14 @@
   aspect-ratio: 5/2;
   max-width: 394px;
 
-  &::after {
-    content: '';
-
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 60%;
-    height: 1px;
-
-    background-image: linear-gradient(to right, rgb(0 0 0 / 0%), rgb(0 0 0 / 75%), rgb(0 0 0 / 0%));
-    border: 0;
-
-    transition: all 0.5s ease-in-out;
-  }
-
   &:hover {
-    transition:
-      width,
-      height 0.5s ease-in;
-
-    &::after {
-      width: 100%;
-    }
-
     .cardImage {
       width: calc(100% + 20px);
       height: calc(100% + 20px);
     }
   }
+
+  @include animations.bottom-line-hover;
 
   @media (width <= breakpoints.$mobile) {
     width: 95vw;

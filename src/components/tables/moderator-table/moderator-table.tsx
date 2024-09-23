@@ -1,6 +1,6 @@
 import { useId } from 'react'
 
-import { PostModel, SortBy, SortDirection } from '@/app/api/posts/posts.types'
+import { PostModel, PostsSortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
 import { Button } from '@/components/ui/button/button'
@@ -22,7 +22,7 @@ import { useFormatter, useLocale, useTranslations } from 'next-intl'
 import s from './moderator-table.module.scss'
 
 type ModeratorTableColumns = {
-  key?: SortBy
+  key?: PostsSortBy
   title: string
 }
 
@@ -30,11 +30,11 @@ type ModeratorTableProps = {
   disabled?: boolean
   onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
   onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
-  onSortByChange: (value: SortBy | null) => void
+  onSortByChange: (value: PostsSortBy | null) => void
   onSortChange: (value: SortDirection | null) => void
   posts?: PostModel[]
   sort: SortDirection
-  sortBy: SortBy
+  sortBy: PostsSortBy
 }
 
 export const ModeratorTable = ({
@@ -103,7 +103,7 @@ export const ModeratorTable = ({
     sort === 'asc' ? onSortChange('desc') : onSortChange('asc')
   }
 
-  const sortByHandler = (key: SortBy) => {
+  const sortByHandler = (key: PostsSortBy) => {
     key === sortBy ? sortToggleHandler() : onSortByChange(key)
   }
 

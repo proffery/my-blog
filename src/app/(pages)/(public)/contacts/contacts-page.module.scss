@@ -1,0 +1,22 @@
+@use '@/styles/breakpoints';
+
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  gap: 64px;
+
+  @media (width <= breakpoints.$mobile) {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

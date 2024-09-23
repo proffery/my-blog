@@ -5,6 +5,7 @@ export type PostModel = {
   authorName: string
   cover: string
   isPublished: boolean
+  locale: string
   post: string
   title: string
   views: number
@@ -17,9 +18,13 @@ export type GetPostResponse = PostModel
 export type GetPostRequest = { params: { postId: string } }
 
 export type GetNotPublishedPostsResponse = Models.DocumentList<PostModel>
-export type GetNotPublishedPostsRequest = { locale: string; sort: SortDirection; sortBy: SortBy }
+export type GetNotPublishedPostsRequest = {
+  locale: string
+  sort: SortDirection
+  sortBy: PostsSortBy
+}
 
-export type SortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title'
+export type PostsSortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title'
 
 export type UpdatePostResponse = PostModel
 export type UpdatePostRequest = {
@@ -31,8 +36,8 @@ export type UpdatePostRequest = {
   postId: string
   title: string
 }
-export type PublishPostResponse = PostModel
-export type PublishPostRequest = {
+export type ChangePublishPostResponse = PostModel
+export type ChangePublishPostRequest = {
   isPublished: boolean
   postId: string
 }

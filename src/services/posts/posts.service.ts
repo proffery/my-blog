@@ -1,4 +1,6 @@
 import {
+  ChangePublishPostRequest,
+  ChangePublishPostResponse,
   CreatePostRequest,
   CreatePostResponse,
   DeletePostRequest,
@@ -9,8 +11,6 @@ import {
   GetPostResponse,
   GetPostsRequest,
   GetPostsResponse,
-  PublishPostRequest,
-  PublishPostResponse,
   UpdatePostRequest,
   UpdatePostResponse,
 } from '@/app/api/posts/posts.types'
@@ -60,7 +60,7 @@ export const postsService = baseApi.injectEndpoints({
       providesTags: ['NotPublishedPosts'],
       query: searchParams => ({
         params: searchParams,
-        url: endpoints.posts_get_not_published,
+        url: endpoints.posts_not_published,
       }),
     }),
     getPost: builder.query<GetPostResponse, GetPostRequest>({
@@ -73,7 +73,7 @@ export const postsService = baseApi.injectEndpoints({
       },
       providesTags: ['Post'],
       query: ({ params: { postId } }) => ({
-        url: endpoints.posts_get_post + '/' + postId,
+        url: endpoints.post + '/' + postId,
       }),
     }),
     getPosts: builder.query<GetPostsResponse, GetPostsRequest>({
@@ -90,7 +90,7 @@ export const postsService = baseApi.injectEndpoints({
         url: endpoints.posts,
       }),
     }),
-    publishPost: builder.mutation<PublishPostResponse, PublishPostRequest>({
+    publishPost: builder.mutation<ChangePublishPostResponse, ChangePublishPostRequest>({
       invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {

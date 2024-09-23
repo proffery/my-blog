@@ -45,6 +45,56 @@
       }
     }
   },
+  "PostsPage": {
+    "title": "Посты",
+    "description": "Поиск постов по фильтрам",
+    "Posts": {
+      "CardButtons": {
+        "Edit": {
+          "title": "Редактировать"
+        },
+        "Delete": {
+          "title": "Удалить"
+        },
+        "NotPublish": {
+          "title": "Убрать из публикации"
+        }
+      },
+      "Description": "Пока нет постов"
+    },
+    "Filters": {
+      "SearchInput": {
+        "label": "Искать в заголовках",
+        "placeholder": "тренды фотографии"
+      },
+      "TabSwitcher": {
+        "label": "Показать посты",
+        "item1": "Все",
+        "item2": "Мои"
+      },
+      "SortButton": {
+        "label": "Сначала",
+        "item1": "новые",
+        "item2": "старые"
+      }
+    },
+    "Dialogs": {
+      "DeletePost": {
+        "title": "Удалить этот пост?",
+        "Confirm": "Удалить",
+        "Cancel": "Отмена"
+      },
+      "NotPublish": {
+        "title": "Не публиковать?",
+        "Confirm": "Не публиковать",
+        "Cancel": "Отмена"
+      }
+    }
+  },
+  "ContactsPage": {
+    "title": "Контакты",
+    "description": "Связаться с нами"
+  },
   "PostPage": {
     "Author": "Автор:",
     "Created": "Написан:",
@@ -86,9 +136,6 @@
         "Confirm": "Хорошо"
       }
     }
-  },
-  "ContactsPage": {
-    "test": "Контакты"
   },
   "MyAccountPage": {
     "title": "Мой профиль",
@@ -259,6 +306,24 @@
         },
         "Post": {
           "label": "Пост"
+        },
+        "SubmitButton": "Отправить"
+      },
+      "ContactUs": {
+        "Name": {
+          "label": "Имя",
+          "placeholder": "Ваше имя",
+          "ErrorMessage": "Имя не должно быть короче 3 символов!"
+        },
+        "Email": {
+          "label": "Почта",
+          "placeholder": "mymail@mail.com",
+          "ErrorMessage": "Почта указана не верно!"
+        },
+        "Message": {
+          "label": "Сообщение",
+          "placeholder": "Напечатайте сообщение...",
+          "ErrorMessage": "Напечатайте Ваше сообщение!"
         },
         "SubmitButton": "Отправить"
       },
