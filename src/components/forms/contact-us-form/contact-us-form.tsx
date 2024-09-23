@@ -20,10 +20,17 @@ type Props = {
   defaultValues?: Omit<ContactUsFormValues, 'message'>
   disabled?: boolean
   errorMessage?: string
+  isSubmitSuccess?: boolean
   onSubmit: (data: ContactUsFormValues) => void
 }
 
-export const ContactUsForm = ({ defaultValues, disabled, errorMessage, onSubmit }: Props) => {
+export const ContactUsForm = ({
+  defaultValues,
+  disabled,
+  errorMessage,
+  isSubmitSuccess = false,
+  onSubmit,
+}: Props) => {
   const classNames = {
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
@@ -63,7 +70,8 @@ export const ContactUsForm = ({ defaultValues, disabled, errorMessage, onSubmit 
   useEffect(() => {
     defaultValues?.name && setValue('name', defaultValues?.name)
     defaultValues?.email && setValue('email', defaultValues?.email)
-  }, [defaultValues?.name, defaultValues?.email])
+    isSubmitSuccess && setValue('message', '')
+  }, [defaultValues?.name, defaultValues?.email, isSubmitSuccess])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
@@ -89,19 +97,14 @@ export const ContactUsForm = ({ defaultValues, disabled, errorMessage, onSubmit 
       />
       <Input
         as={'textarea'}
+        disabled={disabled}
         errorMessage={errors.message?.message}
         label={t('Message.label')}
         placeholder={t('Message.placeholder')}
         resize={false}
         {...register('message')}
       />
-      <Button
-        className={classNames.singUpButton}
-        disabled={disabled}
-        fullWidth
-        type={'submit'}
-        variant={'secondary'}
-      >
+      <Button className={classNames.singUpButton} fullWidth type={'submit'} variant={'secondary'}>
         {t('SubmitButton')}
       </Button>
     </form>

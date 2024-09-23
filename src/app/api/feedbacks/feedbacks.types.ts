@@ -36,11 +36,8 @@ export type ChangeReadFeedbackRequest = {
 }
 export type CreateFeedbackResponse = FeedbackModel
 export type CreateFeedbackRequest = {
-  authorId?: string
+  authorId?: null | string
   email: string
-  feedbackId: string
-  isPublished: boolean
-  isRead: boolean
   locale: string
   message: string
   name: string

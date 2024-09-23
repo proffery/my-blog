@@ -92,7 +92,7 @@ export const authService = baseApi.injectEndpoints({
           console.warn(error)
         }
       },
-      providesTags: ['MyAvatarMeta'],
+      providesTags: ['MyAvatar'],
       query: ({ params: { date, userId } }) => ({
         url: endpoints.users_avatar + '/' + userId + '/' + date,
       }),

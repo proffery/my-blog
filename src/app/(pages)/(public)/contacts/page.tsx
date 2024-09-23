@@ -2,13 +2,18 @@
 import { useSelector } from 'react-redux'
 
 import withRedux from '@/common/hocs/with-redux'
-import { ContactUsForm } from '@/components/forms/contact-us-form/contact-us-form'
+import { getErrorMessage } from '@/common/utils/get-error-message'
+import {
+  ContactUsForm,
+  ContactUsFormValues,
+} from '@/components/forms/contact-us-form/contact-us-form'
 import { Page } from '@/components/layouts/page/page'
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
+import { useCreateFeedbackMutation } from '@/services/feedbacks/feedbacks.service'
 import { selectUserId } from '@/services/user/user.selectors'
 import clsx from 'clsx'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 import s from './contacts-page.module.scss'
 
@@ -22,6 +27,22 @@ function Contacts() {
   const userId = useSelector(selectUserId)
   const { data: meData } = useMeQuery()
   const t = useTranslations('ContactsPage')
+  const locale = useLocale()
+
+  const [
+    createFeedback,
+    {
+      error: createFeedbackError,
+      isLoading: isCreateFeedbackLoading,
+      isSuccess: createFeedbackSuccess,
+    },
+  ] = useCreateFeedbackMutation()
+
+  const errorMessage = getErrorMessage(createFeedbackError)
+
+  const contactUsHandler = async (data: ContactUsFormValues) => {
+    await createFeedback({ ...data, authorId: userId, locale }).unwrap()
+  }
 
   return (
     <Page>
@@ -37,7 +58,10 @@ function Contacts() {
                 ? { email: meData?.user?.email ?? '', name: meData?.user?.name ?? '' }
                 : undefined
             }
-            onSubmit={() => {}}
+            disabled={isCreateFeedbackLoading}
+            errorMessage={errorMessage}
+            isSubmitSuccess={createFeedbackSuccess}
+            onSubmit={contactUsHandler}
           />
         </div>
       </div>

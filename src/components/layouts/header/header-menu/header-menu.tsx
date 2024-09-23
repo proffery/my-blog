@@ -46,9 +46,14 @@ export const HeaderMenu = ({ avatarUrl, logout, userData }: Props) => {
       <DropdownItem>
         <ActiveLink href={routes.account}>{t('Account')}</ActiveLink>
       </DropdownItem>
+      {isRole(userRoles, 'Administrator') && (
+        <DropdownItem>
+          <ActiveLink href={routes.administrator}>{t('Administrator')}</ActiveLink>
+        </DropdownItem>
+      )}
       {isRole(userRoles, 'Moderator') && (
         <DropdownItem>
-          <ActiveLink href={routes.moderator}>{t('Moderate')}</ActiveLink>
+          <ActiveLink href={routes.moderator}>{t('Moderator')}</ActiveLink>
         </DropdownItem>
       )}
       {userData && (

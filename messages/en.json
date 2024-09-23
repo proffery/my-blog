@@ -183,7 +183,8 @@
     "Header": {
       "Menu": {
         "Account": "Profile",
-        "Moderate": "Moderate posts",
+        "Moderator": "Moderate posts",
+        "Administrator": "Administrator",
         "WritePost": "Write a post",
         "Logout": "Logout"
       },

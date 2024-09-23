@@ -8,5 +8,14 @@ export const baseApi = createApi({
   }),
   endpoints: () => ({}),
   reducerPath: 'baseApi',
-  tagTypes: ['Me', 'Users', 'Posts', 'Post', 'NotPublishedPosts', 'AvatarMeta', 'MyAvatarMeta'],
+  tagTypes: [
+    'Me',
+    'Users',
+    'Posts',
+    'Post',
+    'NotPublishedPosts',
+    'Avatar',
+    'Feedbacks',
+    'MyAvatar',
+  ],
 })

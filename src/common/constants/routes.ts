@@ -1,5 +1,6 @@
 export const routes = {
   account: '/account',
+  administrator: '/administrator',
   base: '/',
   confirmEmail: '/confirm-email',
   contacts: '/contacts',
