@@ -41,9 +41,8 @@
   padding: 8px 0;
 }
 
-.description {
-  all: unset;
-
+.description,
+.title {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;

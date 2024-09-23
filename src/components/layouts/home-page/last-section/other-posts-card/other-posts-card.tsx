@@ -29,6 +29,7 @@ export const OtherPostCard = ({ className, postData, ...rest }: Props) => {
     description: clsx(s.description),
     readMore: clsx(s.readMore),
     readMoreIcon: clsx(s.readMoreIcon),
+    title: clsx(s.title),
   }
 
   const t = useTranslations('HomePage.LatestSection.Card')
@@ -46,7 +47,7 @@ export const OtherPostCard = ({ className, postData, ...rest }: Props) => {
       </div>
       <div className={classNames.content}>
         <div>
-          <Typography.H5>{title}</Typography.H5>
+          <Typography.H5 className={classNames.title}>{title}</Typography.H5>
           <Typography.Body1 className={classNames.description}>
             {cleanFromHTML(post)}
           </Typography.Body1>
