@@ -14,12 +14,11 @@ const mockData: PostModel = {
   authorId: '1',
   authorName: 'Author',
   cover: '',
-  imageUrl: '',
   isPublished: true,
+  locale: 'en',
   post: 'Description',
-  postId: '1',
   title: 'Title',
-  views: 0,
+  views: 1,
 }
 
 const meta = {
