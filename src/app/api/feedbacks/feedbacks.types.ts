@@ -14,14 +14,7 @@ export type FeedbackModel = {
 export type DeleteFeedbackRequest = { feedbackId: string }
 export type DeleteFeedbackResponse = { feedbackId: string }
 
-export type FeedbacksSortBy =
-  | '$createdAt'
-  | '$updatedAt'
-  | 'email'
-  | 'isPublished'
-  | 'isRead'
-  | 'message'
-  | 'name'
+export type FeedbacksSortBy = '$createdAt' | 'email' | 'isPublished' | 'isRead' | 'message' | 'name'
 
 export type ChangePublishFeedbackResponse = FeedbackModel
 export type ChangePublishFeedbackRequest = {

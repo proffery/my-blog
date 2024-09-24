@@ -118,7 +118,7 @@
         "Cancel": "Cancel"
       }
     },
-    "Table": {
+    "PostsTable": {
       "Columns": {
         "Cover": "Cover",
         "Title": "Title",
@@ -133,6 +133,38 @@
         },
         "Publish": {
           "title": "Do publish"
+        }
+      }
+    }
+  },
+  "AdministratorPage": {
+    "title": "Administrator",
+    "AdminTabs": {
+      "Feedbacks": {
+        "button": "Feedbacks",
+        "Description": "No feedbacks yet..."
+      },
+      "Users": {
+        "button": "Users",
+        "Description": "In development..."
+      }
+    },
+    "Dialogs": {},
+    "PostsTable": {
+      "Columns": {
+        "Cover": "Обложка",
+        "Title": "Заголовок",
+        "Created": "Создан",
+        "Updated": "Изменен",
+        "Author": "Автор",
+        "Options": "Опции"
+      },
+      "OptionsButtons": {
+        "Delete": {
+          "title": "Удалить"
+        },
+        "Publish": {
+          "title": "Опубликовать"
         }
       }
     }

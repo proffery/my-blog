@@ -16,6 +16,8 @@ export const isUserMiddleware: MiddlewareFactory = next => {
         `/edit-post`,
         `/edit-post/:patch*`,
         `/moderator`,
+        `/administrator`,
+        `/profile-not-found`,
       ]?.some(path => pathname.startsWith(path))
     ) {
       if (!isAuthenticated) {

@@ -1,0 +1,42 @@
+@use '@/styles/breakpoints';
+
+.tableContainer {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.coverCell {
+  text-align: center;
+}
+
+.cover {
+  width: auto;
+  max-height: 32px;
+  object-fit: fill;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.sortIcon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+
+  @media (width <= breakpoints.$mobile) {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.sortIconDesc {
+  transform: rotate(90deg);
+}
+
+.sortIconAsc {
+  transform: rotate(270deg);
+}

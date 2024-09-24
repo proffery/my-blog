@@ -8,7 +8,7 @@ import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
 import { isRole } from '@/common/utils/is-role'
 import { Page } from '@/components/layouts/page/page'
-import { ModeratorTable } from '@/components/tables/moderator-table/moderator-table'
+import { ModeratePostsTable } from '@/components/tables/moderate-posts-table/moderate-posts-table'
 import { Dialog } from '@/components/ui/dialog/dialog'
 import { Typography } from '@/components/ui/typography/typography'
 import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
@@ -28,7 +28,6 @@ import { useModeratorFilters } from './use-moderator-filters'
 
 function Moderator() {
   const classNames = {
-    item: clsx(s.item),
     page: clsx(s.page),
   }
   const userRoles = useSelector(selectUserRole)
@@ -121,7 +120,7 @@ function Moderator() {
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
       {notPublishedPosts && notPublishedPosts.documents.length > 0 ? (
-        <ModeratorTable
+        <ModeratePostsTable
           disabled={isDeleteLoading || isPublishLoading}
           onPostDelete={setDeletedPostDataHandler}
           onPostPublish={setPublishPostDataHandler}

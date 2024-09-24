@@ -1,5 +1,3 @@
-import { useId } from 'react'
-
 import { PostModel, PostsSortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
@@ -19,14 +17,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useFormatter, useLocale, useTranslations } from 'next-intl'
 
-import s from './moderator-table.module.scss'
+import s from './moderate-posts-table.module.scss'
 
 type ModeratorTableColumns = {
   key?: PostsSortBy
   title: string
 }
 
-type ModeratorTableProps = {
+type ModeratePosts = {
   disabled?: boolean
   onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
   onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
@@ -37,7 +35,7 @@ type ModeratorTableProps = {
   sortBy: PostsSortBy
 }
 
-export const ModeratorTable = ({
+export const ModeratePostsTable = ({
   disabled = false,
   onPostDelete,
   onPostPublish,
@@ -46,8 +44,8 @@ export const ModeratorTable = ({
   posts,
   sort,
   sortBy,
-}: ModeratorTableProps) => {
-  const t = useTranslations('ModerationPage.Table')
+}: ModeratePosts) => {
+  const t = useTranslations('ModerationPage.PostsTable')
   const format = useFormatter()
   const locale = useLocale()
 

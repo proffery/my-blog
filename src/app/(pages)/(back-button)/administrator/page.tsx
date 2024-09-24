@@ -8,8 +8,14 @@ import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
 import { isRole } from '@/common/utils/is-role'
 import { Page } from '@/components/layouts/page/page'
-import { ModeratorTable } from '@/components/tables/moderator-table/moderator-table'
+import { ModeratePostsTable } from '@/components/tables/moderate-posts-table/moderate-posts-table'
 import { Dialog } from '@/components/ui/dialog/dialog'
+import {
+  TabContentItem,
+  TabGroup,
+  TabItem,
+  TabList,
+} from '@/components/ui/tab-switcher/tab-switcher'
 import { Typography } from '@/components/ui/typography/typography'
 import clearCachesByServerAction from '@/server/utils/clear-caches-by-server-action'
 import {
@@ -26,13 +32,16 @@ import s from './administrator.module.scss'
 
 import { useModeratorFilters } from './use-administrator-filters'
 
+type AdminTabType = 'feedbacks' | 'users'
+
 function Administrator() {
   const classNames = {
-    item: clsx(s.item),
     page: clsx(s.page),
   }
   const userRoles = useSelector(selectUserRole)
   const router = useRouter()
+
+  const [tabValue, setTabValue] = useState<AdminTabType>('feedbacks')
 
   const { setSort, setSortBy, sort, sortBy } = useModeratorFilters()
 
@@ -41,7 +50,7 @@ function Administrator() {
   const [tempPostData, setTempPostData] = useState({ authorId: '', postId: '', postTitle: '' })
 
   const locale = useLocale()
-  const t = useTranslations('ModerationPage')
+  const t = useTranslations('AdministratorPage')
 
   const { data: notPublishedPosts } = useGetNotPublishedPostsQuery({
     locale,
@@ -95,9 +104,12 @@ function Administrator() {
     setTempPostData({ authorId: '', postId: '', postTitle: '' })
   }
 
+  const tabChangeHandler = (value: string) => {
+    setTabValue(value as AdminTabType)
+  }
+
   return (
     <Page className={classNames.page}>
-      <Typography.H1>{t('title')}</Typography.H1>
       <Dialog
         cancelText={t('Dialogs.DeletePost.Cancel')}
         confirmText={t('Dialogs.DeletePost.Confirm')}
@@ -120,20 +132,34 @@ function Administrator() {
       >
         <Typography.Body1>{tempPostData.postTitle}</Typography.Body1>
       </Dialog>
-      {notPublishedPosts && notPublishedPosts.documents.length > 0 ? (
-        <ModeratorTable
-          disabled={isDeleteLoading || isPublishLoading}
-          onPostDelete={setDeletedPostDataHandler}
-          onPostPublish={setPublishPostDataHandler}
-          onSortByChange={setSortBy}
-          onSortChange={setSort}
-          posts={notPublishedPosts?.documents}
-          sort={sort ?? 'desc'}
-          sortBy={sortBy ?? '$updatedAt'}
-        />
-      ) : (
-        <Typography.Caption>{t('Posts.Description')}</Typography.Caption>
-      )}
+      <Typography.H1>{t('title')}</Typography.H1>
+      <TabGroup onValueChange={tabChangeHandler}>
+        <TabList>
+          <TabItem selected={tabValue === 'feedbacks'} value={'feedbacks'}>
+            {t('AdminTabs.Feedbacks.button')}
+          </TabItem>
+          <TabItem selected={tabValue === 'users'} value={'users'}>
+            {t('AdminTabs.Users.button')}
+          </TabItem>
+        </TabList>
+        <TabContentItem value={'feedbacks'}>
+          {notPublishedPosts && notPublishedPosts.documents.length > 0 ? (
+            <ModeratePostsTable
+              disabled={isDeleteLoading || isPublishLoading}
+              onPostDelete={setDeletedPostDataHandler}
+              onPostPublish={setPublishPostDataHandler}
+              onSortByChange={setSortBy}
+              onSortChange={setSort}
+              posts={notPublishedPosts?.documents}
+              sort={sort ?? 'desc'}
+              sortBy={sortBy ?? '$updatedAt'}
+            />
+          ) : (
+            <Typography.Caption>{t('AdminTabs.Feedbacks.Description')}</Typography.Caption>
+          )}
+        </TabContentItem>
+        <TabContentItem value={'users'}>{t('AdminTabs.Users.Description')}</TabContentItem>
+      </TabGroup>
     </Page>
   )
 }

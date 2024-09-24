@@ -1,0 +1,98 @@
+@use '@/styles/animations' as animations;
+@use '@/styles/breakpoints';
+
+$checkbox-size-desk: 32px;
+$checkbox-size-mob: 23px;
+$icon-size-desk: 20px;
+$icon-size-mob: 13px;
+$checkbox-radius-desk: 5px;
+$checkbox-radius-mob: 4px;
+$checkbox-border-desk: 2px;
+$checkbox-border-mob: 1px;
+$gap-desk: 8px;
+$gap-mob: 6px;
+
+.container {
+  display: flex;
+  align-items: center;
+  color: var(--color-dark);
+}
+
+.label {
+  display: flex;
+  gap: $gap-desk;
+  align-items: center;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: $gap-mob;
+  }
+}
+
+.reverse {
+  flex-direction: row-reverse;
+}
+
+.checkbox {
+  @include animations.thumb-hover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $checkbox-size-desk;
+  height: $checkbox-size-desk;
+
+  border: $checkbox-border-desk solid var(--color-dark);
+  border-radius: $checkbox-radius-desk;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info);
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    width: $checkbox-size-mob;
+    height: $checkbox-size-mob;
+    border: $checkbox-border-mob solid var(--color-dark);
+    border-radius: $checkbox-radius-mob;
+  }
+}
+
+.checked {
+  background-color: var(--color-light);
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $icon-size-desk;
+  height: $icon-size-desk;
+
+  svg {
+    width: 90%;
+    height: 90%;
+    color: var(--color-light);
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    width: $icon-size-mob;
+    height: $icon-size-mob;
+
+    svg {
+      width: 70%;
+      height: 70%;
+    }
+  }
+}
+
+.disabled {
+  cursor: default;
+  opacity: 0.5;
+}

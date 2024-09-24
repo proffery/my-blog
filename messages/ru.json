@@ -130,7 +130,39 @@
         "Cancel": "Отмена"
       }
     },
-    "Table": {
+    "PostsTable": {
+      "Columns": {
+        "Cover": "Обложка",
+        "Title": "Заголовок",
+        "Created": "Создан",
+        "Updated": "Изменен",
+        "Author": "Автор",
+        "Options": "Опции"
+      },
+      "OptionsButtons": {
+        "Delete": {
+          "title": "Удалить"
+        },
+        "Publish": {
+          "title": "Опубликовать"
+        }
+      }
+    }
+  },
+  "AdministratorPage": {
+    "title": "Аминистрирование",
+    "AdminTabs": {
+      "Feedbacks": {
+        "button": "Отзывы",
+        "Description": "Пока нет отзывов..."
+      },
+      "Users": {
+        "button": "Пользователи",
+        "Description": "В разработке..."
+      }
+    },
+    "Dialogs": {},
+    "PostsTable": {
       "Columns": {
         "Cover": "Обложка",
         "Title": "Заголовок",
