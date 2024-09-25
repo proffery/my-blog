@@ -154,30 +154,41 @@
     "AdminTabs": {
       "Feedbacks": {
         "button": "Отзывы",
-        "Description": "Пока нет отзывов..."
+        "Description": "Пока нет отзывов...",
+        "Dialogs": {
+          "DeleteFeedback": {
+            "title": "Удалить этот отзыв?",
+            "Confirm": "Удалить",
+            "Cancel": "Отмена"
+          },
+          "PublishFeedback": {
+            "title": "Опубликовать этот отзыв?",
+            "Confirm": "Опубликовать",
+            "Cancel": "Отмена"
+          }
+        },
+        "FeedbacksTable": {
+          "Columns": {
+            "Published": "В публикации",
+            "Author": "Автор",
+            "Email": "Почта",
+            "Message": "Отзыв",
+            "Created": "Создан",
+            "Options": "Опции"
+          },
+          "OptionsButtons": {
+            "Delete": {
+              "title": "Удалить"
+            },
+            "Publish": {
+              "title": "Опубликовать"
+            }
+          }
+        }
       },
       "Users": {
         "button": "Пользователи",
         "Description": "В разработке..."
-      }
-    },
-    "Dialogs": {},
-    "PostsTable": {
-      "Columns": {
-        "Cover": "Обложка",
-        "Title": "Заголовок",
-        "Created": "Создан",
-        "Updated": "Изменен",
-        "Author": "Автор",
-        "Options": "Опции"
-      },
-      "OptionsButtons": {
-        "Delete": {
-          "title": "Удалить"
-        },
-        "Publish": {
-          "title": "Опубликовать"
-        }
       }
     }
   },

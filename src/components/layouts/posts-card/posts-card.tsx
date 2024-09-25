@@ -4,6 +4,7 @@ import { PostModel } from '@/app/api/posts/posts.types'
 import defaultImage from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { cleanFromHTML } from '@/common/utils/clean-from-html'
+import { formatDateShort } from '@/common/utils/format-date-short'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
@@ -36,7 +37,6 @@ export const PostsCard = ({ postData, ...rest }: Props) => {
   }
   const t = useTranslations('Components')
   const format = useFormatter()
-  const dateTime = new Date($createdAt)
 
   return (
     <Card {...rest} className={classNames.card}>
@@ -72,12 +72,7 @@ export const PostsCard = ({ postData, ...rest }: Props) => {
             </Typography.Link2>
           </Typography.Subtitle2>
           <Typography.Body2 className={classNames.date}>
-            {format.dateTime(dateTime, {
-              day: 'numeric',
-              month: 'short',
-              weekday: 'short',
-              year: 'numeric',
-            })}
+            {formatDateShort($createdAt, format)}
           </Typography.Body2>
         </div>
       </div>

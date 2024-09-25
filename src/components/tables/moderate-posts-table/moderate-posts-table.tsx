@@ -1,6 +1,7 @@
 import { PostModel, PostsSortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
+import { formatDateLong } from '@/common/utils/format-date-long'
 import { Button } from '@/components/ui/button/button'
 import {
   Table,
@@ -105,20 +106,6 @@ export const ModeratePostsTable = ({
     key === sortBy ? sortToggleHandler() : onSortByChange(key)
   }
 
-  const formatDateHandler = (postDate: string) => {
-    const dateTime = new Date(postDate)
-
-    return format.dateTime(dateTime, {
-      day: 'numeric', // Day of the month
-      hour: '2-digit', // Two-digit hour
-      hour12: locale !== 'ru', // 24-hour format
-      minute: '2-digit', // Two-digit minute
-      month: 'short', // Full month [name]
-      second: '2-digit', // Two-digit second
-      year: 'numeric', // Full year
-    })
-  }
-
   return (
     <div className={classNames.tableContainer}>
       <Table>
@@ -162,10 +149,14 @@ export const ModeratePostsTable = ({
                 </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{formatDateHandler(post.$createdAt)}</Typography.Body2>
+                <Typography.Body2>
+                  {formatDateLong(post.$createdAt, locale, format)}
+                </Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{formatDateHandler(post.$updatedAt)}</Typography.Body2>
+                <Typography.Body2>
+                  {formatDateLong(post.$updatedAt, locale, format)}
+                </Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
                 <Typography.Link2 as={Link} href={`${routes.account}/${post.authorId}`}>

@@ -1,8 +1,10 @@
-import { FeedbackModel } from '@/app/api/feedbacks/feedbacks.types'
+import { FeedbackModel, FeedbacksSortBy } from '@/app/api/feedbacks/feedbacks.types'
 import { PostModel, PostsSortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
+import { formatDateLong } from '@/common/utils/format-date-long'
 import { Button } from '@/components/ui/button/button'
+import { Checkbox } from '@/components/ui/checkbox/checkbox'
 import {
   Table,
   TableBody,
@@ -21,57 +23,54 @@ import { useFormatter, useLocale, useTranslations } from 'next-intl'
 import s from './admin-feedbacks-table.module.scss'
 
 type AdminFeedbacksTableColumns = {
-  key?: PostsSortBy
+  key?: FeedbacksSortBy
   title: string
 }
 
 type AdminFeedbacks = {
   disabled?: boolean
   feedbacks?: FeedbackModel[]
-  onPostDelete: (data: { authorId: string; postId: string; postTitle: string }) => void
-  onPostPublish: (data: { authorId: string; postId: string; postTitle: string }) => void
-  onSortByChange: (value: PostsSortBy | null) => void
+  onFeedbackDelete: (data: { feedbackId: string }) => void
+  onFeedbackPublish: (data: { feedbackId: string }) => void
+  onSortByChange: (value: FeedbacksSortBy | null) => void
   onSortChange: (value: SortDirection | null) => void
   sort: SortDirection
-  sortBy: PostsSortBy
+  sortBy: FeedbacksSortBy
 }
 
 export const AdminFeedbacksTable = ({
   disabled = false,
   feedbacks,
-  onPostDelete,
-  onPostPublish,
+  onFeedbackDelete,
+  onFeedbackPublish,
   onSortByChange,
   onSortChange,
   sort,
   sortBy,
 }: AdminFeedbacks) => {
-  const t = useTranslations('ModerationPage.PostsTable')
+  const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks')
   const format = useFormatter()
   const locale = useLocale()
 
   const columns: AdminFeedbacksTableColumns[] = [
     {
-      title: t('Columns.Cover'),
+      key: 'isPublished',
+      title: t('FeedbacksTable.Columns.Published'),
     },
     {
-      key: 'title',
-      title: t('Columns.Title'),
+      key: 'name',
+      title: t('FeedbacksTable.Columns.Author'),
+    },
+    {
+      key: 'email',
+      title: t('FeedbacksTable.Columns.Email'),
     },
     {
       key: '$createdAt',
-      title: t('Columns.Created'),
+      title: t('FeedbacksTable.Columns.Created'),
     },
     {
-      key: '$updatedAt',
-      title: t('Columns.Updated'),
-    },
-    {
-      key: 'authorName',
-      title: t('Columns.Author'),
-    },
-    {
-      title: t('Columns.Options'),
+      title: t('FeedbacksTable.Columns.Options'),
     },
   ]
 
@@ -83,18 +82,14 @@ export const AdminFeedbacksTable = ({
     tableContainer: clsx(s.tableContainer),
   }
 
-  const postPublishHandler = (post: PostModel) => {
-    onPostPublish({
-      authorId: post.authorId,
-      postId: post.$id,
-      postTitle: post.title,
+  const feedbackPublishHandler = (feedback: FeedbackModel) => {
+    onFeedbackPublish({
+      feedbackId: feedback.$id,
     })
   }
-  const postDeleteHandler = (post: PostModel) => {
-    onPostDelete({
-      authorId: post.authorId,
-      postId: post.$id,
-      postTitle: post.title,
+  const feedbackDeleteHandler = (feedback: FeedbackModel) => {
+    onFeedbackDelete({
+      feedbackId: feedback.$id,
     })
   }
 
@@ -102,22 +97,8 @@ export const AdminFeedbacksTable = ({
     sort === 'asc' ? onSortChange('desc') : onSortChange('asc')
   }
 
-  const sortByHandler = (key: PostsSortBy) => {
+  const sortByHandler = (key: FeedbacksSortBy) => {
     key === sortBy ? sortToggleHandler() : onSortByChange(key)
-  }
-
-  const formatDateHandler = (postDate: string) => {
-    const dateTime = new Date(postDate)
-
-    return format.dateTime(dateTime, {
-      day: 'numeric', // Day of the month
-      hour: '2-digit', // Two-digit hour
-      hour12: locale !== 'ru', // 24-hour format
-      minute: '2-digit', // Two-digit minute
-      month: 'short', // Full month [name]
-      second: '2-digit', // Two-digit second
-      year: 'numeric', // Full year
-    })
   }
 
   return (
@@ -130,7 +111,7 @@ export const AdminFeedbacksTable = ({
                 <TableHeadCell key={column.title}>
                   <Button
                     disabled={disabled}
-                    onClick={() => sortByHandler(column.key ?? '$updatedAt')}
+                    onClick={() => sortByHandler(column.key ?? '$createdAt')}
                     variant={'text'}
                   >
                     <Typography.Subtitle2>{column.title}&nbsp;</Typography.Subtitle2>
@@ -146,48 +127,50 @@ export const AdminFeedbacksTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {feedbacks?.map(post => (
-            <TableRow key={post.$id}>
-              <TableBodyCell className={classNames.coverCell}>
-                <Image
-                  alt={post.title}
-                  className={classNames.cover}
-                  height={32}
-                  src={post.cover ? post.cover : '/images/no-image.svg'}
-                  width={32}
-                />
+          {feedbacks?.map(feedback => (
+            <TableRow key={feedback.$id}>
+              <TableBodyCell>
+                <div className={classNames.buttonsWrapper}>
+                  <Checkbox checked={feedback.isPublished} />
+                </div>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Link2 as={Link} href={`${routes.post}${post.$id}`}>
-                  {post.title}
+                {feedback.authorId ? (
+                  <Typography.Link2 as={Link} href={`${routes.account}/${feedback.authorId}`}>
+                    {feedback.name}
+                  </Typography.Link2>
+                ) : (
+                  <Typography.Body2>{feedback.name}</Typography.Body2>
+                )}
+              </TableBodyCell>
+              <TableBodyCell>
+                <Typography.Link2 as={Link} href={`mailto:${feedback.email}`}>
+                  {feedback.email}
                 </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{formatDateHandler(post.$createdAt)}</Typography.Body2>
+                <Typography.Body2>{feedback.message}</Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{formatDateHandler(post.$updatedAt)}</Typography.Body2>
-              </TableBodyCell>
-              <TableBodyCell>
-                <Typography.Link2 as={Link} href={`${routes.account}/${post.authorId}`}>
-                  {post.authorName}
-                </Typography.Link2>
+                <Typography.Body2>
+                  {formatDateLong(feedback.$createdAt, locale, format)}
+                </Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
                 <div className={classNames.buttonsWrapper}>
                   <Button
                     disabled={disabled}
-                    onClick={() => {}}
+                    onClick={() => feedbackPublishHandler(feedback)}
                     padding={false}
-                    title={t('OptionsButtons.Publish.title')}
+                    title={t('FeedbacksTable.OptionsButtons.Publish.title')}
                   >
                     <BookCheck />
                   </Button>
                   <Button
                     disabled={disabled}
-                    onClick={() => {}}
+                    onClick={() => feedbackDeleteHandler(feedback)}
                     padding={false}
-                    title={t('OptionsButtons.Delete.title')}
+                    title={t('FeedbacksTable.OptionsButtons.Delete.title')}
                   >
                     <Trash2 />
                   </Button>
