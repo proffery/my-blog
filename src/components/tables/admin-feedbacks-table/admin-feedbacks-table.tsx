@@ -66,6 +66,10 @@ export const AdminFeedbacksTable = ({
       title: t('FeedbacksTable.Columns.Email'),
     },
     {
+      key: 'message',
+      title: t('FeedbacksTable.Columns.Message'),
+    },
+    {
       key: '$createdAt',
       title: t('FeedbacksTable.Columns.Created'),
     },
