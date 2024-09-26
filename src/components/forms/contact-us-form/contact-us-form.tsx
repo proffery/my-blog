@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { projectConstants } from '@/common/constants/projectConstants'
+import { useWidth } from '@/common/hooks/use-width'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -33,9 +35,9 @@ export const ContactUsForm = ({
 }: Props) => {
   const classNames = {
     form: clsx(s.form),
-    singUpButton: clsx(s.singUpButton),
   }
 
+  const width = useWidth()
   const t = useTranslations('Components.Forms.ContactUs')
 
   const contactUsSchema = z.object({
@@ -104,7 +106,11 @@ export const ContactUsForm = ({
         resize={false}
         {...register('message')}
       />
-      <Button className={classNames.singUpButton} fullWidth type={'submit'} variant={'secondary'}>
+      <Button
+        fullWidth={width <= projectConstants.mobileWidth}
+        type={'submit'}
+        variant={'secondary'}
+      >
         {t('SubmitButton')}
       </Button>
     </form>
