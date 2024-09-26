@@ -3,6 +3,11 @@
 .page {
   display: flex;
   flex-direction: column;
+  gap: 64px;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 32px;
+  }
 }
 
 .row {

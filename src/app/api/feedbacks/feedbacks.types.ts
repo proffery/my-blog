@@ -5,7 +5,6 @@ export type FeedbackModel = {
   authorId: string
   email: string
   isPublished: boolean
-  isRead: boolean
   locale: string
   message: string
   name: string
@@ -31,9 +30,14 @@ export type CreateFeedbackRequest = {
   name: string
 }
 
+export type GetPublishedFeedbacksResponse = Models.DocumentList<FeedbackModel>
+export type GetPublishedFeedbacksRequest = {
+  locale: string
+}
+
 export type GetFeedbacksResponse = Models.DocumentList<FeedbackModel>
 export type GetFeedbacksRequest = {
-  locale?: string
+  locale: string
   sort?: SortDirection
   sortBy: FeedbacksSortBy
 }

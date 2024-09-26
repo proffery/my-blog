@@ -17,5 +17,6 @@ export const baseApi = createApi({
     'Avatar',
     'Feedbacks',
     'MyAvatar',
+    'PublishedFeedbacks',
   ],
 })

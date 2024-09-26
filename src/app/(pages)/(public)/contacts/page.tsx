@@ -7,10 +7,15 @@ import {
   ContactUsForm,
   ContactUsFormValues,
 } from '@/components/forms/contact-us-form/contact-us-form'
+import { FeedbackCard } from '@/components/layouts/feedback-card/feedback-card'
 import { Page } from '@/components/layouts/page/page'
+import { SwiperComponent } from '@/components/ui/swiper/swiper'
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
-import { useCreateFeedbackMutation } from '@/services/feedbacks/feedbacks.service'
+import {
+  useCreateFeedbackMutation,
+  usePublishedFeedbacksQuery,
+} from '@/services/feedbacks/feedbacks.service'
 import { selectUserId } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useLocale, useTranslations } from 'next-intl'
@@ -23,11 +28,13 @@ function Contacts() {
     page: clsx(s.page),
     row: clsx(s.row),
   }
+  const locale = useLocale()
+  const t = useTranslations('ContactsPage')
 
   const userId = useSelector(selectUserId)
   const { data: meData } = useMeQuery()
-  const t = useTranslations('ContactsPage')
-  const locale = useLocale()
+
+  const { data: feedbacksData } = usePublishedFeedbacksQuery({ locale })
 
   const [
     createFeedback,
@@ -45,7 +52,7 @@ function Contacts() {
   }
 
   return (
-    <Page>
+    <Page className={classNames.page}>
       <div className={classNames.row}>
         <div className={classNames.column}>
           <Typography.H1>{t('title')}</Typography.H1>
@@ -65,6 +72,13 @@ function Contacts() {
           />
         </div>
       </div>
+      {feedbacksData && feedbacksData.documents.length > 0 && (
+        <SwiperComponent>
+          {feedbacksData.documents.map(feedback => (
+            <FeedbackCard feedbackData={feedback} key={feedback.$id} />
+          ))}
+        </SwiperComponent>
+      )}
     </Page>
   )
 }

@@ -7,6 +7,8 @@ import {
   DeleteFeedbackResponse,
   GetFeedbacksRequest,
   GetFeedbacksResponse,
+  GetPublishedFeedbacksRequest,
+  GetPublishedFeedbacksResponse,
 } from '@/app/api/feedbacks/feedbacks.types'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
@@ -43,7 +45,7 @@ export const feedbacksService = baseApi.injectEndpoints({
       }),
     }),
     deleteFeedback: builder.mutation<DeleteFeedbackResponse, DeleteFeedbackRequest>({
-      invalidatesTags: ['Feedbacks'],
+      invalidatesTags: ['Feedbacks', 'PublishedFeedbacks'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
@@ -58,7 +60,7 @@ export const feedbacksService = baseApi.injectEndpoints({
       }),
     }),
     publishFeedback: builder.mutation<ChangePublishFeedbackResponse, ChangePublishFeedbackRequest>({
-      invalidatesTags: ['Feedbacks'],
+      invalidatesTags: ['Feedbacks', 'PublishedFeedbacks'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
@@ -72,6 +74,20 @@ export const feedbacksService = baseApi.injectEndpoints({
         url: endpoints.feedbacks_publish,
       }),
     }),
+    publishedFeedbacks: builder.query<GetPublishedFeedbacksResponse, GetPublishedFeedbacksRequest>({
+      async onQueryStarted(_, { queryFulfilled }) {
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      providesTags: ['PublishedFeedbacks'],
+      query: searchParams => ({
+        params: searchParams,
+        url: endpoints.feedbacks_published,
+      }),
+    }),
   }),
 })
 
@@ -80,4 +96,5 @@ export const {
   useCreateFeedbackMutation,
   useDeleteFeedbackMutation,
   usePublishFeedbackMutation,
+  usePublishedFeedbacksQuery,
 } = feedbacksService

@@ -1,0 +1,79 @@
+@use '@/styles/breakpoints';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.swiper {
+  position: relative;
+
+  display: flex;
+  align-self: center;
+  justify-content: center;
+
+  padding: 2px;
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 100%;
+  height: 100%;
+}
+
+.slideContent {
+  display: flex;
+  place-self: center center;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100%;
+  padding: 16px;
+}
+
+.navButtonLeft,
+.navButtonRight {
+  cursor: pointer;
+
+  position: absolute;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  background: none;
+  border: 1px solid var(--color-dark);
+  border-radius: 50%;
+}
+
+.navButtonRight {
+  right: 32px;
+
+  @media (width <= breakpoints.$mobile) {
+    right: 8px;
+  }
+}
+
+.navButtonLeft {
+  left: 32px;
+  transform: rotate(180deg);
+
+  @media (width <= breakpoints.$mobile) {
+    left: 8px;
+  }
+}
+
+.arrowIcon {
+  width: 20px;
+  height: 20px;
+}

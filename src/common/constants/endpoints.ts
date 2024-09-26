@@ -14,6 +14,7 @@ export const endpoints = {
   feedbacks_create: `/api/feedbacks/create`,
   feedbacks_delete: `/api/feedbacks/delete`,
   feedbacks_publish: `/api/feedbacks/publish`,
+  feedbacks_published: `/api/feedbacks/published`,
   feedbacks_read: `/api/feedbacks/read`,
   post: `/api/post`,
   posts: `/api/posts`,
