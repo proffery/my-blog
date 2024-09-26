@@ -22,11 +22,6 @@ export type ChangePublishFeedbackRequest = {
   isPublished: boolean
 }
 
-export type ChangeReadFeedbackResponse = FeedbackModel
-export type ChangeReadFeedbackRequest = {
-  feedbackId: string
-  isRead: boolean
-}
 export type CreateFeedbackResponse = FeedbackModel
 export type CreateFeedbackRequest = {
   authorId?: null | string

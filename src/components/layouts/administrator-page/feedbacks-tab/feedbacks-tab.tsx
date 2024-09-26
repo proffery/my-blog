@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import withRedux from '@/common/hocs/with-redux'
 import { useFeedbacksFilters } from '@/components/layouts/administrator-page/use-feedbacks-filters'
 import { AdminFeedbacksTable } from '@/components/tables/admin-feedbacks-table/admin-feedbacks-table'
 import { Dialog } from '@/components/ui/dialog/dialog'
+import { Typography } from '@/components/ui/typography/typography'
 import {
   useAllFeedbacksQuery,
   useDeleteFeedbackMutation,
@@ -11,18 +11,18 @@ import {
 } from '@/services/feedbacks/feedbacks.service'
 import { useLocale, useTranslations } from 'next-intl'
 
-function FeedbacksTab() {
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [publishModal, setPublishModal] = useState(false)
-  const [tempFeedbackData, setTempFeedbackData] = useState({ feedbackId: '' })
+export const FeedbacksTab = () => {
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showPublishModal, setShowPublishModal] = useState(false)
+  const [tempFeedbackData, setTempFeedbackData] = useState({ feedback: '', feedbackId: '' })
 
-  const currentLocale = useLocale()
+  const locale = useLocale()
 
-  const { isPublished, locale, setIsPublished, setLocale, setSort, setSortBy, sort, sortBy } =
-    useFeedbacksFilters()
+  const { setSort, setSortBy, sort, sortBy } = useFeedbacksFilters()
 
   const { data: feedbacks } = useAllFeedbacksQuery({
-    locale: currentLocale,
+    locale,
     sort: sort ?? 'desc',
     sortBy: sortBy ?? '$createdAt',
   })
@@ -33,26 +33,56 @@ function FeedbacksTab() {
   const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks')
 
   const setDeletedFeedbackDataHandler = (data: { feedbackId: string }) => {
-    setTempFeedbackData({ feedbackId: data.feedbackId })
-    setDeleteModal(true)
+    setTempFeedbackData({ feedback: '', feedbackId: data.feedbackId })
+    setShowDeleteModal(true)
+  }
+
+  const setOpenFeedbackDataHandler = (data: { feedbackId: string }) => {
+    const { feedbackId } = data
+
+    if (feedbacks) {
+      const feedbackIndex = feedbacks.documents.findIndex(document => document.$id === feedbackId)
+
+      if (feedbackIndex !== -1) {
+        setTempFeedbackData({ feedback: feedbacks.documents[feedbackIndex].message, feedbackId })
+      }
+    }
+
+    setShowFeedbackModal(true)
   }
 
   const setPublishPostDataHandler = (data: { feedbackId: string }) => {
-    setTempFeedbackData({ feedbackId: data.feedbackId })
-    setPublishModal(true)
+    setTempFeedbackData({ feedback: '', feedbackId: data.feedbackId })
+    setShowPublishModal(true)
   }
 
   const confirmDeleteHandler = async () => {
-    setDeleteModal(false)
+    setShowDeleteModal(false)
     await deleteFeedback({ feedbackId: tempFeedbackData.feedbackId }).unwrap()
-    setTempFeedbackData({ feedbackId: '' })
+    setTempFeedbackData({ feedback: '', feedbackId: '' })
+  }
+
+  const cancelOpenFeedbackHandler = () => {
+    setShowFeedbackModal(false)
+    setTempFeedbackData({ feedback: '', feedbackId: '' })
   }
 
   const confirmPublishHandler = async () => {
-    setPublishModal(false)
-    await changePublish({ feedbackId: tempFeedbackData.feedbackId, isPublished: true }).unwrap()
+    setShowPublishModal(false)
+    const { feedbackId } = tempFeedbackData
 
-    setTempFeedbackData({ feedbackId: '' })
+    if (feedbacks) {
+      const feedbackIndex = feedbacks.documents.findIndex(document => document.$id === feedbackId)
+
+      if (feedbackIndex !== -1) {
+        await changePublish({
+          feedbackId,
+          isPublished: !feedbacks.documents[feedbackIndex].isPublished,
+        }).unwrap()
+      }
+    }
+
+    setTempFeedbackData({ feedback: '', feedbackId: '' })
   }
 
   return (
@@ -60,33 +90,45 @@ function FeedbacksTab() {
       <Dialog
         cancelText={t('Dialogs.DeleteFeedback.Cancel')}
         confirmText={t('Dialogs.DeleteFeedback.Confirm')}
-        onCancel={() => setDeleteModal(false)}
+        onCancel={() => setShowDeleteModal(false)}
         onConfirm={confirmDeleteHandler}
-        onOpenChange={setDeleteModal}
-        open={deleteModal}
+        onOpenChange={setShowDeleteModal}
+        open={showDeleteModal}
         title={t('Dialogs.DeleteFeedback.title')}
       />
       <Dialog
+        cancelText={t('Dialogs.ShowFeedback.Cancel')}
+        onCancel={cancelOpenFeedbackHandler}
+        onOpenChange={setShowFeedbackModal}
+        open={showFeedbackModal}
+        title={t('Dialogs.ShowFeedback.title')}
+      >
+        {tempFeedbackData.feedback}
+      </Dialog>
+      <Dialog
         cancelText={t('Dialogs.PublishFeedback.Cancel')}
         confirmText={t('Dialogs.PublishFeedback.Confirm')}
-        onCancel={() => setPublishModal(false)}
+        onCancel={() => setShowPublishModal(false)}
         onConfirm={confirmPublishHandler}
-        onOpenChange={setPublishModal}
-        open={publishModal}
+        onOpenChange={setShowPublishModal}
+        open={showPublishModal}
         title={t('Dialogs.PublishFeedback.title')}
       />
-      <AdminFeedbacksTable
-        disabled={isDeleteLoading || isPublishLoading}
-        feedbacks={feedbacks?.documents}
-        onFeedbackDelete={setDeletedFeedbackDataHandler}
-        onFeedbackPublish={setPublishPostDataHandler}
-        onSortByChange={setSortBy}
-        onSortChange={setSort}
-        sort={sort ?? 'desc'}
-        sortBy={sortBy ?? '$createdAt'}
-      />
+      {feedbacks && feedbacks.documents.length > 0 ? (
+        <AdminFeedbacksTable
+          disabled={isDeleteLoading || isPublishLoading}
+          feedbacks={feedbacks?.documents}
+          onFeedbackDelete={setDeletedFeedbackDataHandler}
+          onFeedbackOpen={setOpenFeedbackDataHandler}
+          onFeedbackPublish={setPublishPostDataHandler}
+          onSortByChange={setSortBy}
+          onSortChange={setSort}
+          sort={sort ?? 'desc'}
+          sortBy={sortBy ?? '$createdAt'}
+        />
+      ) : (
+        <Typography.Caption>{t('Description')}</Typography.Caption>
+      )}
     </>
   )
 }
-
-export default withRedux(FeedbacksTab)

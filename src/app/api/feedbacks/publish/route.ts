@@ -1,6 +1,5 @@
 import { createDatabaseClient } from '@/server/database-config'
 import { changePublishFeedback } from '@/server/functions/database/feedbacks/change-publish-feedback'
-import { changePublishPost } from '@/server/functions/database/posts/change-publish-post'
 import { serverErrorHandler } from '@/server/functions/server-errors-handler'
 import { NextRequest, NextResponse } from 'next/server'
 

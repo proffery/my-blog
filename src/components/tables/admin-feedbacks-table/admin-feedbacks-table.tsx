@@ -1,5 +1,5 @@
 import { FeedbackModel, FeedbacksSortBy } from '@/app/api/feedbacks/feedbacks.types'
-import { PostModel, PostsSortBy, SortDirection } from '@/app/api/posts/posts.types'
+import { SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
 import { formatDateLong } from '@/common/utils/format-date-long'
@@ -15,8 +15,7 @@ import {
 } from '@/components/ui/table/table'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
-import { BookCheck, Trash2 } from 'lucide-react'
-import Image from 'next/image'
+import { Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useFormatter, useLocale, useTranslations } from 'next-intl'
 
@@ -31,6 +30,7 @@ type AdminFeedbacks = {
   disabled?: boolean
   feedbacks?: FeedbackModel[]
   onFeedbackDelete: (data: { feedbackId: string }) => void
+  onFeedbackOpen: (data: { feedbackId: string }) => void
   onFeedbackPublish: (data: { feedbackId: string }) => void
   onSortByChange: (value: FeedbacksSortBy | null) => void
   onSortChange: (value: SortDirection | null) => void
@@ -42,6 +42,7 @@ export const AdminFeedbacksTable = ({
   disabled = false,
   feedbacks,
   onFeedbackDelete,
+  onFeedbackOpen,
   onFeedbackPublish,
   onSortByChange,
   onSortChange,
@@ -82,6 +83,7 @@ export const AdminFeedbacksTable = ({
     buttonsWrapper: clsx(s.buttonsWrapper),
     cover: clsx(s.cover),
     coverCell: clsx(s.coverCell),
+    feedbackCell: clsx(s.feedbackCell),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     tableContainer: clsx(s.tableContainer),
   }
@@ -93,6 +95,12 @@ export const AdminFeedbacksTable = ({
   }
   const feedbackDeleteHandler = (feedback: FeedbackModel) => {
     onFeedbackDelete({
+      feedbackId: feedback.$id,
+    })
+  }
+
+  const feedbackOpenHandler = (feedback: FeedbackModel) => {
+    onFeedbackOpen({
       feedbackId: feedback.$id,
     })
   }
@@ -135,7 +143,11 @@ export const AdminFeedbacksTable = ({
             <TableRow key={feedback.$id}>
               <TableBodyCell>
                 <div className={classNames.buttonsWrapper}>
-                  <Checkbox checked={feedback.isPublished} />
+                  <Checkbox
+                    checked={feedback.isPublished}
+                    disabled={disabled}
+                    onCheckedChange={() => feedbackPublishHandler(feedback)}
+                  />
                 </div>
               </TableBodyCell>
               <TableBodyCell>
@@ -153,7 +165,13 @@ export const AdminFeedbacksTable = ({
                 </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Body2>{feedback.message}</Typography.Body2>
+                <Typography.Link2
+                  as={'p'}
+                  className={classNames.feedbackCell}
+                  onClick={() => feedbackOpenHandler(feedback)}
+                >
+                  {feedback.message}
+                </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
                 <Typography.Body2>
@@ -162,14 +180,6 @@ export const AdminFeedbacksTable = ({
               </TableBodyCell>
               <TableBodyCell>
                 <div className={classNames.buttonsWrapper}>
-                  <Button
-                    disabled={disabled}
-                    onClick={() => feedbackPublishHandler(feedback)}
-                    padding={false}
-                    title={t('FeedbacksTable.OptionsButtons.Publish.title')}
-                  >
-                    <BookCheck />
-                  </Button>
                   <Button
                     disabled={disabled}
                     onClick={() => feedbackDeleteHandler(feedback)}

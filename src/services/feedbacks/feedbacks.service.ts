@@ -1,8 +1,6 @@
 import {
   ChangePublishFeedbackRequest,
   ChangePublishFeedbackResponse,
-  ChangeReadFeedbackRequest,
-  ChangeReadFeedbackResponse,
   CreateFeedbackRequest,
   CreateFeedbackResponse,
   DeleteFeedbackRequest,
@@ -10,22 +8,6 @@ import {
   GetFeedbacksRequest,
   GetFeedbacksResponse,
 } from '@/app/api/feedbacks/feedbacks.types'
-import {
-  ChangePublishPostRequest,
-  ChangePublishPostResponse,
-  CreatePostRequest,
-  CreatePostResponse,
-  DeletePostRequest,
-  DeletePostResponse,
-  GetNotPublishedPostsRequest,
-  GetNotPublishedPostsResponse,
-  GetPostRequest,
-  GetPostResponse,
-  GetPostsRequest,
-  GetPostsResponse,
-  UpdatePostRequest,
-  UpdatePostResponse,
-} from '@/app/api/posts/posts.types'
 import { endpoints } from '@/common/constants/endpoints'
 import { baseApi } from '@/services/base-api'
 
@@ -90,21 +72,6 @@ export const feedbacksService = baseApi.injectEndpoints({
         url: endpoints.feedbacks_publish,
       }),
     }),
-    readFeedback: builder.mutation<ChangeReadFeedbackResponse, ChangeReadFeedbackRequest>({
-      invalidatesTags: ['Feedbacks'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled
-        } catch (error) {
-          console.error(error)
-        }
-      },
-      query: body => ({
-        body,
-        method: 'POST',
-        url: endpoints.feedbacks_read,
-      }),
-    }),
   }),
 })
 
@@ -113,5 +80,4 @@ export const {
   useCreateFeedbackMutation,
   useDeleteFeedbackMutation,
   usePublishFeedbackMutation,
-  useReadFeedbackMutation,
 } = feedbacksService

@@ -162,9 +162,13 @@
             "Cancel": "Отмена"
           },
           "PublishFeedback": {
-            "title": "Опубликовать этот отзыв?",
-            "Confirm": "Опубликовать",
+            "title": "Изменить видимость отзыва?",
+            "Confirm": "Изменить",
             "Cancel": "Отмена"
+          },
+          "ShowFeedback": {
+            "title": "Отзыв",
+            "Cancel": "Закрыть"
           }
         },
         "FeedbacksTable": {

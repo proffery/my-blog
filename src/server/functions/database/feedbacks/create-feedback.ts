@@ -6,27 +6,17 @@ export const createFeedback = async (payload: {
   email: string
   feedbackId: string
   isPublished: boolean
-  isRead: boolean
   locale: string
   message: string
   name: string
 }) => {
-  const {
-    authorId,
-    databasesInstance,
-    email,
-    feedbackId,
-    isPublished,
-    isRead,
-    locale,
-    message,
-    name,
-  } = payload
+  const { authorId, databasesInstance, email, feedbackId, isPublished, locale, message, name } =
+    payload
 
   return await databasesInstance.createDocument(
     `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
     `${process.env.NEXT_PUBLIC_APPWRITE_FEEDBACKS}`,
     feedbackId,
-    { authorId, email, isPublished, isRead, locale, message, name }
+    { authorId, email, isPublished, locale, message, name }
   )
 }

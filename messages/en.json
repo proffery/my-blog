@@ -150,9 +150,13 @@
             "Cancel": "Cancel"
           },
           "PublishFeedback": {
-            "title": "Do publish?",
-            "Confirm": "Publish",
+            "title": "Change publish status?",
+            "Confirm": "Confirm",
             "Cancel": "Cancel"
+          },
+          "ShowFeedback": {
+            "title": "Feedback",
+            "Cancel": "Close"
           }
         },
         "FeedbacksTable": {

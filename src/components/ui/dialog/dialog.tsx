@@ -11,9 +11,9 @@ export type DialogProps = {
   onConfirm?: () => void
 } & ModalProps
 export const Dialog = ({
-  cancelText = 'Cancel',
+  cancelText,
   children,
-  confirmText = 'OK',
+  confirmText,
   onCancel,
   onConfirm,
   onOpenChange,
@@ -36,8 +36,8 @@ export const Dialog = ({
     <Modal onOpenChange={handleCancel} {...rest}>
       {children}
       <div className={classNames.buttons}>
-        <Button onClick={handleCancel}>{cancelText}</Button>
-        <Button onClick={handleConfirm}>{confirmText}</Button>
+        {cancelText && <Button onClick={handleCancel}>{cancelText}</Button>}
+        {confirmText && <Button onClick={handleConfirm}>{confirmText}</Button>}
       </div>
     </Modal>
   )

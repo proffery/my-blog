@@ -3,6 +3,7 @@
 .tableContainer {
   overflow-x: auto;
   width: 100%;
+  max-width: 95vw;
 }
 
 .coverCell {
@@ -39,4 +40,11 @@
 
 .sortIconAsc {
   transform: rotate(270deg);
+}
+
+.feedbackCell {
+  overflow: hidden;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

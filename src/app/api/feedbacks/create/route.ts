@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
       email,
       feedbackId,
       isPublished: false,
-      isRead: false,
       locale,
       message,
       name,

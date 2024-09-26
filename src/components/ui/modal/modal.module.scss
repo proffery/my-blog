@@ -46,6 +46,8 @@ $border-radius-mobile: 8px;
   max-height: 85vh;
   padding: $padding-desktop;
 
+  word-wrap: break-word;
+
   background-color: var(--color-light);
   border: 1px solid var(--color-dark);
   border-radius: $border-radius-desktop;
@@ -74,8 +76,7 @@ $border-radius-mobile: 8px;
   cursor: pointer;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-self: flex-start;
 
   width: 32px;
   height: 32px;

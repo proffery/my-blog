@@ -5,11 +5,9 @@ import { useSelector } from 'react-redux'
 
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
-import withSuspense from '@/common/hocs/with-suspense'
 import { isRole } from '@/common/utils/is-role'
-import FeedbacksTab from '@/components/layouts/administrator-page/feedbacks-tab/feedbacks-tab'
+import { FeedbacksTab } from '@/components/layouts/administrator-page/feedbacks-tab/feedbacks-tab'
 import { Page } from '@/components/layouts/page/page'
-import { ModeratePostsTable } from '@/components/tables/moderate-posts-table/moderate-posts-table'
 import {
   TabContentItem,
   TabGroup,
@@ -17,32 +15,24 @@ import {
   TabList,
 } from '@/components/ui/tab-switcher/tab-switcher'
 import { Typography } from '@/components/ui/typography/typography'
-import { useAllFeedbacksQuery } from '@/services/feedbacks/feedbacks.service'
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import s from './administrator.module.scss'
-
-type AdminTabType = 'feedbacks' | 'users'
 
 function Administrator() {
   const classNames = {
     page: clsx(s.page),
+    tabList: clsx(s.tabList),
   }
   const userRoles = useSelector(selectUserRole)
   const router = useRouter()
 
-  const [tabValue, setTabValue] = useState<AdminTabType>('feedbacks')
+  const [tabValue, setTabValue] = useState('feedbacks')
 
   const t = useTranslations('AdministratorPage')
-  const locale = useLocale()
-
-  const { data: feedbacks } = useAllFeedbacksQuery({
-    locale,
-    sortBy: '$createdAt',
-  })
 
   useEffect(() => {
     if (!isRole(userRoles, 'Administrator')) {
@@ -50,15 +40,11 @@ function Administrator() {
     }
   }, [userRoles])
 
-  const tabChangeHandler = (value: string) => {
-    setTabValue(value as AdminTabType)
-  }
-
   return (
     <Page className={classNames.page}>
       <Typography.H1>{t('title')}</Typography.H1>
-      <TabGroup onValueChange={tabChangeHandler}>
-        <TabList>
+      <TabGroup defaultValue={'feedbacks'} onValueChange={value => setTabValue(value)}>
+        <TabList className={classNames.tabList}>
           <TabItem selected={tabValue === 'feedbacks'} value={'feedbacks'}>
             {t('AdminTabs.Feedbacks.button')}
           </TabItem>
@@ -67,15 +53,11 @@ function Administrator() {
           </TabItem>
         </TabList>
         <TabContentItem value={'feedbacks'}>
-          {feedbacks && feedbacks.documents.length > 0 ? (
-            <FeedbacksTab />
-          ) : (
-            <Typography.Caption>{t('AdminTabs.Feedbacks.Description')}</Typography.Caption>
-          )}
+          <FeedbacksTab />
         </TabContentItem>
         <TabContentItem value={'users'}>{t('AdminTabs.Users.Description')}</TabContentItem>
       </TabGroup>
     </Page>
   )
 }
-export default withSuspense(withRedux(Administrator))
+export default withRedux(Administrator)
