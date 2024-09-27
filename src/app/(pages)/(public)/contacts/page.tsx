@@ -17,6 +17,7 @@ import {
   usePublishedFeedbacksQuery,
 } from '@/services/feedbacks/feedbacks.service'
 import { selectUserId } from '@/services/user/user.selectors'
+import { useGetAvatarMetaQuery } from '@/services/users/users.service'
 import clsx from 'clsx'
 import { useLocale, useTranslations } from 'next-intl'
 

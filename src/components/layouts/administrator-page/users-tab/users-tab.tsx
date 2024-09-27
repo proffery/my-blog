@@ -1,0 +1,134 @@
+import { useState } from 'react'
+
+import { useFeedbacksFilters } from '@/components/layouts/administrator-page/use-feedbacks-filters'
+import { AdminFeedbacksTable } from '@/components/tables/admin-feedbacks-table/admin-feedbacks-table'
+import { Dialog } from '@/components/ui/dialog/dialog'
+import { Typography } from '@/components/ui/typography/typography'
+import {
+  useAllFeedbacksQuery,
+  useDeleteFeedbackMutation,
+  usePublishFeedbackMutation,
+} from '@/services/feedbacks/feedbacks.service'
+import { useLocale, useTranslations } from 'next-intl'
+
+export const UsersTab = () => {
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showPublishModal, setShowPublishModal] = useState(false)
+  const [tempFeedbackData, setTempFeedbackData] = useState({ feedback: '', feedbackId: '' })
+
+  const locale = useLocale()
+
+  const { setSort, setSortBy, sort, sortBy } = useFeedbacksFilters()
+
+  const { data: feedbacks } = useAllFeedbacksQuery({
+    locale,
+    sort: sort ?? 'desc',
+    sortBy: sortBy ?? '$createdAt',
+  })
+
+  const [deleteFeedback, { isLoading: isDeleteLoading }] = useDeleteFeedbackMutation()
+  const [changePublish, { isLoading: isPublishLoading }] = usePublishFeedbackMutation()
+
+  const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks')
+
+  const setDeletedFeedbackDataHandler = (data: { feedbackId: string }) => {
+    setTempFeedbackData({ feedback: '', feedbackId: data.feedbackId })
+    setShowDeleteModal(true)
+  }
+
+  const setOpenFeedbackDataHandler = (data: { feedbackId: string }) => {
+    const { feedbackId } = data
+
+    if (feedbacks) {
+      const feedbackIndex = feedbacks.documents.findIndex(document => document.$id === feedbackId)
+
+      if (feedbackIndex !== -1) {
+        setTempFeedbackData({ feedback: feedbacks.documents[feedbackIndex].message, feedbackId })
+      }
+    }
+
+    setShowFeedbackModal(true)
+  }
+
+  const setPublishPostDataHandler = (data: { feedbackId: string }) => {
+    setTempFeedbackData({ feedback: '', feedbackId: data.feedbackId })
+    setShowPublishModal(true)
+  }
+
+  const confirmDeleteHandler = async () => {
+    setShowDeleteModal(false)
+    await deleteFeedback({ feedbackId: tempFeedbackData.feedbackId }).unwrap()
+    setTempFeedbackData({ feedback: '', feedbackId: '' })
+  }
+
+  const cancelOpenFeedbackHandler = () => {
+    setShowFeedbackModal(false)
+    setTempFeedbackData({ feedback: '', feedbackId: '' })
+  }
+
+  const confirmPublishHandler = async () => {
+    setShowPublishModal(false)
+    const { feedbackId } = tempFeedbackData
+
+    if (feedbacks) {
+      const feedbackIndex = feedbacks.documents.findIndex(document => document.$id === feedbackId)
+
+      if (feedbackIndex !== -1) {
+        await changePublish({
+          feedbackId,
+          isPublished: !feedbacks.documents[feedbackIndex].isPublished,
+        }).unwrap()
+      }
+    }
+
+    setTempFeedbackData({ feedback: '', feedbackId: '' })
+  }
+
+  return (
+    <>
+      <Dialog
+        cancelText={t('Dialogs.DeleteFeedback.Cancel')}
+        confirmText={t('Dialogs.DeleteFeedback.Confirm')}
+        onCancel={() => setShowDeleteModal(false)}
+        onConfirm={confirmDeleteHandler}
+        onOpenChange={setShowDeleteModal}
+        open={showDeleteModal}
+        title={t('Dialogs.DeleteFeedback.title')}
+      />
+      <Dialog
+        cancelText={t('Dialogs.ShowFeedback.Cancel')}
+        onCancel={cancelOpenFeedbackHandler}
+        onOpenChange={setShowFeedbackModal}
+        open={showFeedbackModal}
+        title={t('Dialogs.ShowFeedback.title')}
+      >
+        {tempFeedbackData.feedback}
+      </Dialog>
+      <Dialog
+        cancelText={t('Dialogs.PublishFeedback.Cancel')}
+        confirmText={t('Dialogs.PublishFeedback.Confirm')}
+        onCancel={() => setShowPublishModal(false)}
+        onConfirm={confirmPublishHandler}
+        onOpenChange={setShowPublishModal}
+        open={showPublishModal}
+        title={t('Dialogs.PublishFeedback.title')}
+      />
+      {feedbacks && feedbacks.documents.length > 0 ? (
+        <AdminFeedbacksTable
+          disabled={isDeleteLoading || isPublishLoading}
+          feedbacks={feedbacks?.documents}
+          onFeedbackDelete={setDeletedFeedbackDataHandler}
+          onFeedbackOpen={setOpenFeedbackDataHandler}
+          onFeedbackPublish={setPublishPostDataHandler}
+          onSortByChange={setSortBy}
+          onSortChange={setSort}
+          sort={sort ?? 'desc'}
+          sortBy={sortBy ?? '$createdAt'}
+        />
+      ) : (
+        <Typography.Caption>{t('Description')}</Typography.Caption>
+      )}
+    </>
+  )
+}

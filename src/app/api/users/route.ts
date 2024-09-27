@@ -6,8 +6,12 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(request: NextRequest) {
   const { usersInstance } = await createUsersClient()
 
+  const { searchParams } = new URL(request.url)
+  const sort = searchParams.get('sort')
+  const sortBy = searchParams.get('sortBy')
+
   try {
-    const usersList = await allUsers({ usersInstance })
+    const usersList = await allUsers({ sort, sortBy, usersInstance })
 
     return NextResponse.json(usersList)
   } catch (error: unknown) {

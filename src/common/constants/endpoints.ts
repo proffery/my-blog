@@ -25,5 +25,6 @@ export const endpoints = {
   posts_update: `/api/posts/update`,
   users_all: `/api/users`,
   users_avatar: `/api/users/avatar`,
+  users_update_roles: `/api/users/update-roles`,
   users_user: `/api/users/user`,
 } as const

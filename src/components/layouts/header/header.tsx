@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { projectConstants } from '@/common/constants/projectConstants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
+import { useInitializeApp } from '@/common/hooks/use-initialize-app'
 import { useWidth } from '@/common/hooks/use-width'
 import { NavbarDesktop } from '@/components/layouts/header/navbar/navbar-desktop/navbar-desktop'
 import { NavbarMobile } from '@/components/layouts/header/navbar/navbar-mobile/navbar-mobile'
@@ -33,11 +34,7 @@ const Header = () => {
   const width = useWidth()
   const t = useTranslations('Components.Header')
 
-  const { data: meData } = useMeQuery()
-
-  useGetMyAvatarMetaQuery({
-    params: { date: meData?.user?.$createdAt ?? '', userId: meData?.user?.$id ?? '' },
-  })
+  const { meData } = useInitializeApp()
 
   return (
     <header className={classNames.root}>

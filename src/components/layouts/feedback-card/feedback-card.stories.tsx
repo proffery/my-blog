@@ -34,10 +34,3 @@ export const Default: Story = {
     feedbackData: mockData,
   },
 }
-
-export const WithAvatar: Story = {
-  args: {
-    avatarUrl: cover.src,
-    feedbackData: mockData,
-  },
-}

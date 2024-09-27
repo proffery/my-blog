@@ -9,11 +9,10 @@ import Link from 'next/link'
 import s from './feedback-card.module.scss'
 
 type Props = {
-  avatarUrl?: string
   feedbackData: FeedbackModel
 }
 
-export const FeedbackCard = ({ avatarUrl, feedbackData: { authorId, message, name } }: Props) => {
+export const FeedbackCard = ({ feedbackData: { authorId, message, name } }: Props) => {
   const classNames = {
     card: clsx(s.card),
     feedback: clsx(s.feedback),
@@ -24,7 +23,6 @@ export const FeedbackCard = ({ avatarUrl, feedbackData: { authorId, message, nam
       <Typography.Subtitle1 as={'p'} className={classNames.feedback}>
         {message}
       </Typography.Subtitle1>
-      <Avatar url={avatarUrl} />
       {authorId ? (
         <Typography.Subtitle2 as={Link} href={routes.account + '/' + authorId}>
           {name}

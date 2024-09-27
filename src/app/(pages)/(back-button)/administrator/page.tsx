@@ -7,6 +7,7 @@ import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { isRole } from '@/common/utils/is-role'
 import { FeedbacksTab } from '@/components/layouts/administrator-page/feedbacks-tab/feedbacks-tab'
+import { UsersTab } from '@/components/layouts/administrator-page/users-tab/users-tab'
 import { Page } from '@/components/layouts/page/page'
 import {
   TabContentItem,
@@ -55,7 +56,9 @@ function Administrator() {
         <TabContentItem value={'feedbacks'}>
           <FeedbacksTab />
         </TabContentItem>
-        <TabContentItem value={'users'}>{t('AdminTabs.Users.Description')}</TabContentItem>
+        <TabContentItem value={'users'}>
+          <UsersTab />
+        </TabContentItem>
       </TabGroup>
     </Page>
   )

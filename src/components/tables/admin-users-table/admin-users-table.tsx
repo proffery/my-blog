@@ -1,5 +1,5 @@
-import { FeedbackModel, FeedbacksSortBy } from '@/app/api/feedbacks/feedbacks.types'
 import { SortDirection } from '@/app/api/posts/posts.types'
+import { UserModel, UsersSortBy } from '@/app/api/users/users.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import { routes } from '@/common/constants/routes'
 import { formatDateLong } from '@/common/utils/format-date-long'
@@ -15,49 +15,40 @@ import {
 } from '@/components/ui/table/table'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
-import { Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { useFormatter, useLocale, useTranslations } from 'next-intl'
 
-import s from './admin-feedbacks-table.module.scss'
+import s from './admin-users-table.module.scss'
 
-type AdminFeedbacksTableColumns = {
-  key?: FeedbacksSortBy
+type AdminUsersTableColumns = {
+  key?: UsersSortBy
   title: string
 }
 
-type AdminFeedbacks = {
+type AdminUsers = {
   disabled?: boolean
-  feedbacks?: FeedbackModel[]
-  onFeedbackDelete: (data: { feedbackId: string }) => void
-  onFeedbackOpen: (data: { feedbackId: string }) => void
-  onFeedbackPublish: (data: { feedbackId: string }) => void
-  onSortByChange: (value: FeedbacksSortBy | null) => void
+  onSortByChange: (value: UsersSortBy | null) => void
   onSortChange: (value: SortDirection | null) => void
+  onUserRolesChange: (data: { userRoles: string[] }) => void
   sort: SortDirection
-  sortBy: FeedbacksSortBy
+  sortBy: UsersSortBy
+  users?: UserModel[]
 }
 
 export const AdminFeedbacksTable = ({
   disabled = false,
-  feedbacks,
-  onFeedbackDelete,
-  onFeedbackOpen,
-  onFeedbackPublish,
   onSortByChange,
   onSortChange,
+  onUserRolesChange,
   sort,
   sortBy,
-}: AdminFeedbacks) => {
+  users,
+}: AdminUsers) => {
   const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks')
   const format = useFormatter()
   const locale = useLocale()
 
-  const columns: AdminFeedbacksTableColumns[] = [
-    {
-      key: 'isPublished',
-      title: t('FeedbacksTable.Columns.Published'),
-    },
+  const columns: AdminUsersTableColumns[] = [
     {
       key: 'name',
       title: t('FeedbacksTable.Columns.Author'),
@@ -65,10 +56,6 @@ export const AdminFeedbacksTable = ({
     {
       key: 'email',
       title: t('FeedbacksTable.Columns.Email'),
-    },
-    {
-      key: 'message',
-      title: t('FeedbacksTable.Columns.Message'),
     },
     {
       key: '$createdAt',
@@ -81,33 +68,15 @@ export const AdminFeedbacksTable = ({
 
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
-    feedbackCell: clsx(s.feedbackCell),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     tableContainer: clsx(s.tableContainer),
-  }
-
-  const feedbackPublishHandler = (feedback: FeedbackModel) => {
-    onFeedbackPublish({
-      feedbackId: feedback.$id,
-    })
-  }
-  const feedbackDeleteHandler = (feedback: FeedbackModel) => {
-    onFeedbackDelete({
-      feedbackId: feedback.$id,
-    })
-  }
-
-  const feedbackOpenHandler = (feedback: FeedbackModel) => {
-    onFeedbackOpen({
-      feedbackId: feedback.$id,
-    })
   }
 
   const sortToggleHandler = () => {
     sort === 'asc' ? onSortChange('desc') : onSortChange('asc')
   }
 
-  const sortByHandler = (key: FeedbacksSortBy) => {
+  const sortByHandler = (key: UsersSortBy) => {
     key === sortBy ? sortToggleHandler() : onSortByChange(key)
   }
 
@@ -137,55 +106,28 @@ export const AdminFeedbacksTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {feedbacks?.map(feedback => (
-            <TableRow key={feedback.$id}>
+          {users?.map(user => (
+            <TableRow key={user.$id}>
               <TableBodyCell>
-                <div className={classNames.buttonsWrapper}>
-                  <Checkbox
-                    checked={feedback.isPublished}
-                    disabled={disabled}
-                    onCheckedChange={() => feedbackPublishHandler(feedback)}
-                  />
-                </div>
-              </TableBodyCell>
-              <TableBodyCell>
-                {feedback.authorId ? (
-                  <Typography.Link2 as={Link} href={`${routes.account}/${feedback.authorId}`}>
-                    {feedback.name}
-                  </Typography.Link2>
-                ) : (
-                  <Typography.Body2>{feedback.name}</Typography.Body2>
-                )}
-              </TableBodyCell>
-              <TableBodyCell>
-                <Typography.Link2 as={Link} href={`mailto:${feedback.email}`}>
-                  {feedback.email}
+                <Typography.Link2 as={Link} href={`${routes.account}/${user.$id}`}>
+                  {user.name}
                 </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
-                <Typography.Link2
-                  as={'p'}
-                  className={classNames.feedbackCell}
-                  onClick={() => feedbackOpenHandler(feedback)}
-                >
-                  {feedback.message}
+                <Typography.Link2 as={Link} href={`mailto:${user.email}`}>
+                  {user.email}
                 </Typography.Link2>
               </TableBodyCell>
               <TableBodyCell>
                 <Typography.Body2>
-                  {formatDateLong(feedback.$createdAt, locale, format)}
+                  {formatDateLong(user.$createdAt, locale, format)}
                 </Typography.Body2>
               </TableBodyCell>
               <TableBodyCell>
                 <div className={classNames.buttonsWrapper}>
-                  <Button
-                    disabled={disabled}
-                    onClick={() => feedbackDeleteHandler(feedback)}
-                    padding={false}
-                    title={t('FeedbacksTable.OptionsButtons.Delete.title')}
-                  >
-                    <Trash2 />
-                  </Button>
+                  <Checkbox />
+                  <Checkbox />
+                  <Checkbox />
                 </div>
               </TableBodyCell>
             </TableRow>

@@ -1,4 +1,4 @@
-import { User } from '@/app/api/users/users.types'
+import { UserModel } from '@/app/api/users/users.types'
 import { routes } from '@/common/constants/routes'
 import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
@@ -24,9 +24,9 @@ export const dynamicParams = true
 
 export const generateStaticParams = async () => {
   const { usersInstance } = await createUsersClient()
-  const usersData = await allUsers({ usersInstance })
+  const usersData = await allUsers({ sort: 'asc', sortBy: '$createdAt', usersInstance })
 
-  return usersData.users?.map((user: User) => ({
+  return usersData.users?.map((user: UserModel) => ({
     userId: user.$id,
   })) as any[]
 }

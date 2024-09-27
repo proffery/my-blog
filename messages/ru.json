@@ -150,7 +150,7 @@
     }
   },
   "AdministratorPage": {
-    "title": "Аминистрирование",
+    "title": "Аминистриратор",
     "AdminTabs": {
       "Feedbacks": {
         "button": "Отзывы",
