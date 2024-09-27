@@ -35,7 +35,7 @@ type AdminUsers = {
   users?: UserModel[]
 }
 
-export const AdminFeedbacksTable = ({
+export const AdminUsersTable = ({
   disabled = false,
   onSortByChange,
   onSortChange,

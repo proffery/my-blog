@@ -10,6 +10,11 @@
   min-width: 240px;
   min-height: 30px;
 
+  &:focus-visible {
+    border-radius: 5px;
+    outline: 2px solid var(--color-info);
+  }
+
   @media (width <= breakpoints.$mobile) {
     min-width: 210px;
     min-height: 20px;
