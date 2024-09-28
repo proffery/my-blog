@@ -25,3 +25,7 @@ export type UpdateUserRolesRequest = {
 export type UpdateUserRolesResponse = {
   roles: string[]
 }
+
+export type DeleteUserRequest = {
+  userId: string
+}

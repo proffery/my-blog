@@ -180,7 +180,29 @@
       },
       "Users": {
         "button": "Users",
-        "Description": "In development..."
+        "Description": "There are no users yet...",
+        "Dialogs": {
+          "DeleteUser": {
+            "title": "Delete this user?",
+            "Confirm": "Delete",
+            "Cancel": "Cancel"
+          }
+        },
+        "UsersTable": {
+          "Columns": {
+            "Name": "Name",
+            "Email": "Email",
+            "Created": "Created",
+            "Moderator": "Moderator",
+            "Writer": "Writer",
+            "Options": "Options"
+          },
+          "OptionsButtons": {
+            "Delete": {
+              "title": "Delete"
+            }
+          }
+        }
       }
     }
   },

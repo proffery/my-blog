@@ -21,7 +21,7 @@ export const FeedbacksTab = () => {
 
   const { setSort, setSortBy, sort, sortBy } = useFeedbacksFilters()
 
-  const { data: feedbacks } = useAllFeedbacksQuery({
+  const { data: feedbacks, isLoading: isFeedbacksLoading } = useAllFeedbacksQuery({
     locale,
     sort: sort ?? 'desc',
     sortBy: sortBy ?? '$createdAt',
@@ -32,27 +32,22 @@ export const FeedbacksTab = () => {
 
   const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks')
 
-  const setDeletedFeedbackDataHandler = (data: { feedbackId: string }) => {
-    setTempFeedbackData({ feedback: '', feedbackId: data.feedbackId })
+  const setDeletedFeedbackDataHandler = (data: { feedback: string; feedbackId: string }) => {
+    setTempFeedbackData({ feedback: data.feedback, feedbackId: data.feedbackId })
     setShowDeleteModal(true)
   }
 
-  const setOpenFeedbackDataHandler = (data: { feedbackId: string }) => {
-    const { feedbackId } = data
+  const setOpenFeedbackDataHandler = (data: { feedback: string; feedbackId: string }) => {
+    const { feedback, feedbackId } = data
 
-    if (feedbacks) {
-      const feedbackIndex = feedbacks.documents.findIndex(document => document.$id === feedbackId)
-
-      if (feedbackIndex !== -1) {
-        setTempFeedbackData({ feedback: feedbacks.documents[feedbackIndex].message, feedbackId })
-      }
-    }
-
+    setTempFeedbackData({ feedback, feedbackId })
     setShowFeedbackModal(true)
   }
 
-  const setPublishPostDataHandler = (data: { feedbackId: string }) => {
-    setTempFeedbackData({ feedback: '', feedbackId: data.feedbackId })
+  const setPublishPostDataHandler = (data: { feedback: string; feedbackId: string }) => {
+    const { feedback, feedbackId } = data
+
+    setTempFeedbackData({ feedback, feedbackId })
     setShowPublishModal(true)
   }
 
@@ -95,7 +90,9 @@ export const FeedbacksTab = () => {
         onOpenChange={setShowDeleteModal}
         open={showDeleteModal}
         title={t('Dialogs.DeleteFeedback.title')}
-      />
+      >
+        {tempFeedbackData.feedback}
+      </Dialog>
       <Dialog
         cancelText={t('Dialogs.ShowFeedback.Cancel')}
         onCancel={cancelOpenFeedbackHandler}
@@ -113,10 +110,12 @@ export const FeedbacksTab = () => {
         onOpenChange={setShowPublishModal}
         open={showPublishModal}
         title={t('Dialogs.PublishFeedback.title')}
-      />
+      >
+        {tempFeedbackData.feedback}
+      </Dialog>
       {feedbacks && feedbacks.documents.length > 0 ? (
         <AdminFeedbacksTable
-          disabled={isDeleteLoading || isPublishLoading}
+          disabled={isDeleteLoading || isPublishLoading || isFeedbacksLoading}
           feedbacks={feedbacks?.documents}
           onFeedbackDelete={setDeletedFeedbackDataHandler}
           onFeedbackOpen={setOpenFeedbackDataHandler}

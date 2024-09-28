@@ -150,7 +150,7 @@
     }
   },
   "AdministratorPage": {
-    "title": "Аминистриратор",
+    "title": "Администратор",
     "AdminTabs": {
       "Feedbacks": {
         "button": "Отзывы",
@@ -173,7 +173,7 @@
         },
         "FeedbacksTable": {
           "Columns": {
-            "Published": "В публикации",
+            "Published": "Опубликован",
             "Author": "Автор",
             "Email": "Почта",
             "Message": "Отзыв",
@@ -192,7 +192,29 @@
       },
       "Users": {
         "button": "Пользователи",
-        "Description": "В разработке..."
+        "Description": "Пока нет пользователей...",
+        "Dialogs": {
+          "DeleteUser": {
+            "title": "Удалить пользователя?",
+            "Confirm": "Удалить",
+            "Cancel": "Отмена"
+          }
+        },
+        "UsersTable": {
+          "Columns": {
+            "Name": "Имя",
+            "Email": "Почта",
+            "Created": "Создан",
+            "Moderator": "Модератор",
+            "Writer": "Писатель",
+            "Options": "Опции"
+          },
+          "OptionsButtons": {
+            "Delete": {
+              "title": "Удалить"
+            }
+          }
+        }
       }
     }
   },

@@ -28,7 +28,7 @@ export function LangSelect() {
             type={'submit'}
             variant={locale === currentLocale ? 'secondary' : 'primary'}
           >
-            {locale.toUpperCase()}
+            {locale}
           </Button>
         </form>
       ))}

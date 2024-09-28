@@ -10,6 +10,12 @@
   flex-direction: column;
   gap: 16px;
   align-items: flex-start;
+
+  padding: 32px;
+
+  border: 1px solid var(--color-placeholder);
+  border-radius: 8px;
+  box-shadow: var(--color-shadow);
 }
 
 .item {

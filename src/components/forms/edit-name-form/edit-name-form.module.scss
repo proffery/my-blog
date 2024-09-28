@@ -4,14 +4,14 @@ $height-desktop: 48px;
 $height-mobile: 40px;
 $input-padding-desktop: 12px 30px 12px 12px;
 $input-padding-mobile: 8px 30px 8px 8px;
-$icon-size: 20px;
+$icon-size: 24px;
 $button-padding: 2px;
 
 .span {
   display: flex;
   align-items: center;
 
-  height: $height-desktop;
+  height: fit-content;
 
   font-family: var(--font-family-primary), sans-serif;
   font-size: var(--font-size-xs);
@@ -47,9 +47,12 @@ $button-padding: 2px;
 
 .form {
   position: relative;
+
   display: flex;
   align-items: center;
+
   width: fit-content;
+  height: fit-content;
 }
 
 .input {

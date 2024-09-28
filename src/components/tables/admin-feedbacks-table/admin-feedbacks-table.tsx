@@ -29,9 +29,9 @@ type AdminFeedbacksTableColumns = {
 type AdminFeedbacks = {
   disabled?: boolean
   feedbacks?: FeedbackModel[]
-  onFeedbackDelete: (data: { feedbackId: string }) => void
-  onFeedbackOpen: (data: { feedbackId: string }) => void
-  onFeedbackPublish: (data: { feedbackId: string }) => void
+  onFeedbackDelete: (data: { feedback: string; feedbackId: string }) => void
+  onFeedbackOpen: (data: { feedback: string; feedbackId: string }) => void
+  onFeedbackPublish: (data: { feedback: string; feedbackId: string }) => void
   onSortByChange: (value: FeedbacksSortBy | null) => void
   onSortChange: (value: SortDirection | null) => void
   sort: SortDirection
@@ -49,33 +49,33 @@ export const AdminFeedbacksTable = ({
   sort,
   sortBy,
 }: AdminFeedbacks) => {
-  const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks')
+  const t = useTranslations('AdministratorPage.AdminTabs.Feedbacks.FeedbacksTable')
   const format = useFormatter()
   const locale = useLocale()
 
   const columns: AdminFeedbacksTableColumns[] = [
     {
       key: 'isPublished',
-      title: t('FeedbacksTable.Columns.Published'),
+      title: t('Columns.Published'),
     },
     {
       key: 'name',
-      title: t('FeedbacksTable.Columns.Author'),
+      title: t('Columns.Author'),
     },
     {
       key: 'email',
-      title: t('FeedbacksTable.Columns.Email'),
+      title: t('Columns.Email'),
     },
     {
       key: 'message',
-      title: t('FeedbacksTable.Columns.Message'),
+      title: t('Columns.Message'),
     },
     {
       key: '$createdAt',
-      title: t('FeedbacksTable.Columns.Created'),
+      title: t('Columns.Created'),
     },
     {
-      title: t('FeedbacksTable.Columns.Options'),
+      title: t('Columns.Options'),
     },
   ]
 
@@ -88,17 +88,20 @@ export const AdminFeedbacksTable = ({
 
   const feedbackPublishHandler = (feedback: FeedbackModel) => {
     onFeedbackPublish({
+      feedback: feedback.message,
       feedbackId: feedback.$id,
     })
   }
   const feedbackDeleteHandler = (feedback: FeedbackModel) => {
     onFeedbackDelete({
+      feedback: feedback.message,
       feedbackId: feedback.$id,
     })
   }
 
   const feedbackOpenHandler = (feedback: FeedbackModel) => {
     onFeedbackOpen({
+      feedback: feedback.message,
       feedbackId: feedback.$id,
     })
   }
@@ -182,7 +185,7 @@ export const AdminFeedbacksTable = ({
                     disabled={disabled}
                     onClick={() => feedbackDeleteHandler(feedback)}
                     padding={false}
-                    title={t('FeedbacksTable.OptionsButtons.Delete.title')}
+                    title={t('OptionsButtons.Delete.title')}
                   >
                     <Trash2 />
                   </Button>
