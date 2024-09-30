@@ -4,18 +4,26 @@
     "description": "Search posts by filters",
     "Filters": {
       "SearchInput": {
-        "label": "Search in titles",
+        "label": "Search in text:",
         "placeholder": "photography trends"
       },
       "TabSwitcher": {
-        "label": "Show posts",
-        "item1": "All",
-        "item2": "My"
+        "label": "show posts:",
+        "item1": "all",
+        "item2": "my"
       },
       "SortButton": {
-        "label": "Sort",
-        "item1": "new",
-        "item2": "old"
+        "label": "direction:",
+        "item1": "desc",
+        "item2": "asc"
+      },
+      "SortBy": {
+        "label": "sort by:",
+        "item1": "created",
+        "item2": "updated",
+        "item3": "author",
+        "item4": "title",
+        "item5": "views"
       }
     },
     "Dialogs": {
@@ -54,8 +62,7 @@
     }
   },
   "HomePage": {
-    "title1": "Stay inspired with Street Photo World articles",
-    "title2": "Popular",
+    "title": "Stay inspired with Street Photo World articles",
     "description": "“If your pictures aren't good enough, you aren't close enough.” - Robert Capa",
     "LatestSection": {
       "title": "Latest blog posts:",
@@ -64,7 +71,9 @@
       }
     },
     "PopularSection": {
-      "title": "Most views articles:"
+      "title1": "Popular",
+      "title2": "Most views articles:",
+      "button": "View all"
     }
   },
   "MyAccountPage": {
@@ -125,6 +134,7 @@
         "Created": "Created",
         "Updated": "Updated",
         "Author": "Author",
+        "Views": "Views",
         "Options": "Options"
       },
       "OptionsButtons": {

@@ -4,7 +4,7 @@ import { LastPostCard } from '@/components/layouts/home-page/last-section/last-p
 import { OtherPostCard } from '@/components/layouts/home-page/last-section/other-posts-card/other-posts-card'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
-import { paginatedPostsByCreate } from '@/server/functions/database/posts/paginated-posts-by-create'
+import { paginatedPosts } from '@/server/functions/database/posts/paginated-posts'
 import clsx from 'clsx'
 import { getLocale, getTranslations } from 'next-intl/server'
 
@@ -24,12 +24,13 @@ export const LastSection = async () => {
   const locale = await getLocale()
 
   const { databasesInstance } = await createDatabaseClient()
-  const { documents } = (await paginatedPostsByCreate({
+  const { documents } = (await paginatedPosts({
     databasesInstance,
     limit: projectConstants.NumberPostsForLastSection,
     locale,
     offset: 0,
     sort: null,
+    sortBy: null,
   })) as GetPostsResponse
 
   return (

@@ -1,5 +1,6 @@
 import { PostModel, PostsSortBy, SortDirection } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
+import defaultImage from '@/assets/images/no-image.svg'
 import { routes } from '@/common/constants/routes'
 import { formatDateLong } from '@/common/utils/format-date-long'
 import { Button } from '@/components/ui/button/button'
@@ -71,12 +72,17 @@ export const ModeratePostsTable = ({
       title: t('Columns.Author'),
     },
     {
+      key: 'views',
+      title: t('Columns.Views'),
+    },
+    {
       title: t('Columns.Options'),
     },
   ]
 
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
+    cell: clsx(s.cell),
     cover: clsx(s.cover),
     coverCell: clsx(s.coverCell),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
@@ -138,12 +144,12 @@ export const ModeratePostsTable = ({
                 <Image
                   alt={post.title}
                   className={classNames.cover}
-                  height={32}
-                  src={post.cover ? post.cover : '/images/no-image.svg'}
-                  width={32}
+                  height={60}
+                  src={post.cover ? post.cover : defaultImage}
+                  width={60}
                 />
               </TableBodyCell>
-              <TableBodyCell>
+              <TableBodyCell className={classNames.cell}>
                 <Typography.Link2 as={Link} href={`${routes.post}${post.$id}`}>
                   {post.title}
                 </Typography.Link2>
@@ -158,10 +164,15 @@ export const ModeratePostsTable = ({
                   {formatDateLong(post.$updatedAt, locale, format)}
                 </Typography.Body2>
               </TableBodyCell>
-              <TableBodyCell>
+              <TableBodyCell className={classNames.cell}>
                 <Typography.Link2 as={Link} href={`${routes.account}/${post.authorId}`}>
                   {post.authorName}
                 </Typography.Link2>
+              </TableBodyCell>
+              <TableBodyCell>
+                <div className={classNames.buttonsWrapper}>
+                  <Typography.Body2>{post.views}</Typography.Body2>
+                </div>
               </TableBodyCell>
               <TableBodyCell>
                 <div className={classNames.buttonsWrapper}>

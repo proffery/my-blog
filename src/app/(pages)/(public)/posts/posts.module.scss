@@ -2,12 +2,8 @@
 @use '@/styles/animations' as animations;
 
 .page {
-  gap: 64px;
+  gap: 32px;
   width: 100%;
-
-  @media (width <= breakpoints.$mobile) {
-    gap: 32px;
-  }
 }
 
 .sortIcon {
@@ -25,23 +21,51 @@
 }
 
 .filtersWrapper {
+  position: relative;
+
+  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
 
   width: 100%;
+  height: 250px;
+  padding: 32px;
+
+  transition: all 0.2s;
+
+  label {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-light) !important;
+  }
 
   @media (width <= breakpoints.$mobile) {
     gap: 8px;
+    padding: 8px;
   }
+}
+
+.filtersWrapperCollapsed {
+  height: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.filtersWrapperBackgroundImage {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+
+  background-size: cover;
 }
 
 .posts {
   display: flex;
   flex-wrap: wrap;
-  gap: 80px 32px;
+  gap: 32px;
   align-items: flex-start;
   justify-content: center;
 

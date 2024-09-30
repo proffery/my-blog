@@ -51,7 +51,7 @@ export const NavbarMobile = ({ meData }: Props) => {
 
   const handleLogout = async () => {
     await logout().unwrap()
-    router.push(routes.login)
+    router.push(routes.base)
   }
 
   return (

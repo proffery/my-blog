@@ -4,7 +4,7 @@ import { Page } from '@/components/layouts/page/page'
 import { Avatar } from '@/components/ui/avatar/avatar'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
-import { paginatedPostsByCreate } from '@/server/functions/database/posts/paginated-posts-by-create'
+import { paginatedPosts } from '@/server/functions/database/posts/paginated-posts'
 import { getAvatarMeta } from '@/server/functions/storage/get-avatar-meta'
 import { allUsers } from '@/server/functions/users/all-users'
 import { userById } from '@/server/functions/users/user-by-id'
@@ -53,14 +53,15 @@ export default async function AccountById(props: Props) {
     redirect(routes.profileNotFound)
   })
 
-  const userPosts = await paginatedPostsByCreate({
+  const userPosts = await paginatedPosts({
     authorId: userId,
     databasesInstance,
     limit: 9999999,
     locale,
     offset: 0,
-    sort: 'desc',
-    titleSearch: '',
+    search: '',
+    sort: null,
+    sortBy: null,
   })
 
   let userAvatarUrl

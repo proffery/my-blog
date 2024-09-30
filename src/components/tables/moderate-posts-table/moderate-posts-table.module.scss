@@ -9,9 +9,16 @@
   text-align: center;
 }
 
+.cell {
+  overflow: hidden;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .cover {
   width: auto;
-  max-height: 32px;
+  max-height: 60px;
   object-fit: fill;
 }
 

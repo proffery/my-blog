@@ -1,5 +1,3 @@
-@use '@/styles/animations' as animations;
-
 .card {
   display: flex;
   flex-direction: column;
@@ -7,8 +5,6 @@
   width: 100%;
   max-width: 100%;
   padding-bottom: 8px;
-
-  @include animations.bottom-line-hover;
 }
 
 .cover {

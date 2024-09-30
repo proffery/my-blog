@@ -1,0 +1,134 @@
+@use '@/styles/breakpoints';
+@use '@/styles/animations' as animations;
+
+$height-desktop: 48px;
+$height-mobile: 40px;
+$options-height: 300px;
+$radius: 5px;
+$padding-desktop: 12px 24px;
+$padding-mobile: 8px 20px;
+
+.icon {
+  transform-origin: center;
+  transform: rotate(90deg);
+
+  width: 12px;
+  height: 12px;
+
+  color: var(--color-dark);
+
+  transition: transform 0.2s ease-in-out;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.trigger {
+  all: unset;
+
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: $height-desktop;
+  padding: $padding-desktop;
+
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xl);
+  color: inherit;
+  white-space: nowrap;
+
+  background-color: var(--color-light);
+  border: 1px solid var(--color-dark);
+  border-radius: $radius;
+
+  &[data-state='open'] {
+    background-color: var(--color-light);
+
+    .icon {
+      transform: rotate(270deg);
+    }
+  }
+
+  &:focus-visible,
+  &:hover {
+    outline: 2px solid var(--color-info);
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: var(--color-light);
+    }
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    height: $height-mobile;
+    padding: $padding-mobile;
+    font-size: var(--font-size-xxs);
+  }
+}
+
+.content {
+  z-index: 9999;
+
+  overflow: hidden auto;
+
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  padding: $padding-desktop;
+
+  background-color: var(--color-light);
+  border: 1px solid var(--color-placeholder);
+  border-radius: $radius;
+  box-shadow: var(--color-shadow);
+
+  @media (width <= breakpoints.$mobile) {
+    padding: $padding-mobile;
+  }
+}
+
+.item {
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: $height-desktop;
+
+  white-space: nowrap;
+
+  background-color: var(--color-light);
+
+  &:hover,
+  &:focus {
+    color: var(--color-primary-500);
+    outline: none;
+  }
+
+  @media (width <= breakpoints.$mobile) {
+    height: $height-mobile;
+  }
+}
+
+.value {
+  overflow: hidden;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

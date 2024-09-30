@@ -24,7 +24,7 @@ export type GetNotPublishedPostsRequest = {
   sortBy: PostsSortBy
 }
 
-export type PostsSortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title'
+export type PostsSortBy = '$createdAt' | '$updatedAt' | 'authorName' | 'title' | 'views'
 
 export type UpdatePostResponse = PostModel
 export type UpdatePostRequest = {
@@ -59,4 +59,5 @@ export type GetPostsRequest = {
   page?: string
   search?: string
   sort?: SortDirection
+  sortBy?: PostsSortBy
 }

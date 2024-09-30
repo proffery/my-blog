@@ -81,7 +81,7 @@ export const AdminFeedbacksTable = ({
 
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
-    feedbackCell: clsx(s.feedbackCell),
+    cell: clsx(s.cell),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     tableContainer: clsx(s.tableContainer),
   }
@@ -151,13 +151,13 @@ export const AdminFeedbacksTable = ({
                   />
                 </div>
               </TableBodyCell>
-              <TableBodyCell>
+              <TableBodyCell className={classNames.cell}>
                 {feedback.authorId ? (
                   <Typography.Link2 as={Link} href={`${routes.account}/${feedback.authorId}`}>
                     {feedback.name}
                   </Typography.Link2>
                 ) : (
-                  <Typography.Body2>{feedback.name}</Typography.Body2>
+                  <Typography.Body2 className={classNames.cell}>{feedback.name}</Typography.Body2>
                 )}
               </TableBodyCell>
               <TableBodyCell>
@@ -168,7 +168,7 @@ export const AdminFeedbacksTable = ({
               <TableBodyCell>
                 <Typography.Link2
                   as={'p'}
-                  className={classNames.feedbackCell}
+                  className={classNames.cell}
                   onClick={() => feedbackOpenHandler(feedback)}
                 >
                   {feedback.message}

@@ -30,7 +30,7 @@ export const NavbarDesktop = ({ meData }: Props) => {
 
   const handleLogout = async () => {
     await logout().unwrap()
-    router.push(routes.login)
+    router.push(routes.base)
   }
 
   const t = useTranslations('Components.Header.Navbar')

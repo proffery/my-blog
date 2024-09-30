@@ -9,9 +9,9 @@
 
 .postsContainer {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1.25fr 1fr;
   grid-template-rows: auto auto auto;
-  gap: 32px;
+  gap: 16px;
 
   @media (width <= breakpoints.$mobile) {
     grid-template-columns: 1fr;

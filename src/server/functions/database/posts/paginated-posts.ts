@@ -1,15 +1,16 @@
 import { Databases, Query } from 'node-appwrite'
 
-export const paginatedPostsByCreate = async (payload: {
+export const paginatedPosts = async (payload: {
   authorId?: null | string
   databasesInstance: Databases
   limit: number
   locale: string
   offset: number
+  search?: string
   sort: null | string
-  titleSearch?: string
+  sortBy: null | string
 }) => {
-  const { authorId, databasesInstance, limit, locale, offset, sort, titleSearch } = payload
+  const { authorId, databasesInstance, limit, locale, offset, search, sort, sortBy } = payload
 
   return await databasesInstance.listDocuments(
     `${process.env.NEXT_PUBLIC_APPWRITE_DB}`,
@@ -17,9 +18,11 @@ export const paginatedPostsByCreate = async (payload: {
     [
       Query.limit(limit),
       Query.offset(offset),
-      sort === 'asc' ? Query.orderAsc('$createdAt') : Query.orderDesc('$createdAt'),
+      sort === 'asc'
+        ? Query.orderAsc(sortBy ?? '$createdAt')
+        : Query.orderDesc(sortBy ?? '$createdAt'),
       authorId ? Query.equal('authorId', [authorId]) : Query.equal('isPublished', [true]),
-      Query.contains('title', titleSearch ?? ''),
+      Query.contains('post', search ?? ''),
       Query.equal('locale', locale),
     ]
   )

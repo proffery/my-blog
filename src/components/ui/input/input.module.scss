@@ -68,6 +68,7 @@ $radius: 5px;
 
 .primary {
   color: var(--color-dark);
+  background-color: var(--color-light);
 
   &.disabled:hover {
     cursor: initial;

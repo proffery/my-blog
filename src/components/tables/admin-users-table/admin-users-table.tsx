@@ -79,6 +79,7 @@ export const AdminUsersTable = ({
 
   const classNames = {
     buttonsWrapper: clsx(s.buttonsWrapper),
+    cell: clsx(s.cell),
     emailConfirmedIcon: clsx(s.emailConfirmedIcon),
     sortIcon: clsx(s.sortIcon, sort === 'desc' ? s.sortIconDesc : s.sortIconAsc),
     tableContainer: clsx(s.tableContainer),
@@ -137,7 +138,7 @@ export const AdminUsersTable = ({
         <TableBody>
           {users?.map(user => (
             <TableRow key={user.$id}>
-              <TableBodyCell>
+              <TableBodyCell className={classNames.cell}>
                 <Typography.Link2 as={Link} href={`${routes.account}/${user.$id}`}>
                   {user.name}
                 </Typography.Link2>

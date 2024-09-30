@@ -1,5 +1,3 @@
-@use '@/styles/animations' as animations;
-
 .card {
   display: flex;
   flex-flow: row nowrap !important;
@@ -30,8 +28,6 @@
 }
 
 .content {
-  @include animations.bottom-line-hover;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;

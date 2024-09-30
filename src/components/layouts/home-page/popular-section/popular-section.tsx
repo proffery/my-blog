@@ -27,7 +27,7 @@ export const PopularSection = async () => {
 
   return (
     <section className={classNames.section} id={'popular'}>
-      <Typography.H3>{t('title')}</Typography.H3>
+      <Typography.H3>{t('title2')}</Typography.H3>
       <div className={classNames.postsContainer}>
         {documents.map(doc => (
           <PostsCard key={doc.$id} postData={doc} />
