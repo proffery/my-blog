@@ -1,3 +1,4 @@
+import headerTitleImage from '@/assets/images/home-page/header.webp'
 import popularTitleImage from '@/assets/images/home-page/popular.webp'
 import { routes } from '@/common/constants/routes'
 import { LastSection } from '@/components/layouts/home-page/last-section/last-section'
@@ -24,9 +25,18 @@ export default function Home() {
 
   return (
     <Page className={classNames.page}>
-      <div>
+      <div className={classNames.titleWithBackgroundWrapper}>
         <Typography.H1>{t('title')}</Typography.H1>
-        <Typography.Caption>{t('description')}</Typography.Caption>
+        <Typography.Caption style={{ fontWeight: 'var(--font-weight-bold)' }}>
+          {t('description')}
+        </Typography.Caption>
+        <Image
+          alt={'Title background'}
+          className={classNames.titleWithBackgroundImage}
+          height={250}
+          src={headerTitleImage}
+          width={1248}
+        />
       </div>
       <LastSection />
       <div className={classNames.titleWithBackgroundWrapper}>

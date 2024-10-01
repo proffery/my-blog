@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 import { MessageResponse } from '@/app/api/auth/auth.types'
 import {
   DeleteUserRequest,
@@ -11,6 +13,7 @@ import {
   UpdateUserRolesResponse,
 } from '@/app/api/users/users.types'
 import { endpoints } from '@/common/constants/endpoints'
+import { errorNotification } from '@/common/utils/errors-notification'
 import { baseApi } from '@/services/base-api'
 
 export const usersService = baseApi.injectEndpoints({
@@ -19,9 +22,11 @@ export const usersService = baseApi.injectEndpoints({
       invalidatesTags: ['Users'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(response.data.message)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -35,7 +40,7 @@ export const usersService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['Avatar'],
@@ -48,7 +53,7 @@ export const usersService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: ({ params: { userId } }) => ({
@@ -60,7 +65,7 @@ export const usersService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['Users'],
@@ -71,11 +76,13 @@ export const usersService = baseApi.injectEndpoints({
     }),
     updateUsersRoles: builder.mutation<UpdateUserRolesResponse, UpdateUserRolesRequest>({
       invalidatesTags: ['Users', 'Me'],
-      async onQueryStarted(_, { queryFulfilled }) {
+      async onQueryStarted({ roles }, { queryFulfilled }) {
         try {
           await queryFulfilled
+
+          toast.success(`The user roles is being updated. ${roles}`)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({

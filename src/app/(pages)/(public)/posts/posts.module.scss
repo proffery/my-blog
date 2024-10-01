@@ -37,7 +37,6 @@
   transition: all 0.2s;
 
   label {
-    font-weight: var(--font-weight-bold);
     color: var(--color-light) !important;
   }
 
@@ -60,6 +59,11 @@
   left: 0;
 
   background-size: cover;
+
+  @media (width <= breakpoints.$mobile) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .posts {

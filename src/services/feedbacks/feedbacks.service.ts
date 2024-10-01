@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 import {
   ChangePublishFeedbackRequest,
   ChangePublishFeedbackResponse,
@@ -11,6 +13,7 @@ import {
   GetPublishedFeedbacksResponse,
 } from '@/app/api/feedbacks/feedbacks.types'
 import { endpoints } from '@/common/constants/endpoints'
+import { errorNotification } from '@/common/utils/errors-notification'
 import { baseApi } from '@/services/base-api'
 
 export const feedbacksService = baseApi.injectEndpoints({
@@ -20,7 +23,7 @@ export const feedbacksService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['Feedbacks'],
@@ -31,11 +34,15 @@ export const feedbacksService = baseApi.injectEndpoints({
     }),
     createFeedback: builder.mutation<CreateFeedbackResponse, CreateFeedbackRequest>({
       invalidatesTags: ['Feedbacks'],
-      async onQueryStarted(_, { queryFulfilled }) {
+      async onQueryStarted({ email, name }, { queryFulfilled }) {
         try {
           await queryFulfilled
+
+          toast.success(
+            `${name}, your review has been delivered. If it requires a response, it will be sent to your email: ${email}`
+          )
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -49,8 +56,10 @@ export const feedbacksService = baseApi.injectEndpoints({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
           await queryFulfilled
+
+          toast.success(`Feedback has been deleted.`)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -61,11 +70,17 @@ export const feedbacksService = baseApi.injectEndpoints({
     }),
     publishFeedback: builder.mutation<ChangePublishFeedbackResponse, ChangePublishFeedbackRequest>({
       invalidatesTags: ['Feedbacks', 'PublishedFeedbacks'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ isPublished }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled
+
+          toast.success(
+            isPublished
+              ? 'The feedback is being published!'
+              : 'The feedback is no longer published.'
+          )
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -79,7 +94,7 @@ export const feedbacksService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['PublishedFeedbacks'],

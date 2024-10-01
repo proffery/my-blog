@@ -16,7 +16,6 @@
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  gap: 64px;
   align-items: center;
   justify-content: space-between;
 
@@ -25,9 +24,8 @@
   padding: 32px;
 
   @media (width <= breakpoints.$mobile) {
-    gap: 32px;
     justify-content: center;
-    height: 200px;
+    padding: 8px;
   }
 }
 
@@ -38,10 +36,19 @@
   left: 0;
 
   background-size: cover;
+
+  @media (width <= breakpoints.$mobile) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .titleWithBackgroundButton {
+  margin-left: 8px !important;
   opacity: 0.9;
+
+  @media (width <= breakpoints.$mobile) {
+  }
 }
 
 .titleWithBackground {

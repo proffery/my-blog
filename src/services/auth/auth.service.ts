@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 import {
   ChangeNameRequest,
   CreateAvatarRequest,
@@ -12,6 +14,7 @@ import {
   VerifyEmailRequest,
 } from '@/app/api/auth/auth.types'
 import { endpoints } from '@/common/constants/endpoints'
+import { errorNotification } from '@/common/utils/errors-notification'
 import { appActions } from '@/services/app/app.slice'
 import { baseApi } from '@/services/base-api'
 import { userActions } from '@/services/user/user.slice'
@@ -30,10 +33,12 @@ export const authService = baseApi.injectEndpoints({
         )
 
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(response.data.message)
         } catch (error) {
           patchResult?.undo()
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -49,7 +54,7 @@ export const authService = baseApi.injectEndpoints({
 
           dispatch(userActions.setAvatarUrl(response.data.avatarUrl))
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: ({ image, userId }) => {
@@ -68,9 +73,11 @@ export const authService = baseApi.injectEndpoints({
     deleteAvatar: builder.mutation<MessageResponse, DeleteAvatarRequest>({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(response.data.message)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         } finally {
           dispatch(userActions.setAvatarUrl(null))
         }
@@ -103,7 +110,7 @@ export const authService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -121,7 +128,7 @@ export const authService = baseApi.injectEndpoints({
           dispatch(userActions.setUserId(null))
           dispatch(userActions.setAvatarUrl(null))
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: () => ({
@@ -138,7 +145,7 @@ export const authService = baseApi.injectEndpoints({
           dispatch(userActions.setUserRole(response.data.user?.labels ?? ['']))
           dispatch(userActions.setUserId(response.data.user?.$id ?? ''))
         } catch (error) {
-          console.warn('Me request failed: ', error)
+          console.warn(error)
         } finally {
           dispatch(appActions.setAppIsInitialized(true))
         }
@@ -153,9 +160,11 @@ export const authService = baseApi.injectEndpoints({
       invalidatesTags: ['Me', 'Posts', 'Post'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(response.data.message)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -168,9 +177,11 @@ export const authService = baseApi.injectEndpoints({
     sendVerifyEmail: builder.mutation<MessageResponse, void>({
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(response.data.message)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: () => ({
@@ -183,9 +194,11 @@ export const authService = baseApi.injectEndpoints({
       invalidatesTags: ['Me'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(response.data.message)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({

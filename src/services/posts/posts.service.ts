@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 import {
   ChangePublishPostRequest,
   ChangePublishPostResponse,
@@ -15,6 +17,7 @@ import {
   UpdatePostResponse,
 } from '@/app/api/posts/posts.types'
 import { endpoints } from '@/common/constants/endpoints'
+import { errorNotification } from '@/common/utils/errors-notification'
 import { baseApi } from '@/services/base-api'
 
 export const postsService = baseApi.injectEndpoints({
@@ -23,9 +26,11 @@ export const postsService = baseApi.injectEndpoints({
       invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(`Post "${response.data.title}" created successfully.`)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -38,9 +43,11 @@ export const postsService = baseApi.injectEndpoints({
       invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(`Post deleted successfully.`)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -54,7 +61,7 @@ export const postsService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['NotPublishedPosts'],
@@ -68,7 +75,7 @@ export const postsService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['Post'],
@@ -81,7 +88,7 @@ export const postsService = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       providesTags: ['Posts'],
@@ -92,11 +99,15 @@ export const postsService = baseApi.injectEndpoints({
     }),
     publishPost: builder.mutation<ChangePublishPostResponse, ChangePublishPostRequest>({
       invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ isPublished }, { queryFulfilled }) {
         try {
           await queryFulfilled
+
+          toast.success(
+            isPublished ? 'The post is being published!' : 'The post is no longer published.'
+          )
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
@@ -109,9 +120,11 @@ export const postsService = baseApi.injectEndpoints({
       invalidatesTags: ['Posts', 'Post', 'NotPublishedPosts'],
       async onQueryStarted(_, { queryFulfilled }) {
         try {
-          await queryFulfilled
+          const response = await queryFulfilled
+
+          toast.success(`Post "${response.data.title}" updated successfully.`)
         } catch (error) {
-          console.error(error)
+          errorNotification(error)
         }
       },
       query: body => ({
