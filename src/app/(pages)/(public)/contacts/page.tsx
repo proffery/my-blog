@@ -1,14 +1,17 @@
 'use client'
 import { useSelector } from 'react-redux'
 
+import contactsTitleImage from '@/assets/images/contacts-page/contacts.jpg'
+import { constants } from '@/common/constants/constants'
 import withRedux from '@/common/hocs/with-redux'
 import { getErrorMessage } from '@/common/utils/get-error-message'
 import {
   ContactUsForm,
   ContactUsFormValues,
 } from '@/components/forms/contact-us-form/contact-us-form'
-import { FeedbackCard } from '@/components/layouts/feedback-card/feedback-card'
+import { FeedbackCard } from '@/components/layouts/contacts-page/feedback-card/feedback-card'
 import { Page } from '@/components/layouts/page/page'
+import { TitleWithBackground } from '@/components/layouts/title-with-background/title-with-background'
 import { SwiperComponent } from '@/components/ui/swiper/swiper'
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery } from '@/services/auth/auth.service'
@@ -72,6 +75,12 @@ function Contacts() {
           />
         </div>
       </div>
+      <TitleWithBackground
+        height={250}
+        imageAlt={'Contacts background'}
+        src={contactsTitleImage}
+        width={constants.maxContentWidth}
+      />
       {feedbacksData && feedbacksData.documents.length > 0 && (
         <SwiperComponent>
           {feedbacksData.documents.map(feedback => (

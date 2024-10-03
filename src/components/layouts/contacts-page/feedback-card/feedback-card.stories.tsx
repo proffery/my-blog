@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { FeedbackModel } from '@/app/api/feedbacks/feedbacks.types'
-import cover from '@/assets/images/test-cover.jpg'
-import { FeedbackCard } from '@/components/layouts/feedback-card/feedback-card'
+import { FeedbackCard } from '@/components/layouts/contacts-page/feedback-card/feedback-card'
 
 const mockData: FeedbackModel = {
   $collectionId: '1',

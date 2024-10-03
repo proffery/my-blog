@@ -11,6 +11,7 @@
   height: 100%;
 
   object-fit: cover;
+  filter: saturate(50%);
 
   transition:
     width,
@@ -31,7 +32,7 @@
 .card {
   position: relative;
   aspect-ratio: 5/2;
-  max-width: 394px;
+  max-width: 405px;
 
   &:hover {
     .cardImage {

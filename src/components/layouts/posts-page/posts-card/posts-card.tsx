@@ -49,9 +49,10 @@ export const PostsCard = ({ postData, ...rest }: Props) => {
         <Image
           alt={'Card cover'}
           className={classNames.cardImage}
-          height={380}
+          draggable={false}
+          height={405}
           src={cover ? cover : defaultImage}
-          width={380}
+          width={405}
         />
       </div>
       <div className={classNames.contentWrapper}>

@@ -5,13 +5,14 @@ import { useSelector } from 'react-redux'
 import { PostsSortBy } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import filtersBackgroundImage from '@/assets/images/posts-page/filters.webp'
-import { projectConstants } from '@/common/constants/projectConstants'
+import { constants } from '@/common/constants/constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import withSuspense from '@/common/hocs/with-suspense'
 import { isRole } from '@/common/utils/is-role'
 import { Page } from '@/components/layouts/page/page'
-import { PostsCard } from '@/components/layouts/posts-card/posts-card'
+import { PostsCard } from '@/components/layouts/posts-page/posts-card/posts-card'
+import { TitleWithBackground } from '@/components/layouts/title-with-background/title-with-background'
 import { Button } from '@/components/ui/button/button'
 import { Dialog } from '@/components/ui/dialog/dialog'
 import { Input } from '@/components/ui/input/input'
@@ -30,7 +31,6 @@ import {
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import { BookX, Edit3, Trash2 } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useDebouncedCallback } from 'use-debounce'
@@ -48,7 +48,6 @@ function Posts() {
     adminButtonsWrapper: clsx(s.adminButtonsWrapper),
     cardWrapper: clsx(s.cardWrapper),
     filtersWrapper: clsx(s.filtersWrapper, !showFilters && s.filtersWrapperCollapsed),
-    filtersWrapperBackgroundImage: clsx(s.filtersWrapperBackgroundImage),
     page: clsx(s.page),
     pagination: clsx(s.pagination),
     posts: clsx(s.posts),
@@ -91,9 +90,7 @@ function Posts() {
     sortBy: sortBy ?? '$createdAt',
   })
   const posts = postsData?.documents
-  const pagesCount = postsData
-    ? Math.ceil(postsData.total / projectConstants.NumberPostsForPagination)
-    : 1
+  const pagesCount = postsData ? Math.ceil(postsData.total / constants.NumberPostsForPagination) : 1
 
   const [deletePost, { isLoading: isDeleteLoading }] = useDeletePostMutation()
   const [changePublish, { isLoading: isPublishLoading }] = usePublishPostMutation()
@@ -158,50 +155,51 @@ function Posts() {
           </Typography.Caption>
         </Button>
         <div className={classNames.filtersWrapper}>
-          <Image
-            alt={'Posts filters background'}
-            className={classNames.filtersWrapperBackgroundImage}
+          <TitleWithBackground
             height={250}
+            imageAlt={'Posts filters background'}
+            position={'flex-end'}
             src={filtersBackgroundImage}
-            width={1248}
-          />
-          <Input
-            label={t('Filters.SearchInput.label')}
-            onChange={searchInputChangeHandler}
-            placeholder={t('Filters.SearchInput.placeholder')}
-            value={searchInput ?? ''}
-          />
-          {userRoles && (
-            <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
-              <TabList>
-                <TabItem selected={tabValue === 'all'} value={'all'}>
-                  {t('Filters.TabSwitcher.item1')}
-                </TabItem>
-                <TabItem selected={tabValue === 'my'} value={'my'}>
-                  {t('Filters.TabSwitcher.item2')}
-                </TabItem>
-              </TabList>
-            </TabGroup>
-          )}
-          <Select
-            defaultValue={sortByOptions[0].value}
-            label={t('Filters.SortBy.label')}
-            onValueChange={value => setSortBy(value as PostsSortBy)}
-            value={sortBy as string}
+            width={constants.maxContentWidth}
           >
-            {sortByOptions.map(option => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </Select>
-          <Label>
-            {t('Filters.SortButton.label')}
-            <Button onClick={sortChangeHandler}>
-              {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
-              <RightBracketIcon className={classNames.sortIcon} />
-            </Button>
-          </Label>
+            <Input
+              label={t('Filters.SearchInput.label')}
+              onChange={searchInputChangeHandler}
+              placeholder={t('Filters.SearchInput.placeholder')}
+              value={searchInput ?? ''}
+            />
+            {userRoles && (
+              <TabGroup label={t('Filters.TabSwitcher.label')} onValueChange={tabChangeHandler}>
+                <TabList>
+                  <TabItem selected={tabValue === 'all'} value={'all'}>
+                    {t('Filters.TabSwitcher.item1')}
+                  </TabItem>
+                  <TabItem selected={tabValue === 'my'} value={'my'}>
+                    {t('Filters.TabSwitcher.item2')}
+                  </TabItem>
+                </TabList>
+              </TabGroup>
+            )}
+            <Select
+              defaultValue={sortByOptions[0].value}
+              label={t('Filters.SortBy.label')}
+              onValueChange={value => setSortBy(value as PostsSortBy)}
+              value={sortBy as string}
+            >
+              {sortByOptions.map(option => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </Select>
+            <Label>
+              {t('Filters.SortButton.label')}
+              <Button onClick={sortChangeHandler}>
+                {sort === 'desc' ? t('Filters.SortButton.item1') : t('Filters.SortButton.item2')}
+                <RightBracketIcon className={classNames.sortIcon} />
+              </Button>
+            </Label>
+          </TitleWithBackground>
         </div>
       </div>
       <Dialog

@@ -1,4 +1,4 @@
-import { projectConstants } from '@/common/constants/projectConstants'
+import { constants } from '@/common/constants/constants'
 import { defaultLocale } from '@/i18n/config'
 import { createDatabaseClient } from '@/server/database-config'
 import { paginatedPosts } from '@/server/functions/database/posts/paginated-posts'
@@ -17,9 +17,8 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get('search') ?? ''
 
   const page = Number(searchParams.get('page')) - 1
-  const limit = projectConstants.NumberPostsForPagination
-  const offset =
-    page <= 0 || Number.isNaN(page) ? 0 : page * projectConstants.NumberPostsForPagination
+  const limit = constants.NumberPostsForPagination
+  const offset = page <= 0 || Number.isNaN(page) ? 0 : page * constants.NumberPostsForPagination
 
   try {
     const list = await paginatedPosts({

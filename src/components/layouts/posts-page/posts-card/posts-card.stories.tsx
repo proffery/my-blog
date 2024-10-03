@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { PostModel } from '@/app/api/posts/posts.types'
 import cover from '@/assets/images/test-cover.jpg'
-import { PostsCard } from '@/components/layouts/posts-card/posts-card'
+import { PostsCard } from '@/components/layouts/posts-page/posts-card/posts-card'
 
 const mockData: PostModel = {
   $collectionId: '1',

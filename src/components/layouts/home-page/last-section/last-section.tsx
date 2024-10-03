@@ -1,5 +1,5 @@
 import { GetPostsResponse } from '@/app/api/posts/posts.types'
-import { projectConstants } from '@/common/constants/projectConstants'
+import { constants } from '@/common/constants/constants'
 import { LastPostCard } from '@/components/layouts/home-page/last-section/last-post-card/last-post-card'
 import { OtherPostCard } from '@/components/layouts/home-page/last-section/other-posts-card/other-posts-card'
 import { Typography } from '@/components/ui/typography/typography'
@@ -13,6 +13,7 @@ import s from './last-section.module.scss'
 export const LastSection = async () => {
   const classNames = {
     otherPosts: clsx(s.otherPosts),
+    postFive: clsx(s.postFive),
     postFour: clsx(s.postFour),
     postOne: clsx(s.postOne),
     postThree: clsx(s.postThree),
@@ -26,7 +27,7 @@ export const LastSection = async () => {
   const { databasesInstance } = await createDatabaseClient()
   const { documents } = (await paginatedPosts({
     databasesInstance,
-    limit: projectConstants.NumberPostsForLastSection,
+    limit: constants.NumberPostsForLastSection,
     locale,
     offset: 0,
     sort: null,
@@ -41,6 +42,7 @@ export const LastSection = async () => {
         {documents[1] && <OtherPostCard className={classNames.postTwo} postData={documents[1]} />}
         {documents[2] && <OtherPostCard className={classNames.postThree} postData={documents[2]} />}
         {documents[3] && <OtherPostCard className={classNames.postFour} postData={documents[3]} />}
+        {documents[4] && <OtherPostCard className={classNames.postFive} postData={documents[4]} />}
       </div>
     </section>
   )

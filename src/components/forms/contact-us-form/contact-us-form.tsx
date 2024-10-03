@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { projectConstants } from '@/common/constants/projectConstants'
+import { constants } from '@/common/constants/constants'
 import { useWidth } from '@/common/hooks/use-width'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
@@ -106,11 +106,7 @@ export const ContactUsForm = ({
         resize={false}
         {...register('message')}
       />
-      <Button
-        fullWidth={width <= projectConstants.mobileWidth}
-        type={'submit'}
-        variant={'secondary'}
-      >
+      <Button fullWidth={width <= constants.mobileWidth} type={'submit'} variant={'secondary'}>
         {t('SubmitButton')}
       </Button>
     </form>

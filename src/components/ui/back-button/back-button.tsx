@@ -1,6 +1,6 @@
 'use client'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import { projectConstants } from '@/common/constants/projectConstants'
+import { constants } from '@/common/constants/constants'
 import { useWidth } from '@/common/hooks/use-width'
 import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
@@ -29,7 +29,7 @@ export const BackButton = () => {
         variant={'text'}
       >
         <RightBracketIcon className={classNames.icon} />
-        {width >= projectConstants.mobileWidth && (
+        {width >= constants.mobileWidth && (
           <Typography.Caption>{t('BackButton.Back')}</Typography.Caption>
         )}
       </Typography.Link1>

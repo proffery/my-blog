@@ -1,7 +1,7 @@
 'use client'
 import { useSelector } from 'react-redux'
 
-import { projectConstants } from '@/common/constants/projectConstants'
+import { constants } from '@/common/constants/constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { useInitializeApp } from '@/common/hooks/use-initialize-app'
@@ -13,7 +13,6 @@ import { InitializationLoader } from '@/components/ui/initialization-loader/init
 import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Logo } from '@/components/ui/logo/logo'
 import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
-import { useGetMyAvatarMetaQuery, useMeQuery } from '@/services/auth/auth.service'
 import { selectUserRole } from '@/services/user/user.selectors'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -43,7 +42,7 @@ const Header = () => {
       <nav className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>
-          {width > projectConstants.mobileWidth ? (
+          {width > constants.mobileWidth ? (
             <NavbarDesktop meData={meData} />
           ) : (
             <NavbarMobile meData={meData} />

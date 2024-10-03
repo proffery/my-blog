@@ -90,6 +90,7 @@ export default async function Post({ params: { postId } }: Props) {
         <Image
           alt={'Post cover'}
           className={classNames.cover}
+          draggable={false}
           height={900}
           src={postData.cover}
           width={900}

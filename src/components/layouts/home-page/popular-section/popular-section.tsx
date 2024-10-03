@@ -1,6 +1,6 @@
 import { GetPostsResponse } from '@/app/api/posts/posts.types'
-import { projectConstants } from '@/common/constants/projectConstants'
-import { PostsCard } from '@/components/layouts/posts-card/posts-card'
+import { constants } from '@/common/constants/constants'
+import { PostsCard } from '@/components/layouts/posts-page/posts-card/posts-card'
 import { Typography } from '@/components/ui/typography/typography'
 import { createDatabaseClient } from '@/server/database-config'
 import { mostViewsPosts } from '@/server/functions/database/posts/most-views-posts'
@@ -20,7 +20,7 @@ export const PopularSection = async () => {
   const { databasesInstance } = await createDatabaseClient()
   const { documents } = (await mostViewsPosts({
     databasesInstance,
-    limit: projectConstants.NumberPostsForPopularSection,
+    limit: constants.NumberPostsForPopularSection,
     locale,
     offset: 0,
   })) as GetPostsResponse

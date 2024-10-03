@@ -40,6 +40,7 @@ export const OtherPostCard = ({ className, postData, ...rest }: Props) => {
         <Image
           alt={'Last post'}
           className={classNames.cover}
+          draggable={false}
           height={150}
           src={cover ? cover : defaultImage}
           width={150}

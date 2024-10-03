@@ -23,6 +23,7 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
         <Image
           alt={'avatar'}
           className={classNames.image}
+          draggable={false}
           height={size === 'large' ? 200 : 30}
           src={url}
           width={size === 'large' ? 200 : 30}

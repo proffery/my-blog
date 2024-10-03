@@ -12,6 +12,7 @@ html {
 *,
 *::before,
 *::after {
+  user-select: none;
   box-sizing: border-box;
 
   // outline: 1px solid red;
