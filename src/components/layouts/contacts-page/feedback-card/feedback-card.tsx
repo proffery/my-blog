@@ -1,6 +1,5 @@
 import { FeedbackModel } from '@/app/api/feedbacks/feedbacks.types'
 import { routes } from '@/common/constants/routes'
-import { Avatar } from '@/components/ui/avatar/avatar'
 import { Card } from '@/components/ui/card/card'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
