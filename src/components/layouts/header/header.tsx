@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { constants } from '@/common/constants/constants'
@@ -32,13 +33,20 @@ const Header = () => {
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const width = useWidth()
   const t = useTranslations('Components.Header')
+  const [showLoader, setShowLoader] = useState(true)
 
   const { meData } = useInitializeApp()
+
+  useEffect(() => {
+    const timout = setTimeout(() => {
+      setShowLoader(false)
+    }, 5000)
+  }, [])
 
   return (
     <header className={classNames.root}>
       {isLoading && <LinearLoader />}
-      {!isAppInitialized && <InitializationLoader />}
+      {(!isAppInitialized || showLoader) && <InitializationLoader />}
       <nav className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>

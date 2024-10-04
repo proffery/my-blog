@@ -21,6 +21,7 @@ const nextConfig = {
         ],
     },
     trailingSlash: true,
+    transpilePackages: ['three']
 }
 
 export default withNextIntl(nextConfig)

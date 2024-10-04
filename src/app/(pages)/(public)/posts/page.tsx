@@ -90,7 +90,7 @@ function Posts() {
     sortBy: sortBy ?? '$createdAt',
   })
   const posts = postsData?.documents
-  const pagesCount = postsData ? Math.ceil(postsData.total / constants.NumberPostsForPagination) : 1
+  const pagesCount = postsData ? Math.ceil(postsData.total / constants.numberPostsForPagination) : 1
 
   const [deletePost, { isLoading: isDeleteLoading }] = useDeletePostMutation()
   const [changePublish, { isLoading: isPublishLoading }] = usePublishPostMutation()

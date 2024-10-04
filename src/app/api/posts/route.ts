@@ -17,8 +17,8 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get('search') ?? ''
 
   const page = Number(searchParams.get('page')) - 1
-  const limit = constants.NumberPostsForPagination
-  const offset = page <= 0 || Number.isNaN(page) ? 0 : page * constants.NumberPostsForPagination
+  const limit = constants.numberPostsForPagination
+  const offset = page <= 0 || Number.isNaN(page) ? 0 : page * constants.numberPostsForPagination
 
   try {
     const list = await paginatedPosts({

@@ -20,7 +20,7 @@ export const PopularSection = async () => {
   const { databasesInstance } = await createDatabaseClient()
   const { documents } = (await mostViewsPosts({
     databasesInstance,
-    limit: constants.NumberPostsForPopularSection,
+    limit: constants.numberPostsForPopularSection,
     locale,
     offset: 0,
   })) as GetPostsResponse

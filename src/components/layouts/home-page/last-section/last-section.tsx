@@ -27,7 +27,7 @@ export const LastSection = async () => {
   const { databasesInstance } = await createDatabaseClient()
   const { documents } = (await paginatedPosts({
     databasesInstance,
-    limit: constants.NumberPostsForLastSection,
+    limit: constants.numberPostsForLastSection,
     locale,
     offset: 0,
     sort: null,
