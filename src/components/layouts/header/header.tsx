@@ -35,18 +35,26 @@ const Header = () => {
   const t = useTranslations('Components.Header')
   const [showLoader, setShowLoader] = useState(true)
 
+  const [isTouched, setIsTouched] = useState(false)
+
   const { meData } = useInitializeApp()
 
   useEffect(() => {
-    setTimeout(() => {
+    const timout = setTimeout(() => {
       setShowLoader(false)
     }, 5000)
-  }, [])
+
+    return () => {
+      clearTimeout(timout)
+    }
+  }, [isTouched])
 
   return (
     <header className={classNames.root}>
       {isLoading && <LinearLoader />}
-      {(!isAppInitialized || showLoader) && <InitializationLoader />}
+      {(!isAppInitialized || showLoader) && (
+        <InitializationLoader isTouched={isTouched} setIsTouched={setIsTouched} />
+      )}
       <nav className={classNames.container}>
         <Logo />
         <div className={classNames.navWrapper}>

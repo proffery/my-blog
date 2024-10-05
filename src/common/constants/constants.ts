@@ -18,7 +18,7 @@ export const constants = {
       scale: 35,
     },
     mobile: {
-      position: [-9.5, -2, 0],
+      position: [-10.5, -2, 0],
       rotation: [5, 6.34, 0],
       scale: 30,
     },

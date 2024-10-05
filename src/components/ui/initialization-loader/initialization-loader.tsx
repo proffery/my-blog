@@ -11,7 +11,12 @@ import { Leva, useControls } from 'leva'
 
 import s from './initialization-loader.module.scss'
 
-export const InitializationLoader = () => {
+export type Props = {
+  isTouched: boolean
+  setIsTouched: (isTouched: boolean) => void
+}
+
+export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
   const width = useWidth()
   const [showAnimation, setShowAnimation] = useState(false)
   const classNames = {
@@ -40,7 +45,7 @@ export const InitializationLoader = () => {
       clearTimeout(timout1)
       clearTimeout(timout2)
     }
-  }, [])
+  }, [isTouched])
 
   const isMobile = width <= constants.mobileWidth
   const { desktop, mobile } = constants.initializationLoaderCoordinates
@@ -59,7 +64,11 @@ export const InitializationLoader = () => {
     <div className={classNames.background}>
       <audio id={'audio'} ref={audioRef} src={'/sounds/click.wav'} />
       {/*<Leva />*/}
-      <Canvas className={classNames.canvas}>
+      <Canvas
+        className={classNames.canvas}
+        onMouseDown={() => setIsTouched(!isTouched)}
+        onTouchMove={() => setIsTouched(!isTouched)}
+      >
         <Suspense fallback={<CanvasLoader />}>
           <PerspectiveCamera makeDefault position={[0, 0, 25]} />
           <Center>
