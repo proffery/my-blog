@@ -20,7 +20,7 @@ type GLTFResult = {
 } & GLTF
 
 export const OldPhoto = ({ avatarUrl, ...rest }: Props) => {
-  const { materials, nodes } = useGLTF('/models/old_photo.glb') as unknown as GLTFResult
+  const { materials, nodes } = useGLTF('/models/old_photo/scene.gltf') as unknown as GLTFResult
 
   const avatar = useTexture(avatarUrl)
 
@@ -50,4 +50,4 @@ export const OldPhoto = ({ avatarUrl, ...rest }: Props) => {
   )
 }
 
-useGLTF.preload('/models/old_photo.glb')
+useGLTF.preload('/models/old_photo/scene.gltf')
