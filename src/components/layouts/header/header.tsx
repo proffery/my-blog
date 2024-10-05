@@ -38,7 +38,7 @@ const Header = () => {
   const { meData } = useInitializeApp()
 
   useEffect(() => {
-    const timout = setTimeout(() => {
+    setTimeout(() => {
       setShowLoader(false)
     }, 5000)
   }, [])

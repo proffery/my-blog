@@ -1,6 +1,16 @@
-import { AvatarDefault } from '@/assets/icons/components/avatar-default'
+'use client'
+import { Suspense } from 'react'
+
+import avatarDefault from '@/assets/images/default-avatar.png'
+import { constants } from '@/common/constants/constants'
+import { useWidth } from '@/common/hooks/use-width'
+import { OldPhoto } from '@/components/models/polaroid-photo-sample/polaroid-photo-sample'
+import { AvatarCamera } from '@/components/ui/avatar/avatar-camera'
+import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 import clsx from 'clsx'
-import Image from 'next/image'
+import { Leva, useControls } from 'leva'
 
 import s from './avatar.module.scss'
 
@@ -12,25 +22,54 @@ type Props = {
 
 export const Avatar = ({ className, size = 'small', url }: Props) => {
   const classNames = {
+    canvas: clsx(s.canvas),
     container: clsx(s.container, s[size], className),
-    default: clsx(s.default, s[size + 'Default']),
     image: clsx(s.image, s[size], url && s.withImage),
   }
 
+  const width = useWidth()
+
+  const isMobile = width <= constants.mobileWidth
+  const { desktop, mobile } = constants.avatarCoordinates
+
+  // const x = useControls('InitializationLoader', {
+  //   positionX: { max: 50, min: -50, value: 0 },
+  //   positionY: { max: 50, min: -50, value: 0 },
+  //   positionZ: { max: 50, min: -50, value: 0 },
+  //   rotationX: { max: 5, min: -5, value: 0 },
+  //   rotationY: { max: 5, min: -5, value: 0 },
+  //   rotationZ: { max: 5, min: -5, value: 0 },
+  //   scale: { max: 10, min: -10, value: 1 },
+  // })
+
   return (
     <div className={classNames.container}>
-      {url ? (
-        <Image
-          alt={'avatar'}
-          className={classNames.image}
-          draggable={false}
-          height={size === 'large' ? 200 : 30}
-          src={url}
-          width={size === 'large' ? 200 : 30}
-        />
-      ) : (
-        <AvatarDefault className={classNames.default} />
-      )}
+      {/*<Leva />*/}
+      <Canvas className={classNames.canvas}>
+        <Suspense fallback={<CanvasLoader />}>
+          <PerspectiveCamera makeDefault position={[0, 0, 25]} />
+          <OldPhoto
+            avatarUrl={url ? url : avatarDefault.src}
+            // position={[x.positionX, x.positionY, x.positionZ]}
+            // rotation={[x.rotationX, x.rotationY, x.rotationZ]}
+            // scale={x.scale}
+            position={isMobile ? mobile.position : desktop.position}
+            // @ts-ignore
+            rotation={isMobile ? mobile.rotation : desktop.rotation}
+            scale={isMobile ? mobile.scale : desktop.scale}
+          />
+          <ambientLight intensity={2} />
+          <directionalLight intensity={1} position={[-7, -4, 30]} />
+        </Suspense>
+        {size === 'large' && <AvatarCamera />}
+        {size === 'large' && (
+          <OrbitControls
+            enableZoom={false}
+            maxAzimuthAngle={Math.PI / 8}
+            maxPolarAngle={Math.PI / 2}
+          />
+        )}
+      </Canvas>
     </div>
   )
 }

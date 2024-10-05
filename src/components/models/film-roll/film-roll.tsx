@@ -1,4 +1,4 @@
-import React, { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef } from 'react'
+import React, { ComponentPropsWithoutRef, ElementRef, useRef } from 'react'
 
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
@@ -17,11 +17,9 @@ type GLTFResult = {
 } & GLTF
 
 export const FilmRoll = (props: Props) => {
-  const { materials, nodes } = useGLTF(
-    '/models/35mm_film_roll/35mm_film_roll.glb'
-  ) as unknown as GLTFResult
+  const { materials, nodes } = useGLTF('/models/35mm_film_roll.glb') as unknown as GLTFResult
 
-  const ref = useRef<any>(null)
+  const ref = useRef<ElementRef<'group'>>(null)
 
   useFrame(() => {
     if (ref.current) {

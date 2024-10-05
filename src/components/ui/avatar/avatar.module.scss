@@ -1,9 +1,9 @@
 @use '@/styles/breakpoints';
 
 $avatar-small-desktop: 40px;
-$avatar-large-desktop: 300px;
+$avatar-large-desktop: 700px;
 $avatar-small-mobile: 30px;
-$avatar-large-mobile: 200px;
+$avatar-large-mobile: 300px;
 
 .container {
   position: relative;
@@ -15,7 +15,7 @@ $avatar-large-mobile: 200px;
 
   aspect-ratio: 1/1;
 
-  border-radius: 50%;
+  background-color: var(--color-light);
 }
 
 .small {
@@ -38,9 +38,6 @@ $avatar-large-mobile: 200px;
   min-height: $avatar-large-desktop;
   max-height: $avatar-large-desktop;
 
-  border-radius: 16px;
-  box-shadow: var(--color-shadow);
-
   @media (width <= breakpoints.$mobile) {
     min-width: $avatar-large-mobile;
     max-width: $avatar-large-mobile;
@@ -55,13 +52,7 @@ $avatar-large-mobile: 200px;
   object-position: center;
 }
 
-.default {
-  width: 60%;
-  height: 60%;
-}
-
-.smallDefault {
-  svg {
-    color: var(--color-second);
-  }
+.canvas {
+  width: 100%;
+  height: 100%;
 }
