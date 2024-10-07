@@ -2,8 +2,12 @@
 @use '@/styles/animations' as animations;
 
 .page {
-  gap: 32px;
+  gap: 48px;
   width: 100%;
+
+  @media (width <= breakpoints.$mobile) {
+    gap: 32px;
+  }
 }
 
 .sortIcon {
@@ -22,6 +26,7 @@
 
 .filtersWrapper {
   height: 250px;
+  margin-top: 16px;
   transition: all 0.2s;
 
   label {
@@ -61,17 +66,23 @@
 .adminButtonsWrapper {
   position: absolute;
   z-index: 99;
+  top: 16px;
 
   display: flex;
+  flex-direction: column;
   gap: 8px;
 
   padding: 8px;
 
-  opacity: 0.7;
+  opacity: 0.8;
+}
+
+.userButtonsWrapper {
+  right: 16px;
 }
 
 .adminButtonsWrapper {
-  left: 0;
+  left: 16px;
 
   button {
     border-color: var(--color-danger);
@@ -86,10 +97,6 @@
       color: var(--color-light);
     }
   }
-}
-
-.userButtonsWrapper {
-  right: 0;
 }
 
 .pagination {

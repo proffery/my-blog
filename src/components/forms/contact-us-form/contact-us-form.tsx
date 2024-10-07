@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { constants } from '@/common/constants/constants'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -37,7 +37,7 @@ export const ContactUsForm = ({
     form: clsx(s.form),
   }
 
-  const width = useWidth()
+  const isMobile = useIsMobile()
   const t = useTranslations('Components.Forms.ContactUs')
 
   const contactUsSchema = z.object({
@@ -106,7 +106,7 @@ export const ContactUsForm = ({
         resize={false}
         {...register('message')}
       />
-      <Button fullWidth={width <= constants.mobileWidth} type={'submit'} variant={'secondary'}>
+      <Button fullWidth={isMobile} type={'submit'} variant={'secondary'}>
         {t('SubmitButton')}
       </Button>
     </form>

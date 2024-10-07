@@ -1,7 +1,6 @@
 import { ElementRef, ReactNode, forwardRef } from 'react'
 
-import { constants } from '@/common/constants/constants'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
 
@@ -10,8 +9,7 @@ type Props = {
 }
 
 export const AvatarCamera = forwardRef<ElementRef<'group'>, Props>(({ children }: Props, ref) => {
-  const width = useWidth()
-  const isMobile = width <= constants.mobileWidth
+  const isMobile = useIsMobile()
 
   useFrame((state, delta) => {
     // @ts-ignore

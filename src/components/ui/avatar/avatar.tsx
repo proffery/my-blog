@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 import avatarDefault from '@/assets/images/default-avatar.png'
 import { constants } from '@/common/constants/constants'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { PhotoFrame } from '@/components/models/photo-frame/photo-frame'
 import { AvatarCamera } from '@/components/ui/avatar/avatar-camera'
 import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
@@ -27,9 +27,8 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
     image: clsx(s.image, s[size], url && s.withImage),
   }
 
-  const width = useWidth()
+  const isMobile = useIsMobile()
 
-  const isMobile = width <= constants.mobileWidth
   const { desktop, mobile } = constants.avatarCoordinates
 
   // const x = useControls('InitializationLoader', {
@@ -59,7 +58,7 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
             scale={isMobile ? mobile.scale : desktop.scale}
           />
           <ambientLight intensity={1} />
-          <directionalLight intensity={3} position={[-1, 1, 5]} />
+          <directionalLight intensity={5} position={[0, 4, 5]} />
         </Suspense>
         {size === 'large' && <AvatarCamera />}
         {size === 'large' && (

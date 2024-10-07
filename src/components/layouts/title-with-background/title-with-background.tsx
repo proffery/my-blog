@@ -1,5 +1,8 @@
+'use client'
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { Parallax } from 'react-scroll-parallax'
 
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import clsx from 'clsx'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
@@ -13,7 +16,7 @@ type Props = {
   position?: 'center' | 'flex-end' | 'flex-start' | 'space-between'
   src: StaticImport | string
   width: number
-} & ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<typeof Parallax>
 
 export const TitleWithBackground = ({
   children,
@@ -28,15 +31,21 @@ export const TitleWithBackground = ({
     titleWithBackgroundWrapper: clsx(s.titleWithBackgroundWrapper),
   }
 
+  const isMobile = useIsMobile()
+
   return (
-    <div
+    <Parallax
       className={classNames.titleWithBackgroundWrapper}
+      easing={'easeInQuad'}
+      scale={[1, 0.98]}
       style={{
         height: `${height}px`,
         justifyContent: position,
       }}
+      translateY={isMobile ? [-10, 16] : [-18, 24]}
     >
       {children}
+
       <Image
         alt={imageAlt}
         className={classNames.titleWithBackgroundImage}
@@ -44,6 +53,6 @@ export const TitleWithBackground = ({
         src={src}
         width={width}
       />
-    </div>
+    </Parallax>
   )
 }

@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react'
+import { Parallax } from 'react-scroll-parallax'
 
 import { PostModel } from '@/app/api/posts/posts.types'
 import defaultImage from '@/assets/images/no-image.svg'
@@ -16,7 +17,7 @@ import s from './posts-card.module.scss'
 
 type Props = {
   postData: PostModel
-} & ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<typeof Parallax>
 
 export const PostsCard = ({ postData, ...rest }: Props) => {
   const { $createdAt, $id, authorId, authorName, className, cover, isPublished, post, title } =

@@ -1,7 +1,7 @@
 import { ElementRef, Suspense, useEffect, useRef, useState } from 'react'
 
 import { constants } from '@/common/constants/constants'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { Camera } from '@/components/models/camera/camera'
 import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
 import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei'
@@ -17,7 +17,7 @@ export type Props = {
 }
 
 export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
-  const width = useWidth()
+  const isMobile = useIsMobile()
   const [showAnimation, setShowAnimation] = useState(false)
   const classNames = {
     background: clsx(s.background, showAnimation && s.animation),
@@ -46,7 +46,6 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
     }
   }, [isTouched])
 
-  const isMobile = width <= constants.mobileWidth
   const { desktop, mobile } = constants.initializationLoaderCoordinates
 
   // const x = useControls('InitializationLoader', {

@@ -1,7 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-export const useWidth = () => {
+import { constants } from '@/common/constants/constants'
+
+export const useIsMobile = () => {
   const [width, setWidth] = useState<number>(1000)
   const handleWindowResize = () => setWidth(window.innerWidth)
 
@@ -13,5 +15,5 @@ export const useWidth = () => {
     return () => window.removeEventListener('resize', handleWindowResize)
   }, [])
 
-  return width
+  return width <= constants.mobileWidth
 }

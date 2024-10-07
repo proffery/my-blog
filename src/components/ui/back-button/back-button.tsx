@@ -1,7 +1,6 @@
 'use client'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import { constants } from '@/common/constants/constants'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { Button } from '@/components/ui/button/button'
 import { Typography } from '@/components/ui/typography/typography'
 import clsx from 'clsx'
@@ -17,7 +16,7 @@ export const BackButton = () => {
     icon: clsx(s.icon),
   }
   const router = useRouter()
-  const width = useWidth()
+  const isMobile = useIsMobile()
   const t = useTranslations('Components')
 
   return (
@@ -29,9 +28,7 @@ export const BackButton = () => {
         variant={'text'}
       >
         <RightBracketIcon className={classNames.icon} />
-        {width >= constants.mobileWidth && (
-          <Typography.Caption>{t('BackButton.Back')}</Typography.Caption>
-        )}
+        {!isMobile && <Typography.Caption>{t('BackButton.Back')}</Typography.Caption>}
       </Typography.Link1>
     </div>
   )

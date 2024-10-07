@@ -1,3 +1,5 @@
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
+
 import { GetPostsResponse } from '@/app/api/posts/posts.types'
 import { constants } from '@/common/constants/constants'
 import { LastPostCard } from '@/components/layouts/home-page/last-section/last-post-card/last-post-card'

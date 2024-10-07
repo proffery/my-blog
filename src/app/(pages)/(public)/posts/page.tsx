@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { PostsSortBy } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
-import filtersBackgroundImage from '@/assets/images/posts-page/filters.webp'
+import filtersBackgroundImage from '@/assets/images/posts-page/filters.jpg'
 import { constants } from '@/common/constants/constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
@@ -158,7 +158,7 @@ function Posts() {
           <TitleWithBackground
             height={250}
             imageAlt={'Posts filters background'}
-            position={'flex-end'}
+            position={'flex-start'}
             src={filtersBackgroundImage}
             width={constants.maxContentWidth}
           >

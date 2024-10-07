@@ -6,7 +6,7 @@ import { constants } from '@/common/constants/constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { useInitializeApp } from '@/common/hooks/use-initialize-app'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { NavbarDesktop } from '@/components/layouts/header/navbar/navbar-desktop/navbar-desktop'
 import { NavbarMobile } from '@/components/layouts/header/navbar/navbar-mobile/navbar-mobile'
 import { Button } from '@/components/ui/button/button'
@@ -31,7 +31,7 @@ const Header = () => {
   const isLoading = useSelector(selectAppIsLoading)
   const isUserAuthenticated = useSelector(selectUserRole)
   const isAppInitialized = useSelector(selectAppIsInitialized)
-  const width = useWidth()
+  const isMobile = useIsMobile()
   const t = useTranslations('Components.Header')
   const [showLoader, setShowLoader] = useState(true)
 
@@ -58,11 +58,7 @@ const Header = () => {
         <FetchLoader loading={isLoading} />
         <Logo />
         <div className={classNames.navWrapper}>
-          {width > constants.mobileWidth ? (
-            <NavbarDesktop meData={meData} />
-          ) : (
-            <NavbarMobile meData={meData} />
-          )}
+          {!isMobile ? <NavbarDesktop meData={meData} /> : <NavbarMobile meData={meData} />}
           {!isUserAuthenticated && (
             <Button as={Link} href={routes.login}>
               {t('Login')}

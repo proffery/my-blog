@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 
 import { constants } from '@/common/constants/constants'
-import { useWidth } from '@/common/hooks/use-width'
+import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { FilmRoll } from '@/components/models/film-roll/film-roll'
 import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
 import { PerspectiveCamera } from '@react-three/drei'
@@ -18,8 +18,7 @@ export const FetchLoader = ({ loading = false }: Props) => {
   const classNames = {
     loader: clsx(s.loader, loading && s.loading),
   }
-  const width = useWidth()
-  const isMobile = width <= constants.mobileWidth
+  const isMobile = useIsMobile()
   const { desktop, mobile } = constants.linearLoaderCoordinates
 
   return (
