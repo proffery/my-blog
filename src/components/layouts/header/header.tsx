@@ -10,8 +10,8 @@ import { useWidth } from '@/common/hooks/use-width'
 import { NavbarDesktop } from '@/components/layouts/header/navbar/navbar-desktop/navbar-desktop'
 import { NavbarMobile } from '@/components/layouts/header/navbar/navbar-mobile/navbar-mobile'
 import { Button } from '@/components/ui/button/button'
+import { FetchLoader } from '@/components/ui/fetch-loader/fetch-loader'
 import { InitializationLoader } from '@/components/ui/initialization-loader/initialization-loader'
-import { LinearLoader } from '@/components/ui/linear-loader/linear-loader'
 import { Logo } from '@/components/ui/logo/logo'
 import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
 import { selectUserRole } from '@/services/user/user.selectors'
@@ -42,7 +42,7 @@ const Header = () => {
   useEffect(() => {
     const timout = setTimeout(() => {
       setShowLoader(false)
-    }, 5000)
+    }, 3000)
 
     return () => {
       clearTimeout(timout)
@@ -51,11 +51,11 @@ const Header = () => {
 
   return (
     <header className={classNames.root}>
-      {isLoading && <LinearLoader />}
       {(!isAppInitialized || showLoader) && (
         <InitializationLoader isTouched={isTouched} setIsTouched={setIsTouched} />
       )}
       <nav className={classNames.container}>
+        <FetchLoader loading={isLoading} />
         <Logo />
         <div className={classNames.navWrapper}>
           {width > constants.mobileWidth ? (

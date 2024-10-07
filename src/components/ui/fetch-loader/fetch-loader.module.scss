@@ -1,0 +1,35 @@
+@use '@/styles/breakpoints';
+
+@keyframes blink-anim {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.loader {
+  position: absolute;
+  z-index: 998;
+  bottom: -20%;
+  left: 120px;
+
+  width: 40px;
+  height: 30px;
+
+  @media (width <= breakpoints.$mobile) {
+    left: 95px;
+    width: 30px;
+    height: 20px;
+  }
+}
+
+.loading {
+  animation: blink-anim 0.7s linear infinite;
+}

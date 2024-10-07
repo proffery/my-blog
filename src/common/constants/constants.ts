@@ -1,26 +1,38 @@
 export const constants = {
   avatarCoordinates: {
     desktop: {
-      position: [0, -1, 0],
-      rotation: [0, 1.4, 0],
-      scale: 6.5,
+      position: [0, 0, 0],
+      rotation: [0, -0.2, 0],
+      scale: 100,
     },
     mobile: {
-      position: [0, -1, 0],
-      rotation: [-0.1, 1.4, 0],
-      scale: 6.5,
+      position: [0, 0, 0],
+      rotation: [0, -0.2, 0],
+      scale: 100,
     },
   },
   initializationLoaderCoordinates: {
     desktop: {
-      position: [-8, -3, 0],
-      rotation: [5, 6.52, 0],
-      scale: 35,
+      position: [-0, 0, 0],
+      rotation: [0, -0.5, 0],
+      scale: 20,
     },
     mobile: {
-      position: [-10.5, -2, 0],
-      rotation: [5, 6.34, 0],
-      scale: 30,
+      position: [-0, 0, 0],
+      rotation: [0, -0.5, 0],
+      scale: 10,
+    },
+  },
+  linearLoaderCoordinates: {
+    desktop: {
+      position: [-2, -7, 0],
+      rotation: [5, 6.45, 0],
+      scale: 60,
+    },
+    mobile: {
+      position: [-3, -7, 0],
+      rotation: [5, 6.45, 0],
+      scale: 65,
     },
   },
   maxContentWidth: 1248, // in px

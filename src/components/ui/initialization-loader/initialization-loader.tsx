@@ -2,7 +2,7 @@ import { ElementRef, Suspense, useEffect, useRef, useState } from 'react'
 
 import { constants } from '@/common/constants/constants'
 import { useWidth } from '@/common/hooks/use-width'
-import { FilmRoll } from '@/components/models/film-roll/film-roll'
+import { Camera } from '@/components/models/camera/camera'
 import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
 import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
@@ -21,7 +21,6 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
   const [showAnimation, setShowAnimation] = useState(false)
   const classNames = {
     background: clsx(s.background, showAnimation && s.animation),
-    canvas: clsx(s.canvas),
   }
 
   const audioRef = useRef<ElementRef<'audio'>>(null)
@@ -35,11 +34,11 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
   useEffect(() => {
     const timout1 = setTimeout(() => {
       setShowAnimation(true)
-    }, 2500)
+    }, 2700)
     const timout2 = setTimeout(() => {
       setShowAnimation(false)
       play()
-    }, 2700)
+    }, 2800)
 
     return () => {
       clearTimeout(timout1)
@@ -65,7 +64,6 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
       <audio id={'audio'} ref={audioRef} src={'/sounds/click.wav'} />
       {/*<Leva />*/}
       <Canvas
-        className={classNames.canvas}
         onMouseDown={() => setIsTouched(!isTouched)}
         onTouchMove={() => setIsTouched(!isTouched)}
       >
@@ -73,7 +71,7 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
           <PerspectiveCamera makeDefault position={[0, 0, 25]} />
           <Center>
             {!showAnimation && (
-              <FilmRoll
+              <Camera
                 position={isMobile ? mobile.position : desktop.position}
                 // @ts-ignore
                 rotation={isMobile ? mobile.rotation : desktop.rotation}
@@ -85,10 +83,10 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
             )}
           </Center>
 
-          <ambientLight intensity={1} />
-          <directionalLight intensity={4} position={[-4, 0.5, 0]} />
+          <ambientLight intensity={4} />
+          <directionalLight intensity={4} position={[-5, 5, -5]} />
         </Suspense>
-        <OrbitControls maxAzimuthAngle={Math.PI / 2} />
+        <OrbitControls enableZoom={false} maxAzimuthAngle={Math.PI / 2} />
       </Canvas>
     </div>
   )

@@ -23,7 +23,7 @@ export const FilmRoll = (props: Props) => {
 
   useFrame(() => {
     if (ref.current) {
-      ref.current.rotation.z += 0.01
+      ref.current.rotation.z += 0.002
     }
   })
 

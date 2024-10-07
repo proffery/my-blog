@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import avatarDefault from '@/assets/images/default-avatar.png'
 import { constants } from '@/common/constants/constants'
 import { useWidth } from '@/common/hooks/use-width'
-import { OldPhoto } from '@/components/models/polaroid-photo-sample/polaroid-photo-sample'
+import { PhotoFrame } from '@/components/models/photo-frame/photo-frame'
 import { AvatarCamera } from '@/components/ui/avatar/avatar-camera'
 import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
@@ -48,7 +48,7 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
       <Canvas className={classNames.canvas}>
         <Suspense fallback={<CanvasLoader />}>
           <PerspectiveCamera makeDefault position={[0, 0, 25]} />
-          <OldPhoto
+          <PhotoFrame
             avatarUrl={url ? url : avatarDefault.src}
             // position={[x.positionX, x.positionY, x.positionZ]}
             // rotation={[x.rotationX, x.rotationY, x.rotationZ]}
@@ -58,16 +58,12 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
             rotation={isMobile ? mobile.rotation : desktop.rotation}
             scale={isMobile ? mobile.scale : desktop.scale}
           />
-          <ambientLight intensity={2} />
-          <directionalLight intensity={1} position={[-7, -4, 30]} />
+          <ambientLight intensity={1} />
+          <directionalLight intensity={3} position={[-1, 1, 5]} />
         </Suspense>
         {size === 'large' && <AvatarCamera />}
         {size === 'large' && (
-          <OrbitControls
-            enableZoom={false}
-            maxAzimuthAngle={Math.PI / 8}
-            maxPolarAngle={Math.PI / 2}
-          />
+          <OrbitControls enableZoom={false} maxAzimuthAngle={Math.PI / 4} maxPolarAngle={Math.PI} />
         )}
       </Canvas>
     </div>
