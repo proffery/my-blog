@@ -52,10 +52,10 @@ export async function generateMetadata({ params: { postId } }: Props) {
           width: 600,
         },
       ],
-      title: `${postData.title} by ${postData.authorName}`,
+      title: `${postData.title} | ${postData.authorName}`,
       url: process.env.NEXT_PUBLIC_HOST_BASE + routes.post + postId,
     },
-    title: `${postData.title} by ${postData.authorName}`,
+    title: { absolute: `${postData.title} | ${postData.authorName}` },
     twitter: {
       card: 'summary_large_image',
       title: `${postData.title} by ${postData.authorName}`,

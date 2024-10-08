@@ -53,7 +53,7 @@ export async function generateMetadata({ params: { userId } }: Props) {
       title: `${t('title')} | ${userData.name}`,
       url: process.env.NEXT_PUBLIC_HOST_BASE + routes.account + '/' + userId,
     },
-    title: userData.name,
+    title: { absolute: `${t('title')} | ${userData.name}` },
     twitter: {
       card: 'summary_large_image',
       title: `${t('title')} | ${userData.name}`,
