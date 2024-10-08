@@ -13,9 +13,9 @@
 
 .canvas {
   aspect-ratio: 1 / 1;
-  max-width: 50%;
+  max-width: 30%;
 
   @media (width <= breakpoints.$mobile) {
-    max-width: 80%;
+    max-width: 70%;
   }
 }
