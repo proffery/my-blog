@@ -9,11 +9,9 @@ import {
   useGetUsersListQuery,
   useUpdateUsersRolesMutation,
 } from '@/services/users/users.service'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 export const UsersTab = () => {
-  const locale = useLocale()
-
   const { setSort, setSortBy, sort, sortBy } = useUsersFilters()
 
   const [showDeleteModal, setShowDeleteModal] = useState(false)

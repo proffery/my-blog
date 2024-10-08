@@ -10,7 +10,6 @@ import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import clsx from 'clsx'
-import { Leva, useControls } from 'leva'
 
 import s from './avatar.module.scss'
 
@@ -31,34 +30,20 @@ export const Avatar = ({ className, size = 'small', url }: Props) => {
 
   const { desktop, mobile } = constants.avatarCoordinates
 
-  // const x = useControls('InitializationLoader', {
-  //   positionX: { max: 50, min: -50, value: 0 },
-  //   positionY: { max: 50, min: -50, value: 0 },
-  //   positionZ: { max: 50, min: -50, value: 0 },
-  //   rotationX: { max: 5, min: -5, value: 0 },
-  //   rotationY: { max: 5, min: -5, value: 0 },
-  //   rotationZ: { max: 5, min: -5, value: 0 },
-  //   scale: { max: 10, min: -10, value: 1 },
-  // })
-
   return (
     <div className={classNames.container}>
-      {/*<Leva />*/}
       <Canvas className={classNames.canvas}>
         <Suspense fallback={<CanvasLoader />}>
           <PerspectiveCamera makeDefault position={[0, 0, 25]} />
           <PhotoFrame
             avatarUrl={url ? url : avatarDefault.src}
-            // position={[x.positionX, x.positionY, x.positionZ]}
-            // rotation={[x.rotationX, x.rotationY, x.rotationZ]}
-            // scale={x.scale}
             position={isMobile ? mobile.position : desktop.position}
             // @ts-ignore
             rotation={isMobile ? mobile.rotation : desktop.rotation}
             scale={isMobile ? mobile.scale : desktop.scale}
           />
-          <ambientLight intensity={1} />
-          <directionalLight intensity={5} position={[0, 4, 5]} />
+          <ambientLight intensity={2} />
+          <directionalLight intensity={5} position={[-2, -8, 2]} />
         </Suspense>
         {size === 'large' && <AvatarCamera />}
         {size === 'large' && (

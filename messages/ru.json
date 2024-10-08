@@ -240,9 +240,9 @@
       "title": "Постов:"
     }
   },
-  "ProfileNotFoundPage": {
-    "title": "Профиль не найден...",
-    "description": "Такого автора не существует, или он был удален!"
+  "NotFoundPage": {
+    "title": "404 страница не найдена!",
+    "description": "Такой страницы не существует"
   },
   "ConfirmEmailPage": {
     "description1": "На указанную Вами почту",
@@ -410,5 +410,10 @@
       },
       "Copyrights": "Все права защищены."
     }
+  },
+  "Metadata": {
+    "applicationName": "platform for street photography enthusiasts",
+    "title": "STREET PHOTO WORLD",
+    "description": "platform for street photography enthusiasts, featuring stunning articles, tips, and stories that celebrate urban life and spontaneity"
   }
 }

@@ -37,12 +37,12 @@ export const TitleWithBackground = ({
     <Parallax
       className={classNames.titleWithBackgroundWrapper}
       easing={'easeInQuad'}
-      scale={[1, 0.98]}
+      scale={[1, 0.96]}
       style={{
         height: `${height}px`,
         justifyContent: position,
       }}
-      translateY={isMobile ? [-10, 16] : [-18, 24]}
+      translateY={isMobile ? [-10, 10] : [-18, 24]}
     >
       {children}
 

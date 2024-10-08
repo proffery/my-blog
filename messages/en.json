@@ -240,9 +240,9 @@
       }
     }
   },
-  "ProfileNotFoundPage": {
-    "title": "Profile not found...",
-    "description": "This author does not exist or has been deleted!"
+  "NotFoundPage": {
+    "title": "404 Page not found!",
+    "description": "This page does not exist"
   },
   "ConfirmEmailPage": {
     "description1": "An email with further instructions has been sent to",
@@ -410,5 +410,10 @@
       },
       "Copyrights": "All rights reserved."
     }
+  },
+  "Metadata": {
+    "applicationName": "платформа для любителей уличной фотографии",
+    "title": "STREET PHOTO WORLD",
+    "description": "платформа для любителей уличной фотографии, предлагающая потрясающие статьи, советы и истории, воспевающие городскую жизнь и спонтанность"
   }
 }

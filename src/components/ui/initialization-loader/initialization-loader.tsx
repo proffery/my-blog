@@ -7,7 +7,6 @@ import { CanvasLoader } from '@/components/ui/canvas-loader/canvas-loader'
 import { Center, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import clsx from 'clsx'
-import { Leva, useControls } from 'leva'
 
 import s from './initialization-loader.module.scss'
 
@@ -46,22 +45,12 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
     }
   }, [isTouched])
 
-  const { desktop, mobile } = constants.initializationLoaderCoordinates
-
-  // const x = useControls('InitializationLoader', {
-  //   positionX: { max: 10, min: -10, value: 1 },
-  //   positionY: { max: 10, min: -10, value: 1 },
-  //   positionZ: { max: 10, min: -10, value: 1 },
-  //   rotationX: { max: 10, min: -10, value: 5 },
-  //   rotationY: { max: 10, min: -10, value: 5 },
-  //   rotationZ: { max: 10, min: -10, value: 5 },
-  //   scale: { max: 50, min: 0, value: 25 },
-  // })
+  const { desktop, mobile } = constants.initializationLoaderModelCoordinates
 
   return (
     <div className={classNames.background}>
       <audio id={'audio'} ref={audioRef} src={'/sounds/click.wav'} />
-      {/*<Leva />*/}
+
       <Canvas
         onMouseDown={() => setIsTouched(!isTouched)}
         onTouchMove={() => setIsTouched(!isTouched)}
@@ -75,9 +64,6 @@ export const InitializationLoader = ({ isTouched, setIsTouched }: Props) => {
                 // @ts-ignore
                 rotation={isMobile ? mobile.rotation : desktop.rotation}
                 scale={isMobile ? mobile.scale : desktop.scale}
-                // position={[x.positionX, x.positionY, x.positionZ]}
-                // rotation={[x.rotationX, x.rotationY, x.rotationZ]}
-                // scale={x.scale}
               />
             )}
           </Center>

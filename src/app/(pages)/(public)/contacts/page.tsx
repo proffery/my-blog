@@ -1,86 +1,27 @@
-'use client'
-import { useSelector } from 'react-redux'
+import { routes } from '@/common/constants/routes'
+import ContactsPage from '@/components/layouts/contacts-page/contacts-page'
+import { getLocale, getTranslations } from 'next-intl/server'
 
-import withRedux from '@/common/hocs/with-redux'
-import { getErrorMessage } from '@/common/utils/get-error-message'
-import {
-  ContactUsForm,
-  ContactUsFormValues,
-} from '@/components/forms/contact-us-form/contact-us-form'
-import { FeedbackCard } from '@/components/layouts/contacts-page/feedback-card/feedback-card'
-import { Page } from '@/components/layouts/page/page'
-import { SwiperComponent } from '@/components/ui/swiper/swiper'
-import { Typography } from '@/components/ui/typography/typography'
-import { useMeQuery } from '@/services/auth/auth.service'
-import {
-  useCreateFeedbackMutation,
-  usePublishedFeedbacksQuery,
-} from '@/services/feedbacks/feedbacks.service'
-import { selectUserId } from '@/services/user/user.selectors'
-import clsx from 'clsx'
-import { useLocale, useTranslations } from 'next-intl'
+export async function generateMetadata() {
+  const locale = await getLocale()
+  const t = await getTranslations({ locale, namespace: 'ContactsPage' })
 
-import s from './contacts-page.module.scss'
-
-function Contacts() {
-  const classNames = {
-    column: clsx(s.column),
-    page: clsx(s.page),
-    row: clsx(s.row),
-  }
-  const locale = useLocale()
-  const t = useTranslations('ContactsPage')
-
-  const userId = useSelector(selectUserId)
-  const { data: meData } = useMeQuery()
-
-  const { data: feedbacksData } = usePublishedFeedbacksQuery({ locale })
-
-  const [
-    createFeedback,
-    {
-      error: createFeedbackError,
-      isLoading: isCreateFeedbackLoading,
-      isSuccess: createFeedbackSuccess,
+  return {
+    alternates: { canonical: routes.contacts },
+    description: t('description'),
+    openGraph: {
+      description: t('description'),
+      title: `${t('title')}`,
+      url: process.env.NEXT_PUBLIC_HOST_BASE + routes.contacts,
     },
-  ] = useCreateFeedbackMutation()
-
-  const errorMessage = getErrorMessage(createFeedbackError)
-
-  const contactUsHandler = async (data: ContactUsFormValues) => {
-    await createFeedback({ ...data, authorId: userId, locale }).unwrap()
+    title: t('title'),
+    twitter: {
+      description: t('description'),
+      title: `${t('title')}`,
+    },
   }
-
-  return (
-    <Page className={classNames.page}>
-      <div className={classNames.row}>
-        <div className={classNames.column}>
-          <Typography.H1>{t('title')}</Typography.H1>
-          <Typography.Caption>{t('description')}</Typography.Caption>
-        </div>
-        <div className={classNames.column}>
-          <ContactUsForm
-            defaultValues={
-              userId
-                ? { email: meData?.user?.email ?? '', name: meData?.user?.name ?? '' }
-                : undefined
-            }
-            disabled={isCreateFeedbackLoading}
-            errorMessage={errorMessage}
-            isSubmitSuccess={createFeedbackSuccess}
-            onSubmit={contactUsHandler}
-          />
-        </div>
-      </div>
-      {feedbacksData && feedbacksData.documents.length > 0 && (
-        <SwiperComponent>
-          {feedbacksData.documents.map(feedback => (
-            <FeedbackCard feedbackData={feedback} key={feedback.$id} />
-          ))}
-        </SwiperComponent>
-      )}
-    </Page>
-  )
 }
 
-export default withRedux(Contacts)
+export default function Contacts() {
+  return <ContactsPage />
+}

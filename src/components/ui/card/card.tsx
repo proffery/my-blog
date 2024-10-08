@@ -14,7 +14,7 @@ export const Card = ({ children, className, ...rest }: Props) => {
   }
 
   return (
-    <Parallax scale={[0.95, 1]} {...rest} className={classNames.card}>
+    <Parallax scale={[1, 0.95]} {...rest} className={classNames.card}>
       {children}
     </Parallax>
   )

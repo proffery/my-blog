@@ -55,7 +55,7 @@ const Header = () => {
         <InitializationLoader isTouched={isTouched} setIsTouched={setIsTouched} />
       )}
       <nav className={classNames.container}>
-        <FetchLoader loading={isLoading} />
+        {isLoading && <FetchLoader />}
         <Logo />
         <div className={classNames.navWrapper}>
           {!isMobile ? <NavbarDesktop meData={meData} /> : <NavbarMobile meData={meData} />}

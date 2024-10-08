@@ -1,5 +1,3 @@
-import { useParallax } from 'react-scroll-parallax'
-
 import headerTitleImage from '@/assets/images/home-page/header.webp'
 import popularTitleImage from '@/assets/images/home-page/popular.webp'
 import { constants } from '@/common/constants/constants'

@@ -14,7 +14,7 @@ import { Edit3, Eye } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { getFormatter, getLocale, getTranslations } from 'next-intl/server'
 
 import s from './post-by-id.module.scss'
@@ -36,6 +36,33 @@ export const generateStaticParams = async () => {
   })) as any[]
 }
 
+export async function generateMetadata({ params: { postId } }: Props) {
+  const { databasesInstance } = await createDatabaseClient()
+  const postData = (await postById({ databasesInstance, postId }).catch(() => {
+    notFound()
+  })) as PostModel
+
+  return {
+    alternates: { canonical: routes.post + postId },
+    openGraph: {
+      images: [
+        {
+          height: 400,
+          url: postData.cover,
+          width: 600,
+        },
+      ],
+      title: `${postData.title} by ${postData.authorName}`,
+      url: process.env.NEXT_PUBLIC_HOST_BASE + routes.post + postId,
+    },
+    title: `${postData.title} by ${postData.authorName}`,
+    twitter: {
+      card: 'summary_large_image',
+      title: `${postData.title} by ${postData.authorName}`,
+    },
+  }
+}
+
 export default async function Post({ params: { postId } }: Props) {
   const classNames = {
     cover: clsx(s.cover),
@@ -51,7 +78,7 @@ export default async function Post({ params: { postId } }: Props) {
   try {
     postData = (await postById({ databasesInstance, postId })) as PostModel
   } catch (error) {
-    redirect(routes.base)
+    notFound()
   }
 
   if (postData.views) {

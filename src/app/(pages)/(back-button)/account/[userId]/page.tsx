@@ -11,14 +11,10 @@ import { userById } from '@/server/functions/users/user-by-id'
 import { createStorageClient } from '@/server/storage-config'
 import { createUsersClient } from '@/server/users-config'
 import clsx from 'clsx'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import s from '../account.module.scss'
-
-type Props = {
-  params: { userId: string }
-}
+import s from './account.module.scss'
 
 export const dynamicParams = true
 
@@ -29,6 +25,44 @@ export const generateStaticParams = async () => {
   return usersData.users?.map((user: UserModel) => ({
     userId: user.$id,
   })) as any[]
+}
+
+export async function generateMetadata({ params: { userId } }: Props) {
+  const locale = await getLocale()
+  const t = await getTranslations({ locale, namespace: 'AccountPage' })
+
+  const { usersInstance } = await createUsersClient()
+  const userData = await userById({ userId, usersInstance }).catch(() => {
+    notFound()
+  })
+
+  const { storageInstance } = await createStorageClient()
+
+  const avatarMeta = await getAvatarMeta({ storageInstance, userId })
+
+  return {
+    alternates: { canonical: routes.account + '/' + userId },
+    openGraph: {
+      images: [
+        {
+          height: 600,
+          url: avatarMeta.avatarUrl,
+          width: 400,
+        },
+      ],
+      title: `${t('title')} | ${userData.name}`,
+      url: process.env.NEXT_PUBLIC_HOST_BASE + routes.account + '/' + userId,
+    },
+    title: userData.name,
+    twitter: {
+      card: 'summary_large_image',
+      title: `${t('title')} | ${userData.name}`,
+    },
+  }
+}
+
+type Props = {
+  params: { userId: string }
 }
 
 export default async function AccountById(props: Props) {
@@ -50,7 +84,7 @@ export default async function AccountById(props: Props) {
   const { storageInstance } = await createStorageClient()
 
   const userData = await userById({ userId, usersInstance }).catch(() => {
-    redirect(routes.profileNotFound)
+    notFound()
   })
 
   const userPosts = await paginatedPosts({

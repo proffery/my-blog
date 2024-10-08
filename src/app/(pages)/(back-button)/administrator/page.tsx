@@ -7,6 +7,7 @@ import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { isRole } from '@/common/utils/is-role'
 import { FeedbacksTab } from '@/components/layouts/administrator-page/feedbacks-tab/feedbacks-tab'
+import { useFeedbacksFilters } from '@/components/layouts/administrator-page/use-feedbacks-filters'
 import { UsersTab } from '@/components/layouts/administrator-page/users-tab/users-tab'
 import { Page } from '@/components/layouts/page/page'
 import {
@@ -32,7 +33,7 @@ function Administrator() {
   const router = useRouter()
 
   const [tabValue, setTabValue] = useState('feedbacks')
-
+  const { setSortBy } = useFeedbacksFilters()
   const t = useTranslations('AdministratorPage')
 
   useEffect(() => {
@@ -40,6 +41,10 @@ function Administrator() {
       router.push(routes.base)
     }
   }, [userRoles])
+
+  useEffect(() => {
+    setSortBy(null)
+  }, [tabValue])
 
   return (
     <Page className={classNames.page}>
