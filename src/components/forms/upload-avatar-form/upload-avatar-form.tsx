@@ -67,7 +67,7 @@ export const UploadAvatarForm = ({ disabled, errorMessage, onSubmit }: Props) =>
     } else {
       clearErrors(['image'])
     }
-  }, [errorMessage])
+  }, [errorMessage, clearErrors, setError])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data.image[0])

@@ -50,7 +50,7 @@ export const LoginForm = ({ disabled, errorMessage, onSubmit }: Props) => {
     } else {
       clearErrors(['password'])
     }
-  }, [errorMessage])
+  }, [errorMessage, setError, clearErrors])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
@@ -58,21 +58,23 @@ export const LoginForm = ({ disabled, errorMessage, onSubmit }: Props) => {
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Input
-        autoComplete={'email'}
-        errorMessage={errors.email?.message}
-        label={t('Email.label')}
-        placeholder={t('Email.placeholder')}
-        {...register('email')}
-      />
-      <Input
-        autoComplete={'current-password webauthn'}
-        errorMessage={errors.password?.message}
-        label={t('Password.label')}
-        placeholder={t('Password.placeholder')}
-        type={'password'}
-        {...register('password')}
-      />
+      <div>
+        <Input
+          autoComplete={'email'}
+          errorMessage={errors.email?.message}
+          label={t('Email.label')}
+          placeholder={t('Email.placeholder')}
+          {...register('email')}
+        />
+        <Input
+          autoComplete={'current-password webauthn'}
+          errorMessage={errors.password?.message}
+          label={t('Password.label')}
+          placeholder={t('Password.placeholder')}
+          type={'password'}
+          {...register('password')}
+        />
+      </div>
       <Button
         className={classNames.singUpButton}
         disabled={disabled}

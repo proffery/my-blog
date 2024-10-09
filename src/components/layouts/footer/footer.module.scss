@@ -1,7 +1,10 @@
 @use '@/styles/breakpoints';
 
+$decor-size: 10px;
+
 .root {
   position: relative;
+  z-index: 2;
   bottom: 0;
   left: 0;
 
@@ -15,7 +18,45 @@
 
   color: var(--color-light);
 
-  background-color: var(--color-dark);
+  background-color: var(--color-light);
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: calc($decor-size * 3) calc($decor-size * 2.5);
+
+    background-image: linear-gradient(
+        to right,
+        var(--color-dark) $decor-size,
+        transparent $decor-size
+      ),
+      linear-gradient(to bottom, var(--color-dark) $decor-size, transparent $decor-size),
+      linear-gradient(to right, var(--color-dark) $decor-size, transparent $decor-size),
+      linear-gradient(to bottom, var(--color-dark) $decor-size, transparent $decor-size),
+      linear-gradient(to bottom, transparent $decor-size, var(--color-dark) $decor-size);
+    background-repeat: repeat-x;
+    background-position:
+      0 $decor-size,
+      top left,
+      0 calc(100% - $decor-size),
+      bottom left,
+      0 $decor-size;
+    background-size:
+      calc($decor-size * 2) $decor-size,
+      calc($decor-size * 2) $decor-size,
+      calc($decor-size * 2) $decor-size,
+      calc($decor-size * 2) $decor-size,
+      100% calc(100% - $decor-size * 3);
+    border: $decor-size solid var(--color-dark);
+  }
 
   @media (width <= breakpoints.$mobile) {
     padding: breakpoints.$footer-padding-mobile;
@@ -23,6 +64,7 @@
 }
 
 .container {
+  z-index: 3;
   width: 100%;
   max-width: breakpoints.$max-content-width;
 }
@@ -47,11 +89,9 @@
   justify-content: flex-start;
 
   width: 100%;
-  padding: 32px 0 0 !important;
+  margin-bottom: 32px;
 
-  color: inherit;
-
-  border-top: 1px solid var(--color-light);
+  color: var(--color-light);
 
   @media (width <= breakpoints.$mobile) {
     justify-content: center;
@@ -61,7 +101,7 @@
 .copyrightsLink {
   color: inherit !important;
   text-decoration: underline;
-  text-underline-offset: 5px;
+  text-underline-offset: 3px;
 }
 
 .columns {

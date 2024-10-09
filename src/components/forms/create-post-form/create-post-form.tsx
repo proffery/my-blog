@@ -67,13 +67,13 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
     } else {
       clearErrors(['post'])
     }
-  }, [errorMessage])
+  }, [errorMessage, clearErrors, setError])
 
   useEffect(() => {
     defaultValues?.post && setValue('post', defaultValues?.post)
     defaultValues?.title && setValue('title', defaultValues?.title)
     defaultValues?.cover && setValue('cover', defaultValues?.cover)
-  }, [defaultValues?.title, defaultValues?.post, defaultValues?.cover])
+  }, [defaultValues?.title, defaultValues?.post, defaultValues?.cover, setValue])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
@@ -81,34 +81,35 @@ export const CreatePostForm = ({ defaultValues, disabled, errorMessage, onSubmit
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Input
-        defaultValue={defaultValues?.title}
-        errorMessage={errors.title?.message}
-        label={t('Title.label')}
-        placeholder={t('Title.placeholder')}
-        {...register('title')}
-      />
-      <Input
-        defaultValue={defaultValues?.cover}
-        errorMessage={errors.cover?.message}
-        label={t('Cover.label')}
-        placeholder={t('Cover.placeholder')}
-        {...register('cover')}
-      />
-      <Controller
-        control={control}
-        name={'post'}
-        render={({ field: { onChange, ref, ...restField } }) => (
-          <TextEditor
-            defaultValue={defaultValues?.post}
-            label={t('Post.label')}
-            onChange={onChange}
-            ref={ref}
-            {...restField}
-          />
-        )}
-      />
-
+      <div>
+        <Input
+          defaultValue={defaultValues?.title}
+          errorMessage={errors.title?.message}
+          label={t('Title.label')}
+          placeholder={t('Title.placeholder')}
+          {...register('title')}
+        />
+        <Input
+          defaultValue={defaultValues?.cover}
+          errorMessage={errors.cover?.message}
+          label={t('Cover.label')}
+          placeholder={t('Cover.placeholder')}
+          {...register('cover')}
+        />
+        <Controller
+          control={control}
+          name={'post'}
+          render={({ field: { onChange, ref, ...restField } }) => (
+            <TextEditor
+              defaultValue={defaultValues?.post}
+              label={t('Post.label')}
+              onChange={onChange}
+              ref={ref}
+              {...restField}
+            />
+          )}
+        />
+      </div>
       <Button
         className={classNames.singUpButton}
         disabled={disabled}

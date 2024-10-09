@@ -1,8 +1,6 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { constants } from '@/common/constants/constants'
 import { routes } from '@/common/constants/routes'
 import withRedux from '@/common/hocs/with-redux'
 import { useInitializeApp } from '@/common/hooks/use-initialize-app'
@@ -11,7 +9,6 @@ import { NavbarDesktop } from '@/components/layouts/header/navbar/navbar-desktop
 import { NavbarMobile } from '@/components/layouts/header/navbar/navbar-mobile/navbar-mobile'
 import { Button } from '@/components/ui/button/button'
 import { FetchLoader } from '@/components/ui/fetch-loader/fetch-loader'
-import { InitializationLoader } from '@/components/ui/initialization-loader/initialization-loader'
 import { Logo } from '@/components/ui/logo/logo'
 import { selectAppIsInitialized, selectAppIsLoading } from '@/services/app/app.selectors'
 import { selectUserRole } from '@/services/user/user.selectors'
@@ -33,27 +30,11 @@ const Header = () => {
   const isAppInitialized = useSelector(selectAppIsInitialized)
   const isMobile = useIsMobile()
   const t = useTranslations('Components.Header')
-  const [showLoader, setShowLoader] = useState(true)
-
-  const [isTouched, setIsTouched] = useState(false)
 
   const { meData } = useInitializeApp()
 
-  useEffect(() => {
-    const timout = setTimeout(() => {
-      setShowLoader(false)
-    }, 3000)
-
-    return () => {
-      clearTimeout(timout)
-    }
-  }, [isTouched])
-
   return (
     <header className={classNames.root}>
-      {(!isAppInitialized || showLoader) && (
-        <InitializationLoader isTouched={isTouched} setIsTouched={setIsTouched} />
-      )}
       <nav className={classNames.container}>
         {isLoading && <FetchLoader />}
         <Logo />

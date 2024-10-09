@@ -1,10 +1,14 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
   width: 100%;
 }
 
 .singUpButton {
   align-self: center;
+}
+
+.confirmPasswordField {
+  margin-top: 16px;
 }

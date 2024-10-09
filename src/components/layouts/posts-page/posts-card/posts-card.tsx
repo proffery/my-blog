@@ -1,5 +1,6 @@
+'use client'
 import { ComponentPropsWithoutRef } from 'react'
-import { Parallax } from 'react-scroll-parallax'
+import { Fade } from 'react-awesome-reveal'
 
 import { PostModel } from '@/app/api/posts/posts.types'
 import defaultImage from '@/assets/images/no-image.svg'
@@ -17,7 +18,7 @@ import s from './posts-card.module.scss'
 
 type Props = {
   postData: PostModel
-} & ComponentPropsWithoutRef<typeof Parallax>
+} & ComponentPropsWithoutRef<typeof Card>
 
 export const PostsCard = ({ postData, ...rest }: Props) => {
   const { $createdAt, $id, authorId, authorName, className, cover, isPublished, post, title } =
@@ -40,44 +41,46 @@ export const PostsCard = ({ postData, ...rest }: Props) => {
   const format = useFormatter()
 
   return (
-    <Card {...rest} className={classNames.card}>
-      <div className={classNames.cardImageContainer}>
-        {!isPublished && (
-          <Typography.H5 as={'span'} className={classNames.notPublishedDescription}>
-            {t('PostCard.Moderation')}
-          </Typography.H5>
-        )}
-        <Image
-          alt={'Card cover'}
-          className={classNames.cardImage}
-          draggable={false}
-          height={405}
-          src={cover ? cover : defaultImage}
-          width={405}
-        />
-      </div>
-      <div className={classNames.contentWrapper}>
-        <div className={classNames.titleWrapper}>
-          <Typography.H5 as={Link} className={classNames.title} href={routes.post + $id}>
-            {title}
-          </Typography.H5>
-          <Typography.Body1 className={classNames.description}>
-            {cleanFromHTML(post)}
-          </Typography.Body1>
+    <Fade triggerOnce>
+      <Card {...rest} className={classNames.card}>
+        <div className={classNames.cardImageContainer}>
+          {!isPublished && (
+            <Typography.H5 as={'span'} className={classNames.notPublishedDescription}>
+              {t('PostCard.Moderation')}
+            </Typography.H5>
+          )}
+          <Image
+            alt={'Card cover'}
+            className={classNames.cardImage}
+            draggable={false}
+            height={405}
+            src={cover ? cover : defaultImage}
+            width={405}
+          />
         </div>
+        <div className={classNames.contentWrapper}>
+          <div className={classNames.titleWrapper}>
+            <Typography.H5 as={Link} className={classNames.title} href={routes.post + $id}>
+              {title}
+            </Typography.H5>
+            <Typography.Body1 className={classNames.description}>
+              {cleanFromHTML(post)}
+            </Typography.Body1>
+          </div>
 
-        <div className={classNames.bottomInfoWrapper}>
-          <Typography.Subtitle2 as={'span'} className={classNames.author}>
-            {t('PostCard.Author')}&nbsp;
-            <Typography.Link2 as={Link} href={routes.account + '/' + authorId}>
-              {authorName}
-            </Typography.Link2>
-          </Typography.Subtitle2>
-          <Typography.Body2 className={classNames.date}>
-            {formatDateShort($createdAt, format)}
-          </Typography.Body2>
+          <div className={classNames.bottomInfoWrapper}>
+            <Typography.Subtitle2 as={'span'} className={classNames.author}>
+              {t('PostCard.Author')}&nbsp;
+              <Typography.Link2 as={Link} href={routes.account + '/' + authorId}>
+                {authorName}
+              </Typography.Link2>
+            </Typography.Subtitle2>
+            <Typography.Body2 className={classNames.date}>
+              {formatDateShort($createdAt, format)}
+            </Typography.Body2>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </Fade>
   )
 }

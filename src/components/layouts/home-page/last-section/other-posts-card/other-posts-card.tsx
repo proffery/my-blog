@@ -1,4 +1,6 @@
+'use client'
 import { ComponentPropsWithoutRef } from 'react'
+import { Fade } from 'react-awesome-reveal'
 
 import { PostModel } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
@@ -35,29 +37,31 @@ export const OtherPostCard = ({ className, postData, ...rest }: Props) => {
   const t = useTranslations('HomePage.LatestSection.Card')
 
   return (
-    <Card className={classNames.card} {...rest}>
-      <div className={classNames.coverWrapper}>
-        <Image
-          alt={'Last post'}
-          className={classNames.cover}
-          draggable={false}
-          height={150}
-          src={cover ? cover : defaultImage}
-          width={150}
-        />
-      </div>
-      <div className={classNames.content}>
-        <div>
-          <Typography.H5 className={classNames.title}>{title}</Typography.H5>
-          <Typography.Body1 className={classNames.description}>
-            {cleanFromHTML(post)}
-          </Typography.Body1>
+    <Fade delay={200} triggerOnce>
+      <Card {...rest} className={classNames.card}>
+        <div className={classNames.coverWrapper}>
+          <Image
+            alt={'Last post'}
+            className={classNames.cover}
+            draggable={false}
+            height={150}
+            src={cover ? cover : defaultImage}
+            width={150}
+          />
         </div>
-        <Typography.Subtitle2 as={Link} className={classNames.readMore} href={routes.post + $id}>
-          {t('ReadMore')}
-          <RightBracketIcon className={classNames.readMoreIcon} />
-        </Typography.Subtitle2>
-      </div>
-    </Card>
+        <div className={classNames.content}>
+          <div>
+            <Typography.H5 className={classNames.title}>{title}</Typography.H5>
+            <Typography.Body1 className={classNames.description}>
+              {cleanFromHTML(post)}
+            </Typography.Body1>
+          </div>
+          <Typography.Subtitle2 as={Link} className={classNames.readMore} href={routes.post + $id}>
+            {t('ReadMore')}
+            <RightBracketIcon className={classNames.readMoreIcon} />
+          </Typography.Subtitle2>
+        </div>
+      </Card>
+    </Fade>
   )
 }

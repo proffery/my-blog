@@ -38,15 +38,15 @@ export const Footer = () => {
               </ActiveLink>
             </nav>
             <div className={classNames.columns}>
-              <Link className={classNames.copyrightsLink} href={'/'}>
+              <ActiveLink href={routes.base} variant={'secondary'}>
                 About
-              </Link>
-              <Link className={classNames.copyrightsLink} href={'/'}>
+              </ActiveLink>
+              <ActiveLink href={routes.base} variant={'secondary'}>
                 FAQs
-              </Link>
-              <Link className={classNames.copyrightsLink} href={'/'}>
+              </ActiveLink>
+              <ActiveLink href={routes.base} variant={'secondary'}>
                 Terms
-              </Link>
+              </ActiveLink>
             </div>
           </div>
         </div>

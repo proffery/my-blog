@@ -25,14 +25,14 @@ export const constants = {
   },
   initializationLoaderModelCoordinates: {
     desktop: {
-      position: [-0, 0, 0],
-      rotation: [0, -0.5, 0],
-      scale: 20,
+      position: [-1, -1, 0],
+      rotation: [0, -0.4, 0],
+      scale: 25,
     },
     mobile: {
-      position: [-0, 0, 0],
-      rotation: [0, -0.5, 0],
-      scale: 10,
+      position: [-1, -1, 0],
+      rotation: [0, -0.4, 0],
+      scale: 25,
     },
   },
   maxContentWidth: 1248, // in px

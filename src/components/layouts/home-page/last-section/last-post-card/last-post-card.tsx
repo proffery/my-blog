@@ -1,4 +1,6 @@
+'use client'
 import { ComponentPropsWithoutRef } from 'react'
+import { Fade } from 'react-awesome-reveal'
 
 import { PostModel } from '@/app/api/posts/posts.types'
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
@@ -31,21 +33,25 @@ export const LastPostCard = ({ className, postData, ...rest }: Props) => {
   const t = useTranslations('HomePage.LatestSection.Card')
 
   return (
-    <Card className={classNames.card} {...rest}>
-      <Image
-        alt={'Last post'}
-        className={classNames.cover}
-        draggable={false}
-        height={400}
-        src={cover}
-        width={640}
-      />
-      <Typography.H4>{title}</Typography.H4>
-      <Typography.Body1 className={classNames.description}>{cleanFromHTML(post)}</Typography.Body1>
-      <Typography.Subtitle2 as={Link} className={classNames.readMore} href={routes.post + $id}>
-        {t('ReadMore')}
-        <RightBracketIcon className={classNames.readMoreIcon} />
-      </Typography.Subtitle2>
-    </Card>
+    <Fade className={classNames.card} triggerOnce>
+      <Card {...rest}>
+        <Image
+          alt={'Last post'}
+          className={classNames.cover}
+          draggable={false}
+          height={400}
+          src={cover}
+          width={640}
+        />
+        <Typography.H4>{title}</Typography.H4>
+        <Typography.Body1 className={classNames.description}>
+          {cleanFromHTML(post)}
+        </Typography.Body1>
+        <Typography.Subtitle2 as={Link} className={classNames.readMore} href={routes.post + $id}>
+          {t('ReadMore')}
+          <RightBracketIcon className={classNames.readMoreIcon} />
+        </Typography.Subtitle2>
+      </Card>
+    </Fade>
   )
 }

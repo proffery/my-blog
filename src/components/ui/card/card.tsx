@@ -1,21 +1,19 @@
-'use client'
-import { ComponentPropsWithoutRef } from 'react'
-import { Parallax } from 'react-scroll-parallax'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
 import clsx from 'clsx'
 
 import s from './card.module.scss'
 
-type Props = ComponentPropsWithoutRef<typeof Parallax>
+export const Card = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(
+  ({ children, className, ...rest }, ref) => {
+    const classNames = {
+      card: clsx(s.card, className),
+    }
 
-export const Card = ({ children, className, ...rest }: Props) => {
-  const classNames = {
-    card: clsx(s.card, className),
+    return (
+      <div {...rest} className={classNames.card} ref={ref}>
+        {children}
+      </div>
+    )
   }
-
-  return (
-    <Parallax scale={[1, 0.95]} {...rest} className={classNames.card}>
-      {children}
-    </Parallax>
-  )
-}
+)

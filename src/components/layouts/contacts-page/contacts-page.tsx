@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import withRedux from '@/common/hocs/with-redux'
@@ -8,6 +9,7 @@ import {
   ContactUsFormValues,
 } from '@/components/forms/contact-us-form/contact-us-form'
 import { FeedbackCard } from '@/components/layouts/contacts-page/feedback-card/feedback-card'
+import { SwiperDecorationModel } from '@/components/layouts/contacts-page/swiper-decoration-model/swiper-decoration-model'
 import { Page } from '@/components/layouts/page/page'
 import { SwiperComponent } from '@/components/ui/swiper/swiper'
 import { Typography } from '@/components/ui/typography/typography'
@@ -25,11 +27,16 @@ import s from './contacts-page.module.scss'
 function ContactsPage() {
   const classNames = {
     column: clsx(s.column),
+    feedbackWrapper: clsx(s.feedbackWrapper),
+    model: clsx(s.model),
     page: clsx(s.page),
     row: clsx(s.row),
+    swiper: clsx(s.swiper),
   }
   const locale = useLocale()
   const t = useTranslations('ContactsPage')
+
+  const [isSliderMove, setIsSliderMove] = useState(false)
 
   const userId = useSelector(selectUserId)
   const { data: meData } = useMeQuery()
@@ -72,13 +79,20 @@ function ContactsPage() {
           />
         </div>
       </div>
-      {feedbacksData && feedbacksData.documents.length > 0 && (
-        <SwiperComponent>
-          {feedbacksData.documents.map(feedback => (
-            <FeedbackCard feedbackData={feedback} key={feedback.$id} />
-          ))}
-        </SwiperComponent>
-      )}
+      <div className={classNames.feedbackWrapper}>
+        {feedbacksData && feedbacksData.documents.length > 0 && (
+          <SwiperComponent onSliderMove={setIsSliderMove}>
+            {feedbacksData.documents.map(feedback => (
+              <FeedbackCard feedbackData={feedback} key={feedback.$id} />
+            ))}
+          </SwiperComponent>
+        )}
+        <SwiperDecorationModel
+          className={classNames.model}
+          setShowAnimation={setIsSliderMove}
+          showAnimation={isSliderMove}
+        />
+      </div>
     </Page>
   )
 }

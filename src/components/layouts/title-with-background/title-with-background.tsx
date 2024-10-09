@@ -1,8 +1,7 @@
 'use client'
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
-import { Parallax } from 'react-scroll-parallax'
+import { Fade } from 'react-awesome-reveal'
 
-import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import clsx from 'clsx'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
@@ -16,7 +15,7 @@ type Props = {
   position?: 'center' | 'flex-end' | 'flex-start' | 'space-between'
   src: StaticImport | string
   width: number
-} & ComponentPropsWithoutRef<typeof Parallax>
+} & ComponentPropsWithoutRef<'div'>
 
 export const TitleWithBackground = ({
   children,
@@ -31,28 +30,25 @@ export const TitleWithBackground = ({
     titleWithBackgroundWrapper: clsx(s.titleWithBackgroundWrapper),
   }
 
-  const isMobile = useIsMobile()
-
   return (
-    <Parallax
-      className={classNames.titleWithBackgroundWrapper}
-      easing={'easeInQuad'}
-      scale={[1, 0.96]}
-      style={{
-        height: `${height}px`,
-        justifyContent: position,
-      }}
-      translateY={isMobile ? [-10, 10] : [-18, 24]}
-    >
-      {children}
+    <Fade triggerOnce>
+      <div
+        className={classNames.titleWithBackgroundWrapper}
+        style={{
+          height: `${height}px`,
+          justifyContent: position,
+        }}
+      >
+        {children}
 
-      <Image
-        alt={imageAlt}
-        className={classNames.titleWithBackgroundImage}
-        height={height}
-        src={src}
-        width={width}
-      />
-    </Parallax>
+        <Image
+          alt={imageAlt}
+          className={classNames.titleWithBackgroundImage}
+          height={height}
+          src={src}
+          width={width}
+        />
+      </div>
+    </Fade>
   )
 }

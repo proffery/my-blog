@@ -12,11 +12,12 @@ import s from '@/components/ui/swiper/swiper.module.scss'
 
 type SwiperProps = {
   children: ReactNode
+  onSliderMove?: (value: boolean) => void
   showNavigation?: boolean
   showPagination?: boolean
 }
 export const SwiperComponent = (props: SwiperProps) => {
-  const { children, showNavigation = true, showPagination = true } = props
+  const { children, onSliderMove, showNavigation = true, showPagination = true } = props
   const swiperRef = useRef<any>()
   const classNames = {
     arrowIcon: clsx(s.arrowIcon),
@@ -31,20 +32,27 @@ export const SwiperComponent = (props: SwiperProps) => {
     clickable: true,
   }
 
+  const onPrevHandler = () => {
+    swiperRef.current.slidePrev()
+  }
+
+  const onNextHandler = () => {
+    swiperRef.current.slideNext()
+  }
+
   return (
     <div className={classNames.container}>
       {showNavigation && (
-        <button
-          className={classNames.navButtonLeft}
-          onClick={() => swiperRef.current.slidePrev()}
-          type={'button'}
-        >
+        <button className={classNames.navButtonLeft} onClick={onPrevHandler} type={'button'}>
           <RightBracketIcon className={classNames.arrowIcon} />
         </button>
       )}
       <Swiper
         className={classNames.swiper}
+        loop
         modules={[Navigation, Pagination, FreeMode]}
+        onSlideChangeTransitionEnd={() => onSliderMove?.(false)}
+        onSlideChangeTransitionStart={() => onSliderMove?.(true)}
         onSwiper={swiper => {
           swiperRef.current = swiper
         }}
@@ -57,11 +65,7 @@ export const SwiperComponent = (props: SwiperProps) => {
         ))}
       </Swiper>
       {showNavigation && (
-        <button
-          className={classNames.navButtonRight}
-          onClick={() => swiperRef.current.slideNext()}
-          type={'button'}
-        >
+        <button className={classNames.navButtonRight} onClick={onNextHandler} type={'button'}>
           <RightBracketIcon className={classNames.arrowIcon} />
         </button>
       )}

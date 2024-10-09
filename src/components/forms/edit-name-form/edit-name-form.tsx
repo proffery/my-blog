@@ -59,7 +59,7 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
 
   useEffect(() => {
     defaultValue && setValue('name', defaultValue)
-  }, [defaultValue])
+  }, [defaultValue, setValue])
 
   useEffect(() => {
     if (errorMessage) {
@@ -67,7 +67,7 @@ export const EditNameForm = ({ defaultValue, disabled, errorMessage, onSubmit }:
     } else {
       clearErrors(['name'])
     }
-  }, [errorMessage, editMode])
+  }, [errorMessage, editMode, clearErrors, setError])
 
   const handleToggleEditMode = () => {
     setEditMode(!editMode)

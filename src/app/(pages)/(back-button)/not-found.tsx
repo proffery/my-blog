@@ -44,6 +44,7 @@ export default function NotFound() {
 
   return (
     <Page className={classNames.page}>
+      <Typography.H1 style={{ textAlign: 'center' }}>{t('title')}</Typography.H1>
       <Canvas className={classNames.canvas}>
         <Suspense fallback={<CanvasLoader />}>
           <Center>
@@ -60,8 +61,7 @@ export default function NotFound() {
         </Suspense>
         <OrbitControls enableZoom={false} maxAzimuthAngle={Math.PI / 2} />
       </Canvas>
-      <Typography.H1 style={{ textAlign: 'center' }}>{t('title')}</Typography.H1>
-      <Typography.H4>{t('description')}</Typography.H4>
+      <Typography.H3 style={{ textAlign: 'center' }}>{t('description')}</Typography.H3>
     </Page>
   )
 }

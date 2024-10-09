@@ -86,7 +86,7 @@ function EditPost(props: Props) {
     if (userId && authorId && userId !== authorId) {
       router.push(routes.post + postId)
     }
-  }, [userId, authorId, postId])
+  }, [userId, authorId, postId, router])
 
   return (
     <Page className={classNames.page}>

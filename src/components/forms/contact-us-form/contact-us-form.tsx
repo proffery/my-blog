@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { constants } from '@/common/constants/constants'
 import { useIsMobile } from '@/common/hooks/use-is-mobile'
 import { Button } from '@/components/ui/button/button'
 import { Input } from '@/components/ui/input/input'
@@ -67,13 +66,13 @@ export const ContactUsForm = ({
     } else {
       clearErrors(['message'])
     }
-  }, [errorMessage])
+  }, [errorMessage, setError, clearErrors])
 
   useEffect(() => {
     defaultValues?.name && setValue('name', defaultValues?.name)
     defaultValues?.email && setValue('email', defaultValues?.email)
     isSubmitSuccess && setValue('message', '')
-  }, [defaultValues?.name, defaultValues?.email, isSubmitSuccess])
+  }, [defaultValues?.name, defaultValues?.email, isSubmitSuccess, setValue])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
@@ -81,31 +80,33 @@ export const ContactUsForm = ({
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Input
-        autoComplete={'name'}
-        disabled={!!defaultValues?.name}
-        errorMessage={errors.name?.message}
-        label={t('Name.label')}
-        placeholder={t('Name.placeholder')}
-        {...register('name')}
-      />
-      <Input
-        autoComplete={'email'}
-        disabled={!!defaultValues?.email}
-        errorMessage={errors.email?.message}
-        label={t('Email.label')}
-        placeholder={t('Email.placeholder')}
-        {...register('email')}
-      />
-      <Input
-        as={'textarea'}
-        disabled={disabled}
-        errorMessage={errors.message?.message}
-        label={t('Message.label')}
-        placeholder={t('Message.placeholder')}
-        resize={false}
-        {...register('message')}
-      />
+      <div>
+        <Input
+          autoComplete={'name'}
+          disabled={!!defaultValues?.name}
+          errorMessage={errors.name?.message}
+          label={t('Name.label')}
+          placeholder={t('Name.placeholder')}
+          {...register('name')}
+        />
+        <Input
+          autoComplete={'email'}
+          disabled={!!defaultValues?.email}
+          errorMessage={errors.email?.message}
+          label={t('Email.label')}
+          placeholder={t('Email.placeholder')}
+          {...register('email')}
+        />
+        <Input
+          as={'textarea'}
+          disabled={disabled}
+          errorMessage={errors.message?.message}
+          label={t('Message.label')}
+          placeholder={t('Message.placeholder')}
+          resize={false}
+          {...register('message')}
+        />
+      </div>
       <Button fullWidth={isMobile} type={'submit'} variant={'secondary'}>
         {t('SubmitButton')}
       </Button>

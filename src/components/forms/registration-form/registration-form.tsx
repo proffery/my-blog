@@ -24,6 +24,7 @@ type Props = {
 
 export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) => {
   const classNames = {
+    confirmPasswordField: clsx(s.confirmPasswordField),
     form: clsx(s.form),
     singUpButton: clsx(s.singUpButton),
   }
@@ -58,7 +59,7 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
     } else {
       clearErrors(['confirmPassword'])
     }
-  }, [errorMessage])
+  }, [errorMessage, clearErrors, setError])
 
   const handleFormSubmit = handleSubmit(data => {
     onSubmit(data)
@@ -66,35 +67,38 @@ export const RegistrationForm = ({ disabled, errorMessage, onSubmit }: Props) =>
 
   return (
     <form className={classNames.form} onSubmit={handleFormSubmit}>
-      <Input
-        autoComplete={'name'}
-        errorMessage={errors.name?.message}
-        label={t('Name.label')}
-        placeholder={t('Name.placeholder')}
-        {...register('name')}
-      />
-      <Input
-        autoComplete={'email'}
-        errorMessage={errors.email?.message}
-        label={t('Email.label')}
-        placeholder={t('Email.placeholder')}
-        {...register('email')}
-      />
-      <Input
-        autoComplete={'password'}
-        errorMessage={errors.password?.message}
-        label={t('Password.label')}
-        placeholder={t('Password.placeholder')}
-        type={'password'}
-        {...register('password')}
-      />
-      <Input
-        autoComplete={'confirmPassword'}
-        errorMessage={errors.confirmPassword?.message}
-        placeholder={t('ConfirmPassword.placeholder')}
-        type={'password'}
-        {...register('confirmPassword')}
-      />
+      <div>
+        <Input
+          autoComplete={'name'}
+          errorMessage={errors.name?.message}
+          label={t('Name.label')}
+          placeholder={t('Name.placeholder')}
+          {...register('name')}
+        />
+        <Input
+          autoComplete={'email'}
+          errorMessage={errors.email?.message}
+          label={t('Email.label')}
+          placeholder={t('Email.placeholder')}
+          {...register('email')}
+        />
+        <Input
+          autoComplete={'password'}
+          errorMessage={errors.password?.message}
+          label={t('Password.label')}
+          placeholder={t('Password.placeholder')}
+          type={'password'}
+          {...register('password')}
+        />
+        <Input
+          autoComplete={'confirmPassword'}
+          className={classNames.confirmPasswordField}
+          errorMessage={errors.confirmPassword?.message}
+          placeholder={t('ConfirmPassword.placeholder')}
+          type={'password'}
+          {...register('confirmPassword')}
+        />
+      </div>
       <Button
         className={classNames.singUpButton}
         disabled={disabled}

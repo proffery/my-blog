@@ -40,11 +40,11 @@ function Administrator() {
     if (!isRole(userRoles, 'Administrator')) {
       router.push(routes.base)
     }
-  }, [userRoles])
+  }, [userRoles, router])
 
   useEffect(() => {
     setSortBy(null)
-  }, [tabValue])
+  }, [tabValue, setSortBy])
 
   return (
     <Page className={classNames.page}>

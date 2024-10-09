@@ -1,5 +1,3 @@
-import { ComponentPropsWithoutRef, forwardRef } from 'react'
-
 import { GetPostsResponse } from '@/app/api/posts/posts.types'
 import { constants } from '@/common/constants/constants'
 import { LastPostCard } from '@/components/layouts/home-page/last-section/last-post-card/last-post-card'
@@ -40,11 +38,25 @@ export const LastSection = async () => {
     <section className={classNames.section} id={'last'}>
       <Typography.H3>{t('title')}</Typography.H3>
       <div className={classNames.postsContainer}>
-        {documents[0] && <LastPostCard className={classNames.postOne} postData={documents[0]} />}
-        {documents[1] && <OtherPostCard className={classNames.postTwo} postData={documents[1]} />}
-        {documents[2] && <OtherPostCard className={classNames.postThree} postData={documents[2]} />}
-        {documents[3] && <OtherPostCard className={classNames.postFour} postData={documents[3]} />}
-        {documents[4] && <OtherPostCard className={classNames.postFive} postData={documents[4]} />}
+        {documents[0] && (
+          <LastPostCard className={classNames.postOne} key={'postOne'} postData={documents[0]} />
+        )}
+        {documents[1] && (
+          <OtherPostCard className={classNames.postTwo} key={'postTwo'} postData={documents[1]} />
+        )}
+        {documents[2] && (
+          <OtherPostCard
+            className={classNames.postThree}
+            key={'postThree'}
+            postData={documents[2]}
+          />
+        )}
+        {documents[3] && (
+          <OtherPostCard className={classNames.postFour} key={'postFour'} postData={documents[3]} />
+        )}
+        {documents[4] && (
+          <OtherPostCard className={classNames.postFive} key={'postFive'} postData={documents[4]} />
+        )}
       </div>
     </section>
   )

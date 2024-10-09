@@ -54,7 +54,7 @@ function Moderator() {
     if (!isRole(userRoles, 'Moderator')) {
       router.push(routes.base)
     }
-  }, [userRoles])
+  }, [userRoles, router])
 
   const setDeletedPostDataHandler = (data: {
     authorId: string
