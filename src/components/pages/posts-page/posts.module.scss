@@ -66,7 +66,7 @@
 .adminButtonsWrapper {
   position: absolute;
   z-index: 99;
-  top: 16px;
+  top: 8px;
 
   display: flex;
   flex-direction: column;
@@ -78,11 +78,11 @@
 }
 
 .userButtonsWrapper {
-  right: 16px;
+  right: 8px;
 }
 
 .adminButtonsWrapper {
-  left: 16px;
+  left: 8px;
 
   button {
     border-color: var(--color-danger);
