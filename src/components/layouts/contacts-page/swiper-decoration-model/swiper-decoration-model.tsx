@@ -13,16 +13,10 @@ import { gsap } from 'gsap'
 import s from './swiper-decoration-model.module.scss'
 
 export type Props = {
-  setShowAnimation: (showAnimation: boolean) => void
   showAnimation: boolean
 } & ComponentPropsWithoutRef<'div'>
 
-export const SwiperDecorationModel = ({
-  className,
-  setShowAnimation,
-  showAnimation,
-  ...rest
-}: Props) => {
+export const SwiperDecorationModel = ({ className, showAnimation, ...rest }: Props) => {
   const isMobile = useIsMobile()
   const classNames = {
     canvas: clsx(s.canvas),
@@ -47,7 +41,7 @@ export const SwiperDecorationModel = ({
           y: Math.PI / 2,
         })
     }
-    showAnimation && play().then(() => setShowAnimation(false))
+    showAnimation && play()
   }, [showAnimation])
 
   const { desktop, mobile } = constants.initializationLoaderModelCoordinates

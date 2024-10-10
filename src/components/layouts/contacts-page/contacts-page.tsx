@@ -81,17 +81,13 @@ function ContactsPage() {
       </div>
       <div className={classNames.feedbackWrapper}>
         {feedbacksData && feedbacksData.documents.length > 0 && (
-          <SwiperComponent onSliderMove={setIsSliderMove}>
+          <SwiperComponent className={classNames.swiper} onSliderMove={setIsSliderMove}>
             {feedbacksData.documents.map(feedback => (
               <FeedbackCard feedbackData={feedback} key={feedback.$id} />
             ))}
           </SwiperComponent>
         )}
-        <SwiperDecorationModel
-          className={classNames.model}
-          setShowAnimation={setIsSliderMove}
-          showAnimation={isSliderMove}
-        />
+        <SwiperDecorationModel className={classNames.model} showAnimation={isSliderMove} />
       </div>
     </Page>
   )

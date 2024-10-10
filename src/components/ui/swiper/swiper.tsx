@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from 'react'
+import React, { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef, useRef } from 'react'
 
 import { RightBracketIcon } from '@/assets/icons/components/right-bracket-icon'
 import clsx from 'clsx'
@@ -15,60 +15,62 @@ type SwiperProps = {
   onSliderMove?: (value: boolean) => void
   showNavigation?: boolean
   showPagination?: boolean
-}
-export const SwiperComponent = (props: SwiperProps) => {
-  const { children, onSliderMove, showNavigation = true, showPagination = true } = props
-  const swiperRef = useRef<any>()
-  const classNames = {
-    arrowIcon: clsx(s.arrowIcon),
-    container: clsx(s.container),
-    navButtonLeft: clsx(s.navButtonLeft),
-    navButtonRight: clsx(s.navButtonRight),
-    slide: clsx(s.slide),
-    slideContent: clsx(s.slideContent),
-    swiper: clsx(s.swiper),
-  }
-  const pagination = {
-    clickable: true,
-  }
+} & ComponentPropsWithoutRef<'div'>
+export const SwiperComponent = forwardRef<ElementRef<'div'>, SwiperProps>(
+  ({ className, ...props }: SwiperProps, ref) => {
+    const { children, onSliderMove, showNavigation = true, showPagination = true } = props
+    const swiperRef = useRef<any>()
+    const classNames = {
+      arrowIcon: clsx(s.arrowIcon),
+      container: clsx(s.container, className),
+      navButtonLeft: clsx(s.navButtonLeft),
+      navButtonRight: clsx(s.navButtonRight),
+      slide: clsx(s.slide),
+      slideContent: clsx(s.slideContent),
+      swiper: clsx(s.swiper),
+    }
+    const pagination = {
+      clickable: true,
+    }
 
-  const onPrevHandler = () => {
-    swiperRef.current.slidePrev()
-  }
+    const onPrevHandler = () => {
+      swiperRef.current.slidePrev()
+    }
 
-  const onNextHandler = () => {
-    swiperRef.current.slideNext()
-  }
+    const onNextHandler = () => {
+      swiperRef.current.slideNext()
+    }
 
-  return (
-    <div className={classNames.container}>
-      {showNavigation && (
-        <button className={classNames.navButtonLeft} onClick={onPrevHandler} type={'button'}>
-          <RightBracketIcon className={classNames.arrowIcon} />
-        </button>
-      )}
-      <Swiper
-        className={classNames.swiper}
-        loop
-        modules={[Navigation, Pagination, FreeMode]}
-        onSlideChangeTransitionEnd={() => onSliderMove?.(false)}
-        onSlideChangeTransitionStart={() => onSliderMove?.(true)}
-        onSwiper={swiper => {
-          swiperRef.current = swiper
-        }}
-        {...(showPagination ? { pagination } : {})}
-      >
-        {React.Children.map(children, child => (
-          <SwiperSlide className={classNames.slide} key={uuidv4()}>
-            <div className={classNames.slideContent}>{child}</div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      {showNavigation && (
-        <button className={classNames.navButtonRight} onClick={onNextHandler} type={'button'}>
-          <RightBracketIcon className={classNames.arrowIcon} />
-        </button>
-      )}
-    </div>
-  )
-}
+    return (
+      <div className={classNames.container} ref={ref}>
+        {showNavigation && (
+          <button className={classNames.navButtonLeft} onClick={onPrevHandler} type={'button'}>
+            <RightBracketIcon className={classNames.arrowIcon} />
+          </button>
+        )}
+        <Swiper
+          className={classNames.swiper}
+          loop
+          modules={[Navigation, Pagination, FreeMode]}
+          onSlideChangeTransitionEnd={() => onSliderMove?.(false)}
+          onSlideChangeTransitionStart={() => onSliderMove?.(true)}
+          onSwiper={swiper => {
+            swiperRef.current = swiper
+          }}
+          {...(showPagination ? { pagination } : {})}
+        >
+          {React.Children.map(children, child => (
+            <SwiperSlide className={classNames.slide} key={uuidv4()}>
+              <div className={classNames.slideContent}>{child}</div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {showNavigation && (
+          <button className={classNames.navButtonRight} onClick={onNextHandler} type={'button'}>
+            <RightBracketIcon className={classNames.arrowIcon} />
+          </button>
+        )}
+      </div>
+    )
+  }
+)
