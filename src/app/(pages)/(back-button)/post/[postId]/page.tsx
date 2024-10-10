@@ -14,7 +14,7 @@ import { Edit3, Eye } from 'lucide-react'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { getFormatter, getLocale, getTranslations } from 'next-intl/server'
 
 import s from './post-by-id.module.scss'

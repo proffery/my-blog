@@ -245,6 +245,7 @@
     "description": "This page does not exist"
   },
   "ConfirmEmailPage": {
+    "title": "Confirm email",
     "description1": "An email with further instructions has been sent to",
     "description2": ", the email address you provided"
   },
@@ -412,8 +413,8 @@
     }
   },
   "Metadata": {
-    "applicationName": "платформа для любителей уличной фотографии",
+    "applicationName": "platform for street photography enthusiasts",
     "title": "STREET PHOTO WORLD",
-    "description": "платформа для любителей уличной фотографии, предлагающая потрясающие статьи, советы и истории, воспевающие городскую жизнь и спонтанность"
+    "description": "platform for street photography enthusiasts, featuring stunning articles, tips, and stories that celebrate urban life and spontaneity"
   }
 }

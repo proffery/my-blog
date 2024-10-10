@@ -11,7 +11,7 @@ import { userById } from '@/server/functions/users/user-by-id'
 import { createStorageClient } from '@/server/storage-config'
 import { createUsersClient } from '@/server/users-config'
 import clsx from 'clsx'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { getLocale, getTranslations } from 'next-intl/server'
 
 import s from './account.module.scss'
@@ -52,6 +52,10 @@ export async function generateMetadata({ params: { userId } }: Props) {
       ],
       title: `${t('title')} | ${userData.name}`,
       url: process.env.NEXT_PUBLIC_HOST_BASE + routes.account + '/' + userId,
+    },
+    robots: {
+      follow: true,
+      index: false,
     },
     title: { absolute: `${t('title')} | ${userData.name}` },
     twitter: {

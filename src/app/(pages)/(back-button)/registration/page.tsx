@@ -1,5 +1,5 @@
 import { routes } from '@/common/constants/routes'
-import RegistrationPage from '@/components/layouts/registration-page/registration-page'
+import RegistrationPage from '@/components/pages/registration-page/registration-page'
 import { getLocale, getTranslations } from 'next-intl/server'
 
 export async function generateMetadata() {

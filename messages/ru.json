@@ -245,6 +245,7 @@
     "description": "Такой страницы не существует"
   },
   "ConfirmEmailPage": {
+    "title": "Подтверждение почты",
     "description1": "На указанную Вами почту",
     "description2": ", было выслано письмо с дальнейшими инструкциями"
   },
@@ -412,8 +413,8 @@
     }
   },
   "Metadata": {
-    "applicationName": "platform for street photography enthusiasts",
+    "applicationName": "платформа для любителей уличной фотографии",
     "title": "STREET PHOTO WORLD",
-    "description": "platform for street photography enthusiasts, featuring stunning articles, tips, and stories that celebrate urban life and spontaneity"
+    "description": "платформа для любителей уличной фотографии, предлагающая потрясающие статьи, советы и истории, воспевающие городскую жизнь и спонтанность"
   }
 }

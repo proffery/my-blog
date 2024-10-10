@@ -8,9 +8,9 @@ import {
   ContactUsForm,
   ContactUsFormValues,
 } from '@/components/forms/contact-us-form/contact-us-form'
-import { FeedbackCard } from '@/components/layouts/contacts-page/feedback-card/feedback-card'
-import { SwiperDecorationModel } from '@/components/layouts/contacts-page/swiper-decoration-model/swiper-decoration-model'
 import { Page } from '@/components/layouts/page/page'
+import { FeedbackCard } from '@/components/pages/contacts-page/feedback-card/feedback-card'
+import { SwiperDecorationModel } from '@/components/pages/contacts-page/swiper-decoration-model/swiper-decoration-model'
 import { SwiperComponent } from '@/components/ui/swiper/swiper'
 import { Typography } from '@/components/ui/typography/typography'
 import { useMeQuery } from '@/services/auth/auth.service'

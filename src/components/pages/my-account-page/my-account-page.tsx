@@ -29,9 +29,9 @@ import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import s from './account.module.scss'
+import s from './my-account.module.scss'
 
-function AccountPage() {
+function MyAccountPage() {
   const classNames = {
     avatarWrapper: clsx(s.avatarWrapper),
     container: clsx(s.container),
@@ -155,4 +155,4 @@ function AccountPage() {
     </Page>
   )
 }
-export default withRedux(AccountPage)
+export default withRedux(MyAccountPage)

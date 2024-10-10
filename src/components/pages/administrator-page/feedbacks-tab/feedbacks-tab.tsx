@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { useFeedbacksFilters } from '@/components/layouts/administrator-page/use-feedbacks-filters'
-import { AdminFeedbacksTable } from '@/components/tables/admin-feedbacks-table/admin-feedbacks-table'
+import { AdminFeedbacksTable } from '@/components/pages/administrator-page/feedbacks-tab/admin-feedbacks-table/admin-feedbacks-table'
+import { useFeedbacksFilters } from '@/components/pages/administrator-page/use-feedbacks-filters'
 import { Dialog } from '@/components/ui/dialog/dialog'
 import { Typography } from '@/components/ui/typography/typography'
 import {

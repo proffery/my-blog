@@ -4,7 +4,6 @@
   display: flex;
   gap: 32px;
   align-items: center;
-  justify-content: center;
 
   @media (width <= breakpoints.$mobile) {
     gap: 8px;

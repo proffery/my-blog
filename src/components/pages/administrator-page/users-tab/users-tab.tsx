@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { useUsersFilters } from '@/components/layouts/administrator-page/use-users-filters'
-import { AdminUsersTable } from '@/components/tables/admin-users-table/admin-users-table'
+import { useUsersFilters } from '@/components/pages/administrator-page/use-users-filters'
+import { AdminUsersTable } from '@/components/pages/administrator-page/users-tab/admin-users-table/admin-users-table'
 import { Dialog } from '@/components/ui/dialog/dialog'
 import { Typography } from '@/components/ui/typography/typography'
 import {
