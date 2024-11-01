@@ -23,12 +23,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${process.env.NEXT_PUBLIC_HOST_BASE}${routes.contacts}`,
     },
-    {
-      url: `${process.env.NEXT_PUBLIC_HOST_BASE}${routes.login}`,
-    },
-    {
-      url: `${process.env.NEXT_PUBLIC_HOST_BASE}${routes.registration}`,
-    },
     ...postsEntries,
   ]
 }

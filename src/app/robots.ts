@@ -6,7 +6,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         allow: '/',
-        disallow: [routes.administrator, routes.moderator, routes.account],
+        disallow: [
+          routes.administrator,
+          routes.moderator,
+          routes.account,
+          routes.login,
+          routes.registration,
+        ],
         userAgent: '*',
       },
     ],
